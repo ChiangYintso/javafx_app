@@ -1,31 +1,16 @@
 # java2019a
 
 #### 介绍
+
 软件2019年java学习
-
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1. xxxxc
-2. xxxx
-3. xxxx
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
+1. 注册一个码云账号。[https://gitee.com/](https://gitee.com/)  
+2. 安装git及git客户端  
+3. Fork本项目个人仓库。  
+4. 在个人仓库中将Fork的项目clone到本地。  
+5. 在clone到本地的项目目录中添加Eclipse项目。  
 
 #### 码云特技
 
