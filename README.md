@@ -8,7 +8,7 @@
 
 1. 注册一个码云账号。[https://gitee.com/](https://gitee.com/)  
 2. 安装git及git客户端  
-3. Fork本项目个人仓库。  
+3. Fork本项目到个人仓库。  
 4. 在个人仓库中将Fork的项目clone到本地。  
 5. 在clone到本地的项目目录中添加Eclipse项目。  
 
