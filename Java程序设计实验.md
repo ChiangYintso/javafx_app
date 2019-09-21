@@ -70,7 +70,7 @@ Java implementation of Git
 Fork课程项目[https://gitee.com/tjhe/java2019a](https://gitee.com/tjhe/java2019a)到自己的私人仓库  
 然后在自己的gitee中找到Fork的项目，使用git客户端克隆（非下载）到自己计算机的工作目录，如../java2019a。  
 然后在java2019a中使用Eclipse（或其他工具）创建项目，项目名称：
-J学号姓名1，如“J2017110001张三2”  
+J学号姓名2，如“J2017110001张三2”  
 在该项目中实现作业任务的所有功能  
 其中验证性的实验任务放在名称为ex的包中如：
 
