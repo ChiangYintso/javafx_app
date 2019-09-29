@@ -25,5 +25,6 @@ public class InputNum {
 		System.out.print("从键盘输入一个双精度浮点数:");
 		c = reader.nextDouble();
 		System.out.println("你输入的双精度浮点数是" + c);
+		reader.close();
 	}
 }

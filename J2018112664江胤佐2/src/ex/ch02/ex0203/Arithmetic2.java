@@ -9,7 +9,7 @@ public class Arithmetic2 {
 		b1 = 5.0 / 6.0;
 		System.out.println("5.0/6.0=" + b1);
 		c1 = 5 / 6.0;
-		
+		System.out.println("5 / 6.0=" + c1);
 		System.out.println("ÕûÊıĞÍ:");
 		int a2 = 0, b2 = 0, c2 = 0;
 		

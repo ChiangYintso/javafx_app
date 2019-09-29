@@ -20,10 +20,11 @@ public class InitVar {
 		System.out.println("字节型,a=" + a);
 		System.out.println("短整型,b=" + b);
 		System.out.println("整数型,c=" + c);
-		System.out.println("单精度型,d=" + d);
-		System.out.println("双精度型,e=" + e);
-		System.out.println("字符型,f=" + f);
-		System.out.println("布尔型,g=" + g);
+		System.out.println("长整型,d=" + d);
+		System.out.println("单精度型,e=" + e);
+		System.out.println("双精度型,f=" + f);
+		System.out.println("字符型,g=" + g);
+		System.out.println("布尔型,h=" + h);
 		System.out.println("圆周率,pi=" + PI);
 	}
 }
