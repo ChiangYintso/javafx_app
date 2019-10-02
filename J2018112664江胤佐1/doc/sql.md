@@ -6,7 +6,9 @@
 CREATE DATABASE `roll_helper_db`;
 ```
 
-## 创建教学班主表
+## 创建表
+
+### 创建教学班主表
 
 ```SQL
 CREATE TABLE `roll_helper_db`.`roll_helper_teaching_class` (
@@ -23,7 +25,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_teaching_class` (
 ) COMMENT '教学班主表'
 ```
 
-## 创建学生信息表
+### 创建学生信息表
 
 ```SQL
 CREATE TABLE `roll_helper_db`.`roll_helper_student` (
@@ -43,7 +45,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_student` (
 ) COMMENT '学生信息表'
 ```
 
-## 创建教师信息表
+### 创建教师信息表
 
 ```SQL
 CREATE TABLE `roll_helper_db`.`roll_helper_teacher` (
@@ -57,7 +59,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_teacher` (
 ) COMMENT '教师信息表'
 ```
 
-## 创建点名记录表
+### 创建点名记录表
 
 ```SQL
 CREATE TABLE `roll_helper_roll_call` (
@@ -73,7 +75,7 @@ CREATE TABLE `roll_helper_roll_call` (
 ) COMMENT '点名记录表';
 ```
 
-## 创建课表记录表
+### 创建课表记录表
 
 ```SQL
 CREATE TABLE `roll_helper_db`.`roll_helper_schedule` (
@@ -90,7 +92,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_schedule` (
 ) COMMENT '教学课表';
 ```
 
-## 创建学生-课表关系表
+### 创建学生-课表关系表
 
 ```SQL
 CREATE TABLE `roll_helper_db`.`roll_helper_student_schedule_relation` (
@@ -101,7 +103,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_student_schedule_relation` (
 ) COMMENT '学生-课表关系表';
 ```
 
-## 创建学生-点名关系表
+### 创建学生-点名关系表
 
 ```SQL
 CREATE TABLE `roll_helper_db`.`roll_helper_student_roll_call_relation` (
@@ -112,7 +114,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_student_roll_call_relation` (
 ) COMMENT '学生-点名关系表';
 ```
 
-## 创建学生-教学班关系表
+### 创建学生-教学班关系表
 
 ```SQL
 CREATE TABLE `roll_helper_db`.`roll_helper_student_teaching_class_relation` (
@@ -122,3 +124,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_student_teaching_class_relation` (
     PRIMARY KEY(`student_teaching_class_id`)
 ) COMMENT '学生-教学班关系表';
 ```
+
+## 模型图
+
+![diagram](diagram.png "diagram")
