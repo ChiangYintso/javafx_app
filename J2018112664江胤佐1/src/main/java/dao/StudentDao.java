@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.rollHelper.dao;
+package main.java.dao;
 
-import main.java.pers.jiangyinzuo.rollHelper.entity.Student;
+import main.java.entity.Student;
 
 public interface StudentDao {
 	/**
@@ -9,7 +9,7 @@ public interface StudentDao {
 	 * @param student
 	 * @return
 	 */
-	int insertStudent(Student student);
+	boolean insertStudent(Student student);
 	
 	/**
 	 * 根据学号查找学生信息

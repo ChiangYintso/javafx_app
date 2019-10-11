@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollHelper.entity;
+package main.java.entity;
 
 import java.time.Instant;
 import java.util.List;
@@ -10,7 +10,7 @@ public class RollCall {
 	private Instant rollCallTime;
 	private Schedule schedule;
 	private TeachingClass teachingClass;
-	private List<Student> studentList;
+	private Student student;
 
 	public Integer getRollCallId() {
 		return rollCallId;
@@ -60,11 +60,11 @@ public class RollCall {
 		this.teachingClass = teachingClass;
 	}
 
-	public List<Student> getStudentList() {
-		return studentList;
+	public Student getStudentList() {
+		return student;
 	}
 
-	public void setStudentList(List<Student> studentList) {
-		this.studentList = studentList;
+	public void setStudentList(Student student) {
+		this.student = student;
 	}
 }

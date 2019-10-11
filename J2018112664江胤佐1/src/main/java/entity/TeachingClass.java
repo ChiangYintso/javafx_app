@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollHelper.entity;
+package main.java.entity;
 
 import java.util.List;
 
