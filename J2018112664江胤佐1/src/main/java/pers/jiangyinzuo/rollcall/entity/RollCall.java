@@ -1,7 +1,6 @@
-package main.java.entity;
+package main.java.pers.jiangyinzuo.rollcall.entity;
 
 import java.time.Instant;
-import java.util.List;
 
 public class RollCall {
 	private Integer rollCallId;
