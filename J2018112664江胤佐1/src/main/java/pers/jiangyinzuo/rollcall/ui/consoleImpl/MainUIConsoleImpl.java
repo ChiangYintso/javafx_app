@@ -4,11 +4,26 @@ import java.util.Scanner;
 
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
+import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student.StudentMainMenuUI;
 
 public class MainUIConsoleImpl implements UI {
+	public static enum MENU implements AbstractMenu {
+		EXIT(AbstractMenu.EXIT), STUDENT_MAIN_MENU(StudentMainMenuUI.class.getName());
 
-	public MENU showUI() {
+		private String menuClassName;
+
+		MENU(String menuClassName) {
+			this.menuClassName = menuClassName;
+		}
+
+		public String getMenuClassName() {
+			return this.menuClassName;
+		}
+	}
+
+	public AbstractMenu showUI() {
 		String isStudent = "";
 		String id = "";
 		String pwd = "";
