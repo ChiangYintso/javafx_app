@@ -1,14 +1,16 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.common;
 
+import java.util.Scanner;
+
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
 
-public class ScheduleUI extends UI {
-	
-	enum MENU implements AbstractMenu {
-		EXIT(AbstractMenu.EXIT);
-		
-		private String menuClassName;
+public class RollCallUI extends UI {
+
+	private enum MENU implements AbstractMenu {
+		EXIT("exit");
+
+		String menuClassName;
 		MENU(String menuClassName) {
 			this.menuClassName = menuClassName;
 		}
@@ -16,19 +18,16 @@ public class ScheduleUI extends UI {
 		public String getMenuClassName() {
 			return this.menuClassName;
 		}
-	}
-	
-	public ScheduleUI() {
 		
 	}
 	
 	@Override
 	public AbstractMenu showUI() {
-		System.out.println("scheduleui");
-		System.out.println("-------------");
-		System.out.println("0. ·µ»Ø");
-		System.out.println("-------------");
+		System.out.println("rollcallui");
+		Scanner scanner = new Scanner(System.in);
 		
+		scanner.close();
 		return MENU.EXIT;
 	}
+
 }

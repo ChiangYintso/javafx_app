@@ -1,8 +1,13 @@
 package main.java.pers.jiangyinzuo.rollcall.ui;
 
-public interface UI {
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class UI {
 	static enum UI_IMPLEMENT {
 		CONSOLE, JAVA_FX;
 	}
-	AbstractMenu showUI();
+	public abstract AbstractMenu showUI();
+	
+	protected Map<String, AbstractMenu> selectedMenuMap = new HashMap<>();
 }

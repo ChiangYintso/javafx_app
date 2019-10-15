@@ -6,11 +6,12 @@ import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
-import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student.StudentMainMenuUI;
+import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student.StudentMainUI;
 
-public class MainUIConsoleImpl implements UI {
+public class MainUIConsoleImpl extends UI {
 	public static enum MENU implements AbstractMenu {
-		EXIT(AbstractMenu.EXIT), STUDENT_MAIN_MENU(StudentMainMenuUI.class.getName());
+		EXIT(AbstractMenu.EXIT),
+		STUDENT_MAIN_MENU(StudentMainUI.class.getName());
 
 		private String menuClassName;
 
