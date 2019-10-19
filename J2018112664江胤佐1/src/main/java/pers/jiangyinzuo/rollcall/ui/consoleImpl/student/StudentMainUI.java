@@ -3,7 +3,7 @@ package main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.common.ScheduleUI;
-import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.util.Select;
+import main.java.pers.jiangyinzuo.rollcall.util.Select;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.common.RollCallUI;
 
 public class StudentMainUI extends UI {
@@ -27,6 +27,10 @@ public class StudentMainUI extends UI {
 		this.selectedMenuMap.put("1", MENU.ROLL_CALL);
 		this.selectedMenuMap.put("2", MENU.SCHEDULE);
 		this.selectedMenuMap.put("3", MENU.EXIT);
+	}
+	
+	private void showStudentInfo() {
+		
 	}
 
 	public AbstractMenu showUI() {

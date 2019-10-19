@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.util;
+package main.java.pers.jiangyinzuo.rollcall.util;
 
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 

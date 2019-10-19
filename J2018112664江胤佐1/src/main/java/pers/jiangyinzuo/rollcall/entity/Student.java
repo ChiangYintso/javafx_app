@@ -1,8 +1,21 @@
 package main.java.pers.jiangyinzuo.rollcall.entity;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.List;
 
+import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
+import main.java.pers.jiangyinzuo.rollcall.util.ObjectFileList;
+
 public class Student {
+
 	private Integer studentId;
 	private String gender;
 	private String studentName;
@@ -12,6 +25,15 @@ public class Student {
 	private List<TeachingClass> teachingClassList;
 	private List<Schedule> scheduleList;
 	private List<RollCall> rollCallList;
+
+	public Student(Integer studentId, String gender, String studentName, String adminClass, String pwd, String major) {
+		this.studentId = studentId;
+		this.gender = gender;
+		this.studentName = studentName;
+		this.adminClass = adminClass;
+		this.pwd = pwd;
+		this.major = major;
+	}
 
 	public Integer getStudentId() {
 		return studentId;

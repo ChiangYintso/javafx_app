@@ -4,7 +4,7 @@ import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.common.ScheduleUI;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student.TeachingClassUI;
-import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.util.Select;
+import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
 public class TeacherMainUI extends UI {
 

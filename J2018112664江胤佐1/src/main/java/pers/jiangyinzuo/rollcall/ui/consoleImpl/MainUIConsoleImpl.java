@@ -2,6 +2,7 @@ package main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl;
 
 import java.util.Scanner;
 
+import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
@@ -24,7 +25,7 @@ public class MainUIConsoleImpl extends UI {
 		}
 	}
 
-	public AbstractMenu showUI() {
+	public AbstractMenu showUI() throws CustomException {
 		String isStudent = "";
 		String id = "";
 		String pwd = "";

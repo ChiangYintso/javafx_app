@@ -1,5 +1,6 @@
 package main.java.pers.jiangyinzuo.rollcall.service.Impl;
 
+import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 
 public class LoginServiceImpl implements LoginService {
@@ -11,9 +12,8 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public boolean validateStudent(Integer studentId, String pwd) {
-		// TODO
-		return true;
+	public boolean validateStudent(Integer studentId, String pwd) throws CustomException {
+		return false;
 	}
 
 }

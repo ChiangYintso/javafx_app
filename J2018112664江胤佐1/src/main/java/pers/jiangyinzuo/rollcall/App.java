@@ -2,6 +2,7 @@ package main.java.pers.jiangyinzuo.rollcall;
 
 import java.lang.reflect.InvocationTargetException;
 
+import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.config.Config;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
@@ -25,14 +26,31 @@ public class App {
 
 	}
 
+	/**
+	 * Èë¿Úº¯Êý
+	 * 
+	 * @param args
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws CustomException 
+	 */
 	public static void main(String[] args)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException {
-		UIFactory uiFactory = new UIFactory();
-		AbstractMenu uiName = MENU.MAIN;
-		while (!uiName.getMenuClassName().equals("exit")) {
-			UI ui = uiFactory.buildUI(uiName);
-			uiName = ui.showUI();
+			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
+		try {
+			UIFactory uiFactory = new UIFactory();
+			AbstractMenu uiName = MENU.MAIN;
+			while (!uiName.getMenuClassName().equals("exit")) {
+				UI ui = uiFactory.buildUI(uiName);
+				uiName = ui.showUI();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
