@@ -1,21 +1,14 @@
 package main.java.pers.jiangyinzuo.rollcall.entity;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
-import main.java.pers.jiangyinzuo.rollcall.util.ObjectFileList;
+public class Student implements Serializable {
 
-public class Student {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer studentId;
 	private String gender;
 	private String studentName;
@@ -33,6 +26,24 @@ public class Student {
 		this.adminClass = adminClass;
 		this.pwd = pwd;
 		this.major = major;
+	}
+
+	public Student(Integer studentId, String gender, String studentName, String adminClass, String pwd, String major,
+			List<TeachingClass> teachingClassList, List<Schedule> scheduleList, List<RollCall> rollCallList) {
+		this(studentId, gender, studentName, adminClass, pwd, major);
+		this.teachingClassList = teachingClassList;
+		this.scheduleList = scheduleList;
+		this.rollCallList = rollCallList;
+	}
+	
+	public Student(String queryStr) {
+		StringBuilder temp = new StringBuilder();
+		int i = 0;
+		for (; i < queryStr.length(); ++i) {
+			if (queryStr.charAt(i) == ',') {
+				
+			}
+		}
 	}
 
 	public Integer getStudentId() {
