@@ -3,13 +3,14 @@ package main.java.pers.jiangyinzuo.rollcall.service.Impl;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.service.StudentService;
 import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
-import main.java.pers.jiangyinzuo.rollcall.util.Validator;
+import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
 
 public class StudentServiceImpl implements StudentService {
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException, CustomException {
 		StudentsEqualValidator v = new StudentsEqualValidator();
 		Student student = new Student(1234, "男", "jyz", "软件2018-01班", "123456", "软件工程", new ArrayList<>(),
 				new ArrayList<>(), new ArrayList<>());

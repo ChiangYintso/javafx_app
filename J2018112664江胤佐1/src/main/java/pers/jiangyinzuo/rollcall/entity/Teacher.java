@@ -1,8 +1,9 @@
 package main.java.pers.jiangyinzuo.rollcall.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Teacher {
+public class Teacher implements Serializable {
 	private Integer teacherId;
 	private String teacherName;
 	private String department;
@@ -11,6 +12,29 @@ public class Teacher {
 	private String title;
 	private List<TeachingClass> teachingClassList;
 	private List<Schedule> scheduleList;
+
+	public Teacher(Integer teacherId, String teacherName, String department, String gender, String pwd, String title,
+			List<TeachingClass> teachingClassList, List<Schedule> scheduleList) {
+		this.teacherId = teacherId;
+		this.teacherName = teacherName;
+		this.department = department;
+		this.gender = gender;
+		this.pwd = pwd;
+		this.title = title;
+		this.teachingClassList = teachingClassList;
+		this.scheduleList = scheduleList;
+	}
+
+	/**
+	 * 用于教师登录验证
+	 * 
+	 * @param teacherId
+	 * @param pwd
+	 */
+	public Teacher(Integer teacherId, String pwd) {
+		this.teacherId = teacherId;
+		this.pwd = pwd;
+	}
 
 	public Integer getTeacherId() {
 		return teacherId;
@@ -74,5 +98,9 @@ public class Teacher {
 
 	public void setScheduleList(List<Schedule> scheduleList) {
 		this.scheduleList = scheduleList;
+	}
+
+	public void welcome() {
+		System.out.println("你好, " + this.teacherId + " " + this.teacherName + this.title);
 	}
 }

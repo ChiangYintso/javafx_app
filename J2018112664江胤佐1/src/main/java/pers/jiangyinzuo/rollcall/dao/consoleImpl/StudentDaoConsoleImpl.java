@@ -20,7 +20,7 @@ public class StudentDaoConsoleImpl implements StudentDao {
 	@Override
 	public void insertStudent(Student student) throws IOException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException {
-		AppFile.writeEntity(student);
+		AppFile.writeSerializableEntity(student, "student.txt");
 	}
 
 	@Override

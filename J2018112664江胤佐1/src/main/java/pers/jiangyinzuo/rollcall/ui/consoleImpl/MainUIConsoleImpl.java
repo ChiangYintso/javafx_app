@@ -1,18 +1,24 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
+import main.java.pers.jiangyinzuo.rollcall.entity.Student;
+import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
+import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.teacher.TeacherMainUI;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student.StudentMainUI;
+import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 public class MainUIConsoleImpl extends UI {
 	public static enum MENU implements AbstractMenu {
-		EXIT(AbstractMenu.EXIT),
-		STUDENT_MAIN_MENU(StudentMainUI.class.getName());
+		EXIT(AbstractMenu.EXIT), STUDENT_MAIN_MENU(StudentMainUI.class.getName()),
+		TEACHER_MAIN_MENU(TeacherMainUI.class.getName());
 
 		private String menuClassName;
 
@@ -25,7 +31,7 @@ public class MainUIConsoleImpl extends UI {
 		}
 	}
 
-	public AbstractMenu showUI() throws CustomException {
+	public AbstractMenu showUI() throws CustomException, FileNotFoundException, IOException {
 		String isStudent = "";
 		String id = "";
 		String pwd = "";
@@ -59,17 +65,28 @@ public class MainUIConsoleImpl extends UI {
 				if (pwd.equals("#")) {
 					break;
 				}
+				UserInfo userInfo = UserInfo.getSingleton();
 				if (isStudent.equals("1")) {
-					if (loginService.validateStudent(Integer.parseInt(id), pwd)) {
+					Student student = loginService.studentLogin(Integer.parseInt(id), pwd);
+					if (student != null) {
+						userInfo.setStudent(student);
 						return MENU.STUDENT_MAIN_MENU;
 					}
 				} else {
-					if (loginService.validateTeacher(Integer.parseInt(id), pwd)) {
-						return MENU.STUDENT_MAIN_MENU;
+					Teacher teacher = loginService.teacherLogin(Integer.parseInt(id), pwd);
+					if (teacher != null) {
+						
+						userInfo.setTeacher(teacher);
+						return MENU.TEACHER_MAIN_MENU;
 					}
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("输入格式错误");
+			} catch (CustomException e) {
+				System.out.println(e.getErrInfo());
+			} catch (Exception e) {
+				System.out.println("未知错误");
+				e.printStackTrace();
 			}
 		}
 		scanner.close();

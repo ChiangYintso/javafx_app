@@ -4,6 +4,7 @@ import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.common.ScheduleUI;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student.TeachingClassUI;
+import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
 public class TeacherMainUI extends UI {
@@ -33,6 +34,8 @@ public class TeacherMainUI extends UI {
 	
 	@Override
 	public AbstractMenu showUI() {
+		UserInfo userInfo = UserInfo.getSingleton();
+		userInfo.getTeacher().welcome();
 		return Select.selectMenu(selectedMenuMap, new String[] {"1. 查看教学班", "2. 查看课表", "3. 退出"});
 	}
 

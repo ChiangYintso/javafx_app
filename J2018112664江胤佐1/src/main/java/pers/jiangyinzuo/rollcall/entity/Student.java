@@ -5,10 +5,6 @@ import java.util.List;
 
 public class Student implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private Integer studentId;
 	private String gender;
 	private String studentName;
@@ -35,15 +31,16 @@ public class Student implements Serializable {
 		this.scheduleList = scheduleList;
 		this.rollCallList = rollCallList;
 	}
-	
-	public Student(String queryStr) {
-		StringBuilder temp = new StringBuilder();
-		int i = 0;
-		for (; i < queryStr.length(); ++i) {
-			if (queryStr.charAt(i) == ',') {
-				
-			}
-		}
+
+	/**
+	 * 用于验证学生登录账号密码
+	 * 
+	 * @param studentId
+	 * @param pwd
+	 */
+	public Student(Integer studentId, String pwd) {
+		this.studentId = studentId;
+		this.pwd = pwd;
 	}
 
 	public Integer getStudentId() {
@@ -116,5 +113,9 @@ public class Student implements Serializable {
 
 	public void setRollCallList(List<RollCall> rollCallList) {
 		this.rollCallList = rollCallList;
+	}
+
+	public void welcome() {
+		System.out.println("你好, " + this.studentId + " " + this.studentName);
 	}
 }

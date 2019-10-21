@@ -1,5 +1,6 @@
 package main.java.pers.jiangyinzuo.rollcall;
 
+import java.io.StreamCorruptedException;
 import java.lang.reflect.InvocationTargetException;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
@@ -49,7 +50,10 @@ public class App {
 				UI ui = uiFactory.buildUI(uiName);
 				uiName = ui.showUI();
 			}
-		} catch (Exception e) {
+		} catch (StreamCorruptedException e) {
+			System.out.println("ÇëÇå¿ÕÎÄ¼þ");
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

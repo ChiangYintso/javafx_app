@@ -3,6 +3,7 @@ package main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.student;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.common.ScheduleUI;
+import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
 import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.common.RollCallUI;
 
@@ -28,12 +29,11 @@ public class StudentMainUI extends UI {
 		this.selectedMenuMap.put("2", MENU.SCHEDULE);
 		this.selectedMenuMap.put("3", MENU.EXIT);
 	}
-	
-	private void showStudentInfo() {
-		
-	}
 
 	public AbstractMenu showUI() {
+		UserInfo userInfo = UserInfo.getSingleton();
+		userInfo.getStudent().welcome();
+
 		return Select.selectMenu(selectedMenuMap, new String[] { "1. 查看课表", "2. 查看点名记录", "3. 退出" });
 	}
 }

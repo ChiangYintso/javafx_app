@@ -1,6 +1,7 @@
 package main.java.pers.jiangyinzuo.rollcall.util;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,7 +15,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import main.java.pers.jiangyinzuo.rollcall.util.Validator;
+import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
+import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 
 public class AppFile {
@@ -42,7 +44,7 @@ public class AppFile {
 		return br.readLine();
 	}
 
-	public static void writeEntity(Object obj) throws IOException, IllegalAccessException, IllegalArgumentException,
+	public static void writeEntity(Object obj, String fileName) throws IOException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException {
 		Class clazz = obj.getClass();
 		Field[] classField = clazz.getDeclaredFields();
@@ -51,7 +53,7 @@ public class AppFile {
 		String type;
 
 		StringBuilder tempStr = new StringBuilder();
-		try (FileWriter fileWriter = new FileWriter(AppFile.getAppPath() + "student.txt", true);) {
+		try (FileWriter fileWriter = new FileWriter(AppFile.getAppPath() + fileName, true);) {
 			for (Field field : classField) {
 				type = field.getGenericType().toString();
 				fieldName = field.getName();
@@ -79,8 +81,8 @@ public class AppFile {
 		}
 	}
 
-	public static Object readSerializableEntity(String fileSuffix, Validator query, Class clazz, Object ...obj)
-			throws FileNotFoundException, IOException, ClassNotFoundException {
+	public static Object readSerializableEntity(String fileSuffix, Validator query, Class clazz, Object... obj)
+			throws FileNotFoundException, IOException, ClassNotFoundException, CustomException {
 		try (FileInputStream fileInputStream = new FileInputStream(new File(AppFile.getAppPath() + fileSuffix));
 				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);) {
 			Object tempObj;
@@ -93,14 +95,19 @@ public class AppFile {
 				}
 			}
 			return null;
+		} catch (EOFException e) {
+			throw new CustomException("entity not found", false);
+		} catch (CustomException e) {
+			System.out.println(e.getErrInfo());
 		} catch (Exception e) {
-			System.out.println("未找到记录");
-			return null;
+			e.printStackTrace();
 		}
+		return null;
 	}
 
-	public static void main(String[] main) throws IOException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+	public static void main(String[] main)
+			throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, ClassNotFoundException, CustomException {
 
 		Student student = new Student(1234, "男", "jyz", "软件2018-01班", "123456", "软件工程", new ArrayList<>(),
 				new ArrayList<>(), new ArrayList<>());
