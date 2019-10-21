@@ -1,8 +1,9 @@
 package main.java.pers.jiangyinzuo.rollcall.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TeachingClass {
+public class TeachingClass implements Serializable {
 	private Integer classId;
 	private String className;
 	private Integer semester;
