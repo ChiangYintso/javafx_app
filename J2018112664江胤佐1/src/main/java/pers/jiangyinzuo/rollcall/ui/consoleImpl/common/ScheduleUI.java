@@ -31,4 +31,10 @@ public class ScheduleUI extends UI {
 		
 		return MENU.EXIT;
 	}
+
+	@Override
+	protected void setSelectedMenuMap() {
+		// TODO Auto-generated method stub
+		
+	}
 }

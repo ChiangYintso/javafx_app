@@ -42,4 +42,10 @@ public class LoginValidator implements Validator {
 		v.validate(Teacher.class, t);
 		v.validate(Student.class, s);
 	}
+
+	@Override
+	public boolean validate(Object objFromFile, Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

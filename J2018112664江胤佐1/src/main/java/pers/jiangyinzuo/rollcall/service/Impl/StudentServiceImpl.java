@@ -28,4 +28,10 @@ class StudentsEqualValidator implements Validator {
 		Student studentSelf = (Student) obj[0];
 		return studentSelf.getStudentId().equals(student.getStudentId());
 	}
+
+	@Override
+	public boolean validate(Object objFromFile, Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

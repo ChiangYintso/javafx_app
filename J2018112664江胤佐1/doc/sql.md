@@ -67,7 +67,6 @@ CREATE TABLE `roll_helper_roll_call` (
     `student_id` INT(10) UNSIGNED ZEROFILL NOT NULL COMMENT '学生学号',
     `precense` CHAR(2) NOT NULL COMMENT '出席情况',
     `roll_call_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '点名时间',
-    `schedule_id` INT(10) UNSIGNED ZEROFILL NOT NULL COMMENT '课表id',
     `class_id` INT UNSIGNED ZEROFILL NOT NULL COMMENT '课程id',
     `student_roll_call_id` INT(10) UNSIGNED NOT NULL COMMENT '学生-点名id',
     PRIMARY KEY(`roll_call_id`),
@@ -109,7 +108,7 @@ CREATE TABLE `roll_helper_db`.`roll_helper_student_schedule_relation` (
 CREATE TABLE `roll_helper_db`.`roll_helper_student_roll_call_relation` (
     `student_roll_call_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生-点名id',
     `student_id` INT(10) UNSIGNED NOT NULL COMMENT '学号',
-    `schedule_id` INT(10) UNSIGNED NOT NULL COMMENT '点名记录id',
+    `roll_call_id` INT(10) UNSIGNED NOT NULL COMMENT '点名记录id',
     PRIMARY KEY(`student_roll_call_id`)
 ) COMMENT '学生-点名关系表';
 ```

@@ -12,7 +12,7 @@ public class TeacherMainUI extends UI {
 	private static enum MENU implements AbstractMenu {
 		EXIT(AbstractMenu.EXIT),
 		SCHEDULE(ScheduleUI.class.getName()),
-		TEACHING_CLASS(TeachingClassUI.class.getName());
+		TEACHING_CLASS(TeachingClassUIForTeacher.class.getName());
 
 		private String menuClassName;
 
@@ -27,16 +27,21 @@ public class TeacherMainUI extends UI {
 	}
 	
 	public TeacherMainUI() {
-		selectedMenuMap.put("1", MENU.SCHEDULE);
-		selectedMenuMap.put("2", MENU.TEACHING_CLASS);
-		selectedMenuMap.put("3", MENU.EXIT);
+		setSelectedMenuMap();
 	}
 	
 	@Override
 	public AbstractMenu showUI() {
 		UserInfo userInfo = UserInfo.getSingleton();
 		userInfo.getTeacher().welcome();
-		return Select.selectMenu(selectedMenuMap, new String[] {"1. 查看教学班", "2. 查看课表", "3. 退出"});
+		return Select.selectMenu(selectedMenuMap, new String[] {"1. 查看课表", "2. 选择教学班", "3. 退出"});
+	}
+
+	@Override
+	protected void setSelectedMenuMap() {
+		selectedMenuMap.put("1", MENU.SCHEDULE);
+		selectedMenuMap.put("2", MENU.TEACHING_CLASS);
+		selectedMenuMap.put("3", MENU.EXIT);
 	}
 
 }

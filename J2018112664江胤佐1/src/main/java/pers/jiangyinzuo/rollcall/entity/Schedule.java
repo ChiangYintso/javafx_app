@@ -1,9 +1,9 @@
 package main.java.pers.jiangyinzuo.rollcall.entity;
 
-import java.util.List;
+import java.io.Serializable;
 
-public class Schedule {
-	enum WEEKDAY {
+public class Schedule implements Serializable {
+	public enum WEEKDAY {
 		MONDAY("周一"), TUESDAY("周二"), WEDNESDAY("周三"), THURSDAY("周四"), FRIDAY("周五"), SATURDAY("周六"), SUNDAY("周日"),
 		DEFAULT("");
 
@@ -25,7 +25,17 @@ public class Schedule {
 	private Short session;
 	private Teacher teacher;
 	private TeachingClass teachingClass;
-	private List<RollCall> rollCallList;
+
+	public Schedule(Integer scheduleId, String classRoom, String weeks, WEEKDAY weekday, Short session, Teacher teacher,
+			TeachingClass teachingClass) {
+		this.scheduleId = scheduleId;
+		this.classRoom = classRoom;
+		this.weeks = weeks;
+		this.weekday = weekday;
+		this.session = session;
+		this.teacher = teacher;
+		this.teachingClass = teachingClass;
+	}
 
 	public Integer getScheduleId() {
 		return scheduleId;
@@ -81,13 +91,5 @@ public class Schedule {
 
 	public void setTeachingClass(TeachingClass teachingClass) {
 		this.teachingClass = teachingClass;
-	}
-
-	public List<RollCall> getRollCallList() {
-		return rollCallList;
-	}
-
-	public void setRollCallList(List<RollCall> rollCallList) {
-		this.rollCallList = rollCallList;
 	}
 }

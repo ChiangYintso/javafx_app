@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.dao.consoleImpl;
+package main.java.pers.jiangyinzuo.rollcall.dao.fileImpl;
 
 import java.io.BufferedReader;
 import java.io.FileDescriptor;
@@ -15,7 +15,7 @@ import main.java.pers.jiangyinzuo.rollcall.dao.StudentDao;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
 
-public class StudentDaoConsoleImpl implements StudentDao {
+public class StudentDaoFileImpl implements StudentDao {
 
 	@Override
 	public void insertStudent(Student student) throws IOException, IllegalAccessException, IllegalArgumentException,
@@ -47,7 +47,7 @@ public class StudentDaoConsoleImpl implements StudentDao {
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
-		StudentDaoConsoleImpl s = new StudentDaoConsoleImpl();
+		StudentDao s = new StudentDaoFileImpl();
 		s.insertStudent(new Student(123, "男", "jyz", "软件2018-01班", "123456", "软件工程"));
 		System.out.println("query:");
 		s.queryStudent(123);

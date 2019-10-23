@@ -1,15 +1,25 @@
 package main.java.pers.jiangyinzuo.rollcall.entity;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class RollCall {
+public class RollCall implements Serializable {
 	private Integer rollCallId;
 	private String presence;
 	private String rollCallType;
 	private Instant rollCallTime;
-	private Schedule schedule;
 	private TeachingClass teachingClass;
 	private Student student;
+
+	public RollCall(Integer rollCallId, String presence, String rollCallType, Instant rollCallTime,
+			TeachingClass teachingClass, Student student) {
+		this.rollCallId = rollCallId;
+		this.presence = presence;
+		this.rollCallType = rollCallType;
+		this.rollCallTime = rollCallTime;
+		this.teachingClass = teachingClass;
+		this.student = student;
+	}
 
 	public Integer getRollCallId() {
 		return rollCallId;
@@ -43,14 +53,6 @@ public class RollCall {
 		this.rollCallTime = rollCallTime;
 	}
 
-	public Schedule getSchedule() {
-		return schedule;
-	}
-
-	public void setSchedule(Schedule schedule) {
-		this.schedule = schedule;
-	}
-
 	public TeachingClass getTeachingClass() {
 		return teachingClass;
 	}
@@ -65,5 +67,10 @@ public class RollCall {
 
 	public void setStudentList(Student student) {
 		this.student = student;
+	}
+
+	public void showRollCallRecord() {
+		System.out.println(this.student.getStudentId() + " " + this.student.getStudentName() + " " + this.rollCallTime
+				+ " " + this.rollCallType + " " + this.presence);
 	}
 }

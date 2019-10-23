@@ -8,7 +8,7 @@ import main.java.pers.jiangyinzuo.rollcall.config.Config;
 import main.java.pers.jiangyinzuo.rollcall.ui.UI;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 import main.java.pers.jiangyinzuo.rollcall.ui.UIFactory;
-
+import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
 
 public class App {
 	private static enum MENU implements AbstractMenu {
@@ -38,7 +38,7 @@ public class App {
 	 * @throws InvocationTargetException
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
-	 * @throws CustomException 
+	 * @throws CustomException
 	 */
 	public static void main(String[] args)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException,
@@ -52,9 +52,10 @@ public class App {
 			}
 		} catch (StreamCorruptedException e) {
 			System.out.println("ÇëÇå¿ÕÎÄ¼þ");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			AppFile.scanner.close();
 		}
 	}
 }

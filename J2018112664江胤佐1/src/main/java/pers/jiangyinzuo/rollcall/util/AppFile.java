@@ -14,12 +14,43 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 
+/**
+ * 文件读写类, 负责程序的IO操作
+ * 
+ * @author Jiang Yinzuo
+ *
+ */
 public class AppFile {
+	/**
+	 * 全局控制台输入对象
+	 */
+	public static Scanner scanner = new Scanner(System.in);
+
+	public static int scanItem(int firstItem, int lastItem) {
+		String item;
+		int result;
+		while (true) {
+			try {
+				item = scanner.nextLine();
+				result = Integer.parseInt(item);
+				if (firstItem <= result && result <= lastItem) {
+					return result;
+				} else {
+					System.out.printf("请输入数字%d - %d\n", firstItem, lastItem);
+				}
+			} catch (NumberFormatException e) {
+				System.out.printf("请输入数字%d - %d\n", firstItem, lastItem);
+			}
+		}
+	}
+
 	public static String getAppPath() {
 		return "D:\\stuspace\\java2019a\\J2018112664江胤佐1\\src\\main\\files\\";
 	}
@@ -44,8 +75,8 @@ public class AppFile {
 		return br.readLine();
 	}
 
-	public static void writeEntity(Object obj, String fileName) throws IOException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException {
+	public static void writeEntity(Object obj, String fileName) throws IOException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Class clazz = obj.getClass();
 		Field[] classField = clazz.getDeclaredFields();
 		String fieldName;
@@ -103,6 +134,40 @@ public class AppFile {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static <T> List<T> readSerializableEntities(String fileSuffix, Validator v, Object obj)
+			throws CustomException, IOException, ClassNotFoundException {
+		List<T> arrayList = new ArrayList<>();
+
+		if (v == null) {
+			return arrayList;
+		}
+		Object objFromFile;
+		FileInputStream fileInputStream = new FileInputStream(new File(AppFile.getAppPath() + fileSuffix));
+		while (fileInputStream.available() > 0) {
+			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+			objFromFile = objectInputStream.readObject();
+			if (v.validate(objFromFile, obj)) {
+				arrayList.add((T) objFromFile);
+			}
+
+		}
+		return arrayList;
+	}
+
+	public static <T> void bulkInsertSerializableEntities(String fileSuffix, List<T> objectList) throws IOException {
+		if (objectList != null) {
+			for (Object obj : objectList) {
+				try (FileOutputStream fileOutputStream = new FileOutputStream(AppFile.getAppPath() + fileSuffix, true);
+						ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
+					objectOutputStream.writeObject(obj);
+				} catch (IOException e) {
+					System.out.println("写入失败, IO异常");
+				}
+			}
+		}
 	}
 
 	public static void main(String[] main)

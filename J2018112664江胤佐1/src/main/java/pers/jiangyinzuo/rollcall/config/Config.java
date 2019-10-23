@@ -10,6 +10,11 @@ import main.java.pers.jiangyinzuo.rollcall.ui.consoleImpl.MainUIConsoleImpl;
 public class Config {
 	
 	/**
+	 * 时区
+	 */
+	public static final int TIME_ZONE = 8;
+	
+	/**
 	 * UI实现模式, 可根据需要切换
 	 */
 	public static final String UI_IMPL_CLASS = MainUIConsoleImpl.class.getName();
