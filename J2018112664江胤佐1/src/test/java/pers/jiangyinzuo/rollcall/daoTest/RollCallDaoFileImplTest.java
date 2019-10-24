@@ -26,7 +26,7 @@ public class RollCallDaoFileImplTest {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, CustomException {
 
 		dao.insertRollCall(Entity.rollCallList[0]);
-		dao.<RollCall>bulkInsertRollCalls(Arrays.asList(Entity.rollCallList));
+		dao.<RollCall>bulkInsertRollCalls(Arrays.asList(Entity.rollCallList), true);
 
 		testRead();
 	}

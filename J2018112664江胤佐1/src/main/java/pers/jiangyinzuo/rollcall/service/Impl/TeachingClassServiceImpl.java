@@ -7,17 +7,20 @@ import java.util.List;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
 import main.java.pers.jiangyinzuo.rollcall.dao.fileImpl.TeachingClassDaoFileImpl;
+import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 
 public class TeachingClassServiceImpl implements TeachingClassService {
 
+	@Override
 	public List<TeachingClass> queryTeachingClassesByStudentId(Integer studentId)
 			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
 		TeachingClassDao dao = new TeachingClassDaoFileImpl();
 		return dao.queryTeachingClassesByStudentId(studentId);
 	}
 
+	@Override
 	public List<TeachingClass> queryTeachingClassesByTeacherId(Integer teacherId)
 			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
 		TeachingClassDao dao = new TeachingClassDaoFileImpl();
@@ -32,5 +35,4 @@ public class TeachingClassServiceImpl implements TeachingClassService {
 			System.out.println(cls.getClassName());
 		}
 	}
-
 }

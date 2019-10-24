@@ -136,6 +136,20 @@ public class AppFile {
 		return null;
 	}
 
+	public static <T> List<T> readAllSerializableEntities(String fileName) throws ClassNotFoundException, IOException {
+		List<T> entitiesList = new ArrayList<>();
+		Object objFromFile;
+		FileInputStream fileInputStream = new FileInputStream(new File(AppFile.getAppPath() + fileName));
+		while (fileInputStream.available() > 0) {
+			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+			objFromFile = objectInputStream.readObject();
+			entitiesList.add((T) objFromFile);
+		}
+		fileInputStream.close();
+		return entitiesList;
+	}
+	
 	public static <T> List<T> readSerializableEntities(String fileSuffix, Validator v, Object obj)
 			throws CustomException, IOException, ClassNotFoundException {
 		List<T> arrayList = new ArrayList<>();
@@ -154,13 +168,14 @@ public class AppFile {
 			}
 
 		}
+		fileInputStream.close();
 		return arrayList;
 	}
 
-	public static <T> void bulkInsertSerializableEntities(String fileSuffix, List<T> objectList) throws IOException {
+	public static <T> void bulkInsertSerializableEntities(String fileSuffix, List<T> objectList, boolean add) throws IOException {
 		if (objectList != null) {
 			for (Object obj : objectList) {
-				try (FileOutputStream fileOutputStream = new FileOutputStream(AppFile.getAppPath() + fileSuffix, true);
+				try (FileOutputStream fileOutputStream = new FileOutputStream(AppFile.getAppPath() + fileSuffix, add);
 						ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
 					objectOutputStream.writeObject(obj);
 				} catch (IOException e) {

@@ -15,11 +15,18 @@ import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
  * 
  */
 public interface RollCallService {
-	public void insertRollCall(Student student, String presence, String rollcallType, TeachingClass teachingClass)
+	void insertRollCall(Student student, String presence, String rollcallType)
 			throws IOException;
-
-	boolean editRollCall();
-
-	public List<RollCall> queryRollCallsByTeachingClassId(Integer teachingClassId)
-			throws ClassNotFoundException, CustomException, IOException;
+	
+	void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException;
+	
+	void delRollCall(RollCall originRollCall) throws IOException;
+	
+	void bulkWriteRollCalls(List<RollCall> rollCallList, boolean add) throws IOException;
+	
+	List<RollCall> queryTeachingClassRollCalls();
+	
+	List<Student> getAbnormalStudent();
+	
+	List<Student> getRandomStudent(int count);
 }

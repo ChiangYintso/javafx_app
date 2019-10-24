@@ -10,7 +10,9 @@ public interface RollCallDao {
 
 	void insertRollCall(RollCall rollCall) throws IOException;
 
-	void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException;
+	void bulkInsertRollCalls(List<RollCall> rollCallList, boolean add) throws IOException;
 	
 	List<RollCall> queryRollCallsByTeachingClassId(Integer teachingClassId) throws ClassNotFoundException, CustomException, IOException;
+
+	List<RollCall> queryAllRollCalls() throws ClassNotFoundException, IOException;
 }

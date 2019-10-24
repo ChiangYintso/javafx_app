@@ -13,20 +13,27 @@ import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
 public class RollCallDaoFileImpl implements RollCallDao {
 
 	private static final String FILE_NAME = "rollCalls.txt";
-	
+
 	@Override
 	public void insertRollCall(RollCall rollCall) throws IOException {
 		AppFile.writeSerializableEntity(rollCall, FILE_NAME);
 	}
 
 	@Override
-	public void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException {
-		AppFile.<RollCall>bulkInsertSerializableEntities(FILE_NAME, rollCallList);
+	public void bulkInsertRollCalls(List<RollCall> rollCallList, boolean add) throws IOException {
+		AppFile.<RollCall>bulkInsertSerializableEntities(FILE_NAME, rollCallList, add);
 	}
 
 	@Override
-	public List<RollCall> queryRollCallsByTeachingClassId(Integer teachingClassId) throws ClassNotFoundException, CustomException, IOException {
-		
-		return AppFile.<RollCall>readSerializableEntities(FILE_NAME, new RollCallTeachingClassIdValidator(), teachingClassId);
+	public List<RollCall> queryRollCallsByTeachingClassId(Integer teachingClassId)
+			throws ClassNotFoundException, CustomException, IOException {
+
+		return AppFile.<RollCall>readSerializableEntities(FILE_NAME, new RollCallTeachingClassIdValidator(),
+				teachingClassId);
+	}
+
+	@Override
+	public List<RollCall> queryAllRollCalls() throws ClassNotFoundException, IOException {
+		return AppFile.<RollCall>readAllSerializableEntities(FILE_NAME);
 	}
 }

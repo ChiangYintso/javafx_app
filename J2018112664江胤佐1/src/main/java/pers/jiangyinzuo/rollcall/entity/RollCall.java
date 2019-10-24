@@ -5,6 +5,8 @@ import java.time.Instant;
 
 public class RollCall implements Serializable {
 	private Integer rollCallId;
+
+	/* 已到、未到、迟到、请假、早退 */
 	private String presence;
 	private String rollCallType;
 	private Instant rollCallTime;
@@ -19,6 +21,10 @@ public class RollCall implements Serializable {
 		this.rollCallTime = rollCallTime;
 		this.teachingClass = teachingClass;
 		this.student = student;
+	}
+
+	public RollCall copy() {
+		return new RollCall(rollCallId, presence, rollCallType, rollCallTime, teachingClass, student);
 	}
 
 	public Integer getRollCallId() {
@@ -61,11 +67,11 @@ public class RollCall implements Serializable {
 		this.teachingClass = teachingClass;
 	}
 
-	public Student getStudentList() {
+	public Student getStudent() {
 		return student;
 	}
 
-	public void setStudentList(Student student) {
+	public void setStudent(Student student) {
 		this.student = student;
 	}
 
