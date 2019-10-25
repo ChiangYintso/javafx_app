@@ -31,6 +31,10 @@ public class Entity {
 			new RollCall(1, "到场", "点名", Instant.now().plusMillis(TimeUnit.HOURS.toMillis(8)), teachingClassList[0], studentList[0]),
 			new RollCall(2, "缺席", "点名", Instant.now().plusMillis(TimeUnit.HOURS.toMillis(8)), teachingClassList[0], studentList[0])};
 			
+	public static Schedule[] scheduleList = {
+			new Schedule();
+	}
+	
 	{
 		scheduleList[0].setTeachingClass(teachingClassList[0]);
 	}
