@@ -5,8 +5,6 @@ import java.util.List;
 
 public interface UserDao {
 	User queryUserByUserId(Integer userId);
-	
-	List<User> queryFriendsByUserId(Integer userId);
 
 	void insertUser(User user);
 
