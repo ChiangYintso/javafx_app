@@ -10,8 +10,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-    	new SceneRouter().showStage(primaryStage, "ÍøÂçÁÄÌìÊÒ", "login.fxml");
-    	new SceneRouter().showStage(new Stage(), "ÍøÂçÁÄÌìÊÒ", "register.fxml");
+    	SceneRouter.addStage(primaryStage, "µÇÂ¼");
+    	SceneRouter.showStage("µÇÂ¼", "Login.fxml");
     }
     
     void main(String[] args) {

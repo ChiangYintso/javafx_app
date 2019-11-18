@@ -10,28 +10,48 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SceneRouter {
+
+	// 存放页面的容器
 	private static Map<String, Scene> sceneMap = new HashMap<>();
-	
-	public Scene getScene(String sceneName) throws IOException {
+
+	// 存放舞台的容器
+	private static Map<String, Stage> stageMap = new HashMap<>();
+
+	private static Scene getScene(String sceneName) throws IOException {
 		if (sceneMap.get(sceneName) == null) {
 			createScene(sceneName);
 		}
 		return sceneMap.get(sceneName);
 	}
-	
-	public void createScene(String sceneName) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("../scenes/" + sceneName));
+
+	private static void createScene(String sceneName) throws IOException {
+		Parent root = FXMLLoader.load(SceneRouter.class.getResource("../scenes/" + sceneName));
 		sceneMap.put(sceneName, new Scene(root));
 	}
-	
-	public void destructScene(String sceneName) {
-		sceneMap.remove(sceneName);
-	}
-	
-	public void showStage(Stage stage, String title, String sceneName) throws IOException {
+
+	public static void showStage(String stageName, String sceneName) throws IOException {
+		Stage stage = getStage(stageName);
 		stage.setScene(getScene(sceneName));
-		stage.setTitle(title);
+		stage.setTitle(stageName);
 		stage.show();
 	}
-	
+
+	private static Stage getStage(String stageName) {
+		Stage stage = stageMap.get(stageName);
+		if (stage == null) {
+			stage = new Stage();
+			addStage(stage, stageName);
+		}
+		return stage;
+	}
+
+	public static void addStage(Stage stage, String stageName) {
+		stageMap.put(stageName, stage);
+	}
+
+	public static void closeStage(String stageName) {
+		if (stageMap.get(stageName) != null) {
+			stageMap.get(stageName).close();
+		}
+	}
 }
