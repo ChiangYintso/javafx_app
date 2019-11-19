@@ -48,7 +48,7 @@ public class LoginController {
     		} else {
     			CustomAlertBoard.showAlert("登录成功");
     			SceneRouter.closeStage("登录");
-    			SceneRouter.showStage("聊天面板", "ChattingBoard.fxml");
+    			SceneRouter.showStage("网络聊天室", "MainBoard.fxml");
     		}
     	}
     }
