@@ -15,22 +15,19 @@ public class LoginServiceImpl implements LoginService {
 
 	/**
 	 * @return 教师实体类, 若不存在则返回null
+	 * @throws CustomException 
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
 	@Override
-	public Teacher teacherLogin(Integer teacherId, String pwd) {
+	public Teacher teacherLogin(Integer teacherId, String pwd) throws ClassNotFoundException, IOException, CustomException {
 		try {
 			Validator v = new LoginValidator();
 			Teacher teacher = new Teacher(teacherId, pwd);
 			Teacher teacherFromFile = (Teacher) AppFile.readSerializableEntity("teachers.txt", v, Teacher.class,
 					teacher);
 			return teacherFromFile;
-		} catch (CustomException e) {
-			System.out.println("账号不存在");
-		} catch (ClassNotFoundException e) {
-			System.out.println("账号不存在");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -38,24 +35,19 @@ public class LoginServiceImpl implements LoginService {
 
 	/**
 	 * @return 学生实体类, 若不存在则返回null
+	 * @throws ClassNotFoundException 
 	 */
 	@SuppressWarnings("finally")
 	@Override
 	public Student studentLogin(Integer studentId, String pwd)
-			throws CustomException, FileNotFoundException, IOException {
+			throws CustomException, FileNotFoundException, IOException, ClassNotFoundException {
 		try {
 			Validator v = new LoginValidator();
 			Student student = new Student(studentId, pwd);
 			Student studentFromFile = (Student) AppFile.readSerializableEntity("student.txt", v, Student.class,
 					student);
 			return studentFromFile;
-		} catch (CustomException e) {
-			System.out.println("账号不存在");
-		} catch (ClassNotFoundException e) {
-			System.out.println("账号不存在");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;

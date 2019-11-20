@@ -86,9 +86,8 @@ public class MainUIConsoleImpl extends UI {
 				System.out.println("ÕËºÅ²»´æÔÚ");
 			} catch (CustomException e) {
 				System.out.println(e.getErrInfo());
-			} catch (Exception e) {
-				System.out.println("Î´Öª´íÎó");
-				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				System.out.println("ÕËºÅ»òÃÜÂë´íÎó");
 			}
 		}
 		return MENU.EXIT;

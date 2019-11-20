@@ -46,7 +46,6 @@ public class LoginController {
     		if (customInfo.getStatus() != (short) 200) {
     			CustomAlertBoard.showAlert("ÕËºÅ»òÃÜÂë´íÎó");
     		} else {
-    			CustomAlertBoard.showAlert("µÇÂ¼³É¹¦");
     			SceneRouter.closeStage("µÇÂ¼");
     			SceneRouter.showStage("ÍøÂçÁÄÌìÊÒ", "MainBoard.fxml");
     		}

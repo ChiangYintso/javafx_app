@@ -128,12 +128,7 @@ public class AppFile {
 			return null;
 		} catch (EOFException e) {
 			throw new CustomException("entity not found", false);
-		} catch (CustomException e) {
-			System.out.println(e.getErrInfo());
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return null;
 	}
 
 	public static <T> List<T> readAllSerializableEntities(String fileName) throws ClassNotFoundException, IOException {

@@ -9,8 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.controller.Log">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.controller.LoginController">
    <children>
       <Text layoutX="196.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="大学课堂点名系统">
          <font>
@@ -34,12 +33,12 @@
             <Font size="21.0" />
          </font>
       </Button>
-      <RadioButton fx:id="studentRadio" layoutX="232.0" layoutY="239.0" mnemonicParsing="false" text="学生">
+      <RadioButton fx:id="studentRadio" layoutX="232.0" layoutY="239.0" mnemonicParsing="false" onAction="#onSelectedStudentRadio" text="学生">
          <font>
             <Font size="18.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="teacherRadio" layoutX="314.0" layoutY="239.0" mnemonicParsing="false" text="教师">
+      <RadioButton fx:id="teacherRadio" layoutX="314.0" layoutY="239.0" mnemonicParsing="false" onAction="#onSelectedTeacherRadio" text="教师">
          <font>
             <Font size="18.0" />
          </font>
