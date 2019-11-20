@@ -9,16 +9,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.common.CustomAlertBoard;
+import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.router.SceneRouter;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 public class LoginController {
-
+    @FXML
+    private Pane layout;
+    
 	@FXML
 	private TextField usernameField;
 
@@ -61,15 +65,18 @@ public class LoginController {
 				if (studentRadio.isSelected()) {
 					Student student = loginService.studentLogin(Integer.parseInt(usernameField.getText()), passwordField.getText());
 					UserInfo.getSingleton().setStudent(student);
+					SceneRouter.showStage("—ß…˙÷˜ΩÁ√Ê", "StudentMainBoard.fxml");
+					SceneRouter.closeStage("µ«¬º");
 				} else if (teacherRadio.isSelected()) {
 					Teacher teacher = loginService.teacherLogin(Integer.parseInt(passwordField.getText()), passwordField.getText());
 					UserInfo.getSingleton().setTeacher(teacher);
 				}
 				
 			} catch (CustomException e) {
-				CustomAlertBoard.showAlert("’À∫≈ªÚ√‹¬Î¥ÌŒÛ");
+				CustomAlertBoard.showAlert("’À∫≈ªÚ√‹¬Î¥ÌŒÛ(—ß…˙’À∫≈123√‹¬Î123456)");
 			} catch (Exception e) {
 				CustomAlertBoard.showAlert("Œ¥÷™¥ÌŒÛ");
+				e.printStackTrace();
 			}
 
 		}
