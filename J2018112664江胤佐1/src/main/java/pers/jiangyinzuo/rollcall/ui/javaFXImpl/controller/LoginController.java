@@ -68,10 +68,11 @@ public class LoginController {
 					SceneRouter.showStage("学生主界面", "StudentMainBoard.fxml");
 					SceneRouter.closeStage("登录");
 				} else if (teacherRadio.isSelected()) {
-					Teacher teacher = loginService.teacherLogin(Integer.parseInt(passwordField.getText()), passwordField.getText());
+					Teacher teacher = loginService.teacherLogin(Integer.parseInt(usernameField.getText()), passwordField.getText());
 					UserInfo.getSingleton().setTeacher(teacher);
+					SceneRouter.showStage("教师主界面", "TeacherMainBoard.fxml");
+					SceneRouter.closeStage("登录");
 				}
-				
 			} catch (CustomException e) {
 				CustomAlertBoard.showAlert("账号或密码错误(学生账号123密码123456)");
 			} catch (Exception e) {
