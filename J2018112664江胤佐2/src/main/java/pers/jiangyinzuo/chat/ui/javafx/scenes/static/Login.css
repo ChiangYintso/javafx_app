@@ -1,0 +1,9 @@
+#layout {
+	-fx-background-image: url("../static/Loginbackground.jpg");
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 100% 100%;
+}
+
+#label1 {
+	-fx-background-color: red;
+}
