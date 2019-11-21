@@ -21,6 +21,7 @@ import main.java.pers.jiangyinzuo.chat.service.FriendService;
 import main.java.pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
 import main.java.pers.jiangyinzuo.chat.ui.javafx.common.CustomAlertBoard;
 import main.java.pers.jiangyinzuo.chat.ui.javafx.controller.components.SessionCardCmpController;
+import main.java.pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
 import main.java.pers.jiangyinzuo.chat.ui.state.UserInfo;
 
 public class MainBoardController {
@@ -53,7 +54,7 @@ public class MainBoardController {
     
     @FXML
     void addFriendOrGroup(ActionEvent event) {
-
+    	SceneRouter.showTempStage("≤È’“√Ê∞Â", "AddBoard.fxml");
     }
 
     @FXML
@@ -94,12 +95,17 @@ public class MainBoardController {
     		this.friendListContainer.getChildren().add(text);
     	}
     	
+    	int i = 0;
     	for (T t : sessionList) {
     		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "SessionCardCmp.fxml"));
     		Pane pane = fxmlLoader.load();
+    		if ((i&1) == 0) {
+    			pane.setStyle("-fx-background-color: #cceedd");
+    		}
     		SessionCardCmpController controller = fxmlLoader.getController();
     		controller.init(DEFAULT_AVATOR_URL, t.getSessionName());
     		this.friendListContainer.getChildren().add(pane);
+    		++i;
     	}
     }
 }

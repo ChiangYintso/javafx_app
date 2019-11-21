@@ -5,10 +5,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="73.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.pers.jiangyinzuo.chat.ui.javafx.controller.components.SessionCardCmpController">
+<Pane fx:id="SessionCardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#openChattingRoom" prefHeight="73.0" prefWidth="440.0" style="-fx-background-color: #ddddee;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.pers.jiangyinzuo.chat.ui.javafx.controller.components.SessionCardCmpController">
    <children>
-      <ImageView fx:id="avator" fitHeight="47.0" fitWidth="48.0" layoutX="37.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="avator" fitHeight="50.0" fitWidth="50.0" layoutX="37.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
       <Text fx:id="userName" layoutX="131.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="148.4199981689453">
          <font>
             <Font size="23.0" />

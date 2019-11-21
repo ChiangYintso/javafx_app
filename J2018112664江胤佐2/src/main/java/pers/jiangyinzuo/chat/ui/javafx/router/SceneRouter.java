@@ -41,6 +41,18 @@ public class SceneRouter {
 		stage.show();
 	}
 
+	public static void showTempStage(String stageTitle, String fxmlFileName) {
+		try {
+			Stage stage = new Stage();
+			Parent root = FXMLLoader.load(SceneRouter.class.getResource("../scenes/" + fxmlFileName));
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.setTitle(stageTitle);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	private static Stage getStage(String stageName) {
 		Stage stage = stageMap.get(stageName);
 		if (stage == null) {
