@@ -20,7 +20,7 @@
                </font>
             </Text>
             <Button layoutX="18.0" layoutY="269.0" minWidth="43.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="85.0" text="设置" />
-            <Button layoutX="18.0" layoutY="312.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="85.0" text="显示群聊" />
+            <Button fx:id="showGroupsOrFriendsBtn" layoutX="18.0" layoutY="312.0" mnemonicParsing="false" onAction="#showGroupsOrFriends" prefHeight="33.0" prefWidth="85.0" text="显示群聊" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="357.0">
          <children>
