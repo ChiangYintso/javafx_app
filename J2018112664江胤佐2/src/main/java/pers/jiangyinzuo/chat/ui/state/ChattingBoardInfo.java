@@ -12,7 +12,7 @@ import main.java.pers.jiangyinzuo.chat.entity.User;
 public class ChattingBoardInfo {
 	private static Session session;
 	
-	private static User user;
+	private static User friend;
 	
 	private static Group group;
 
@@ -22,14 +22,19 @@ public class ChattingBoardInfo {
 
 	public static void setSession(Session session) {
 		ChattingBoardInfo.session = session;
+		if (session instanceof User) {
+			ChattingBoardInfo.friend = (User) session;
+		} else if (session instanceof Group) {
+			ChattingBoardInfo.group = (Group) session;
+		}
 	}
 
-	public static User getUser() {
-		return user;
+	public static User getFriend() {
+		return friend;
 	}
 
-	public static void setUser(User user) {
-		ChattingBoardInfo.user = user;
+	public static void setFriend(User user) {
+		ChattingBoardInfo.friend = user;
 	}
 
 	public static Group getGroup() {

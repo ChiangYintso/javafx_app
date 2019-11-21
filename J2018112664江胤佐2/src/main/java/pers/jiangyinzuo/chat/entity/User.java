@@ -8,10 +8,19 @@ public class User implements Session {
 	private String userName;
 	private String pwd;
 	private String intro;
+	private String avatarUrl;
 	private List<User> friendList;
 	private List<Group> groupList;
 	private List<Group> priviledgeGroupList;
 	private Map<String, List<User>> friendCategoryMap;
+
+	public String getAvatarUrl() {
+		return avatarUrl == null ? DEFAULT_AVATAR_URL : avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
 
 	public Boolean isOnLine() {
 		return isOnLine;
@@ -23,11 +32,16 @@ public class User implements Session {
 
 	private Boolean isOnLine;
 
-	public User(Integer userId, String userName, String intro, List<Group> groupList) {
+	public User(Integer userId, String userName, String intro, String avatarUrl, List<Group> groupList) {
 		this.userId = userId;
 		this.userName = userName;
 		this.intro = intro;
 		this.groupList = groupList;
+		if (avatarUrl == null) {
+			this.avatarUrl = DEFAULT_AVATAR_URL;
+		} else {
+			this.avatarUrl = avatarUrl;
+		}
 	}
 
 	public Integer getUserId() {

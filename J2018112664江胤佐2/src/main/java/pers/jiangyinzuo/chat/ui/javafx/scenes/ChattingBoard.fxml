@@ -15,7 +15,7 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Text layoutX="72.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="142.90688705444336">
+      <Text fx:id="sessionNameField" layoutX="72.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="142.90688705444336">
          <font>
             <Font size="23.0" />
          </font>
@@ -56,6 +56,6 @@
                </children>
             </Pane>
          </children></VBox>
-      <ImageView fx:id="avator" fitHeight="39.0" fitWidth="41.0" layoutX="17.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="avatar" fitHeight="39.0" fitWidth="41.0" layoutX="17.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>

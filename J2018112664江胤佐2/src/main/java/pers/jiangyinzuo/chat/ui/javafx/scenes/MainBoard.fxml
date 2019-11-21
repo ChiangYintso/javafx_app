@@ -18,7 +18,7 @@
                   <Font size="26.0" />
                </font>
             </Text>
-            <Button layoutX="20.0" layoutY="271.0" minWidth="43.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="85.0" text="设置" />
+            <Button fx:id="userSettingBtn" layoutX="20.0" layoutY="271.0" minWidth="43.0" mnemonicParsing="false" onAction="#showUserSettingBoard" prefHeight="32.0" prefWidth="85.0" text="设置" />
             <Button fx:id="showGroupsOrFriendsBtn" layoutX="20.0" layoutY="312.0" mnemonicParsing="false" onAction="#showGroupsOrFriends" prefHeight="33.0" prefWidth="85.0" text="显示群聊" />
             <Button fx:id="addBtn" layoutX="19.0" layoutY="221.0" minWidth="49.0" mnemonicParsing="false" onAction="#addFriendOrGroup" prefHeight="33.0" prefWidth="85.0" style="-fx-border-radius: 50%;" text="添加" />
          </children></AnchorPane>

@@ -35,14 +35,15 @@ public class RegisterController {
     	alert.setTitle("注册提示");
     	if (password.getText().isBlank() || username.getText().isBlank() || repeatPassword.getText().isBlank()) {
     		alert.setContentText("不能为空");
+    		alert.showAndWait();
     	} else if (!password.getText().equals(repeatPassword.getText())) {
     		alert.setContentText("两次密码不一样");
+    		alert.showAndWait();
     	} else {
     		CustomInfo customInfo = accountService.register(username.getText(), password.getText());
     		alert.setContentText(customInfo.getErrInfo());
+    		SceneRouter.closeStage("注册");
     	}
-    	alert.showAndWait();
-    	SceneRouter.closeStage("注册");
     }
 
 

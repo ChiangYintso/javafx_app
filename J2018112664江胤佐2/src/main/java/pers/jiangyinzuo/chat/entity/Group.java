@@ -6,6 +6,7 @@ public class Group implements Session {
 	private String groupName;
 	private Integer groupId;
 	private User founder;
+	private String avatarUrl;
 	private List<User> manager;
 	private List<User> memberList;
 	private List<Message> chattingRecord;
@@ -53,5 +54,14 @@ public class Group implements Session {
 	@Override
 	public String getSessionName() {
 		return this.groupName;
+	}
+
+	@Override
+	public String getAvatarUrl() {
+		return avatarUrl == null ? DEFAULT_AVATAR_URL : avatarUrl;
+	}
+	
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 }
