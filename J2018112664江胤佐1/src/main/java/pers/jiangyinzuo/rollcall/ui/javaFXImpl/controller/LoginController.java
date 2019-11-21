@@ -74,7 +74,7 @@ public class LoginController {
 					SceneRouter.closeStage("登录");
 				}
 			} catch (CustomException e) {
-				CustomAlertBoard.showAlert("账号或密码错误(学生账号123密码123456)");
+				CustomAlertBoard.showAlert("账号或密码错误");
 			} catch (Exception e) {
 				CustomAlertBoard.showAlert("未知错误");
 				e.printStackTrace();
@@ -86,6 +86,7 @@ public class LoginController {
 	@FXML
 	public void initialize() {
 		loginService = new LoginServiceImpl();
+		CustomAlertBoard.showAlert("学生和老师都是账号123密码123456");
 	}
 
 	/**

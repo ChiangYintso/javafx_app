@@ -19,17 +19,22 @@ import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 public class ScheduleController {
 
-    @FXML
-    private GridPane schedule;
+	@FXML
+	private GridPane schedule;
 
-    private TeachingClassService teachingClassService;
-    
-    private List<TeachingClass> teachingClassList;
-    
-    @FXML
+	private TeachingClassService teachingClassService;
+
+	private List<TeachingClass> teachingClassList;
+
+	@FXML
     public void initialize() throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
     	teachingClassService = new TeachingClassServiceImpl();
-    	this.teachingClassList = teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
+    	if (UserInfo.getSingleton().getTeacher()!=null) {
+    		this.teachingClassList = teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
+    	} else if (UserInfo.getSingleton().getStudent()!=null) {
+    		this.teachingClassList = teachingClassService.queryTeachingClassesByStudentId(UserInfo.getSingleton().getStudent().getStudentId());
+    	}
+    	
     	for (TeachingClass cls : teachingClassList) {
     		Text text = new Text();
     		text.setText(cls.getClassName());
@@ -42,4 +47,3 @@ public class ScheduleController {
     	}
     }
 }
-

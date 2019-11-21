@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,9 +19,11 @@ import main.java.pers.jiangyinzuo.rollcall.service.TeacherService;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeacherServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeachingClassServiceImpl;
+import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.common.CustomAlertBoard;
 import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.controller.components.TeachingClassCmpController;
 import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.router.SceneRouter;
 import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.utils.FXMLTool;
+import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 public class TeacherMainBoardController {
@@ -37,7 +40,27 @@ public class TeacherMainBoardController {
     @FXML
     private VBox teachingClassList;
     
+    @FXML
+    private Button rollCallBtn;
+
+    @FXML
+    private Text selectedTip;
+    
     private TeachingClassService teachingClassService;
+
+    @FXML
+    void rollCall(ActionEvent event) throws IOException {
+    	if (SelectedTeachingClass.getSingleton().getCls() == null) {
+    		CustomAlertBoard.showAlert("请选择班级");
+    	} else {
+    		SceneRouter.showTempStage("点名面板", "RollCallBoard.fxml");
+    	}
+    	
+    }
+    
+    @FXML
+    void onSelectTeachingClass(MouseEvent event) {
+    }
     
     // 教学班列表
     private List<TeachingClass> teachingClasses;
@@ -52,6 +75,8 @@ public class TeacherMainBoardController {
     	this.teachingClassService = new TeachingClassServiceImpl();
     	this.teachingClasses = this.teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
     	this.addTeachingClassTab();
+    	this.teacherName.setText(UserInfo.getSingleton().getTeacher().getTeacherName());
+    	this.teacherId.setText(UserInfo.getSingleton().getTeacher().getTeacherId().toString());
     }
     
     // 动态添加课程信息
@@ -60,9 +85,13 @@ public class TeacherMainBoardController {
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeachingClassCmp.fxml"));
         	Pane pane = fxmlLoader.load();
         	TeachingClassCmpController cmpController = fxmlLoader.getController();
-        	cmpController.init(cls.getClassName(), cls.getClassId(), cls.getWeek(), cls.getSession());
+        	cmpController.init(cls);
         	this.teachingClassList.getChildren().add(pane);
     	}
+    }
+    
+    public void changeTip(Integer classId) {
+    	
     }
 }
 
