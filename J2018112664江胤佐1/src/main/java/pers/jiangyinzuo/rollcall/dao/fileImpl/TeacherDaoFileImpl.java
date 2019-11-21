@@ -29,7 +29,7 @@ public class TeacherDaoFileImpl implements TeacherDao {
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
 		TeacherDao s = new TeacherDaoFileImpl();
-		s.insertTeacher(new Teacher(123, "张三", "信息科学与技术学院", "男", "123456", "讲师", new ArrayList<>(), new ArrayList<>()));
+		s.insertTeacher(new Teacher(123, "张三", "信息科学与技术学院", "男", "123456", "讲师", new ArrayList<>()));
 		
 	}
 }

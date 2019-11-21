@@ -6,12 +6,17 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.controller.components.TeachingClassCmpController">
    <children>
-      <Text fx:id="teachingClassName" layoutX="224.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课程名称" wrappingWidth="175.33331298828125">
+      <Text fx:id="teachingClassName" layoutX="145.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课程名称" wrappingWidth="123.33331298828125">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fx:id="teachingClassId" layoutX="28.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课程ID" wrappingWidth="175.33331298828125">
+      <Text fx:id="teachingClassId" layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课程ID" wrappingWidth="105.99993896484375">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="schedule" layoutX="268.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="讲次" wrappingWidth="123.33331298828125">
          <font>
             <Font size="20.0" />
          </font>

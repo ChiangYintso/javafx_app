@@ -60,7 +60,7 @@ public class TeacherMainBoardController {
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeachingClassCmp.fxml"));
         	Pane pane = fxmlLoader.load();
         	TeachingClassCmpController cmpController = fxmlLoader.getController();
-        	cmpController.init(cls.getClassName(), cls.getClassId());
+        	cmpController.init(cls.getClassName(), cls.getClassId(), cls.getWeek(), cls.getSession());
         	this.teachingClassList.getChildren().add(pane);
     	}
     }

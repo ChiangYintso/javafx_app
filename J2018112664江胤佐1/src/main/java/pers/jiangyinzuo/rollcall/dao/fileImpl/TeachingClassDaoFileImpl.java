@@ -8,7 +8,6 @@ import java.util.List;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
-import main.java.pers.jiangyinzuo.rollcall.entity.Schedule;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.validator.TeachingClassComparedByStudentIdValidator;
@@ -48,15 +47,17 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
 		List<Student> studentList = new ArrayList<>();
 		studentList.add(new Student(123, "男", "jyz", "软件2018-01班", "123456", "软件工程"));
 
-		List<Schedule> scheduleList = new ArrayList<>();
+		teachingClassDaoImpl.insertTeachingClass(
+				new TeachingClass(Integer.valueOf(2), "数学分析", 201901, 6666, (short) 2, "", 1, 2, 123, studentList));
 
-		teachingClassDaoImpl.insertTeachingClass(new TeachingClass(Integer.valueOf(1), "数学分析", 201901, 6666, (short) 2,
-				"", 123, scheduleList, studentList));
-
-		List<TeachingClass> teachingClassList = teachingClassDaoImpl.queryTeachingClassesByTeacherId(Integer.valueOf(123));
+		teachingClassDaoImpl.insertTeachingClass(
+				new TeachingClass(Integer.valueOf(3), "线性代数", 201901, 6666, (short) 2, "", 2, 3, 123, studentList));
+		
+		List<TeachingClass> teachingClassList = teachingClassDaoImpl
+				.queryTeachingClassesByTeacherId(Integer.valueOf(123));
 		System.out.println(teachingClassList.size());
 		for (TeachingClass cls : teachingClassList) {
-			System.out.println(cls.getClassName());
+			System.out.println(cls.getClassName() + cls.getSession());
 		}
 	}
 }

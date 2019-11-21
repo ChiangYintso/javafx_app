@@ -11,8 +11,12 @@ public class TeachingClassCmpController {
     @FXML
     private Text teachingClassId;
     
-    public void init(String teachingClassName, Integer teachingClassId) {
+    @FXML
+    private Text schedule;
+    
+    public void init(String teachingClassName, Integer teachingClassId, Integer week, Integer session) {
     	this.teachingClassName.setText(teachingClassName);
     	this.teachingClassId.setText(teachingClassId.toString());
+    	this.schedule.setText("ÖÜ" + week + "µÚ" + session + "½²");
     }
 }

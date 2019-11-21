@@ -144,7 +144,7 @@ public class AppFile {
 		fileInputStream.close();
 		return entitiesList;
 	}
-	
+
 	public static <T> List<T> readSerializableEntities(String fileSuffix, Validator v, Object obj)
 			throws CustomException, IOException, ClassNotFoundException {
 		List<T> arrayList = new ArrayList<>();
@@ -167,7 +167,8 @@ public class AppFile {
 		return arrayList;
 	}
 
-	public static <T> void bulkInsertSerializableEntities(String fileSuffix, List<T> objectList, boolean add) throws IOException {
+	public static <T> void bulkInsertSerializableEntities(String fileSuffix, List<T> objectList, boolean add)
+			throws IOException {
 		if (objectList != null) {
 			for (Object obj : objectList) {
 				try (FileOutputStream fileOutputStream = new FileOutputStream(AppFile.getAppPath() + fileSuffix, add);
@@ -185,7 +186,7 @@ public class AppFile {
 			NoSuchMethodException, SecurityException, ClassNotFoundException, CustomException {
 
 		Student student = new Student(1234, "男", "jyz", "软件2018-01班", "123456", "软件工程", new ArrayList<>(),
-				new ArrayList<>(), new ArrayList<>());
+				new ArrayList<>());
 		AppFile.writeSerializableEntity(student, "student.txt");
 		Student result = (Student) AppFile.readSerializableEntity("student.txt", null, student.getClass());
 		System.out.println(result.getStudentName());
