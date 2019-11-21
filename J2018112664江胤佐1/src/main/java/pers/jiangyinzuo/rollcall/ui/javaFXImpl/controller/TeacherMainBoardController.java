@@ -19,6 +19,7 @@ import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeacherServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeachingClassServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.controller.components.TeachingClassCmpController;
+import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.router.SceneRouter;
 import main.java.pers.jiangyinzuo.rollcall.ui.javaFXImpl.utils.FXMLTool;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
@@ -42,8 +43,8 @@ public class TeacherMainBoardController {
     private List<TeachingClass> teachingClasses;
 
     @FXML
-    void showSchedule(ActionEvent event) {
-
+    void showSchedule(ActionEvent event) throws IOException {
+    	SceneRouter.showStage("¿Î±í", "Schedule.fxml");
     }
     
     @FXML

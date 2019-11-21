@@ -35,8 +35,8 @@ public class LoginValidator implements Validator {
 	}
 
 	public static void main(String[] args) throws CustomException {
-		Teacher t = new Teacher(666, "李四", "信息科学与技术学院", "男", "swjtu", "讲师", new ArrayList<>(), new ArrayList<>());
-		Student s = new Student(1234, "男", "jyz", "软件2018-01班", "123456", "软件工程", new ArrayList<>(), new ArrayList<>(),
+		Teacher t = new Teacher(666, "李四", "信息科学与技术学院", "男", "swjtu", "讲师", new ArrayList<>());
+		Student s = new Student(1234, "男", "jyz", "软件2018-01班", "123456", "软件工程", new ArrayList<>(),
 				new ArrayList<>());
 		LoginValidator v = new LoginValidator();
 		v.validate(Teacher.class, t);

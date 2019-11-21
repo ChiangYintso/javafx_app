@@ -12,7 +12,6 @@ public class Student implements Serializable {
 	private String pwd;
 	private String major;
 	private List<TeachingClass> teachingClassList;
-	private List<Schedule> scheduleList;
 	private List<RollCall> rollCallList;
 
 	public Student(Integer studentId, String gender, String studentName, String adminClass, String pwd, String major) {
@@ -25,10 +24,9 @@ public class Student implements Serializable {
 	}
 
 	public Student(Integer studentId, String gender, String studentName, String adminClass, String pwd, String major,
-			List<TeachingClass> teachingClassList, List<Schedule> scheduleList, List<RollCall> rollCallList) {
+			List<TeachingClass> teachingClassList, List<RollCall> rollCallList) {
 		this(studentId, gender, studentName, adminClass, pwd, major);
 		this.teachingClassList = teachingClassList;
-		this.scheduleList = scheduleList;
 		this.rollCallList = rollCallList;
 	}
 
@@ -97,14 +95,6 @@ public class Student implements Serializable {
 
 	public void setTeachingClassList(List<TeachingClass> teachingClassList) {
 		this.teachingClassList = teachingClassList;
-	}
-
-	public List<Schedule> getScheduleList() {
-		return scheduleList;
-	}
-
-	public void setScheduleList(List<Schedule> scheduleList) {
-		this.scheduleList = scheduleList;
 	}
 
 	public List<RollCall> getRollCallList() {

@@ -11,8 +11,9 @@ public class TeachingClass implements Serializable {
 	private Integer courseCode;
 	private Short credit;
 	private String intro;
+	private Integer week;
+	private Integer session;
 	private Integer teacherId;
-	private List<Schedule> scheduleList;
 	private List<Student> studentList;
 
 	public Integer getClassId() {
@@ -20,7 +21,7 @@ public class TeachingClass implements Serializable {
 	}
 
 	public TeachingClass(Integer classId, String className, Integer semester, Integer courseCode, Short credit,
-			String intro, Integer teacherId, List<Schedule> scheduleList,
+			String intro, Integer week, Integer session, Integer teacherId,
 			List<Student> studentList) {
 		this.classId = classId;
 		this.className = className;
@@ -29,10 +30,27 @@ public class TeachingClass implements Serializable {
 		this.credit = credit;
 		this.intro = intro;
 		this.teacherId = teacherId;
-		this.scheduleList = scheduleList;
 		this.studentList = studentList;
+		this.week = week;
+		this.session = session;
 	}
-	
+
+	public Integer getWeek() {
+		return week;
+	}
+
+	public void setWeek(Integer week) {
+		this.week = week;
+	}
+
+	public Integer getSession() {
+		return session;
+	}
+
+	public void setSession(Integer session) {
+		this.session = session;
+	}
+
 	public void setClassId(Integer classId) {
 		this.classId = classId;
 	}
@@ -76,21 +94,13 @@ public class TeachingClass implements Serializable {
 	public void setIntro(String intro) {
 		this.intro = intro;
 	}
-	
+
 	public Integer getTeacherId() {
 		return teacherId;
 	}
 
 	public void setTeacherId(Integer teacherId) {
 		this.teacherId = teacherId;
-	}
-
-	public List<Schedule> getScheduleList() {
-		return scheduleList;
-	}
-
-	public void setScheduleList(List<Schedule> scheduleList) {
-		this.scheduleList = scheduleList;
 	}
 
 	public List<Student> getStudentList() {
@@ -105,11 +115,11 @@ public class TeachingClass implements Serializable {
 	public String toString() {
 		return "TeachingClass [classId=" + classId + ", className=" + className + ", semester=" + semester
 				+ ", courseCode=" + courseCode + ", credit=" + credit + ", intro=" + intro + ", teacherId=" + teacherId
-				+ ", scheduleList=" + scheduleList + ", studentList=" + studentList + "]";
+				+ ", studentList=" + studentList + "]";
 	}
-	
+
 	public void showTeachingClassInfo() {
-		System.out.println("课程id: " + this.classId + ", 课程名称: " + this.className
-				+ ", 开课学期: " + this.semester + ", 学分: " + this.credit);
+		System.out.println("课程id: " + this.classId + ", 课程名称: " + this.className + ", 开课学期: " + this.semester + ", 学分: "
+				+ this.credit);
 	}
 }

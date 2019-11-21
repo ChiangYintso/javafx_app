@@ -11,10 +11,9 @@ public class Teacher implements Serializable {
 	private String pwd;
 	private String title;
 	private List<TeachingClass> teachingClassList;
-	private List<Schedule> scheduleList;
 
 	public Teacher(Integer teacherId, String teacherName, String department, String gender, String pwd, String title,
-			List<TeachingClass> teachingClassList, List<Schedule> scheduleList) {
+			List<TeachingClass> teachingClassList) {
 		this.teacherId = teacherId;
 		this.teacherName = teacherName;
 		this.department = department;
@@ -22,7 +21,6 @@ public class Teacher implements Serializable {
 		this.pwd = pwd;
 		this.title = title;
 		this.teachingClassList = teachingClassList;
-		this.scheduleList = scheduleList;
 	}
 
 	/**
@@ -90,14 +88,6 @@ public class Teacher implements Serializable {
 
 	public void setTeachingClassList(List<TeachingClass> teachingClassList) {
 		this.teachingClassList = teachingClassList;
-	}
-
-	public List<Schedule> getScheduleList() {
-		return scheduleList;
-	}
-
-	public void setScheduleList(List<Schedule> scheduleList) {
-		this.scheduleList = scheduleList;
 	}
 
 	public void welcome() {
