@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
@@ -25,6 +30,16 @@ public class ScheduleController {
     public void initialize() throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
     	teachingClassService = new TeachingClassServiceImpl();
     	this.teachingClassList = teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
+    	for (TeachingClass cls : teachingClassList) {
+    		Text text = new Text();
+    		text.setText(cls.getClassName());
+    		text.setFont(new Font(20));
+    		schedule.add(text, cls.getWeek(), cls.getSession());
+    	}
+    	for (Node node : schedule.getChildren()) {
+    		schedule.setValignment(node, VPos.CENTER);
+    		schedule.setHalignment(node, HPos.CENTER);
+    	}
     }
 }
 
