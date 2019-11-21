@@ -2,7 +2,8 @@ package main.java.pers.jiangyinzuo.chat.entity;
 
 import java.util.List;
 
-public class Group {
+public class Group implements Session {
+	private String groupName;
 	private Integer groupId;
 	private User founder;
 	private List<User> manager;
@@ -47,5 +48,10 @@ public class Group {
 
 	public void setChattingRecord(List<Message> chattingRecord) {
 		this.chattingRecord = chattingRecord;
+	}
+
+	@Override
+	public String getSessionName() {
+		return this.groupName;
 	}
 }

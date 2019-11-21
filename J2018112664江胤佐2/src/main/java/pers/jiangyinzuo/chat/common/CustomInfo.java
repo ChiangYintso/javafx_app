@@ -13,9 +13,20 @@ public class CustomInfo {
 	// ¥ÌŒÛ–≈œ¢
 	private String errInfo;
 	
-	public CustomInfo(short status, String errInfo) {
+	private Object entity;
+	
+	public Object getEntity() {
+		return entity;
+	}
+
+	public void setEntity(Object entity) {
+		this.entity = entity;
+	}
+
+	public CustomInfo(short status, String errInfo, Object entity) {
 		this.status = status;
 		this.errInfo = errInfo;
+		this.entity = entity;
 	}
 
 	public short getStatus() {

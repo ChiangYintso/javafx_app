@@ -12,10 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import main.java.pers.jiangyinzuo.chat.common.CustomInfo;
+import main.java.pers.jiangyinzuo.chat.entity.User;
 import main.java.pers.jiangyinzuo.chat.service.AccountService;
 import main.java.pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
 import main.java.pers.jiangyinzuo.chat.ui.javafx.common.CustomAlertBoard;
 import main.java.pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
+import main.java.pers.jiangyinzuo.chat.ui.state.UserInfo;
 
 public class LoginController {
     @FXML
@@ -47,6 +49,7 @@ public class LoginController {
     			CustomAlertBoard.showAlert("ÕËºÅ»òÃÜÂë´íÎó");
     		} else {
     			SceneRouter.closeStage("µÇÂ¼");
+    			UserInfo.getSingleton().setUser((User)customInfo.getEntity());
     			SceneRouter.showStage("ÍøÂçÁÄÌìÊÒ", "MainBoard.fxml");
     		}
     	}

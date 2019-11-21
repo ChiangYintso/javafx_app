@@ -5,7 +5,7 @@ import main.java.pers.jiangyinzuo.chat.entity.Message;
 import main.java.pers.jiangyinzuo.chat.entity.User;
 import java.util.List;
 
-public interface groupService {
+public interface GroupService {
 	Group registerGroup(String groupName, Integer userId);
 
 	Group registerGroup(String groupName, Integer userId, List<User> userList);
@@ -29,4 +29,6 @@ public interface groupService {
 	void sendMessage(Integer groupId, Message message);
 
 	void withdrawMessage(Integer groupId, Message message);
+	
+	List<Group> getGroupsByUserId(Integer userId);
 }
