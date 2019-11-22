@@ -42,6 +42,7 @@ public class RollCallBoardController {
     @FXML
     void abnormalRollCall(ActionEvent event) {
     	List<Student> student = rollCallService.getAbnormalStudent();
+    	
     }
 
     @FXML
