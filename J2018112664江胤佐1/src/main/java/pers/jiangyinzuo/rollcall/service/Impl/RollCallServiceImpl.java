@@ -27,6 +27,9 @@ public class RollCallServiceImpl implements RollCallService {
 	public RollCallServiceImpl(TeachingClass teachingClass)
 			throws ClassNotFoundException, CustomException, IOException {
 		this.dao = new RollCallDaoFileImpl();
+		if (teachingClass == null) {
+			throw new CustomException("Î´Ñ¡Ôñ°à¼¶", false);
+		}
 		this.teachingClass = teachingClass;
 		this.totalRollCallList = this.dao.queryAllRollCalls();
 		this.teachingClassRollCallList = this.dao.queryRollCallsByTeachingClassId(teachingClass.getClassId());
