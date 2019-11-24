@@ -9,14 +9,14 @@ import java.util.List;
 public class Student implements Serializable {
 
 	private Long studentId;
-	private String gender;
+	private Byte gender;
 	private String studentName;
 	private String password;
 	private String major;
 	private List<TeachingClass> teachingClassList;
 	private List<RollCall> rollCallList;
 
-	public Student(Long studentId, String gender, String studentName, String password, String major) {
+	public Student(Long studentId, Byte gender, String studentName, String password, String major) {
 		this.studentId = studentId;
 		this.gender = gender;
 		this.studentName = studentName;
@@ -24,7 +24,7 @@ public class Student implements Serializable {
 		this.major = major;
 	}
 
-	public Student(Long studentId, String gender, String studentName, String password, String major,
+	public Student(Long studentId, Byte gender, String studentName, String password, String major,
 				   List<TeachingClass> teachingClassList, List<RollCall> rollCallList) {
 		this(studentId, gender, studentName, password, major);
 		this.teachingClassList = teachingClassList;
@@ -50,11 +50,19 @@ public class Student implements Serializable {
 		this.studentId = studentId;
 	}
 
-	public String getGender() {
+	public Byte getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public String getGenderStr() {
+		if (gender == 1) {
+			return "ÄÐ";
+		} else {
+			return "Å®";
+		}
+	}
+
+	public void setGender(Byte gender) {
 		this.gender = gender;
 	}
 

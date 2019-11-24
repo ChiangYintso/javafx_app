@@ -15,7 +15,7 @@ import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
 public class StudentServiceImpl implements StudentService {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, CustomException {
 		StudentsEqualValidator v = new StudentsEqualValidator();
-		Student student = new Student(1234L, "男", "jyz", "123456", "软件工程", new ArrayList<>(),
+		Student student = new Student(1234L, (byte)1, "jyz", "123456", "软件工程", new ArrayList<>(),
 				new ArrayList<>());
 		FileHelper.writeSerializableEntity(student, "student.txt");
 		Student result = (Student) FileHelper.readSerializableEntity("student.txt", v, student.getClass(), student);

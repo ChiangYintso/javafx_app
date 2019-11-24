@@ -42,7 +42,7 @@ public class StudentDaoFileImpl implements StudentDao {
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
 		StudentDao s = new StudentDaoFileImpl();
-		s.insertStudent(new Student(123L, "男", "jyz", "123456", "软件工程"));
+		s.insertStudent(new Student(123L, (byte)1, "jyz", "123456", "软件工程"));
 		System.out.println(s.queryStudent(123L).getStudentId());
 	}
 }

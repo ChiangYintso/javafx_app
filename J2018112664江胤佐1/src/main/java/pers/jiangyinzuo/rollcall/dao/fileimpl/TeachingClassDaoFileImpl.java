@@ -48,7 +48,7 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
 		TeachingClassDao teachingClassDaoImpl = new TeachingClassDaoFileImpl();
 
 		List<Student> studentList = new ArrayList<>();
-		studentList.add(new Student(123L, "男", "jyz", "123456", "软件工程"));
+		studentList.add(new Student(123L, (byte)1, "jyz", "123456", "软件工程"));
 
 		teachingClassDaoImpl.insertTeachingClass(
 				new TeachingClass(2L, "高等数学", 201901, 123457, (short) 2, "暂无简介", "3-17周", 32, 123L, studentList));

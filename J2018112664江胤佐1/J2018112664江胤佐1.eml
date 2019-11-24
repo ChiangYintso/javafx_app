@@ -4,5 +4,6 @@
 	<contentEntry url="file://$MODULE_DIR$"/>
 	<levels>
 		<level name="JavaFX13" value="project"/>
+		<level name="MySQLConnector" value="project"/>
 	</levels>
 </component>

@@ -8,5 +8,6 @@ public class StatementDemo {
 		String selectSQL = "SELECT * FROM book";
 		String insertSQL = "INSERT INTO book VALUES(4, 'Java程序设计基础,"
 				+ "'陈国君'";
+		
 	}
 }

@@ -3,6 +3,7 @@ package main.java.pers.jiangyinzuo.rollcall.dao;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
@@ -19,7 +20,7 @@ public interface StudentDao {
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 
 	 */
-	void insertStudent(Student student) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException;
+	void insertStudent(Student student) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, SQLException;
 	
 	/**
 	 * 根据学号查找学生信息

@@ -20,11 +20,7 @@ import main.java.pers.jiangyinzuo.rollcall.ui.console.Main;
  *
  */
 public class FileHelper {
-	public static String getAppPath() {
-		return "../../files/";
-	}
-
-	public static File getFile(String fileName) throws UnsupportedEncodingException {
+	private static File getFile(String fileName) {
 		return new File(System.getProperty("user.dir") +"/files/"+ fileName);
 	}
 

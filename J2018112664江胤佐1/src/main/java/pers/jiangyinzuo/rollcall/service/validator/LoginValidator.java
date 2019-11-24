@@ -36,7 +36,7 @@ public class LoginValidator implements Validator {
 
 	public static void main(String[] args) throws CustomException {
 		Teacher t = new Teacher(666L, "李四", "信息科学与技术学院", "男", "swjtu", "讲师", new ArrayList<>());
-		Student s = new Student(1234L, "男", "jyz", "123456", "软件工程", new ArrayList<>(),
+		Student s = new Student(1234L, (byte)1, "jyz", "123456", "软件工程", new ArrayList<>(),
 				new ArrayList<>());
 		LoginValidator v = new LoginValidator();
 		v.validate(Teacher.class, t);
@@ -45,7 +45,6 @@ public class LoginValidator implements Validator {
 
 	@Override
 	public boolean validate(Object objFromFile, Object obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
