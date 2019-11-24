@@ -1,28 +1,27 @@
 package main.java.pers.jiangyinzuo.rollcall.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TeachingClass implements Serializable {
-	private Integer classId;
+	private Long classId;
 	private String className;
 	private Integer semester;
 	private Integer courseCode;
 	private Short credit;
 	private String intro;
-	private Integer week;
+	private String weeks;
 	private Integer session;
-	private Integer teacherId;
+	private Long teacherId;
 	private List<Student> studentList;
 
-	public Integer getClassId() {
+	public Long getClassId() {
 		return classId;
 	}
 
-	public TeachingClass(Integer classId, String className, Integer semester, Integer courseCode, Short credit,
-			String intro, Integer week, Integer session, Integer teacherId,
-			List<Student> studentList) {
+	public TeachingClass(Long classId, String className, Integer semester, Integer courseCode, Short credit,
+						 String intro, String week, Integer session, Long teacherId,
+						 List<Student> studentList) {
 		this.classId = classId;
 		this.className = className;
 		this.semester = semester;
@@ -31,16 +30,16 @@ public class TeachingClass implements Serializable {
 		this.intro = intro;
 		this.teacherId = teacherId;
 		this.studentList = studentList;
-		this.week = week;
+		this.weeks = week;
 		this.session = session;
 	}
 
-	public Integer getWeek() {
-		return week;
+	public String getWeeks() {
+		return weeks;
 	}
 
-	public void setWeek(Integer week) {
-		this.week = week;
+	public void setWeeks(String weeks) {
+		this.weeks = weeks;
 	}
 
 	public Integer getSession() {
@@ -51,7 +50,7 @@ public class TeachingClass implements Serializable {
 		this.session = session;
 	}
 
-	public void setClassId(Integer classId) {
+	public void setClassId(Long classId) {
 		this.classId = classId;
 	}
 
@@ -95,11 +94,11 @@ public class TeachingClass implements Serializable {
 		this.intro = intro;
 	}
 
-	public Integer getTeacherId() {
+	public Long getTeacherId() {
 		return teacherId;
 	}
 
-	public void setTeacherId(Integer teacherId) {
+	public void setTeacherId(Long teacherId) {
 		this.teacherId = teacherId;
 	}
 
@@ -118,8 +117,8 @@ public class TeachingClass implements Serializable {
 				+ ", studentList=" + studentList + "]";
 	}
 
-	public void showTeachingClassInfo() {
-		System.out.println("课程id: " + this.classId + ", 课程名称: " + this.className + ", 开课学期: " + this.semester + ", 学分: "
-				+ this.credit);
+	public String getTeachingClassInfo() {
+		return "课程id: " + this.classId + ", 课程名称: " + this.className + ", 开课学期: " + this.semester + ", 学分: "
+				+ this.credit;
 	}
 }

@@ -5,13 +5,20 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * @author Jiang Yinzuo
  */
-public class UiContainer {
+class UiContainer {
     private static AbstractUi currentUi;
 
-    public static void run(AbstractUi primaryUi) {
-
+    static void run(Class<?> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        currentUi = buildUi(clazz);
+        while (clazz != null) {
+            clazz = currentUi.run();
+            if (clazz != null) {
+                currentUi = buildUi(clazz);
+            }
+        }
     }
-    public static AbstractUi buildUi(Class<AbstractUi> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+
+    private static AbstractUi buildUi(Class<?> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         return (AbstractUi) clazz.getDeclaredConstructor().newInstance();
     }
 }

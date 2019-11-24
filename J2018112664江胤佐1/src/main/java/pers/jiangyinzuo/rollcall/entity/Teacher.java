@@ -3,22 +3,25 @@ package main.java.pers.jiangyinzuo.rollcall.entity;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class Teacher implements Serializable {
-	private Integer teacherId;
+	private Long teacherId;
 	private String teacherName;
 	private String department;
 	private String gender;
-	private String pwd;
+	private String password;
 	private String title;
 	private List<TeachingClass> teachingClassList;
 
-	public Teacher(Integer teacherId, String teacherName, String department, String gender, String pwd, String title,
-			List<TeachingClass> teachingClassList) {
+	public Teacher(Long teacherId, String teacherName, String department, String gender, String pwd, String title,
+				   List<TeachingClass> teachingClassList) {
 		this.teacherId = teacherId;
 		this.teacherName = teacherName;
 		this.department = department;
 		this.gender = gender;
-		this.pwd = pwd;
+		this.password = pwd;
 		this.title = title;
 		this.teachingClassList = teachingClassList;
 	}
@@ -29,16 +32,16 @@ public class Teacher implements Serializable {
 	 * @param teacherId
 	 * @param pwd
 	 */
-	public Teacher(Integer teacherId, String pwd) {
+	public Teacher(Long teacherId, String pwd) {
 		this.teacherId = teacherId;
-		this.pwd = pwd;
+		this.password = pwd;
 	}
 
-	public Integer getTeacherId() {
+	public Long getTeacherId() {
 		return teacherId;
 	}
 
-	public void setTeacherId(Integer teacherId) {
+	public void setTeacherId(Long teacherId) {
 		this.teacherId = teacherId;
 	}
 
@@ -66,12 +69,12 @@ public class Teacher implements Serializable {
 		this.gender = gender;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getTitle() {
@@ -90,7 +93,7 @@ public class Teacher implements Serializable {
 		this.teachingClassList = teachingClassList;
 	}
 
-	public void welcome() {
-		System.out.println("ÄãºÃ, " + this.teacherId + " " + this.teacherName + this.title);
+	public String welcome() {
+		return "ÄãºÃ, " + this.teacherId + " " + this.teacherName + this.title;
 	}
 }

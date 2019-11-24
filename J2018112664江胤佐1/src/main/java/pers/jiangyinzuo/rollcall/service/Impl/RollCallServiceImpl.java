@@ -11,12 +11,15 @@ import java.util.concurrent.TimeUnit;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.config.Config;
 import main.java.pers.jiangyinzuo.rollcall.dao.RollCallDao;
-import main.java.pers.jiangyinzuo.rollcall.dao.fileImpl.RollCallDaoFileImpl;
+import main.java.pers.jiangyinzuo.rollcall.dao.fileimpl.RollCallDaoFileImpl;
 import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class RollCallServiceImpl implements RollCallService {
 
 	private RollCallDao dao;
@@ -119,6 +122,7 @@ public class RollCallServiceImpl implements RollCallService {
 		return abnormalStudentList;
 	}
 
+	@Override
 	public List<Student> getRandomStudent(int count) {
 		List<Student> studentList = this.teachingClass.getStudentList();
 		if (count < 0 || count > studentList.size()) {

@@ -6,16 +6,19 @@ import java.util.ArrayList;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.service.StudentService;
-import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
+import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
 import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class StudentServiceImpl implements StudentService {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, CustomException {
 		StudentsEqualValidator v = new StudentsEqualValidator();
-		Student student = new Student(1234, "男", "jyz", "软件2018-01班", "123456", "软件工程", new ArrayList<>(),
+		Student student = new Student(1234L, "男", "jyz", "123456", "软件工程", new ArrayList<>(),
 				new ArrayList<>());
-		AppFile.writeSerializableEntity(student, "student.txt");
-		Student result = (Student) AppFile.readSerializableEntity("student.txt", v, student.getClass(), student);
+		FileHelper.writeSerializableEntity(student, "student.txt");
+		Student result = (Student) FileHelper.readSerializableEntity("student.txt", v, student.getClass(), student);
 		System.out.println(result.getStudentId());
 	}
 }

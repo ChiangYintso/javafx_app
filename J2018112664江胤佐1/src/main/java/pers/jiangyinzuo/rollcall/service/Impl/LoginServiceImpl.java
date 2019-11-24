@@ -9,7 +9,7 @@ import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.validator.LoginValidator;
 import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
-import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
+import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 public class LoginServiceImpl implements LoginService {
 
@@ -20,11 +20,11 @@ public class LoginServiceImpl implements LoginService {
 	 * @throws ClassNotFoundException 
 	 */
 	@Override
-	public Teacher teacherLogin(Integer teacherId, String pwd) throws ClassNotFoundException, IOException, CustomException {
+	public Teacher teacherLogin(Long teacherId, String pwd) throws ClassNotFoundException, IOException, CustomException {
 		try {
 			Validator v = new LoginValidator();
 			Teacher teacher = new Teacher(teacherId, pwd);
-			Teacher teacherFromFile = (Teacher) AppFile.readSerializableEntity("teachers.txt", v, Teacher.class,
+			Teacher teacherFromFile = (Teacher) FileHelper.readSerializableEntity("teachers.txt", v, Teacher.class,
 					teacher);
 			return teacherFromFile;
 		} catch (FileNotFoundException e) {
@@ -39,12 +39,12 @@ public class LoginServiceImpl implements LoginService {
 	 */
 	@SuppressWarnings("finally")
 	@Override
-	public Student studentLogin(Integer studentId, String pwd)
+	public Student studentLogin(Long studentId, String pwd)
 			throws CustomException, FileNotFoundException, IOException, ClassNotFoundException {
 		try {
 			Validator v = new LoginValidator();
 			Student student = new Student(studentId, pwd);
-			Student studentFromFile = (Student) AppFile.readSerializableEntity("student.txt", v, Student.class,
+			Student studentFromFile = (Student) FileHelper.readSerializableEntity("student.txt", v, Student.class,
 					student);
 			return studentFromFile;
 		} catch (FileNotFoundException e) {

@@ -42,7 +42,7 @@ public class UserInfo {
 
 	public static void main(String[] args) {
 		UserInfo userInfo = UserInfo.getSingleton();
-		userInfo.setStudent(new Student(99, "abc"));
+		userInfo.setStudent(new Student(99L, "abc"));
 		UserInfo test = UserInfo.getSingleton();
 		test.getStudent().welcome();
 	}

@@ -1,9 +1,9 @@
 package main.java.pers.jiangyinzuo.rollcall.util;
 
+import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 
 import java.util.Map;
-import java.util.Scanner;
 
 public class Select {
 	public static void printMenu(String[] menuItems) {
@@ -19,7 +19,7 @@ public class Select {
 		while (true) {
 
 			printMenu(menuItems);
-			String line = AppFile.scanner.nextLine();
+			String line = FileHelper.scanner.nextLine();
 			AbstractMenu selectedMenu = selectedMenuMap.get(line);
 			if (selectedMenu == null) {
 				System.out.println(" ‰»Î”–ŒÛ");

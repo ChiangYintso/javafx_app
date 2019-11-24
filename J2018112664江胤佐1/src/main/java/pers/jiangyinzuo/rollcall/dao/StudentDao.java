@@ -29,5 +29,5 @@ public interface StudentDao {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	Student queryStudent(Integer studentId) throws CustomException, FileNotFoundException, IOException;
+	Student queryStudent(Long studentId) throws CustomException, FileNotFoundException, IOException;
 }

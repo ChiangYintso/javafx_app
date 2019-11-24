@@ -11,7 +11,7 @@ public class TeachingClassComparedByStudentIdValidator implements Validator {
 	@Override
 	public boolean validate(Class clazz, Object objFromFile, Object... obj) throws CustomException {
 		TeachingClass teachingClass = (TeachingClass) objFromFile;
-		Integer studentId = (Integer)obj[0];
+		Long studentId = (Long)obj[0];
 		List<Student> studentList = teachingClass.getStudentList();
 		if (studentList == null) {
 			return false;
@@ -27,7 +27,7 @@ public class TeachingClassComparedByStudentIdValidator implements Validator {
 	@Override
 	public boolean validate(Object objFromFile, Object obj) {
 		TeachingClass teachingClass = (TeachingClass) objFromFile;
-		Integer studentId = (Integer)obj;
+		Long studentId = (Long)obj;
 		List<Student> studentList = teachingClass.getStudentList();
 		if (studentList == null) {
 			return false;

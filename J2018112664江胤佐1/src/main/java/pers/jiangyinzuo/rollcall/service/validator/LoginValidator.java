@@ -14,7 +14,7 @@ public class LoginValidator implements Validator {
 			Teacher teacher = (Teacher) objFromFile;
 			Teacher teacherSelf = (Teacher) obj[0];
 			if (teacher.getTeacherId().equals(teacherSelf.getTeacherId())) {
-				if (teacher.getPwd().equals(teacherSelf.getPwd())) {
+				if (teacher.getPassword().equals(teacherSelf.getPassword())) {
 					return true;
 				} else {
 					throw new CustomException("密码错误", false);
@@ -35,8 +35,8 @@ public class LoginValidator implements Validator {
 	}
 
 	public static void main(String[] args) throws CustomException {
-		Teacher t = new Teacher(666, "李四", "信息科学与技术学院", "男", "swjtu", "讲师", new ArrayList<>());
-		Student s = new Student(1234, "男", "jyz", "软件2018-01班", "123456", "软件工程", new ArrayList<>(),
+		Teacher t = new Teacher(666L, "李四", "信息科学与技术学院", "男", "swjtu", "讲师", new ArrayList<>());
+		Student s = new Student(1234L, "男", "jyz", "123456", "软件工程", new ArrayList<>(),
 				new ArrayList<>());
 		LoginValidator v = new LoginValidator();
 		v.validate(Teacher.class, t);

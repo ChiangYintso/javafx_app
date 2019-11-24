@@ -7,12 +7,12 @@ import java.util.List;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.Ui;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
+import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
-public class TeachingClassDetailUi extends Ui {
+public class TeachingClassDetailUi extends AbstractUi {
 
 	private SelectedTeachingClass selectedTeachingClass;
 	private List<Student> studentList;
@@ -42,7 +42,7 @@ public class TeachingClassDetailUi extends Ui {
 	public AbstractMenu showUi() throws CustomException, FileNotFoundException, IOException {
 		System.out.println("**********************************");
 		System.out.println("当前选中的教学班:");
-		this.selectedTeachingClass.getCls().showTeachingClassInfo();
+		this.selectedTeachingClass.getCls().getTeachingClassInfo();
 		System.out.println("**********************************");
 
 		return this.operate();
@@ -52,7 +52,7 @@ public class TeachingClassDetailUi extends Ui {
 	private AbstractMenu operate() {
 		int item;
 		Select.printMenu(new String[] { "1. 点名", "2. 查看教学名单", "3. 返回主界面" });
-		while ((item = AppFile.scanItem(1, 3)) != 3) {
+		while ((item = FileHelper.scanItem(1, 3)) != 3) {
 			switch (item) {
 			case 1:
 				return MENU.ROLL_CALL;

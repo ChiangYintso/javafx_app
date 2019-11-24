@@ -1,9 +1,9 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.console.common;
 
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.Ui;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 
-public class ScheduleUi extends Ui {
+public class ScheduleUi extends AbstractUi {
 	
 	enum MENU implements AbstractMenu {
 		EXIT(AbstractMenu.EXIT);

@@ -1,12 +1,12 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
 
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.Ui;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.common.ScheduleUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
-public class TeacherMainUi extends Ui {
+public class TeacherMainUi extends AbstractUi {
 
 	private static enum MENU implements AbstractMenu {
 		EXIT(AbstractMenu.EXIT),

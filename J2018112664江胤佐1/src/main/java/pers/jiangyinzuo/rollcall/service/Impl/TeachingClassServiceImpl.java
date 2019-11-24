@@ -6,22 +6,21 @@ import java.util.List;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
-import main.java.pers.jiangyinzuo.rollcall.dao.fileImpl.TeachingClassDaoFileImpl;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
+import main.java.pers.jiangyinzuo.rollcall.dao.fileimpl.TeachingClassDaoFileImpl;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 
 public class TeachingClassServiceImpl implements TeachingClassService {
 
 	@Override
-	public List<TeachingClass> queryTeachingClassesByStudentId(Integer studentId)
+	public List<TeachingClass> queryTeachingClassesByStudentId(Long studentId)
 			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
 		TeachingClassDao dao = new TeachingClassDaoFileImpl();
 		return dao.queryTeachingClassesByStudentId(studentId);
 	}
 
 	@Override
-	public List<TeachingClass> queryTeachingClassesByTeacherId(Integer teacherId)
+	public List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId)
 			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
 		TeachingClassDao dao = new TeachingClassDaoFileImpl();
 		return dao.queryTeachingClassesByTeacherId(teacherId);
@@ -30,7 +29,7 @@ public class TeachingClassServiceImpl implements TeachingClassService {
 	public static void main(String[] args)
 			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
 		TeachingClassService service = new TeachingClassServiceImpl();
-		List<TeachingClass> list = service.queryTeachingClassesByStudentId(123);
+		List<TeachingClass> list = service.queryTeachingClassesByStudentId(123L);
 		for (TeachingClass cls : list) {
 			System.out.println(cls.getClassName());
 		}

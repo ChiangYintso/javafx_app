@@ -9,11 +9,11 @@ import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeachingClassServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.Ui;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
-public class TeachingClassUi extends Ui {
+public class TeachingClassUi extends AbstractUi {
 
 	private List<TeachingClass> teachingClassList;
 	private TeachingClassService service;
@@ -53,7 +53,7 @@ public class TeachingClassUi extends Ui {
 		}
 		System.out.println("你选择的教学班如下：");
 		for (TeachingClass cls : this.teachingClassList) {
-			cls.showTeachingClassInfo();
+			cls.getTeachingClassInfo();
 		}
 	}
 

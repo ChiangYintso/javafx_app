@@ -31,5 +31,5 @@ public interface TeacherDao {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	Teacher queryTeacherById(Integer teacherId) throws CustomException, FileNotFoundException, IOException;
+	Teacher queryTeacher(Long teacherId) throws CustomException, FileNotFoundException, IOException;
 }

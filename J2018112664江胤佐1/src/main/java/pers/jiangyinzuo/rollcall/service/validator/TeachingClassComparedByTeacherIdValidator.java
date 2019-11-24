@@ -7,14 +7,14 @@ public class TeachingClassComparedByTeacherIdValidator implements Validator {
 
 	@Override
 	public boolean validate(Class clazz, Object objFromFile, Object... obj) throws CustomException {
-		Integer teacherId = (Integer)obj[0];
+		Long teacherId = (Long) obj[0];
 		TeachingClass teachingClass = (TeachingClass) objFromFile;
 		return teachingClass.getTeacherId().equals(teacherId);
 	}
 	
 	@Override
 	public boolean validate(Object objFromFile, Object obj) {
-		Integer teacherId = (Integer)obj;
+		Long teacherId = (Long) obj;
 		TeachingClass teachingClass = (TeachingClass) objFromFile;
 		return teachingClass.getTeacherId().equals(teacherId);
 	}

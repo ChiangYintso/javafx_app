@@ -12,15 +12,15 @@ import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.RollCallServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.Ui;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
+import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
 /**
  * @author Jiang Yinzuo
  */
-public class RollCallUi extends Ui {
+public class RollCallUi extends AbstractUi {
 	
 	private RollCallService service;
 	private List<RollCall> rollCallList;
@@ -75,7 +75,7 @@ public class RollCallUi extends Ui {
 		int count;
 		while (true) {
 			Select.printMenu(new String[] { "1. 异常点名", "2. 全体点名", "3. 随机点名", "4. 修改点名记录","5. 提问",  "6. 返回主菜单" });
-			option = AppFile.scanItem(1, 6);
+			option = FileHelper.scanItem(1, 6);
 			switch (option) {
 			case 1:
 				addRollCallRecord(service.getAbnormalStudent(), "点名");
@@ -85,7 +85,7 @@ public class RollCallUi extends Ui {
 				break;
 			case 3:
 				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-				count = AppFile.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+				count = FileHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
 				addRollCallRecord(this.service.getRandomStudent(count), "点名");
 				break;
 			case 4:
@@ -93,7 +93,7 @@ public class RollCallUi extends Ui {
 				break;
 			case 5:
 				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-				count = AppFile.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+				count = FileHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
 				addRollCallRecord(this.service.getRandomStudent(count), "提问");
 				break;
 			case 6:
@@ -115,7 +115,7 @@ public class RollCallUi extends Ui {
 		if (studentList != null) {
 			for (Student student : studentList) {
 				System.out.println(student.getStudentName() + " " + student.getStudentId());
-				item = AppFile.scanItem(1, 5);
+				item = FileHelper.scanItem(1, 5);
 				service.insertRollCall(student, presenceMap.get(Integer.valueOf(item)), rollCallType);
 			}
 		}
@@ -132,11 +132,11 @@ public class RollCallUi extends Ui {
 			}
 		}
 		System.out.println("输入需要修改的点名记录");
-		int item = AppFile.scanItem(1, this.rollCallList.size());
+		int item = FileHelper.scanItem(1, this.rollCallList.size());
 		System.out.println("1. 已到；2. 未到； 3. 迟到； 4. 请假； 5. 早退");
 		RollCall rollCall = this.rollCallList.get(item-1);
 		RollCall tempRollCall = rollCall.copy();
-		item = AppFile.scanItem(1, this.rollCallList.size());
+		item = FileHelper.scanItem(1, this.rollCallList.size());
 		rollCall.setPresence(presenceMap.get(Integer.valueOf(item)));
 		service.editRollCall(tempRollCall, rollCall);
 	}

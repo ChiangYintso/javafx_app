@@ -3,29 +3,30 @@ package main.java.pers.jiangyinzuo.rollcall.entity;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class Student implements Serializable {
 
-	private Integer studentId;
+	private Long studentId;
 	private String gender;
 	private String studentName;
-	private String adminClass;
-	private String pwd;
+	private String password;
 	private String major;
 	private List<TeachingClass> teachingClassList;
 	private List<RollCall> rollCallList;
 
-	public Student(Integer studentId, String gender, String studentName, String adminClass, String pwd, String major) {
+	public Student(Long studentId, String gender, String studentName, String password, String major) {
 		this.studentId = studentId;
 		this.gender = gender;
 		this.studentName = studentName;
-		this.adminClass = adminClass;
-		this.pwd = pwd;
+		this.password = password;
 		this.major = major;
 	}
 
-	public Student(Integer studentId, String gender, String studentName, String adminClass, String pwd, String major,
-			List<TeachingClass> teachingClassList, List<RollCall> rollCallList) {
-		this(studentId, gender, studentName, adminClass, pwd, major);
+	public Student(Long studentId, String gender, String studentName, String password, String major,
+				   List<TeachingClass> teachingClassList, List<RollCall> rollCallList) {
+		this(studentId, gender, studentName, password, major);
 		this.teachingClassList = teachingClassList;
 		this.rollCallList = rollCallList;
 	}
@@ -34,18 +35,18 @@ public class Student implements Serializable {
 	 * 用于验证学生登录账号密码
 	 * 
 	 * @param studentId
-	 * @param pwd
+	 * @param password
 	 */
-	public Student(Integer studentId, String pwd) {
+	public Student(Long studentId, String password) {
 		this.studentId = studentId;
-		this.pwd = pwd;
+		this.password = password;
 	}
 
-	public Integer getStudentId() {
+	public Long getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(Integer studentId) {
+	public void setStudentId(Long studentId) {
 		this.studentId = studentId;
 	}
 
@@ -65,20 +66,12 @@ public class Student implements Serializable {
 		this.studentName = studentName;
 	}
 
-	public String getAdminClass() {
-		return adminClass;
-	}
-
-	public void setAdminClass(String adminClass) {
-		this.adminClass = adminClass;
-	}
-
 	public String getPwd() {
-		return pwd;
+		return password;
 	}
 
 	public void setPwd(String pwd) {
-		this.pwd = pwd;
+		this.password = pwd;
 	}
 
 	public String getMajor() {
@@ -105,7 +98,7 @@ public class Student implements Serializable {
 		this.rollCallList = rollCallList;
 	}
 
-	public void welcome() {
-		System.out.println("你好, " + this.studentId + " " + this.studentName);
+	public String welcome() {
+		return "你好, " + this.studentId + " " + this.studentName;
 	}
 }

@@ -3,10 +3,15 @@ package main.java.pers.jiangyinzuo.rollcall.entity;
 import java.io.Serializable;
 import java.time.Instant;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class RollCall implements Serializable {
 	private Integer rollCallId;
 
-	/* 已到、未到、迟到、请假、早退 */
+	/**
+	 *  已到、未到、迟到、请假、早退
+	 */
 	private String presence;
 	private String rollCallType;
 	private Instant rollCallTime;

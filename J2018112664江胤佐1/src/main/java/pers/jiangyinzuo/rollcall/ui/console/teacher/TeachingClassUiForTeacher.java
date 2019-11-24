@@ -9,12 +9,12 @@ import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeachingClassServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.Ui;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
-import main.java.pers.jiangyinzuo.rollcall.util.AppFile;
+import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
 
-public class TeachingClassUiForTeacher extends Ui {
+public class TeachingClassUiForTeacher extends AbstractUi {
 
 	private UserInfo userInfo;
 	private List<TeachingClass> teachingClassList;
@@ -60,14 +60,14 @@ public class TeachingClassUiForTeacher extends Ui {
 			int order = 0;
 			for (TeachingClass cls : this.teachingClassList) {
 				System.out.printf("%d. | ", ++order);
-				cls.showTeachingClassInfo();
+				cls.getTeachingClassInfo();
 			}
 			
 			String line = "";
 			int selection = -1;
 			while (selection != 0) {
 				try {
-					line = AppFile.scanner.nextLine();
+					line = FileHelper.scanner.nextLine();
 					selection = Integer.parseInt(line);
 
 					if (selection < 1 || selection > this.teachingClassList.size()) {

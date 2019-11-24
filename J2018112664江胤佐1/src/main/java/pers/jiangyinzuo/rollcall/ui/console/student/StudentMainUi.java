@@ -1,16 +1,15 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.console.student;
 
 import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.Ui;
+import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.common.ScheduleUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.teacher.RollCallUi;
 
 /**
  * @author Jiang Yinzuo
  */
-public class StudentMainUi extends Ui {
+public class StudentMainUi extends AbstractUi {
 	private enum MENU implements AbstractMenu {
 		// TODO ROLL_CALL
 		EXIT(AbstractMenu.EXIT), SCHEDULE(ScheduleUi.class.getName()), TEACHING_CLASS(TeachingClassUi.class.getName()),
