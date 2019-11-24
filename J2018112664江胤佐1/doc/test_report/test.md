@@ -26,5 +26,8 @@ java -jar ./J2018112664江胤佐1.jar
 ## 查看课表
 ![show_schedule.png](./show_schedule.png)
 
+## 查看点名记录
+![rollcall_record](./rollcall_record.png)
+
 ## 点名
 ![rollcall.png](./rollcall.png)
