@@ -1,15 +1,6 @@
 package main.java.pers.jiangyinzuo.rollcall.helper;
 
-import java.io.BufferedReader;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -20,6 +11,7 @@ import java.util.Scanner;
 import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
+import main.java.pers.jiangyinzuo.rollcall.ui.console.Main;
 
 /**
  * 文件读写类, 负责程序的IO操作
@@ -29,7 +21,12 @@ import main.java.pers.jiangyinzuo.rollcall.entity.Student;
  */
 public class FileHelper {
 	public static String getAppPath() {
-		return "D:\\stuspace\\java2019a\\J2018112664江胤佐1\\src\\main\\files\\";
+		return "../../files/";
+	}
+
+	public static File getFile(String fileName) throws UnsupportedEncodingException {
+
+		return new File(System.getProperty("user.dir") +"/files/"+ fileName);
 	}
 
 	public static StringBuilder[] parseLine(StringBuilder line, int wordCount) {
@@ -61,7 +58,7 @@ public class FileHelper {
 		String type;
 
 		StringBuilder tempStr = new StringBuilder();
-		try (FileWriter fileWriter = new FileWriter(FileHelper.getAppPath() + fileName, true);) {
+		try (FileWriter fileWriter = new FileWriter(FileHelper.getFile(fileName), true);) {
 			for (Field field : classField) {
 				type = field.getGenericType().toString();
 				fieldName = field.getName();
@@ -82,7 +79,7 @@ public class FileHelper {
 	}
 
 	public static void writeSerializableEntity(Object obj, String fileSuffix) throws IOException {
-		try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getAppPath() + fileSuffix, true);
+		try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileSuffix), true);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
 			objectOutputStream.writeObject(obj);
 			System.out.println("写入成功");
@@ -91,7 +88,7 @@ public class FileHelper {
 
 	public static Object readSerializableEntity(String fileSuffix, Validator query, Class clazz, Object... obj)
 			throws FileNotFoundException, IOException, ClassNotFoundException, CustomException {
-		try (FileInputStream fileInputStream = new FileInputStream(new File(FileHelper.getAppPath() + fileSuffix));
+		try (FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileSuffix));
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);) {
 			Object tempObj;
 			if (query == null) {
@@ -111,7 +108,7 @@ public class FileHelper {
 	public static <T> List<T> readAllSerializableEntities(String fileName) throws ClassNotFoundException, IOException {
 		List<T> entitiesList = new ArrayList<>();
 		Object objFromFile;
-		FileInputStream fileInputStream = new FileInputStream(new File(FileHelper.getAppPath() + fileName));
+		FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
 		while (fileInputStream.available() > 0) {
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
@@ -130,7 +127,7 @@ public class FileHelper {
 			return arrayList;
 		}
 		Object objFromFile;
-		FileInputStream fileInputStream = new FileInputStream(new File(FileHelper.getAppPath() + fileSuffix));
+		FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileSuffix));
 		while (fileInputStream.available() > 0) {
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
@@ -147,7 +144,7 @@ public class FileHelper {
 	public static <T> void bulkInsertSerializableEntities(String fileSuffix, List<T> objectList, boolean add) {
 		if (objectList != null) {
 			for (Object obj : objectList) {
-				try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getAppPath() + fileSuffix, add);
+				try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileSuffix), add);
                      ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
 					objectOutputStream.writeObject(obj);
 				} catch (IOException e) {

@@ -15,3 +15,9 @@ java -jar ./J2018112664江胤佐1.jar
 ## 教师登录
 
 ![login.png](./teacher_login.png)
+
+## 查看课表
+![show_schedule.png](./show_schedule.png)
+
+## 点名
+![rollcall.png](./rollcall.png)
