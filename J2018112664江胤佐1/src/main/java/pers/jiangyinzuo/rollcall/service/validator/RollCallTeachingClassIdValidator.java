@@ -14,7 +14,7 @@ public class RollCallTeachingClassIdValidator implements Validator {
 
 	@Override
 	public boolean validate(Object objFromFile, Object obj) {
-		Integer teachingClassId = (Integer)obj;
+		Long teachingClassId = (Long)obj;
 		RollCall rollCall = (RollCall) objFromFile;
 		return rollCall.getTeachingClass().getClassId().equals(teachingClassId);
 	}

@@ -11,6 +11,11 @@ public class ConsoleIoHelper {
      */
     public static Scanner scanner = new Scanner(System.in);
 
+    public static int selectMenuItem(String[] menuItems) {
+        printMenu(menuItems);
+        return scanItem(1, menuItems.length);
+    }
+
     public static int scanItem(int firstItem, int lastItem) {
         String item;
         int result;

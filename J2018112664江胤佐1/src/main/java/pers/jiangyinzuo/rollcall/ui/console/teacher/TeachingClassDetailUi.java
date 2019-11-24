@@ -2,7 +2,9 @@ package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
 
 import java.util.List;
 
+import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
+import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 
@@ -16,37 +18,6 @@ public class TeachingClassDetailUi extends AbstractUi {
 		studentList = this.selectedTeachingClass.getCls().getStudentList();
 	}
 
-//	@Override
-//	public AbstractMenu showUi() throws CustomException, FileNotFoundException, IOException {
-//		System.out.println("**********************************");
-//		System.out.println("当前选中的教学班:");
-//		this.selectedTeachingClass.getCls().getTeachingClassInfo();
-//		System.out.println("**********************************");
-//
-//		return this.operate();
-//
-//	}
-
-//	private AbstractMenu operate() {
-//		int item;
-//		Select.printMenu(new String[] { "1. 点名", "2. 查看教学名单", "3. 返回主界面" });
-//		while ((item = FileHelper.scanItem(1, 3)) != 3) {
-//			switch (item) {
-//			case 1:
-//				return MENU.ROLL_CALL;
-//			case 2:
-//				this.showTeachingList();
-//				break;
-//			case 3:
-//				return MENU.TEACHER_MAIN_MENU;
-//			default:
-//				break;
-//			}
-//			Select.printMenu(new String[] { "1. 点名", "2. 查看教学名单", "3. 返回主界面" });
-//		}
-//		return MENU.TEACHER_MAIN_MENU;
-//	}
-
 	private void showTeachingList() {
 		if (studentList == null || studentList.size() == 0) {
 			System.out.println("共0个学生");
@@ -58,7 +29,6 @@ public class TeachingClassDetailUi extends AbstractUi {
 		}
 	}
 
-
 	/**
 	 * 运行UI的方法
 	 *
@@ -66,6 +36,19 @@ public class TeachingClassDetailUi extends AbstractUi {
 	 */
 	@Override
 	public Class<? extends AbstractUi> run() {
-		return null;
+		System.out.println("**********************************");
+		System.out.println("当前选中的教学班:");
+		System.out.println(this.selectedTeachingClass.getCls().getTeachingClassInfo());
+		System.out.println("**********************************");
+		int item = ConsoleIoHelper.selectMenuItem(new String[] {"1. 点名", "2. 查看教学名单", "3. 返回主界面"});
+		switch (item) {
+			case 1:
+				return RollCallUi.class;
+			case 2:
+				this.showTeachingList();
+				return TeacherMainUi.class;
+			default:
+				return TeacherMainUi.class;
+		}
 	}
 }

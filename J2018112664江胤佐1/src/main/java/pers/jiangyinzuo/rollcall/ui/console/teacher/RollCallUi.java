@@ -42,42 +42,7 @@ public class RollCallUi extends AbstractUi {
 		this.presenceMap.put(5, "早退");
 	}
 
-
-//	private void operate() throws IOException {
-//		int option;
-//		int count;
-//		while (true) {
-//			Select.printMenu(new String[] { "1. 异常点名", "2. 全体点名", "3. 随机点名", "4. 修改点名记录","5. 提问",  "6. 返回主菜单" });
-//			option = FileHelper.scanItem(1, 6);
-//			switch (option) {
-//			case 1:
-//				addRollCallRecord(service.getAbnormalStudent(), "点名");
-//				break;
-//			case 2:
-//				addRollCallRecord(this.selectedTeachingClass.getStudentList(), "点名");
-//				break;
-//			case 3:
-//				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-//				count = FileHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
-//				addRollCallRecord(this.service.getRandomStudent(count), "点名");
-//				break;
-//			case 4:
-//				editRollCallRecord();
-//				break;
-//			case 5:
-//				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-//				count = FileHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
-//				addRollCallRecord(this.service.getRandomStudent(count), "提问");
-//				break;
-//			case 6:
-//				return;
-//			default:
-//				break;
-//			}
-//		}
-//	}
-//
-	private void addRollCallRecord(List<Student> studentList, String rollCallType) throws IOException {
+	private void addRollCallRecord(List<Student> studentList, String rollCallType) {
 		if (studentList == null || studentList.size() == 0) {
 			System.out.println("无点名记录");
 			return;
@@ -89,7 +54,11 @@ public class RollCallUi extends AbstractUi {
 			for (Student student : studentList) {
 				System.out.println(student.getStudentName() + " " + student.getStudentId());
 				item = ConsoleIoHelper.scanItem(1, 5);
-				service.insertRollCall(student, presenceMap.get(Integer.valueOf(item)), rollCallType);
+				try {
+					service.insertRollCall(student, presenceMap.get(Integer.valueOf(item)), rollCallType);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -121,6 +90,36 @@ public class RollCallUi extends AbstractUi {
 	 */
 	@Override
 	public Class<? extends AbstractUi> run() {
-		return null;
+		int item = ConsoleIoHelper.selectMenuItem((new String[] { "1. 异常点名", "2. 全体点名", "3. 随机点名", "4. 修改点名记录","5. 提问",  "6. 返回主菜单" }));
+		int count;
+		switch (item) {
+			case 1:
+				addRollCallRecord(service.getAbnormalStudent(), "点名");
+				return this.getClass();
+			case 2:
+				addRollCallRecord(this.selectedTeachingClass.getStudentList(), "点名");
+				return this.getClass();
+			case 3:
+				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
+				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+				addRollCallRecord(this.service.getRandomStudent(count), "点名");
+				return this.getClass();
+			case 4:
+				try {
+					editRollCallRecord();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return this.getClass();
+			case 5:
+				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
+				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+				addRollCallRecord(this.service.getRandomStudent(count), "提问");
+				return this.getClass();
+			case 6:
+				return TeacherMainUi.class;
+			default:
+				return null;
+		}
 	}
 }

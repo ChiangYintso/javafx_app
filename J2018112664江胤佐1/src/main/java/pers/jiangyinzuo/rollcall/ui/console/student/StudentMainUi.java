@@ -43,7 +43,7 @@ public class StudentMainUi extends AbstractUi {
     public Class<? extends AbstractUi> run() {
         System.out.println(UserInfo.getSingleton().getStudent().welcome());
         ConsoleIoHelper.printMenu(new String[]{"1. 查看点名记录", "2. 查看课表", "3. 查看教学班详情", "4. 退出"});
-        int item = ConsoleIoHelper.scanItem(1, 3);
+        int item = ConsoleIoHelper.scanItem(1, 4);
         switch (item) {
             case 1:
                 showRollCallRecord();
