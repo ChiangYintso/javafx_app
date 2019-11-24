@@ -1,15 +1,10 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
-import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
 public class TeachingClassDetailUi extends AbstractUi {
 

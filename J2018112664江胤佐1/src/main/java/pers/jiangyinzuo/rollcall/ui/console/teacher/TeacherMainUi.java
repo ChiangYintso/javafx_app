@@ -1,9 +1,7 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
 
 import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.common.ScheduleUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
-import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
 /**
  * @author Jiang Yinzuo

@@ -28,29 +28,6 @@ import main.java.pers.jiangyinzuo.rollcall.entity.Student;
  *
  */
 public class FileHelper {
-	/**
-	 * 全局控制台输入对象
-	 */
-	public static Scanner scanner = new Scanner(System.in);
-
-	public static int scanItem(int firstItem, int lastItem) {
-		String item;
-		int result;
-		while (true) {
-			try {
-				item = scanner.nextLine();
-				result = Integer.parseInt(item);
-				if (firstItem <= result && result <= lastItem) {
-					return result;
-				} else {
-					System.out.printf("请输入数字%d - %d\n", firstItem, lastItem);
-				}
-			} catch (NumberFormatException e) {
-				System.out.printf("请输入数字%d - %d\n", firstItem, lastItem);
-			}
-		}
-	}
-
 	public static String getAppPath() {
 		return "D:\\stuspace\\java2019a\\J2018112664江胤佐1\\src\\main\\files\\";
 	}

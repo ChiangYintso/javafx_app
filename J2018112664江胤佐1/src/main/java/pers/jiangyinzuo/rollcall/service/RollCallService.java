@@ -29,4 +29,6 @@ public interface RollCallService {
 	List<Student> getAbnormalStudent();
 	
 	List<Student> getRandomStudent(int count);
+
+	List<RollCall> queryRollCallsByStudentId(Long studentId);
 }

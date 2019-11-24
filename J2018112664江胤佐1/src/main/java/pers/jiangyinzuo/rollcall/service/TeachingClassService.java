@@ -9,8 +9,8 @@ import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 
 public interface TeachingClassService {
 	List<TeachingClass> queryTeachingClassesByStudentId(Long studentId)
-			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException;
+			throws ClassNotFoundException, IOException, CustomException;
 
 	List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId)
-			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException;
+			throws ClassNotFoundException, IOException, CustomException;
 }

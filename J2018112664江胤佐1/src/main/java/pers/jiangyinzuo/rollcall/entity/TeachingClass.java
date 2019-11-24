@@ -119,6 +119,10 @@ public class TeachingClass implements Serializable {
 
 	public String getTeachingClassInfo() {
 		return "课程id: " + this.classId + ", 课程名称: " + this.className + ", 开课学期: " + this.semester + ", 学分: "
-				+ this.credit;
+				+ this.credit + " 教师id: " + this.teacherId + "课程简介: " + this.intro;
+	}
+
+	public String getSchedule() {
+		return this.className + " 周" + this.session / 10 + "第" + this.session % 10 + "讲";
 	}
 }

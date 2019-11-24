@@ -138,4 +138,15 @@ public class RollCallServiceImpl implements RollCallService {
 		}
 		return resultList;
 	}
+
+	@Override
+	public List<RollCall> queryRollCallsByStudentId(Long studentId) {
+		List<RollCall> resultList = new ArrayList<>();
+		for (RollCall rollCall : teachingClassRollCallList) {
+			if (studentId.equals(rollCall.getStudent().getStudentId())) {
+				resultList.add(rollCall);
+			}
+		}
+		return resultList;
+	}
 }

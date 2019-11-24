@@ -7,6 +7,7 @@ import java.io.StreamCorruptedException;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
+import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.teacher.TeacherMainUi;
@@ -38,7 +39,7 @@ public class LoginUi extends AbstractUi {
 			try {
 				System.out.println("身份(1代表学生, 0代表教师):");
 
-				isStudent = FileHelper.scanner.nextLine();
+				isStudent = ConsoleIoHelper.scanner.nextLine();
 				if (isStudent.equals("#")) {
 					return null;
 				}
@@ -47,13 +48,13 @@ public class LoginUi extends AbstractUi {
 					continue;
 				}
 				System.out.println("输入账号:");
-				id = FileHelper.scanner.nextLine();
+				id = ConsoleIoHelper.scanner.nextLine();
 				if (id.equals("#")) {
 					break;
 				}
 
 				System.out.println("输入密码:");
-				pwd = FileHelper.scanner.nextLine();
+				pwd = ConsoleIoHelper.scanner.nextLine();
 
 				if (pwd.equals("#")) {
 					break;
@@ -81,8 +82,6 @@ public class LoginUi extends AbstractUi {
 				System.out.println(e.getErrInfo());
 			} catch (ClassNotFoundException e) {
 				System.out.println("账号或密码错误");
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

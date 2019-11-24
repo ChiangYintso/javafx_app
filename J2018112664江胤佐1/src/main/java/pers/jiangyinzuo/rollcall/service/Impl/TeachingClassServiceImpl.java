@@ -10,6 +10,9 @@ import main.java.pers.jiangyinzuo.rollcall.dao.fileimpl.TeachingClassDaoFileImpl
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class TeachingClassServiceImpl implements TeachingClassService {
 
 	@Override
