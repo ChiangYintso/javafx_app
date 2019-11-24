@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<eclipse-userlibraries version="2">
+    <library name="JavaFX13" systemlibrary="false">
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx.base.jar"/>
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx.controls.jar"/>
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx.fxml.jar"/>
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx.graphics.jar"/>
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx.media.jar"/>
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx.swing.jar"/>
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx.web.jar"/>
+        <archive path="D:/JavaFX/openjfx-13.0.1_windows-x64_bin-sdk/javafx-sdk-13.0.1/lib/javafx-swt.jar"/>
+    </library>
+    <library name="MySQLConnector" systemlibrary="false">
+        <archive path="D:/maven/local_mvn_repo/mysql/mysql-connector-java/8.0.18/mysql-connector-java-8.0.18.jar"/>
+    </library>
+</eclipse-userlibraries>
