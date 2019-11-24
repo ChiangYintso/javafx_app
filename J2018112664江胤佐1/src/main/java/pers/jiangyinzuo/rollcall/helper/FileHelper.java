@@ -25,7 +25,6 @@ public class FileHelper {
 	}
 
 	public static File getFile(String fileName) throws UnsupportedEncodingException {
-
 		return new File(System.getProperty("user.dir") +"/files/"+ fileName);
 	}
 

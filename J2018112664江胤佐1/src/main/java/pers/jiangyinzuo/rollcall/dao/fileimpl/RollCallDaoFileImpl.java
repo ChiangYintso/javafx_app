@@ -14,7 +14,7 @@ import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
  */
 public class RollCallDaoFileImpl implements RollCallDao {
 
-	private static final String FILE_NAME = "rollCalls.txt";
+	private static final String FILE_NAME = "rollcalls.txt";
 
 	@Override
 	public void insertRollCall(RollCall rollCall) throws IOException {
