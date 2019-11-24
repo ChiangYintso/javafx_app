@@ -73,7 +73,7 @@ public class StudentMainUi extends AbstractUi {
 				System.out.println("暂无点名记录");
 			}
 			for (RollCall rollCall : resultList) {
-				rollCall.getRollCallInfo();
+                System.out.println(rollCall.getRollCallInfo());
 			}
 		} catch (ClassNotFoundException | CustomException | IOException e) {
 			e.printStackTrace();

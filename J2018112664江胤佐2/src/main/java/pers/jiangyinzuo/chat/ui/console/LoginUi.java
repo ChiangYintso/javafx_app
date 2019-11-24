@@ -1,6 +1,9 @@
 package main.java.pers.jiangyinzuo.chat.ui.console;
 
-import main.java.pers.jiangyinzuo.chat.ui.console.helper.ConsoleScanHelper;
+import main.java.pers.jiangyinzuo.chat.common.CustomInfo;
+import main.java.pers.jiangyinzuo.chat.service.AccountService;
+import main.java.pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
+import main.java.pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
 
 /**
  * @author Jiang Yinzuo
@@ -9,6 +12,7 @@ public class LoginUi extends AbstractUi {
 
     private String username;
     private String password;
+    private AccountService accountService = new AccountServiceImpl();
 
     /**
      * 运行UI的方法
@@ -16,44 +20,47 @@ public class LoginUi extends AbstractUi {
      * @return 要跳转的UI, 若为null则结束程序
      */
     @Override
-    public Class<AbstractUi> run() {
-        int item = 0;
-        System.out.println("0: 注册\n1: 登录");
-        item = Integer.parseInt(ConsoleScanHelper.getScanner().nextLine());
+    public Class<? extends AbstractUi> run() {
+        System.out.println("******网络聊天室******");
+        int item = ConsoleIoHelper.selectMenuItem(new String[]{"1. 注册", "2. 登录"});
 
         if (item == 1) {
-            login();
+            return register();
         } else {
-            register();
+            return login();
         }
-
-        return null;
     }
 
-    private void register() {
+    private Class<? extends AbstractUi> register() {
         System.out.println("输入账号");
-        username = ConsoleScanHelper.getScanner().nextLine();
+        username = ConsoleIoHelper.scanner.nextLine();
         System.out.println("输入密码");
-        password = ConsoleScanHelper.getScanner().nextLine();
+        password = ConsoleIoHelper.scanner.nextLine();
         System.out.println("重新输入密码");
-        String repeatPassword = ConsoleScanHelper.getScanner().nextLine();
+        String repeatPassword = ConsoleIoHelper.scanner.nextLine();
         if (!repeatPassword.equals(password)) {
             System.out.println("两次密码不一样");
+        } else {
+            CustomInfo customInfo = accountService.register(username, password);
+            if (customInfo.getStatus() == (short) 200) {
+            } else {
+                System.out.println(customInfo.getErrInfo());
+            }
         }
+        return LoginUi.class;
     }
 
-    private void login() {
+    private Class<? extends AbstractUi> login() {
         System.out.println("输入账号");
-        username = ConsoleScanHelper.getScanner().nextLine();
+        username = ConsoleIoHelper.scanner.nextLine();
         System.out.println("输入密码");
-        password = ConsoleScanHelper.getScanner().nextLine();
-    }
-
-    /**
-     * 初始化UI
-     */
-    @Override
-    public void init() {
-
+        password = ConsoleIoHelper.scanner.nextLine();
+        CustomInfo customInfo = accountService.login(username, password);
+        if (customInfo.getStatus() == (short) 200) {
+            return MainBoardUi.class;
+        } else {
+            System.out.println(customInfo.getErrInfo());
+            return LoginUi.class;
+        }
     }
 }

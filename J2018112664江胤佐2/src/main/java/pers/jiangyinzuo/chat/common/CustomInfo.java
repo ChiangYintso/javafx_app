@@ -6,11 +6,15 @@ package main.java.pers.jiangyinzuo.chat.common;
  *
  */
 public class CustomInfo {
-	
-	// ×´Ì¬Âë
+
+	/**
+	 * ×´Ì¬Âë
+	 */
 	private short status;
-	
-	// ´íÎóÐÅÏ¢
+
+	/**
+	 * ´íÎóÐÅÏ¢
+	 */
 	private String errInfo;
 	
 	private Object entity;

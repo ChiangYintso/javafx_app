@@ -1,7 +1,6 @@
 package main.java.pers.jiangyinzuo.chat.ui.console;
 
-import com.mysql.cj.log.Log;
-import main.java.pers.jiangyinzuo.chat.ui.console.helper.ConsoleScanHelper;
+import main.java.pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
 
 /**
  * 网络聊天室控制台UI的入口类
@@ -14,7 +13,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            ConsoleScanHelper.closeScanner();
+            ConsoleIoHelper.scanner.close();
         }
     }
 }

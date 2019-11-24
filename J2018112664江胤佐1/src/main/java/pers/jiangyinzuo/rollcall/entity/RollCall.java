@@ -81,7 +81,7 @@ public class RollCall implements Serializable {
 	}
 
 	public String getRollCallInfo() {
-		return this.student.getStudentId() + " " + this.student.getStudentName() + " " + this.rollCallTime
+		return this.student.getStudentId() + " " + this.student.getStudentName() + " " + this.rollCallTime.toString()
 				+ " " + this.rollCallType + " " + this.presence;
 	}
 }
