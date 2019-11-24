@@ -9,8 +9,6 @@ import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.teacher.TeacherMainUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.student.StudentMainUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
@@ -20,24 +18,14 @@ import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
  * @author Jiang Yinzuo
  */
 public class LoginUi extends AbstractUi {
-	public static enum MENU implements AbstractMenu {
-		EXIT(AbstractMenu.EXIT), STUDENT_MAIN_MENU(StudentMainUi.class.getName()),
-		TEACHER_MAIN_MENU(TeacherMainUi.class.getName());
 
-		private String menuClassName;
-
-		MENU(String menuClassName) {
-			this.menuClassName = menuClassName;
-		}
-
-		@Override
-		public String getMenuClassName() {
-			return this.menuClassName;
-		}
-	}
-
+	/**
+	 * 运行UI的方法
+	 *
+	 * @return 要跳转的UI, 若为null则结束程序
+	 */
 	@Override
-	public AbstractMenu showUi() throws CustomException, FileNotFoundException, IOException {
+	public Class<? extends AbstractUi> run() {
 		String isStudent = "";
 		String id = "";
 		String pwd = "";
@@ -52,7 +40,7 @@ public class LoginUi extends AbstractUi {
 
 				isStudent = FileHelper.scanner.nextLine();
 				if (isStudent.equals("#")) {
-					return MENU.EXIT;
+					return null;
 				}
 				if (!(isStudent.equals("1") || isStudent.equals("0"))) {
 					System.out.println("请输入0或1");
@@ -75,14 +63,14 @@ public class LoginUi extends AbstractUi {
 					Student student = loginService.studentLogin(Long.parseLong(id), pwd);
 					if (student != null) {
 						userInfo.setStudent(student);
-						return MENU.STUDENT_MAIN_MENU;
+						return StudentMainUi.class;
 					}
 				} else {
 					Teacher teacher = loginService.teacherLogin(Long.parseLong(id), pwd);
 					if (teacher != null) {
 
 						userInfo.setTeacher(teacher);
-						return MENU.TEACHER_MAIN_MENU;
+						return TeacherMainUi.class;
 					}
 				}
 			} catch (NumberFormatException e) {
@@ -93,13 +81,12 @@ public class LoginUi extends AbstractUi {
 				System.out.println(e.getErrInfo());
 			} catch (ClassNotFoundException e) {
 				System.out.println("账号或密码错误");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-		return MENU.EXIT;
-	}
-
-	@Override
-	protected void setSelectedMenuMap() {
-		
+		return null;
 	}
 }

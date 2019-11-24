@@ -11,8 +11,7 @@ import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
 import main.java.pers.jiangyinzuo.rollcall.service.Impl.RollCallServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
+import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
@@ -26,24 +25,8 @@ public class RollCallUi extends AbstractUi {
 	private List<RollCall> rollCallList;
 	private TeachingClass selectedTeachingClass;
 	private Map<Integer, String> presenceMap;
-
-	private enum MENU implements AbstractMenu {
-		TEACHER_MAIN_MENU(TeacherMainUi.class.getName());
-
-		String menuClassName;
-
-		MENU(String menuClassName) {
-			this.menuClassName = menuClassName;
-		}
-
-		@Override
-		public String getMenuClassName() {
-			return this.menuClassName;
-		}
-	}
 	
 	public RollCallUi() throws ClassNotFoundException, CustomException, IOException {
-		setSelectedMenuMap();
 		this.selectedTeachingClass = SelectedTeachingClass.getSingleton().getCls();
 		if (this.selectedTeachingClass == null) {
 			System.out.println("未选择班级");
@@ -59,16 +42,6 @@ public class RollCallUi extends AbstractUi {
 		this.presenceMap.put(5, "早退");
 	}
 
-	@Override
-	public AbstractMenu showUi() throws IOException {
-		operate();
-		return MENU.TEACHER_MAIN_MENU;
-	}
-
-	@Override
-	protected void setSelectedMenuMap() {
-		this.selectedMenuMap.put("1", MENU.TEACHER_MAIN_MENU);
-	}
 
 	private void operate() throws IOException {
 		int option; 
@@ -139,5 +112,15 @@ public class RollCallUi extends AbstractUi {
 		item = FileHelper.scanItem(1, this.rollCallList.size());
 		rollCall.setPresence(presenceMap.get(Integer.valueOf(item)));
 		service.editRollCall(tempRollCall, rollCall);
+	}
+
+	/**
+	 * 运行UI的方法
+	 *
+	 * @return 要跳转的UI, 若为null则结束程序
+	 */
+	@Override
+	public Class<? extends AbstractUi> run() {
+		return null;
 	}
 }

@@ -1,39 +1,16 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.console.common;
 
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
+import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 
 public class ScheduleUi extends AbstractUi {
-	
-	enum MENU implements AbstractMenu {
-		EXIT(AbstractMenu.EXIT);
-		
-		private String menuClassName;
-		MENU(String menuClassName) {
-			this.menuClassName = menuClassName;
-		}
-		@Override
-		public String getMenuClassName() {
-			return this.menuClassName;
-		}
-	}
-	
-	public ScheduleUi() {
-		
-	}
-	
-	@Override
-	public AbstractMenu showUi() {
-		System.out.println("scheduleui");
-		System.out.println("-------------");
-		System.out.println("0. 返回");
-		System.out.println("-------------");
-		
-		return MENU.EXIT;
-	}
 
+	/**
+	 * 运行UI的方法
+	 *
+	 * @return 要跳转的UI, 若为null则结束程序
+	 */
 	@Override
-	protected void setSelectedMenuMap() {
-		
+	public Class<? extends AbstractUi> run() {
+		return null;
 	}
 }

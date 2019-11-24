@@ -1,7 +1,6 @@
 package main.java.pers.jiangyinzuo.rollcall.util;
 
 import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
 
 import java.util.Map;
 

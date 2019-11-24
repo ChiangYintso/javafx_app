@@ -1,46 +1,25 @@
 package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
 
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractMenu;
-import main.java.pers.jiangyinzuo.rollcall.ui.AbstractUi;
+import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.common.ScheduleUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 import main.java.pers.jiangyinzuo.rollcall.util.Select;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class TeacherMainUi extends AbstractUi {
 
-	private static enum MENU implements AbstractMenu {
-		EXIT(AbstractMenu.EXIT),
-		SCHEDULE(ScheduleUi.class.getName()),
-		TEACHING_CLASS(TeachingClassUiForTeacher.class.getName());
-
-		private String menuClassName;
-
-		MENU(String menuClassName) {
-			this.menuClassName = menuClassName;
-		}
-
-		@Override
-		public String getMenuClassName() {
-			return this.menuClassName;
-		}
-	}
-	
-	public TeacherMainUi() {
-		setSelectedMenuMap();
-	}
-	
+	/**
+	 * 运行UI的方法
+	 *
+	 * @return 要跳转的UI, 若为null则结束程序
+	 */
 	@Override
-	public AbstractMenu showUi() {
+	public Class<? extends AbstractUi> run() {
 		UserInfo userInfo = UserInfo.getSingleton();
-		userInfo.getTeacher().welcome();
-		return Select.selectMenu(selectedMenuMap, new String[] {"1. 查看课表", "2. 选择教学班", "3. 退出"});
+		System.out.println(userInfo.getTeacher().welcome());
+		System.out.println("1. 查看课表\n2. 选择教学班\n3. 退出");
+		return null;
 	}
-
-	@Override
-	protected void setSelectedMenuMap() {
-		selectedMenuMap.put("1", MENU.SCHEDULE);
-		selectedMenuMap.put("2", MENU.TEACHING_CLASS);
-		selectedMenuMap.put("3", MENU.EXIT);
-	}
-
 }
