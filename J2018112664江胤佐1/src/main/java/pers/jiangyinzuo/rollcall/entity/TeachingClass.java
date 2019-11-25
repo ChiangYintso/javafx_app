@@ -3,6 +3,9 @@ package main.java.pers.jiangyinzuo.rollcall.entity;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class TeachingClass implements Serializable {
 	private Long classId;
 	private String className;
@@ -124,5 +127,10 @@ public class TeachingClass implements Serializable {
 
 	public String getSchedule() {
 		return this.className + " ÖÜ" + this.session / 10 + "µÚ" + this.session % 10 + "½²";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj == this || obj instanceof TeachingClass && classId != null && classId.equals(((TeachingClass) obj).getClassId());
 	}
 }

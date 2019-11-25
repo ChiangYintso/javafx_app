@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.service.Impl;
+package main.java.pers.jiangyinzuo.rollcall.service.impl;
 
 import main.java.pers.jiangyinzuo.rollcall.service.UserService;
 

@@ -96,4 +96,9 @@ public class Teacher implements Serializable {
 	public String welcome() {
 		return "ÄãºÃ, " + this.teacherId + " " + this.teacherName + this.title;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this == obj || obj instanceof Teacher && teacherId != null && teacherId.equals(((Teacher) obj).getTeacherId());
+	}
 }

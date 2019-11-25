@@ -60,11 +60,6 @@ public class RollCallDaoFileImpl implements RollCallDao {
 
 	}
 
-	@Override
-	public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) {
-
-	}
-
 	private List<RollCall> getAllRollCalls() throws ClassNotFoundException, IOException {
 		return FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 	}

@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
-import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeachingClassServiceImpl;
+import main.java.pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
 import main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller.components.TeachingClassCmpController;
 import main.java.pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;

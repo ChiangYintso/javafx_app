@@ -14,7 +14,7 @@ import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
 import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
-import main.java.pers.jiangyinzuo.rollcall.service.Impl.LoginServiceImpl;
+import main.java.pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
 import main.java.pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;

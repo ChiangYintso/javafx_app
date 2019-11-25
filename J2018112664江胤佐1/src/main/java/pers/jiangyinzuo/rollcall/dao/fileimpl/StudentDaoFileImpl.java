@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.List;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
@@ -40,7 +41,7 @@ public class StudentDaoFileImpl implements StudentDao {
 	}
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
+			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException, SQLException {
 		StudentDao s = new StudentDaoFileImpl();
 		s.insertStudent(new Student(123L, (byte)1, "jyz", "123456", "Èí¼þ¹¤³Ì"));
 		System.out.println(s.queryStudent(123L).getStudentId());

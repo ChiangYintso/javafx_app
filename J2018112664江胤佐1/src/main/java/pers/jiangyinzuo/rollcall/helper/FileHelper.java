@@ -24,55 +24,6 @@ public class FileHelper {
 		return new File(System.getProperty("user.dir") +"/files/"+ fileName);
 	}
 
-	public static StringBuilder[] parseLine(StringBuilder line, int wordCount) {
-		StringBuilder[] result = new StringBuilder[wordCount];
-		for (StringBuilder s : result) {
-			s = new StringBuilder();
-		}
-		int idx = 0;
-		for (int i = 0; i < line.length(); ++i) {
-			if (line.charAt(i) != ',') {
-				result[idx].append(line.charAt(i));
-			} else {
-				++idx;
-			}
-		}
-		return result;
-	}
-
-	public static String getLine(BufferedReader br) throws IOException {
-		return br.readLine();
-	}
-
-	public static void writeEntity(Object obj, String fileName) throws IOException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		Class clazz = obj.getClass();
-		Field[] classField = clazz.getDeclaredFields();
-		String fieldName;
-		Method getter;
-		String type;
-
-		StringBuilder tempStr = new StringBuilder();
-		try (FileWriter fileWriter = new FileWriter(FileHelper.getFile(fileName), true);) {
-			for (Field field : classField) {
-				type = field.getGenericType().toString();
-				fieldName = field.getName();
-				fieldName = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-				getter = clazz.getMethod("get" + fieldName);
-
-				if (type.startsWith("class")) {
-					tempStr.append(getter.invoke(obj).toString());
-				} else {
-					System.out.println(getter.invoke(obj));
-					tempStr.append("[]");
-				}
-				tempStr.append(",");
-			}
-			tempStr.append("\n");
-			fileWriter.write(tempStr.toString());
-		}
-	}
-
 	public static void writeSerializableEntity(Object obj, String fileSuffix) throws IOException {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileSuffix), true);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
@@ -97,6 +48,19 @@ public class FileHelper {
 			return null;
 		} catch (EOFException e) {
 			throw new CustomException("entity not found", false);
+		}
+	}
+
+	public static <T> T readSerializableEntity(String fileName, T t) throws IOException, ClassNotFoundException {
+		try (FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
+			 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+			T result;
+			while ((result = (T) objectInputStream.readObject()) != null) {
+				if (t.equals(result)) {
+					return result;
+				}
+			}
+			return null;
 		}
 	}
 

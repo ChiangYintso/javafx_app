@@ -23,5 +23,5 @@ public interface RollCallDao {
 
 	void updateRollCall(RollCall rollCall, Long rollCallId);
 
-	void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap);
+	void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws IOException, ClassNotFoundException;
 }

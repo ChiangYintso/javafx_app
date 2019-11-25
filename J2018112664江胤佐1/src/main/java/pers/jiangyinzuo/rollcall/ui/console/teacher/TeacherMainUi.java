@@ -4,7 +4,7 @@ import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
-import main.java.pers.jiangyinzuo.rollcall.service.Impl.TeachingClassServiceImpl;
+import main.java.pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;

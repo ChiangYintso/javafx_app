@@ -109,4 +109,9 @@ public class Student implements Serializable {
 	public String welcome() {
 		return "ÄãºÃ, " + this.studentId + " " + this.studentName;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj == this || obj instanceof Student && studentId != null && studentId.equals(((Student) obj).getStudentId());
+	}
 }

@@ -84,4 +84,14 @@ public class RollCall implements Serializable {
 		return this.student.getStudentId() + " " + this.student.getStudentName() + " " + this.rollCallTime.toString()
 				+ " " + this.rollCallType + " " + this.presence;
 	}
+
+	/**
+	 * 根据rollCallId判断两个实体类是否相等
+	 * @param obj
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return obj == this || obj instanceof RollCall && rollCallId != null && rollCallId.equals(((RollCall) obj).getRollCallId());
+	}
 }

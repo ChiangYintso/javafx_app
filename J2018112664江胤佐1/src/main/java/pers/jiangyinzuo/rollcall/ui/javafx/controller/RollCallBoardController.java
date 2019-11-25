@@ -11,7 +11,7 @@ import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.entity.Student;
 import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
 import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
-import main.java.pers.jiangyinzuo.rollcall.service.Impl.RollCallServiceImpl;
+import main.java.pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
 import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 
 public class RollCallBoardController {
