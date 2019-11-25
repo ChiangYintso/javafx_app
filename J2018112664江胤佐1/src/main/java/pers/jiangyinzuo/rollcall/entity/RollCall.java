@@ -7,7 +7,7 @@ import java.time.Instant;
  * @author Jiang Yinzuo
  */
 public class RollCall implements Serializable {
-	private Integer rollCallId;
+	private Long rollCallId;
 
 	/**
 	 *  已到、未到、迟到、请假、早退
@@ -18,8 +18,8 @@ public class RollCall implements Serializable {
 	private TeachingClass teachingClass;
 	private Student student;
 
-	public RollCall(Integer rollCallId, String presence, String rollCallType, Instant rollCallTime,
-			TeachingClass teachingClass, Student student) {
+	public RollCall(Long rollCallId, String presence, String rollCallType, Instant rollCallTime,
+					TeachingClass teachingClass, Student student) {
 		this.rollCallId = rollCallId;
 		this.presence = presence;
 		this.rollCallType = rollCallType;
@@ -32,11 +32,11 @@ public class RollCall implements Serializable {
 		return new RollCall(rollCallId, presence, rollCallType, rollCallTime, teachingClass, student);
 	}
 
-	public Integer getRollCallId() {
+	public Long getRollCallId() {
 		return rollCallId;
 	}
 
-	public void setRollCallId(Integer rollCallId) {
+	public void setRollCallId(Long rollCallId) {
 		this.rollCallId = rollCallId;
 	}
 

@@ -1,6 +1,7 @@
 package main.java.pers.jiangyinzuo.rollcall.service.Impl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,11 +40,11 @@ public class RollCallServiceImpl implements RollCallService {
 	}
 
 	@Override
-	public void insertRollCall(Student student, String presence, String rollcallType) throws IOException {
-		RollCall rollCall = new RollCall(1, presence, rollcallType,
+	public void insertRollCall(Student student, String presence, String rollcallType) throws IOException, SQLException {
+		RollCall rollCall = new RollCall(1L, presence, rollcallType,
 				Instant.now().plusMillis(TimeUnit.HOURS.toMillis(Config.TIME_ZONE)), this.teachingClass, student);
 		this.dao.insertRollCall(rollCall);
-		this.totalRollCallList.add(rollCall);
+//		this.totalRollCallList.add(rollCall);
 		this.teachingClassRollCallList.add(rollCall);
 	}
 
@@ -53,20 +54,17 @@ public class RollCallServiceImpl implements RollCallService {
 	}
 
 	@Override
-	public void bulkWriteRollCalls(List<RollCall> rollCallList, boolean add) throws IOException {
-		if (add) {
-			this.totalRollCallList.addAll(rollCallList);
-			this.teachingClassRollCallList.addAll(rollCallList);
-		} else {
-			this.totalRollCallList.removeAll(this.teachingClassRollCallList);
-			this.totalRollCallList.addAll(rollCallList);
-			this.teachingClassRollCallList = rollCallList;
-		}
-		this.dao.bulkInsertRollCalls(rollCallList, add);
+	public void bulkWriteRollCalls(List<RollCall> rollCallList) throws IOException, SQLException {
+
+		this.totalRollCallList.removeAll(this.teachingClassRollCallList);
+		this.totalRollCallList.addAll(rollCallList);
+		this.teachingClassRollCallList = rollCallList;
+
+		this.dao.bulkInsertRollCalls(rollCallList);
 	}
 
 	@Override
-	public void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException {
+	public void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException, SQLException {
 		if (totalRollCallList == null || totalRollCallList.size() == 0) {
 			return;
 		}
@@ -85,11 +83,11 @@ public class RollCallServiceImpl implements RollCallService {
 			}
 		}
 
-		this.bulkWriteRollCalls(this.totalRollCallList, false);
+		this.bulkWriteRollCalls(this.totalRollCallList);
 	}
 
 	@Override
-	public void delRollCall(RollCall originRollCall) throws IOException {
+	public void delRollCall(RollCall originRollCall) throws IOException, SQLException {
 		if (totalRollCallList == null || totalRollCallList.size() == 0) {
 			return;
 		}
@@ -108,7 +106,7 @@ public class RollCallServiceImpl implements RollCallService {
 			}
 		}
 
-		this.bulkWriteRollCalls(this.totalRollCallList, false);
+		this.bulkWriteRollCalls(this.totalRollCallList);
 	}
 
 	@Override

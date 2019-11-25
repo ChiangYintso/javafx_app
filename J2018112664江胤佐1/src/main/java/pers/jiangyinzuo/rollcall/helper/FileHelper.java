@@ -114,7 +114,7 @@ public class FileHelper {
 		return entitiesList;
 	}
 
-	public static <T> List<T> readSerializableEntities(String fileSuffix, Validator v, Object obj)
+	public static <T> List<T> readSerializableEntities(String fileName, Validator v, Object obj)
 			throws CustomException, IOException, ClassNotFoundException {
 		List<T> arrayList = new ArrayList<>();
 
@@ -122,7 +122,7 @@ public class FileHelper {
 			return arrayList;
 		}
 		Object objFromFile;
-		FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileSuffix));
+		FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
 		while (fileInputStream.available() > 0) {
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
@@ -136,10 +136,10 @@ public class FileHelper {
 		return arrayList;
 	}
 
-	public static <T> void bulkInsertSerializableEntities(String fileSuffix, List<T> objectList, boolean add) {
+	public static <T> void bulkWriteSerializableEntities(String fileName, List<T> objectList, boolean add) {
 		if (objectList != null) {
 			for (Object obj : objectList) {
-				try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileSuffix), add);
+				try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileName), add);
                      ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
 					objectOutputStream.writeObject(obj);
 				} catch (IOException e) {

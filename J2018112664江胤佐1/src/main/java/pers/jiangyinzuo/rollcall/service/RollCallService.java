@@ -1,6 +1,7 @@
 package main.java.pers.jiangyinzuo.rollcall.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
@@ -16,13 +17,13 @@ import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
  */
 public interface RollCallService {
 	void insertRollCall(Student student, String presence, String rollcallType)
-			throws IOException;
+			throws IOException, SQLException;
 	
-	void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException;
+	void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException, SQLException;
 	
-	void delRollCall(RollCall originRollCall) throws IOException;
+	void delRollCall(RollCall originRollCall) throws IOException, SQLException;
 	
-	void bulkWriteRollCalls(List<RollCall> rollCallList, boolean add) throws IOException;
+	void bulkWriteRollCalls(List<RollCall> rollCallList) throws IOException, SQLException;
 	
 	List<RollCall> queryTeachingClassRollCalls();
 	

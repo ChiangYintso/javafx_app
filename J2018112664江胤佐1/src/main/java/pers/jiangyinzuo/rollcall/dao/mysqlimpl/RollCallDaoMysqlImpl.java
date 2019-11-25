@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jiang Yinzuo
@@ -21,7 +22,7 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     }
 
     @Override
-    public void bulkInsertRollCalls(List<RollCall> rollCallList, boolean add) throws IOException, SQLException {
+    public void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException {
         String sql = "INSERT INTO rollcall_rollcall_record(`rollcall_type`, `rollcall_time`, `presence`, `class_id`, `student_id`)";
         List<List<Object>> parametersList = new ArrayList<>();
         for (RollCall rollCall : rollCallList) {
@@ -39,6 +40,21 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     @Override
     public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws ClassNotFoundException, CustomException, IOException {
         return null;
+    }
+
+    @Override
+    public List<RollCall> queryRollCallsByStudentId(Long studentId) {
+        return null;
+    }
+
+    @Override
+    public void updateRollCall(RollCall rollCall, Long rollCallId) {
+
+    }
+
+    @Override
+    public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) {
+
     }
 
     @Override

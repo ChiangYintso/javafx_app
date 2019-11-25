@@ -2,6 +2,7 @@ package main.java.pers.jiangyinzuo.rollcall.dao.fileimpl;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
 import main.java.pers.jiangyinzuo.rollcall.dao.RollCallDao;
@@ -22,8 +23,23 @@ public class RollCallDaoFileImpl implements RollCallDao {
 	}
 
 	@Override
-	public void bulkInsertRollCalls(List<RollCall> rollCallList, boolean add) throws IOException {
-		FileHelper.<RollCall>bulkInsertSerializableEntities(FILE_NAME, rollCallList, add);
+	public void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, ClassNotFoundException {
+		FileHelper.<RollCall>bulkWriteSerializableEntities(FILE_NAME, rollCallList, true);
+	}
+
+	@Override
+	public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws IOException, ClassNotFoundException {
+		List<RollCall> allRollCallList = getAllRollCalls();
+		for (Map.Entry<Long, RollCall> entry : rollCallMap.entrySet()) {
+			for (RollCall rollCall : allRollCallList) {
+				if (rollCall.getRollCallId().equals(entry.getKey())) {
+					allRollCallList.remove(rollCall);
+					allRollCallList.add(entry.getValue());
+					break;
+				}
+			}
+		}
+		FileHelper.<RollCall>bulkWriteSerializableEntities(FILE_NAME, allRollCallList, false);
 	}
 
 	@Override
@@ -35,7 +51,21 @@ public class RollCallDaoFileImpl implements RollCallDao {
 	}
 
 	@Override
-	public List<RollCall> queryAllRollCalls() throws ClassNotFoundException, IOException {
+	public List<RollCall> queryRollCallsByStudentId(Long studentId) {
+		return null;
+	}
+
+	@Override
+	public void updateRollCall(RollCall rollCall, Long rollCallId) {
+
+	}
+
+	@Override
+	public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) {
+
+	}
+
+	private List<RollCall> getAllRollCalls() throws ClassNotFoundException, IOException {
 		return FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 	}
 }
