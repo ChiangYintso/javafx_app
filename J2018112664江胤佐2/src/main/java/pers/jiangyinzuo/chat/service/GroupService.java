@@ -1,8 +1,8 @@
-package main.java.pers.jiangyinzuo.chat.service;
+package pers.jiangyinzuo.chat.service;
 
-import main.java.pers.jiangyinzuo.chat.entity.Group;
-import main.java.pers.jiangyinzuo.chat.entity.Message;
-import main.java.pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.entity.Group;
+import pers.jiangyinzuo.chat.entity.Message;
+import pers.jiangyinzuo.chat.entity.User;
 import java.util.List;
 
 public interface GroupService {

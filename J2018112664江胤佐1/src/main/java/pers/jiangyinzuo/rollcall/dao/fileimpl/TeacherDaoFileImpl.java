@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.dao.fileimpl;
+package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -6,10 +6,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.dao.TeacherDao;
-import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
-import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.dao.TeacherDao;
+import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
  * @author Jiang Yinzuo

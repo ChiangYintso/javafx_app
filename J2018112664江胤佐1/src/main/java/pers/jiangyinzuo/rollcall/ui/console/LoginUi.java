@@ -1,17 +1,17 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.console;
+package pers.jiangyinzuo.rollcall.ui.console;
 
 import java.io.IOException;
 import java.io.StreamCorruptedException;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
-import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
-import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.teacher.TeacherMainUi;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.student.StudentMainUi;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.rollcall.service.LoginService;
+import pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.console.teacher.TeacherMainUi;
+import pers.jiangyinzuo.rollcall.ui.console.student.StudentMainUi;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 /**
  * @author Jiang Yinzuo

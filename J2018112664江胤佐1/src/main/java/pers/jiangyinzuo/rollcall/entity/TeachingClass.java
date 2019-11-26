@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.entity;
+package pers.jiangyinzuo.rollcall.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,6 +35,10 @@ public class TeachingClass implements Serializable {
 		this.studentList = studentList;
 		this.weeks = week;
 		this.session = session;
+	}
+
+	public TeachingClass(Long classId) {
+		this.classId = classId;
 	}
 
 	public String getWeeks() {

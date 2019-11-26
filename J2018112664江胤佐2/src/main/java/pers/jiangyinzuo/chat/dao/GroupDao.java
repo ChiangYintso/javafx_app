@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.chat.dao;
+package pers.jiangyinzuo.chat.dao;
 
-import main.java.pers.jiangyinzuo.chat.entity.Group;
+import pers.jiangyinzuo.chat.entity.Group;
 import java.util.List;
 
 public interface GroupDao {

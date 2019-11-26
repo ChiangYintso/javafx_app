@@ -1,14 +1,14 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
+package pers.jiangyinzuo.rollcall.ui.console.teacher;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
+import pers.jiangyinzuo.rollcall.service.TeachingClassService;
+import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 import java.io.IOException;
 import java.util.List;

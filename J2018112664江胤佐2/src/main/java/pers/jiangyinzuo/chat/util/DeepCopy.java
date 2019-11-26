@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.util;
+package pers.jiangyinzuo.chat.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

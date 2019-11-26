@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.ui.javafx.controller.components;
+package pers.jiangyinzuo.chat.ui.javafx.controller.components;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -6,11 +6,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.chat.entity.Group;
-import main.java.pers.jiangyinzuo.chat.entity.Session;
-import main.java.pers.jiangyinzuo.chat.entity.User;
-import main.java.pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
-import main.java.pers.jiangyinzuo.chat.ui.state.ChattingBoardInfo;
+import pers.jiangyinzuo.chat.entity.Group;
+import pers.jiangyinzuo.chat.entity.Session;
+import pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.ui.state.ChattingBoardInfo;
 
 public class SessionCardCmpController {
     @FXML

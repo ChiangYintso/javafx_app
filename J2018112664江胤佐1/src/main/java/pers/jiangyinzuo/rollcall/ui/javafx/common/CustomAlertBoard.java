@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.common;
+package pers.jiangyinzuo.rollcall.ui.javafx.common;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

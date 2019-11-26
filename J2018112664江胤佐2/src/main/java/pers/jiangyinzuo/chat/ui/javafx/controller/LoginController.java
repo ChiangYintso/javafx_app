@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.ui.javafx.controller;
+package pers.jiangyinzuo.chat.ui.javafx.controller;
 
 
 import java.io.IOException;
@@ -11,13 +11,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.chat.common.CustomInfo;
-import main.java.pers.jiangyinzuo.chat.entity.User;
-import main.java.pers.jiangyinzuo.chat.service.AccountService;
-import main.java.pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
-import main.java.pers.jiangyinzuo.chat.ui.javafx.common.CustomAlertBoard;
-import main.java.pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
-import main.java.pers.jiangyinzuo.chat.ui.state.UserInfo;
+import pers.jiangyinzuo.chat.common.CustomInfo;
+import pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.service.AccountService;
+import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
+import pers.jiangyinzuo.chat.ui.javafx.common.CustomAlertBoard;
+import pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.ui.state.UserInfo;
 
 public class LoginController {
     @FXML

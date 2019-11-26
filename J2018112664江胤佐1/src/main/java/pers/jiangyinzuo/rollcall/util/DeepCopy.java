@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.util;
+package pers.jiangyinzuo.rollcall.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

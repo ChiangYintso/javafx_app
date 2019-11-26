@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.ui.javafx.controller;
+package pers.jiangyinzuo.chat.ui.javafx.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,15 +14,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.chat.entity.Group;
-import main.java.pers.jiangyinzuo.chat.entity.Session;
-import main.java.pers.jiangyinzuo.chat.entity.User;
-import main.java.pers.jiangyinzuo.chat.service.FriendService;
-import main.java.pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
-import main.java.pers.jiangyinzuo.chat.ui.javafx.common.CustomAlertBoard;
-import main.java.pers.jiangyinzuo.chat.ui.javafx.controller.components.SessionCardCmpController;
-import main.java.pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
-import main.java.pers.jiangyinzuo.chat.ui.state.UserInfo;
+import pers.jiangyinzuo.chat.entity.Group;
+import pers.jiangyinzuo.chat.entity.Session;
+import pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.service.FriendService;
+import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
+import pers.jiangyinzuo.chat.ui.javafx.common.CustomAlertBoard;
+import pers.jiangyinzuo.chat.ui.javafx.controller.components.SessionCardCmpController;
+import pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.ui.state.UserInfo;
 
 public class MainBoardController {
 

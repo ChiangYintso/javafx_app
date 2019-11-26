@@ -1,8 +1,8 @@
-package main.java.pers.jiangyinzuo.chat.ui.state;
+package pers.jiangyinzuo.chat.ui.state;
 
-import main.java.pers.jiangyinzuo.chat.entity.Group;
-import main.java.pers.jiangyinzuo.chat.entity.Session;
-import main.java.pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.entity.Group;
+import pers.jiangyinzuo.chat.entity.Session;
+import pers.jiangyinzuo.chat.entity.User;
 
 /**
  * 临时存放打开ChattingBoard的相关信息，便于初始化

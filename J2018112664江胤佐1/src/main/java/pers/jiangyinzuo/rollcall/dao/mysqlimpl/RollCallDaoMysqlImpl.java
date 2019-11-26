@@ -1,9 +1,9 @@
-package main.java.pers.jiangyinzuo.rollcall.dao.mysqlimpl;
+package pers.jiangyinzuo.rollcall.dao.mysqlimpl;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.dao.RollCallDao;
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
-import main.java.pers.jiangyinzuo.rollcall.helper.MySqlHelper;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.dao.RollCallDao;
+import pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,7 +38,7 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     }
 
     @Override
-    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws ClassNotFoundException, CustomException, IOException {
+    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws ClassNotFoundException, IOException {
         return null;
     }
 
@@ -58,7 +58,7 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     }
 
     @Override
-    public List<RollCall> queryAllRollCalls() throws ClassNotFoundException, IOException {
+    public Long getRecordCount() throws IOException, ClassNotFoundException {
         return null;
     }
 }

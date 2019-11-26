@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.service;
+package pers.jiangyinzuo.rollcall.service;
 
 public interface TeacherService {
 

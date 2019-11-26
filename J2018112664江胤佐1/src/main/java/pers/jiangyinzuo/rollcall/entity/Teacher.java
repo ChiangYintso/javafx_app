@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.entity;
+package pers.jiangyinzuo.rollcall.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,12 +29,16 @@ public class Teacher implements Serializable {
 	/**
 	 * 用于教师登录验证
 	 * 
-	 * @param teacherId
-	 * @param pwd
+	 * @param teacherId 教师工号
+	 * @param password 密码
 	 */
-	public Teacher(Long teacherId, String pwd) {
+	public Teacher(Long teacherId, String password) {
 		this.teacherId = teacherId;
-		this.password = pwd;
+		this.password = password;
+	}
+
+	public Teacher(Long teacherId) {
+		this.teacherId = teacherId;
 	}
 
 	public Long getTeacherId() {

@@ -1,12 +1,12 @@
-package main.java.pers.jiangyinzuo.rollcall.dao;
+package pers.jiangyinzuo.rollcall.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
 
 public interface TeachingClassDao {
 	void insertTeachingClass(TeachingClass teachingClass) throws IOException, IllegalAccessException, IllegalArgumentException,

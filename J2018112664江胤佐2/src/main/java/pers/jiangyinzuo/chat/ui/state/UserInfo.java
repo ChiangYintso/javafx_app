@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.chat.ui.state;
+package pers.jiangyinzuo.chat.ui.state;
 
-import main.java.pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.entity.User;
 
 public class UserInfo {
 	private User user;

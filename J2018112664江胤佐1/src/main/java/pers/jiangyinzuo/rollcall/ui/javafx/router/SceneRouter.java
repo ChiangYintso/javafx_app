@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.router;
+package pers.jiangyinzuo.rollcall.ui.javafx.router;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,6 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class SceneRouter {
 
 	// ´æ·ÅÒ³ÃæµÄÈÝÆ÷

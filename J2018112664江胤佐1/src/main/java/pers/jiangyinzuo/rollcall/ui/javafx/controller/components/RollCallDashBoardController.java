@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.common;
+package pers.jiangyinzuo.chat.common;
 
 /**
  * 自定义消息

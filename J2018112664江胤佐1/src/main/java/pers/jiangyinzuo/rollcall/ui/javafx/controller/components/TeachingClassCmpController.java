@@ -1,13 +1,13 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller.TeacherMainBoardController;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.ui.javafx.controller.TeacherMainBoardController;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 
 public class TeachingClassCmpController {
     @FXML

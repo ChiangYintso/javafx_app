@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.entity;
+package pers.jiangyinzuo.rollcall.entity;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -26,6 +26,10 @@ public class RollCall implements Serializable {
 		this.rollCallTime = rollCallTime;
 		this.teachingClass = teachingClass;
 		this.student = student;
+	}
+
+	public RollCall(Long rollCallId) {
+		this.rollCallId = rollCallId;
 	}
 
 	public RollCall copy() {
@@ -93,5 +97,19 @@ public class RollCall implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		return obj == this || obj instanceof RollCall && rollCallId != null && rollCallId.equals(((RollCall) obj).getRollCallId());
+	}
+
+	public Long getTeachingClassId() {
+		if (teachingClass == null) {
+			return null;
+		}
+		return teachingClass.getClassId();
+	}
+
+	public Long getStudentId() {
+		if (student == null) {
+			return null;
+		}
+		return student.getStudentId();
 	}
 }

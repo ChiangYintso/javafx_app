@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.ui.console;
+package pers.jiangyinzuo.chat.ui.console;
 
 import java.lang.reflect.InvocationTargetException;
 

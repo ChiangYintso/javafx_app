@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.utils;
+package pers.jiangyinzuo.rollcall.ui.javafx.utils;
 
 import java.io.IOException;
 

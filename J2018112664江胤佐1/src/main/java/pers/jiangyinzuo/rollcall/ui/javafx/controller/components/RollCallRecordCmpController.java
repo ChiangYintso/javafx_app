@@ -1,8 +1,8 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
 
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.entity.RollCall;
 
 public class RollCallRecordCmpController {
 

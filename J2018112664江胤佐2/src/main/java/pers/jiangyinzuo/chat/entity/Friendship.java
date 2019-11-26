@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.entity;
+package pers.jiangyinzuo.chat.entity;
 
 public class Friendship {
 	Long friendshipId;

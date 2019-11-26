@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.state;
+package pers.jiangyinzuo.rollcall.ui.state;
 
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
 
 /**
  * µ¥ÀýÄ£Ê½ 

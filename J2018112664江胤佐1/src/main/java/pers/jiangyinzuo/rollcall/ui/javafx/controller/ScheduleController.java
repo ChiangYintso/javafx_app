@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,11 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.service.TeachingClassService;
+import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 /**
  * @author Jiang Yinzuo

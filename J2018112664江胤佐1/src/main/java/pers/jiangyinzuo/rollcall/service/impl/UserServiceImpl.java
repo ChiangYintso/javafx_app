@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.rollcall.service.impl;
+package pers.jiangyinzuo.rollcall.service.impl;
 
-import main.java.pers.jiangyinzuo.rollcall.service.UserService;
+import pers.jiangyinzuo.rollcall.service.UserService;
 
 public class UserServiceImpl implements UserService {
 

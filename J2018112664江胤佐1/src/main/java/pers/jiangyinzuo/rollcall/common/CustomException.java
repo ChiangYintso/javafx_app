@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.common;
+package pers.jiangyinzuo.rollcall.common;
 
 public class CustomException extends Exception {
 

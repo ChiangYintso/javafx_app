@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.chat.service;
+package pers.jiangyinzuo.chat.service;
 
-import main.java.pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.entity.User;
 
 public interface userStatusService {
 	User login(Integer userId, String pwd);

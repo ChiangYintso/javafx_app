@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import java.io.IOException;
 
@@ -6,10 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class StudentMainBoardController {
 
     @FXML

@@ -1,12 +1,11 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
+package pers.jiangyinzuo.rollcall.ui.console.teacher;
 
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 
 public class TeachingClassDetailUi extends AbstractUi {
 

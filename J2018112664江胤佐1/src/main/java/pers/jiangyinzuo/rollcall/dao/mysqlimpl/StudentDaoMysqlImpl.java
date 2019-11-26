@@ -1,9 +1,9 @@
-package main.java.pers.jiangyinzuo.rollcall.dao.mysqlimpl;
+package pers.jiangyinzuo.rollcall.dao.mysqlimpl;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.dao.StudentDao;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.helper.MySqlHelper;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.dao.StudentDao;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

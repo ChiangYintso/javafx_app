@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.entity;
+package pers.jiangyinzuo.rollcall.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,6 +40,10 @@ public class Student implements Serializable {
 	public Student(Long studentId, String password) {
 		this.studentId = studentId;
 		this.password = password;
+	}
+
+	public Student(Long studentId) {
+		this.studentId = studentId;
 	}
 
 	public Long getStudentId() {

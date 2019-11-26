@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,15 +12,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
-import main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller.components.TeachingClassCmpController;
-import main.java.pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.service.TeachingClassService;
+import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
+import pers.jiangyinzuo.rollcall.ui.javafx.controller.components.TeachingClassCmpController;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 public class TeacherMainBoardController {
 

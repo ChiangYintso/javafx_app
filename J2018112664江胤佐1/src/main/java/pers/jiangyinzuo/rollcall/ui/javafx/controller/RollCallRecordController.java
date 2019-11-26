@@ -1,9 +1,9 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
+import pers.jiangyinzuo.rollcall.service.RollCallService;
 
 public class RollCallRecordController {
 

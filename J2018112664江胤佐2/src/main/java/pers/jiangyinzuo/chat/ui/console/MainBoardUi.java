@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.chat.ui.console;
+package pers.jiangyinzuo.chat.ui.console;
 
-import main.java.pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
 
 public class MainBoardUi extends AbstractUi {
     /**

@@ -1,7 +1,7 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.state;
+package pers.jiangyinzuo.rollcall.ui.state;
 
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.Teacher;
 
 public class UserInfo {
 	private Student student;

@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.dao.fileimpl;
+package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -9,10 +9,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.dao.StudentDao;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.dao.StudentDao;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
  * @author Jiang Yinzuo

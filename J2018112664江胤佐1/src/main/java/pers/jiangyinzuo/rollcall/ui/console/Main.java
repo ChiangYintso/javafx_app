@@ -1,11 +1,11 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.console;
+package pers.jiangyinzuo.rollcall.ui.console;
 
 import java.io.StreamCorruptedException;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.config.Config;
-import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
-import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.config.Config;
+import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
  * @author Jiang Yinzuo

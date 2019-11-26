@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.helper;
+package pers.jiangyinzuo.rollcall.helper;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.Main;
+import pers.jiangyinzuo.rollcall.service.validator.Validator;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.ui.console.Main;
 
 /**
  * 文件读写类, 负责程序的IO操作
@@ -65,17 +65,15 @@ public class FileHelper {
 	}
 
 	public static <T> List<T> readAllSerializableEntities(String fileName) throws ClassNotFoundException, IOException {
-		List<T> entitiesList = new ArrayList<>();
-		Object objFromFile;
+		List<T> results = new ArrayList<>();
+
 		FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
 		while (fileInputStream.available() > 0) {
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-			objFromFile = objectInputStream.readObject();
-			entitiesList.add((T) objFromFile);
+			results.add((T) objectInputStream.readObject());
 		}
 		fileInputStream.close();
-		return entitiesList;
+		return results;
 	}
 
 	public static <T> List<T> readSerializableEntities(String fileName, Validator v, Object obj)

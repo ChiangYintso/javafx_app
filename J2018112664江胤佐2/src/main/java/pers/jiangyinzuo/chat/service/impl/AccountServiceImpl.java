@@ -1,10 +1,10 @@
-package main.java.pers.jiangyinzuo.chat.service.impl;
+package pers.jiangyinzuo.chat.service.impl;
 
 import java.util.ArrayList;
 
-import main.java.pers.jiangyinzuo.chat.common.CustomInfo;
-import main.java.pers.jiangyinzuo.chat.entity.User;
-import main.java.pers.jiangyinzuo.chat.service.AccountService;
+import pers.jiangyinzuo.chat.common.CustomInfo;
+import pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.service.AccountService;
 
 public class AccountServiceImpl implements AccountService {
 

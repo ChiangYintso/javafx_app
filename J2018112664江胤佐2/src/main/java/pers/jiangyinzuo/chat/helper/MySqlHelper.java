@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.helper;
+package pers.jiangyinzuo.chat.helper;
 
 import java.sql.*;
 

@@ -1,10 +1,10 @@
-package main.java.pers.jiangyinzuo.rollcall.service.validator;
+package pers.jiangyinzuo.rollcall.service.validator;
 
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
 
 public class TeachingClassComparedByStudentIdValidator implements Validator {
 

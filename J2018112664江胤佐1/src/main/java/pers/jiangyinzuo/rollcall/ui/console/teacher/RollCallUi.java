@@ -1,19 +1,21 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.console.teacher;
+package pers.jiangyinzuo.rollcall.ui.console.teacher;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
-import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.rollcall.service.RollCallService;
+import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 
 /**
  * @author Jiang Yinzuo
@@ -25,7 +27,7 @@ public class RollCallUi extends AbstractUi {
 	private TeachingClass selectedTeachingClass;
 	private Map<Integer, String> presenceMap;
 	
-	public RollCallUi() throws ClassNotFoundException, CustomException, IOException {
+	public RollCallUi() throws ClassNotFoundException, CustomException, IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		this.selectedTeachingClass = SelectedTeachingClass.getSingleton().getCls();
 		if (this.selectedTeachingClass == null) {
 			System.out.println("未选择班级");
@@ -55,14 +57,14 @@ public class RollCallUi extends AbstractUi {
 				item = ConsoleIoHelper.scanItem(1, 5);
 				try {
 					service.insertRollCall(student, presenceMap.get(Integer.valueOf(item)), rollCallType);
-				} catch (IOException e) {
+				} catch (IOException | SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
 	
-	private void editRollCallRecord() throws IOException {
+	private void editRollCallRecord() throws IOException, SQLException {
 		if (this.rollCallList == null || this.rollCallList.size() == 0) {
 			System.out.println("无点名记录");
 		} else {
@@ -106,7 +108,7 @@ public class RollCallUi extends AbstractUi {
 			case 4:
 				try {
 					editRollCallRecord();
-				} catch (IOException e) {
+				} catch (IOException | SQLException e) {
 					e.printStackTrace();
 				}
 				return this.getClass();

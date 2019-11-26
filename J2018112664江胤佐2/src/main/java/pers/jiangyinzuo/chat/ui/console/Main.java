@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.chat.ui.console;
+package pers.jiangyinzuo.chat.ui.console;
 
-import main.java.pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
 
 /**
  * 网络聊天室控制台UI的入口类

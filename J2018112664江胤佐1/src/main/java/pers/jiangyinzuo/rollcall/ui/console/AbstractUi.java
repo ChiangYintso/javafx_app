@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.console;
+package pers.jiangyinzuo.rollcall.ui.console;
 
 /**
  * @author Jiang Yinzuo

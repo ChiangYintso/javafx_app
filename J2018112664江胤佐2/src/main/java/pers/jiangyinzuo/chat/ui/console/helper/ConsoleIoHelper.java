@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.ui.console.helper;
+package pers.jiangyinzuo.chat.ui.console.helper;
 
 import java.util.Scanner;
 

@@ -1,13 +1,13 @@
-package main.java.pers.jiangyinzuo.rollcall.service;
+package pers.jiangyinzuo.rollcall.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
 
 /**
  * µãÃû
@@ -23,7 +23,7 @@ public interface RollCallService {
 	
 	void delRollCall(RollCall originRollCall) throws IOException, SQLException;
 	
-	void bulkWriteRollCalls(List<RollCall> rollCallList) throws IOException, SQLException;
+	void bulkWriteRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException;
 	
 	List<RollCall> queryTeachingClassRollCalls();
 	

@@ -1,6 +1,7 @@
-package main.java.pers.jiangyinzuo.rollcall.service.impl;
+package pers.jiangyinzuo.rollcall.service.impl;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -9,14 +10,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.config.Config;
-import main.java.pers.jiangyinzuo.rollcall.dao.RollCallDao;
-import main.java.pers.jiangyinzuo.rollcall.dao.fileimpl.RollCallDaoFileImpl;
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.dao.RollCallDao;
+import pers.jiangyinzuo.rollcall.dao.fileimpl.RollCallDaoFileImpl;
+import pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.factory.DaoFactory;
+import pers.jiangyinzuo.rollcall.service.RollCallService;
 
 /**
  * @author Jiang Yinzuo
@@ -24,29 +25,28 @@ import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
 public class RollCallServiceImpl implements RollCallService {
 
 	private RollCallDao dao;
-	private List<RollCall> totalRollCallList;
 	private List<RollCall> teachingClassRollCallList;
 	private TeachingClass teachingClass;
 
 	public RollCallServiceImpl(TeachingClass teachingClass)
-			throws ClassNotFoundException, CustomException, IOException {
-		this.dao = new RollCallDaoFileImpl();
+			throws ClassNotFoundException, CustomException, IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+		// 反射实例化Dao
+		this.dao = DaoFactory.createDao(RollCallDao.class);
+
 		if (teachingClass == null) {
 			throw new CustomException("未选择班级", false);
 		}
 		this.teachingClass = teachingClass;
-		this.totalRollCallList = this.dao.queryAllRollCalls();
 		this.teachingClassRollCallList = this.dao.queryRollCallsByTeachingClassId(teachingClass.getClassId());
 	}
 
-	@Override
-	public void insertRollCall(Student student, String presence, String rollcallType) throws IOException, SQLException {
-		RollCall rollCall = new RollCall(1L, presence, rollcallType,
-				Instant.now().plusMillis(TimeUnit.HOURS.toMillis(Config.TIME_ZONE)), this.teachingClass, student);
-		this.dao.insertRollCall(rollCall);
-//		this.totalRollCallList.add(rollCall);
-		this.teachingClassRollCallList.add(rollCall);
-	}
+//	@Override
+//	public void insertRollCall(RollCall rollCall) throws IOException, SQLException, ClassNotFoundException {
+//		rollCall.setRollCallId(this.dao.getRecordCount() + 1);
+//		this.dao.insertRollCall(rollCall);
+//		this.teachingClassRollCallList.add(rollCall);
+//	}
 
 	@Override
 	public List<RollCall> queryTeachingClassRollCalls() {
@@ -54,60 +54,69 @@ public class RollCallServiceImpl implements RollCallService {
 	}
 
 	@Override
-	public void bulkWriteRollCalls(List<RollCall> rollCallList) throws IOException, SQLException {
+	public void bulkWriteRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException {
 
-		this.totalRollCallList.removeAll(this.teachingClassRollCallList);
-		this.totalRollCallList.addAll(rollCallList);
 		this.teachingClassRollCallList = rollCallList;
 
 		this.dao.bulkInsertRollCalls(rollCallList);
 	}
 
 	@Override
+	public void insertRollCall(Student student, String presence, String rollcallType) throws IOException, SQLException {
+
+	}
+
+	@Override
 	public void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException, SQLException {
-		if (totalRollCallList == null || totalRollCallList.size() == 0) {
-			return;
-		}
 
-		for (RollCall r : this.totalRollCallList) {
-			if (r.equals(originRollCall)) {
-				r = rollCall;
-				break;
-			}
-		}
-
-		for (RollCall r : this.teachingClassRollCallList) {
-			if (r.equals(originRollCall)) {
-				r = rollCall;
-				break;
-			}
-		}
-
-		this.bulkWriteRollCalls(this.totalRollCallList);
 	}
 
 	@Override
 	public void delRollCall(RollCall originRollCall) throws IOException, SQLException {
-		if (totalRollCallList == null || totalRollCallList.size() == 0) {
-			return;
-		}
 
-		for (RollCall r : this.totalRollCallList) {
-			if (r.equals(originRollCall)) {
-				this.totalRollCallList.remove(originRollCall);
-				break;
-			}
-		}
-
-		for (RollCall r : this.teachingClassRollCallList) {
-			if (r.equals(originRollCall)) {
-				this.teachingClassRollCallList.remove(originRollCall);
-				break;
-			}
-		}
-
-		this.bulkWriteRollCalls(this.totalRollCallList);
 	}
+
+//	@Override
+//	public void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException, SQLException {
+//		for (RollCall r : this.totalRollCallList) {
+//			if (r.equals(originRollCall)) {
+//				r = rollCall;
+//				break;
+//			}
+//		}
+//
+//		for (RollCall r : this.teachingClassRollCallList) {
+//			if (r.equals(originRollCall)) {
+//				r = rollCall;
+//				break;
+//			}
+//		}
+//
+//		this.bulkWriteRollCalls(this.totalRollCallList);
+//	}
+
+//	@Override
+//	public void delRollCall(RollCall originRollCall) throws IOException, SQLException {
+//		if (totalRollCallList == null || totalRollCallList.size() == 0) {
+//			return;
+//		}
+//
+//		for (RollCall r : this.totalRollCallList) {
+//			if (r.equals(originRollCall)) {
+//				this.totalRollCallList.remove(originRollCall);
+//				break;
+//			}
+//		}
+//
+//		for (RollCall r : this.teachingClassRollCallList) {
+//			if (r.equals(originRollCall)) {
+//				this.teachingClassRollCallList.remove(originRollCall);
+//				break;
+//			}
+//		}
+//
+//		this.bulkWriteRollCalls(this.totalRollCallList);
+//	}
 
 	@Override
 	public List<Student> getAbnormalStudent() {

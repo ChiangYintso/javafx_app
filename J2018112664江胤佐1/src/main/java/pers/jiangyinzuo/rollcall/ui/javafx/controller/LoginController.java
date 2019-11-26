@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,15 +10,18 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.Teacher;
-import main.java.pers.jiangyinzuo.rollcall.service.LoginService;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
-import main.java.pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.service.LoginService;
+import pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class LoginController {
     @FXML
     private Pane layout;

@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.chat.service;
+package pers.jiangyinzuo.chat.service;
 
-import main.java.pers.jiangyinzuo.chat.common.CustomInfo;
+import pers.jiangyinzuo.chat.common.CustomInfo;
 
 public interface AccountService {
 	

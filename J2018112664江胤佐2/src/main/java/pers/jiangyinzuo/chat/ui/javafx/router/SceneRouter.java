@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.ui.javafx.router;
+package pers.jiangyinzuo.chat.ui.javafx.router;
 
 import java.io.IOException;
 import java.util.HashMap;

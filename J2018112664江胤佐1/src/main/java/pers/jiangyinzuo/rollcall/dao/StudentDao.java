@@ -1,12 +1,12 @@
-package main.java.pers.jiangyinzuo.rollcall.dao;
+package pers.jiangyinzuo.rollcall.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.Student;
 
 public interface StudentDao {
 	/**

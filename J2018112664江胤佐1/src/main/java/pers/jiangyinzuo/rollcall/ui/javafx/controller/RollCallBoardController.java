@@ -1,18 +1,19 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.javafx.controller;
+package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.service.RollCallService;
+import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 
 public class RollCallBoardController {
 
@@ -33,7 +34,7 @@ public class RollCallBoardController {
     private RollCallService rollCallService;
     
     @FXML
-    public void initialize() throws ClassNotFoundException, CustomException, IOException {
+    public void initialize() throws ClassNotFoundException, CustomException, IOException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
     	selectedTeachingClass = SelectedTeachingClass.getSingleton().getCls();
     	teachingClassName.setText(selectedTeachingClass.getClassName());
     	rollCallService = new RollCallServiceImpl(selectedTeachingClass);

@@ -1,9 +1,9 @@
-package main.java.pers.jiangyinzuo.chat.ui.console;
+package pers.jiangyinzuo.chat.ui.console;
 
-import main.java.pers.jiangyinzuo.chat.common.CustomInfo;
-import main.java.pers.jiangyinzuo.chat.service.AccountService;
-import main.java.pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
-import main.java.pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.chat.common.CustomInfo;
+import pers.jiangyinzuo.chat.service.AccountService;
+import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
+import pers.jiangyinzuo.chat.ui.console.helper.ConsoleIoHelper;
 
 /**
  * @author Jiang Yinzuo

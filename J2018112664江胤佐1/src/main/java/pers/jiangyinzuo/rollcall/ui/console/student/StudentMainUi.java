@@ -1,18 +1,19 @@
-package main.java.pers.jiangyinzuo.rollcall.ui.console.student;
+package pers.jiangyinzuo.rollcall.ui.console.student;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
-import main.java.pers.jiangyinzuo.rollcall.service.RollCallService;
-import main.java.pers.jiangyinzuo.rollcall.service.TeachingClassService;
-import main.java.pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import main.java.pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
+import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
+import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
+import pers.jiangyinzuo.rollcall.service.RollCallService;
+import pers.jiangyinzuo.rollcall.service.TeachingClassService;
+import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -75,10 +76,10 @@ public class StudentMainUi extends AbstractUi {
 			for (RollCall rollCall : resultList) {
                 System.out.println(rollCall.getRollCallInfo());
 			}
-		} catch (ClassNotFoundException | CustomException | IOException e) {
+		} catch (ClassNotFoundException | CustomException | IOException | InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
-	}
+    }
 
     /**
      * ²é¿´¿Î±í

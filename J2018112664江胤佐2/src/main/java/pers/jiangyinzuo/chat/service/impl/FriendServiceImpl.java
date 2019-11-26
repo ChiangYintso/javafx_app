@@ -1,10 +1,10 @@
-package main.java.pers.jiangyinzuo.chat.service.impl;
+package pers.jiangyinzuo.chat.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.chat.entity.User;
-import main.java.pers.jiangyinzuo.chat.service.FriendService;
+import pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.service.FriendService;
 
 public class FriendServiceImpl implements FriendService {
 

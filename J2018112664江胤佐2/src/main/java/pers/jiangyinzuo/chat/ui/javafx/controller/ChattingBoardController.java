@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.chat.ui.javafx.controller;
+package pers.jiangyinzuo.chat.ui.javafx.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,9 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import main.java.pers.jiangyinzuo.chat.entity.Session;
-import main.java.pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
-import main.java.pers.jiangyinzuo.chat.ui.state.ChattingBoardInfo;
+import pers.jiangyinzuo.chat.entity.Session;
+import pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.ui.state.ChattingBoardInfo;
 
 public class ChattingBoardController {
 

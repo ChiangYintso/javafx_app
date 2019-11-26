@@ -1,12 +1,11 @@
-package main.java.pers.jiangyinzuo.rollcall.dao;
+package pers.jiangyinzuo.rollcall.dao;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.entity.RollCall;
 
 /**
  * @author Jiang Yinzuo
@@ -17,11 +16,13 @@ public interface RollCallDao {
 
 	void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException;
 	
-	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws ClassNotFoundException, CustomException, IOException;
+	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws ClassNotFoundException, IOException;
 
-	List<RollCall> queryRollCallsByStudentId(Long studentId);
+	List<RollCall> queryRollCallsByStudentId(Long studentId) throws IOException, ClassNotFoundException;
 
-	void updateRollCall(RollCall rollCall, Long rollCallId);
+	void updateRollCall(RollCall rollCall, Long rollCallId) throws IOException, ClassNotFoundException;
 
 	void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws IOException, ClassNotFoundException;
+
+	Long getRecordCount() throws IOException, ClassNotFoundException;
 }

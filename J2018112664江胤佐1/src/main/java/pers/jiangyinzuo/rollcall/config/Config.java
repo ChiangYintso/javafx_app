@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.rollcall.config;
+package pers.jiangyinzuo.rollcall.config;
 
-import main.java.pers.jiangyinzuo.rollcall.ui.console.LoginUi;
+import pers.jiangyinzuo.rollcall.ui.console.LoginUi;
 
 /**
  * 本应用程序的配置类

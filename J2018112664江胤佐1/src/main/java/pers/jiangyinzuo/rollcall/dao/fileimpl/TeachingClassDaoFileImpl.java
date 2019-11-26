@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.dao.fileimpl;
+package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -6,14 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.pers.jiangyinzuo.rollcall.common.CustomException;
-import main.java.pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
-import main.java.pers.jiangyinzuo.rollcall.entity.Student;
-import main.java.pers.jiangyinzuo.rollcall.entity.TeachingClass;
-import main.java.pers.jiangyinzuo.rollcall.service.validator.TeachingClassComparedByStudentIdValidator;
-import main.java.pers.jiangyinzuo.rollcall.service.validator.TeachingClassComparedByTeacherIdValidator;
-import main.java.pers.jiangyinzuo.rollcall.service.validator.Validator;
-import main.java.pers.jiangyinzuo.rollcall.helper.FileHelper;
+import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
+import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.service.validator.TeachingClassComparedByStudentIdValidator;
+import pers.jiangyinzuo.rollcall.service.validator.TeachingClassComparedByTeacherIdValidator;
+import pers.jiangyinzuo.rollcall.service.validator.Validator;
+import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
  * @author Jiang Yinzuo

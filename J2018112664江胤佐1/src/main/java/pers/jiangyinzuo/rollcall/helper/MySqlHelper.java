@@ -1,4 +1,4 @@
-package main.java.pers.jiangyinzuo.rollcall.helper;
+package pers.jiangyinzuo.rollcall.helper;
 
 import java.sql.*;
 import java.util.List;

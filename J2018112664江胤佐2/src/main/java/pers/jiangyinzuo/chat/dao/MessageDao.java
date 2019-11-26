@@ -1,6 +1,6 @@
-package main.java.pers.jiangyinzuo.chat.dao;
+package pers.jiangyinzuo.chat.dao;
 
-import main.java.pers.jiangyinzuo.chat.entity.Message;
+import pers.jiangyinzuo.chat.entity.Message;
 import java.time.Instant;
 import java.util.List;
 
