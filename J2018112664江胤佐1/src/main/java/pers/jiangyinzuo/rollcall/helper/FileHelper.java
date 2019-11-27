@@ -24,8 +24,8 @@ public class FileHelper {
 		return new File(System.getProperty("user.dir") +"/files/"+ fileName);
 	}
 
-	public static void writeSerializableEntity(Object obj, String fileSuffix) throws IOException {
-		try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileSuffix), true);
+	public static void writeSerializableEntity(Object obj, String fileName) throws IOException {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileName), true);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
 			objectOutputStream.writeObject(obj);
 			System.out.println("写入成功");
@@ -51,6 +51,15 @@ public class FileHelper {
 		}
 	}
 
+	/**
+	 * 调用equals方法读取和t相等的实体类
+	 * @param fileName
+	 * @param t 比较对象
+	 * @param <T>
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static <T> T readSerializableEntity(String fileName, T t) throws IOException, ClassNotFoundException {
 		try (FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
 			 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {

@@ -30,9 +30,15 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
 
 	@Override
 	public List<TeachingClass> queryTeachingClassesByStudentId(Long studentId)
-			throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
-		Validator v = new TeachingClassComparedByStudentIdValidator();
-		return FileHelper.<TeachingClass>readSerializableEntities(FILE_NAME, v, studentId);
+			throws ClassNotFoundException, IOException {
+		List<TeachingClass> list = FileHelper.<TeachingClass>readAllSerializableEntities(FILE_NAME);
+		List<TeachingClass> results = new ArrayList<>();
+		for (TeachingClass cls : list) {
+			if (cls.isSelectedThisClass(studentId)) {
+				results.add(cls);
+			}
+		}
+		return results;
 	}
 
 	@Override
@@ -57,7 +63,7 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
 				new TeachingClass(3L, "线性代数", 201901, 121257, (short) 2, "暂无简介", "3-17周", 34, 123L, studentList));
 		
 		List<TeachingClass> teachingClassList = teachingClassDaoImpl
-				.queryTeachingClassesByTeacherId(Long.valueOf(123));
+				.queryTeachingClassesByTeacherId(123L);
 		System.out.println(teachingClassList.size());
 		for (TeachingClass cls : teachingClassList) {
 			System.out.println(cls.getClassName() + cls.getSession());

@@ -28,27 +28,45 @@ public class TeacherDaoFileImpl implements TeacherDao {
     public Teacher queryTeacher(Long teacherId) {
         try {
             List<Teacher> list = FileHelper.readAllSerializableEntities(FILE_NAME);
-			for (Teacher t : list) {
-				if (t.getTeacherId().equals(teacherId)) {
-					return t;
-				}
-			}
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            for (Teacher t : list) {
+                if (t.getTeacherId().equals(teacherId)) {
+                    return t;
+                }
+            }
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 根据账号密码查找老师, 用于登录验证
+     *
+     * @param teacherId 教师账号
+     * @param password  密码
+     * @return 若查找成功返回教师实体类, 否则返回null
+     */
+    @Override
+    public Teacher queryTeacher(Long teacherId, String password) throws IOException, ClassNotFoundException {
+        Teacher teacher = FileHelper.readSerializableEntity(FILE_NAME, new Teacher.Builder()
+                .teacherId(teacherId)
+                .password(password)
+                .build());
+        if (teacher == null || password != null && !password.equals(teacher.getPassword())) {
+            return null;
+        } else {
+            return teacher;
+        }
     }
 
     public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
         TeacherDao s = new TeacherDaoFileImpl();
         s.insertTeacher(new Teacher(123L, "张三", "信息科学与技术学院", "男", "123456", "讲师", new ArrayList<>()));
-		if (s.queryTeacher(123L).getTeacherId().equals(123L)) {
-			System.out.println("OK");
-		} else {
-			System.out.println("FAILED");
-		}
+        if (s.queryTeacher(123L).getTeacherId().equals(123L)) {
+            System.out.println("OK");
+        } else {
+            System.out.println("FAILED");
+        }
     }
 }

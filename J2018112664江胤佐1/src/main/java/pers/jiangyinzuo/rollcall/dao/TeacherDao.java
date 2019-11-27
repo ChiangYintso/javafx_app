@@ -32,4 +32,12 @@ public interface TeacherDao {
 	 * @throws IOException
 	 */
 	Teacher queryTeacher(Long teacherId) throws CustomException, FileNotFoundException, IOException;
+
+	/**
+	 * 根据账号密码查找老师, 用于登录验证
+	 * @param teacherId
+	 * @param password
+	 * @return
+	 */
+	Teacher queryTeacher(Long teacherId, String password) throws IOException, ClassNotFoundException;
 }

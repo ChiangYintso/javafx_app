@@ -19,10 +19,11 @@ import pers.jiangyinzuo.rollcall.helper.FileHelper;
  */
 public class StudentDaoFileImpl implements StudentDao {
 
+	private static final String FILE_NAME = "student.txt";
 	@Override
 	public void insertStudent(Student student) throws IOException, IllegalArgumentException,
 			SecurityException {
-		FileHelper.writeSerializableEntity(student, "student.txt");
+		FileHelper.writeSerializableEntity(student, FILE_NAME);
 	}
 
 	@Override
@@ -38,6 +39,19 @@ public class StudentDaoFileImpl implements StudentDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public Student queryStudent(Long studentId, String password) throws IOException, ClassNotFoundException {
+		Student student =  FileHelper.readSerializableEntity(FILE_NAME, new Student.Builder()
+				.studentId(studentId)
+				.password(password)
+				.build());
+		if (student == null || password != null && !password.equals(student.getPwd())) {
+			return null;
+		} else {
+			return student;
+		}
 	}
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,

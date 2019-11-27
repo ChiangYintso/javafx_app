@@ -14,5 +14,5 @@ public interface TeachingClassDao {
 	
 	List<TeachingClass> queryTeachingClassesByStudentId(Long studentId) throws FileNotFoundException, ClassNotFoundException, IOException, CustomException;
 	
-	List<TeachingClass> queryTeachingClassesByTeacherId(Long teacher) throws FileNotFoundException, ClassNotFoundException, IOException, CustomException;
+	List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId) throws FileNotFoundException, ClassNotFoundException, IOException, CustomException;
 }

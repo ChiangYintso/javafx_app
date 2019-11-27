@@ -24,27 +24,16 @@ public class Student implements Serializable {
 		this.major = major;
 	}
 
-	public Student(Long studentId, Byte gender, String studentName, String password, String major,
-				   List<TeachingClass> teachingClassList, List<RollCall> rollCallList) {
-		this(studentId, gender, studentName, password, major);
-		this.teachingClassList = teachingClassList;
-		this.rollCallList = rollCallList;
+	private Student(Builder builder) {
+		setStudentId(builder.studentId);
+		setGender(builder.gender);
+		setStudentName(builder.studentName);
+		password = builder.password;
+		setMajor(builder.major);
+		setTeachingClassList(builder.teachingClassList);
+		setRollCallList(builder.rollCallList);
 	}
 
-	/**
-	 * 用于验证学生登录账号密码
-	 * 
-	 * @param studentId
-	 * @param password
-	 */
-	public Student(Long studentId, String password) {
-		this.studentId = studentId;
-		this.password = password;
-	}
-
-	public Student(Long studentId) {
-		this.studentId = studentId;
-	}
 
 	public Long getStudentId() {
 		return studentId;
@@ -117,5 +106,57 @@ public class Student implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		return obj == this || obj instanceof Student && studentId != null && studentId.equals(((Student) obj).getStudentId());
+	}
+
+	public static final class Builder {
+		private Long studentId;
+		private Byte gender;
+		private String studentName;
+		private String password;
+		private String major;
+		private List<TeachingClass> teachingClassList;
+		private List<RollCall> rollCallList;
+
+		public Builder() {
+		}
+
+		public Builder studentId(Long val) {
+			studentId = val;
+			return this;
+		}
+
+		public Builder gender(Byte val) {
+			gender = val;
+			return this;
+		}
+
+		public Builder studentName(String val) {
+			studentName = val;
+			return this;
+		}
+
+		public Builder password(String val) {
+			password = val;
+			return this;
+		}
+
+		public Builder major(String val) {
+			major = val;
+			return this;
+		}
+
+		public Builder teachingClassList(List<TeachingClass> val) {
+			teachingClassList = val;
+			return this;
+		}
+
+		public Builder rollCallList(List<RollCall> val) {
+			rollCallList = val;
+			return this;
+		}
+
+		public Student build() {
+			return new Student(this);
+		}
 	}
 }
