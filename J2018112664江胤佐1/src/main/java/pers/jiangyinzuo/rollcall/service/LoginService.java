@@ -8,7 +8,7 @@ import pers.jiangyinzuo.rollcall.entity.Student;
 import pers.jiangyinzuo.rollcall.entity.Teacher;
 
 public interface LoginService {
-	Teacher teacherLogin(Long teacherId, String pwd) throws CustomException, FileNotFoundException, IOException, ClassNotFoundException;
+	Teacher teacherLogin(Long teacherId, String password) throws CustomException, FileNotFoundException, IOException, ClassNotFoundException;
 
-	Student studentLogin(Long studentId, String pwd) throws CustomException, FileNotFoundException, IOException, ClassNotFoundException;
+	Student studentLogin(Long studentId, String password) throws CustomException, FileNotFoundException, IOException, ClassNotFoundException;
 }

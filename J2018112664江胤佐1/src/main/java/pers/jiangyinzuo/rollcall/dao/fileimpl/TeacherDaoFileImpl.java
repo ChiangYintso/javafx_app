@@ -27,12 +27,7 @@ public class TeacherDaoFileImpl implements TeacherDao {
     @Override
     public Teacher queryTeacher(Long teacherId) {
         try {
-            List<Teacher> list = FileHelper.readAllSerializableEntities(FILE_NAME);
-            for (Teacher t : list) {
-                if (t.getTeacherId().equals(teacherId)) {
-                    return t;
-                }
-            }
+            return FileHelper.<Teacher>filterEntity(teacherId, Teacher::equals, FILE_NAME);
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

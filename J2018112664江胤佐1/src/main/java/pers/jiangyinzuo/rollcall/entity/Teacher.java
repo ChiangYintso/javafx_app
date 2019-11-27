@@ -101,6 +101,10 @@ public class Teacher implements Serializable {
         return this == obj || obj instanceof Teacher && teacherId != null && teacherId.equals(((Teacher) obj).getTeacherId());
     }
 
+    public boolean equals(Long teacherId) {
+        return teacherId.equals(this.teacherId);
+    }
+
     public static final class Builder {
         private Long teacherId;
         private String teacherName;

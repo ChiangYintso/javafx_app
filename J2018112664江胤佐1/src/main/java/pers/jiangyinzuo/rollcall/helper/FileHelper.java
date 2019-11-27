@@ -1,17 +1,13 @@
 package pers.jiangyinzuo.rollcall.helper;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.function.BiFunction;
 
+import pers.jiangyinzuo.rollcall.dao.fileimpl.TeachingClassDaoFileImpl;
 import pers.jiangyinzuo.rollcall.service.validator.Validator;
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.ui.console.Main;
 
 /**
  * 文件读写类, 负责程序的IO操作
@@ -85,28 +81,6 @@ public class FileHelper {
 		return results;
 	}
 
-	public static <T> List<T> readSerializableEntities(String fileName, Validator v, Object obj)
-			throws CustomException, IOException, ClassNotFoundException {
-		List<T> arrayList = new ArrayList<>();
-
-		if (v == null) {
-			return arrayList;
-		}
-		Object objFromFile;
-		FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
-		while (fileInputStream.available() > 0) {
-			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-			objFromFile = objectInputStream.readObject();
-			if (v.validate(objFromFile, obj)) {
-				arrayList.add((T) objFromFile);
-			}
-
-		}
-		fileInputStream.close();
-		return arrayList;
-	}
-
 	public static <T> void bulkWriteSerializableEntities(String fileName, List<T> objectList, boolean add) {
 		if (objectList != null) {
 			for (Object obj : objectList) {
@@ -118,5 +92,45 @@ public class FileHelper {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 根据id和指定方法筛选实体
+	 * @param id
+	 * @param filter
+	 * @param <T>
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static <T> List<T> filterEntities(Long id, BiFunction<T, Long, Boolean> filter, String fileName) throws IOException, ClassNotFoundException {
+		List<T> list = FileHelper.<T>readAllSerializableEntities(fileName);
+		List<T> results = new ArrayList<>();
+		for (T t : list) {
+			if (filter.apply(t, id)) {
+				results.add(t);
+			}
+		}
+		return results;
+	}
+
+	/**
+	 * 根据id和指定方法筛选实体
+	 * @param id
+	 * @param filter
+	 * @param fileName
+	 * @param <T>
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static <T> T filterEntity(Long id, BiFunction<T, Long, Boolean> filter, String fileName) throws IOException, ClassNotFoundException {
+		List<T> list = FileHelper.<T>readAllSerializableEntities(fileName);
+		for (T t : list) {
+			if (filter.apply(t, id)) {
+				return t;
+			}
+		}
+		return null;
 	}
 }

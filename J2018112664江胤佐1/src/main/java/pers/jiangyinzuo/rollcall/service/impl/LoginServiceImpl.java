@@ -2,16 +2,32 @@ package pers.jiangyinzuo.rollcall.service.impl;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
+import pers.jiangyinzuo.rollcall.dao.StudentDao;
+import pers.jiangyinzuo.rollcall.dao.TeacherDao;
+import pers.jiangyinzuo.rollcall.dao.fileimpl.TeacherDaoFileImpl;
 import pers.jiangyinzuo.rollcall.entity.Student;
 import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.factory.DaoFactory;
 import pers.jiangyinzuo.rollcall.service.LoginService;
 import pers.jiangyinzuo.rollcall.service.validator.LoginValidator;
 import pers.jiangyinzuo.rollcall.service.validator.Validator;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class LoginServiceImpl implements LoginService {
+
+	private TeacherDao teacherDao;
+	private StudentDao studentDao;
+
+	public LoginServiceImpl() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+		teacherDao = DaoFactory.createDao(TeacherDao.class);
+		studentDao = DaoFactory.createDao(StudentDao.class);
+	}
 
 	/**
 	 * @return 教师实体类, 若不存在则返回null
@@ -20,13 +36,9 @@ public class LoginServiceImpl implements LoginService {
 	 * @throws ClassNotFoundException 
 	 */
 	@Override
-	public Teacher teacherLogin(Long teacherId, String pwd) throws ClassNotFoundException, IOException, CustomException {
+	public Teacher teacherLogin(Long teacherId, String password) throws ClassNotFoundException, IOException, CustomException {
 		try {
-			Validator v = new LoginValidator();
-			Teacher teacher = new Teacher(teacherId, pwd);
-			Teacher teacherFromFile = (Teacher) FileHelper.readSerializableEntity("teachers.txt", v, Teacher.class,
-					teacher);
-			return teacherFromFile;
+			return teacherDao.queryTeacher(teacherId, password);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -37,16 +49,12 @@ public class LoginServiceImpl implements LoginService {
 	 * @return 学生实体类, 若不存在则返回null
 	 * @throws ClassNotFoundException 
 	 */
-	@SuppressWarnings("finally")
+
 	@Override
-	public Student studentLogin(Long studentId, String pwd)
-			throws CustomException, FileNotFoundException, IOException, ClassNotFoundException {
+	public Student studentLogin(Long studentId, String password)
+			throws IOException, ClassNotFoundException {
 		try {
-			Validator v = new LoginValidator();
-			Student student = new Student(studentId, pwd);
-			Student studentFromFile = (Student) FileHelper.readSerializableEntity("student.txt", v, Student.class,
-					student);
-			return studentFromFile;
+			return studentDao.queryStudent(studentId, password);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

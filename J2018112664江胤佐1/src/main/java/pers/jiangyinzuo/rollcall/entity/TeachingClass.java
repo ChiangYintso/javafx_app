@@ -153,4 +153,8 @@ public class TeachingClass implements Serializable {
         }
         return false;
     }
+
+    public static Boolean isTeachThisClass(TeachingClass cls, Long teacherId) {
+		return cls.getTeacherId().equals(teacherId);
+	}
 }

@@ -27,8 +27,19 @@ public class DaoFactory {
         }
     }
 
-    public static <T> T createDao(Class<T> daoClass) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        return (T) Class.forName(DAO_PACKAGE_NAME + "." + daoImpl.toLowerCase() + "impl." + daoClass.getSimpleName() + daoImpl + "Impl").getDeclaredConstructor().newInstance();
+    /**
+     * 工厂模式 + 反射 创建Dao
+     * @param daoInterface 需要创建的Dao接口
+     * @param <T>
+     * @return 对应Dao的实现类
+     * @throws ClassNotFoundException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     */
+    public static <T> T createDao(Class<T> daoInterface) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (T) Class.forName(DAO_PACKAGE_NAME + "." + daoImpl.toLowerCase() + "impl." + daoInterface.getSimpleName() + daoImpl + "Impl").getDeclaredConstructor().newInstance();
     }
 
     public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
