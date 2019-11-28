@@ -18,11 +18,9 @@ public interface RollCallDao {
 	
 	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws ClassNotFoundException, IOException, SQLException;
 
-	List<RollCall> queryRollCallsByStudentId(Long studentId) throws IOException, ClassNotFoundException;
+	List<RollCall> queryRollCallsByStudentId(Long studentId) throws IOException, ClassNotFoundException, SQLException;
 
-	void updateRollCall(RollCall rollCall, Long rollCallId) throws IOException, ClassNotFoundException;
+	void updateRollCall(RollCall rollCall, Long rollCallId) throws IOException, ClassNotFoundException, SQLException;
 
-	void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws IOException, ClassNotFoundException;
-
-	Long getRecordCount() throws IOException, ClassNotFoundException;
+	void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws IOException, ClassNotFoundException, SQLException;
 }

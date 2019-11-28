@@ -5,7 +5,6 @@ import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,39 +37,35 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     }
 
     @Override
-    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) {
+    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws SQLException {
         String sql = "SELECT * FROM rollcall_rollcall_record WHERE `class_id` = ?";
-        ResultSet resultSet = MySqlHelper.executeQuery(sql, teachingClassId);
-        List<RollCall> results = new ArrayList<>();
-        try {
-            while (resultSet.next()) {
+        return MySqlHelper.queryMany(RollCall.class, sql, teachingClassId);
+    }
 
-            }
-            resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    @Override
+    public List<RollCall> queryRollCallsByStudentId(Long studentId) throws SQLException {
+        String sql = "SELECT * FROM rollcall_rollcall_record WHERE `student_id` = ?";
+        return MySqlHelper.queryMany(RollCall.class, sql, studentId);
+    }
+
+    @Override
+    public void updateRollCall(RollCall rollCall, Long rollCallId) throws SQLException {
+        String sql = "UPDATE rollcall_rollcall_record SET rollcall_type = ?," +
+                " presence = ? WHERE rollcall_id = ?";
+        MySqlHelper.executeUpdate(sql, rollCall.getRollCallType(), rollCall.getPresence(), rollCall.getRollCallId());
+    }
+
+    @Override
+    public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws SQLException {
+        String sql = "UPDATE rollcall_rollcall_record SET rollcall_type = ?," +
+                " presence = ? WHERE rollcall_id = ?";
+        List<List<Object>> parametersList = new ArrayList<>();
+        for (Map.Entry<Long, RollCall> kv : rollCallMap.entrySet()) {
+            List<Object> params = new ArrayList<>();
+            params.add(kv.getKey());
+            params.add(kv.getValue());
+            parametersList.add(params);
         }
-
-        return null;
-    }
-
-    @Override
-    public List<RollCall> queryRollCallsByStudentId(Long studentId) {
-        return null;
-    }
-
-    @Override
-    public void updateRollCall(RollCall rollCall, Long rollCallId) {
-
-    }
-
-    @Override
-    public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) {
-
-    }
-
-    @Override
-    public Long getRecordCount() throws IOException, ClassNotFoundException {
-        return null;
+        MySqlHelper.bulkExecuteUpdate(sql, parametersList);
     }
 }

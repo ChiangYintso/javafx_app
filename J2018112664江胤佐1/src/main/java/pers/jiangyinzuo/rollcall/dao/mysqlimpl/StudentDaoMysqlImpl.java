@@ -17,32 +17,26 @@ public class StudentDaoMysqlImpl implements StudentDao {
     /**
      * 插入学生信息
      *
-     * @param student
-     * @return
+     * @param student 待插入的学生实体类
      * @throws SecurityException
-     * @throws NoSuchMethodException
-     * @throws InvocationTargetException
      * @throws IllegalArgumentException
-     * @throws IllegalAccessException
      */
     @Override
     public void insertStudent(Student student) throws IllegalArgumentException, SecurityException, SQLException {
         String sql = "INSERT INTO rollcall_student(`student_id`, `student_name`, `gender`, `password`, `major`) VALUES(?, ?, ?, ?, ?)";
-        int result = MySqlHelper.executeUpdate(sql, student.getStudentId(), student.getStudentName(), student.getGender(), student.getPwd(), student.getMajor());
-        System.out.println(result);
+        MySqlHelper.executeUpdate(sql, student.getStudentId(), student.getStudentName(), student.getGender(), student.getPwd(), student.getMajor());
     }
 
     /**
      * 根据学号查找学生信息
      *
-     * @param studentId
-     * @return
-     * @throws IOException
-     * @throws FileNotFoundException
+     * @param studentId 学号
+     * @return 查找得到的学生实体类
      */
     @Override
-    public Student queryStudent(Long studentId) throws CustomException, FileNotFoundException, IOException {
-        return null;
+    public Student queryStudent(Long studentId) {
+        String sql = "SELECT * FROM rollcall_student WHERE student_id = ?";
+        return MySqlHelper.queryOne(Student.class, sql, studentId);
     }
 
     /**
@@ -54,17 +48,22 @@ public class StudentDaoMysqlImpl implements StudentDao {
      */
     @Override
     public Student queryStudent(Long studentId, String password) throws IOException, ClassNotFoundException {
-        // TODO
-        return null;
+        String sql = "SELECT * FROM rollcall_student WHERE student_id = ? AND password = ?";
+        return MySqlHelper.queryOne(Student.class, sql, studentId, password);
     }
 
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, IOException {
         StudentDao studentDao = new StudentDaoMysqlImpl();
         try {
-            studentDao.insertStudent(new Student(2018112664L,  true, "123456", "江胤佐", "软件工程"));
-        } catch (SQLException e) {
+            Student student = studentDao.queryStudent(2018112664L, "123456");
+            if (student == null) {
+                System.out.println("no such student");
+            } else {
+                System.out.println(student.getStudentId());
+                System.out.println(student.getPwd());
+            }
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
         }
     }
 }

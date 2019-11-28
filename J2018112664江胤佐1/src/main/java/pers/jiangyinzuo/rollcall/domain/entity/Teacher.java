@@ -5,7 +5,6 @@ import pers.jiangyinzuo.rollcall.domain.mapper.TableMapper;
 import pers.jiangyinzuo.rollcall.domain.repository.TeachingClassRepo;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author Jiang Yinzuo

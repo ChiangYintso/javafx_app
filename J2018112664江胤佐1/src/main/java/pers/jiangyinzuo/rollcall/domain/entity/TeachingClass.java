@@ -35,6 +35,9 @@ public class TeachingClass implements Serializable {
     @FieldMapper(name = "class_session")
     private Integer session;
 
+    @FieldMapper(name = "classroom")
+    private String classroom;
+
     @FieldMapper(type = "reference", name = "teacher_id")
     private Teacher teacher;
 
@@ -49,6 +52,7 @@ public class TeachingClass implements Serializable {
         setIntro(builder.intro);
         setWeeks(builder.weeks);
         setSession(builder.session);
+        setClassroom(builder.classroom);
         setTeacher(builder.teacher);
         studentRepo = builder.studentRepo;
     }
@@ -73,7 +77,8 @@ public class TeachingClass implements Serializable {
     /**
      * 空参构造函数用于反射创建对象
      */
-    public TeachingClass(){};
+    public TeachingClass() {
+    }
 
     public TeachingClass(Long classId) {
         this.classId = classId;
@@ -143,6 +148,18 @@ public class TeachingClass implements Serializable {
         return teacher;
     }
 
+    public String getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
@@ -168,13 +185,14 @@ public class TeachingClass implements Serializable {
         return obj == this || obj instanceof TeachingClass && classId != null && classId.equals(((TeachingClass) obj).getClassId());
     }
 
-	/**
-	 * 判断某学生是否选择了这门课
-	 * @param studentId 学生学号
-	 * @return 是否选择了这门课
-	 */
-	public boolean isSelectedThisClass(Long studentId) {
-	    // TODO: complement the StudentRepo
+    /**
+     * 判断某学生是否选择了这门课
+     *
+     * @param studentId 学生学号
+     * @return 是否选择了这门课
+     */
+    public boolean isSelectedThisClass(Long studentId) {
+        // TODO: complement the StudentRepo
         return true;
 //        if (studentList != null && studentId != null) {
 //            for (Student student : studentList) {
@@ -187,8 +205,8 @@ public class TeachingClass implements Serializable {
     }
 
     public static Boolean isTeachThisClass(TeachingClass cls, Long teacherId) {
-		return cls.getTeacherId().equals(teacherId);
-	}
+        return cls.getTeacherId().equals(teacherId);
+    }
 
     public static final class Builder {
         private Long classId;
@@ -199,6 +217,7 @@ public class TeachingClass implements Serializable {
         private String intro;
         private String weeks;
         private Integer session;
+        private String classroom;
         private Teacher teacher;
         private StudentRepo studentRepo;
 
@@ -227,6 +246,11 @@ public class TeachingClass implements Serializable {
 
         public Builder credit(Integer val) {
             credit = val;
+            return this;
+        }
+
+        public Builder classroom(String val) {
+            classroom = val;
             return this;
         }
 

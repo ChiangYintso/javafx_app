@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public interface StudentDao {
 	/**
 	 * 插入学生信息

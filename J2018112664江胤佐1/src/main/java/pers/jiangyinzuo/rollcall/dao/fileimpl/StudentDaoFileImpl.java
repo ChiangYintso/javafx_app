@@ -16,6 +16,7 @@ import pers.jiangyinzuo.rollcall.helper.FileHelper;
 public class StudentDaoFileImpl implements StudentDao {
 
 	private static final String FILE_NAME = "student.txt";
+
 	@Override
 	public void insertStudent(Student student) throws IOException, IllegalArgumentException,
 			SecurityException {

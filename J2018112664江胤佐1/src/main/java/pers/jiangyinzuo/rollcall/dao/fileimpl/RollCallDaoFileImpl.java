@@ -41,11 +41,7 @@ public class RollCallDaoFileImpl implements RollCallDao {
 		FileHelper.<RollCall>bulkWriteSerializableEntities(FILE_NAME, allRollCallList, false);
 	}
 
-	@Override
-	public Long getRecordCount() throws IOException, ClassNotFoundException {
-		List<RollCall> list = FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
-		return (long) list.size();
-	}
+
 
 	@Override
 	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId)
