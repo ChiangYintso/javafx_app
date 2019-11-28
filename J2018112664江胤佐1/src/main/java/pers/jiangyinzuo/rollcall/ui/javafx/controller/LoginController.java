@@ -2,6 +2,7 @@ package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +12,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.service.LoginService;
 import pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
 import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
@@ -87,7 +88,7 @@ public class LoginController {
 	}
 
 	@FXML
-	public void initialize() {
+	public void initialize() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		loginService = new LoginServiceImpl();
 		CustomAlertBoard.showAlert("学生和老师都是账号123密码123456");
 	}

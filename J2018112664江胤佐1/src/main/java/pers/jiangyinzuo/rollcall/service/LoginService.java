@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 
 public interface LoginService {
 	Teacher teacherLogin(Long teacherId, String password) throws CustomException, FileNotFoundException, IOException, ClassNotFoundException;

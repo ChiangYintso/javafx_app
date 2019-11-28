@@ -7,7 +7,7 @@ import java.util.List;
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
 import pers.jiangyinzuo.rollcall.dao.fileimpl.TeachingClassDaoFileImpl;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 
 /**

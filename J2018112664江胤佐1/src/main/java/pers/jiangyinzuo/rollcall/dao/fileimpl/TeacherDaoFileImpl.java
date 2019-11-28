@@ -1,14 +1,12 @@
 package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.List;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.TeacherDao;
-import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
@@ -57,7 +55,7 @@ public class TeacherDaoFileImpl implements TeacherDao {
     public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
         TeacherDao s = new TeacherDaoFileImpl();
-        s.insertTeacher(new Teacher(123L, "张三", "信息科学与技术学院", "男", "123456", "讲师", new ArrayList<>()));
+        s.insertTeacher(new Teacher(123L, "张三", "信息科学与技术学院", true, "123456", "讲师"));
         if (s.queryTeacher(123L).getTeacherId().equals(123L)) {
             System.out.println("OK");
         } else {

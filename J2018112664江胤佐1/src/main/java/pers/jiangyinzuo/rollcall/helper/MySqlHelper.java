@@ -1,5 +1,11 @@
 package pers.jiangyinzuo.rollcall.helper;
 
+import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.mapper.FieldMapper;
+import pers.jiangyinzuo.rollcall.domain.mapper.TableMapper;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.List;
 
@@ -49,7 +55,7 @@ public class MySqlHelper {
         }
     }
 
-    public static ResultSet executeQuery(String sql, Object[] parameters) {
+    public static ResultSet executeQuery(String sql, Object... parameters) {
         loadPreparedStatement(sql, parameters);
         ResultSet resultSet = null;
         try {
@@ -106,5 +112,69 @@ public class MySqlHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 将数据库中的记录映射为实体类
+     * @param clazz 实体类的class
+     * @param resultSet 读取数据库得到的结果集
+     * @param <T> 实体类
+     * @return 实体类
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws SQLException
+     */
+    private static <T> T mapRecordToEntity(Class<T> clazz, ResultSet resultSet) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException {
+
+        // 构造数据传输对象
+        T dto = clazz.getDeclaredConstructor().newInstance();
+
+        // 获取实体类的实例域
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field: fields) {
+            field.setAccessible(true);
+        }
+
+        while (resultSet.next()) {
+            for (Field field: fields) {
+                // 获取实体类每个实例域上的`FieldMapper`注解
+                FieldMapper fieldMapper = field.getAnnotation(FieldMapper.class);
+
+                if (fieldMapper != null) {
+                    String columnName = fieldMapper.name();
+                    Object value = resultSet.getObject(columnName);
+                    if ("column".equals(fieldMapper.type())) {
+                        try {
+                            field.set(dto, value);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if ("reference".equals(fieldMapper.type())) {
+                        StringBuilder sql = new StringBuilder("SELECT * FROM ");
+                        TableMapper tableMapper = field.getType().getAnnotation(TableMapper.class);
+                        if (tableMapper != null) {
+                            // 表名
+                            sql.append(tableMapper.value());
+                            sql.append(" WHERE ");
+                            sql.append(columnName);
+                            sql.append(" = ?");
+                        }
+                        ResultSet tempResultSet = executeQuery(sql.toString(), value);
+                        field.set(dto, mapRecordToEntity(field.getType(), tempResultSet));
+                    }
+                }
+            }
+        }
+        return dto;
+    }
+
+    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, SQLException, IllegalAccessException {
+        String sql = "SELECT * FROM rollcall_rollcall_record WHERE rollcall_id = 3";
+        RollCall rollCall = mapRecordToEntity(RollCall.class, executeQuery(sql));
+        System.out.println(rollCall.getRollCallInfo());
+        System.out.println(rollCall.getStudent().getStudentId());
+        System.out.println(rollCall.getTeachingClass());
     }
 }

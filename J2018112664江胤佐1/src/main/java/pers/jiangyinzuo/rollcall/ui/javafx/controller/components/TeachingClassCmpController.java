@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.TeacherMainBoardController;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 

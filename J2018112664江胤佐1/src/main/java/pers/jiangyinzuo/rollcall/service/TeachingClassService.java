@@ -1,11 +1,10 @@
 package pers.jiangyinzuo.rollcall.service;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 
 public interface TeachingClassService {
 	List<TeachingClass> queryTeachingClassesByStudentId(Long studentId)

@@ -59,7 +59,7 @@ CREATE TABLE `rollcall`.`rollcall_student`  (
 CREATE TABLE `rollcall`.`rollcall_rollcall_record`  (
   `rollcall_id` int(9) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '点名id',
   `rollcall_type` tinyint(1) UNSIGNED NOT NULL COMMENT '点名类型  1: 点名; 2: 提问',
-  `rollcall_time` timestamp(0) NOT NULL COMMENT '点名时间',
+  `rollcall_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '点名时间',
   `presence` char(2) NOT NULL COMMENT '点名情况',
   `class_id` int(9) UNSIGNED NOT NULL COMMENT '教学班id',
   `student_id` int(9) NOT NULL COMMENT '学号',
@@ -75,5 +75,5 @@ CREATE TABLE `rollcall`.`rollcall_class_selection`  (
   `student_id` int(9) UNSIGNED NOT NULL COMMENT '学号',
   `class_id` int(9) UNSIGNED ZEROFILL NOT NULL COMMENT '课程id',
   PRIMARY KEY (`selection_id`)
-) COMMENT = '选课表（学生-教学班关系表）'
+) ENGINE = InnoDB COMMENT = '选课表（学生-教学班关系表）'
 ```

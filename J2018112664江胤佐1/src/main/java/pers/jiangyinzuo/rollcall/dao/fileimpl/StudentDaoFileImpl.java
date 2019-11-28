@@ -1,17 +1,13 @@
 package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.StudentDao;
-import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
@@ -57,7 +53,7 @@ public class StudentDaoFileImpl implements StudentDao {
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException, SQLException {
 		StudentDao s = new StudentDaoFileImpl();
-		s.insertStudent(new Student(123L, (byte)1, "jyz", "123456", "软件工程"));
+		s.insertStudent(new Student(123L, true, "jyz", "123456", "软件工程"));
 		System.out.println(s.queryStudent(123L).getStudentId());
 	}
 }

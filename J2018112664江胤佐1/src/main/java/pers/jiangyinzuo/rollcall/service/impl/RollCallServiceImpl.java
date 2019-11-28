@@ -3,7 +3,6 @@ package pers.jiangyinzuo.rollcall.service.impl;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,9 +10,9 @@ import java.util.Set;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
-import pers.jiangyinzuo.rollcall.entity.RollCall;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.factory.DaoFactory;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
 
@@ -36,7 +35,7 @@ public class RollCallServiceImpl implements RollCallService {
 			throw new CustomException("未选择班级", false);
 		}
 		this.teachingClass = teachingClass;
-		this.teachingClassRollCallList = this.dao.queryRollCallsByTeachingClassId(teachingClass.getClassId());
+//		this.teachingClassRollCallList = this.dao.queryRollCallsByTeachingClassId(teachingClass.getClassId());
 	}
 
 //	@Override
@@ -47,30 +46,44 @@ public class RollCallServiceImpl implements RollCallService {
 //	}
 
 	@Override
-	public List<RollCall> queryTeachingClassRollCalls() {
-		return this.teachingClassRollCallList;
-	}
-
-	@Override
-	public void bulkWriteRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException {
+	public void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException {
 
 		this.teachingClassRollCallList = rollCallList;
 
 		this.dao.bulkInsertRollCalls(rollCallList);
 	}
 
+	/**
+	 * 根据教学班id查找点名记录
+	 *
+	 * @param teachingClassId 教学班id
+	 * @return
+	 */
 	@Override
-	public void insertRollCall(Student student, String presence, String rollcallType) throws IOException, SQLException {
-
+	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) {
+		return null;
 	}
 
 	@Override
-	public void editRollCall(RollCall originRollCall, RollCall rollCall) throws IOException, SQLException {
+	public void insertRollCall(Student student, String presence, String rollCallType) throws IOException, SQLException {
 
 	}
 
+	/**
+	 * 根据id修改rollCall
+	 *
+	 * @param rollCall
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	@Override
-	public void delRollCall(RollCall originRollCall) throws IOException, SQLException {
+	public void editRollCall(RollCall rollCall) throws IOException, SQLException {
+
+	}
+
+
+	@Override
+	public void deleteRollCall(RollCall rollCall) throws IOException, SQLException {
 
 	}
 
@@ -129,19 +142,20 @@ public class RollCallServiceImpl implements RollCallService {
 
 	@Override
 	public List<Student> getRandomStudent(int count) {
-		List<Student> studentList = this.teachingClass.getStudentList();
-		if (count < 0 || count > studentList.size()) {
-			return studentList;
-		}
-		List<Student> resultList = new ArrayList<>();
-		Set<Integer> set = new HashSet<>();
-		while (set.size() < count) {
-			set.add((int) (Math.random() * studentList.size()));
-		}
-		for (Integer i : set) {
-			resultList.add(studentList.get(i));
-		}
-		return resultList;
+//		List<Student> studentList = this.teachingClass.getStudentList();
+//		if (count < 0 || count > studentList.size()) {
+//			return studentList;
+//		}
+//		List<Student> resultList = new ArrayList<>();
+//		Set<Integer> set = new HashSet<>();
+//		while (set.size() < count) {
+//			set.add((int) (Math.random() * studentList.size()));
+//		}
+//		for (Integer i : set) {
+//			resultList.add(studentList.get(i));
+//		}
+//		return resultList;
+		return null;
 	}
 
 	@Override

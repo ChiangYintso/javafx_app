@@ -7,8 +7,8 @@ import java.util.List;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
@@ -42,13 +42,13 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
         TeachingClassDao teachingClassDaoImpl = new TeachingClassDaoFileImpl();
 
         List<Student> studentList = new ArrayList<>();
-        studentList.add(new Student(123L, (byte) 1, "jyz", "123456", "软件工程"));
+        studentList.add(new Student(123L, true, "jyz", "123456", "软件工程"));
 
         teachingClassDaoImpl.insertTeachingClass(
-                new TeachingClass(2L, "高等数学", 201901, 123457, (short) 2, "暂无简介", "3-17周", 32, 123L, studentList));
+                new TeachingClass.Builder().className("高等数学").build());
 
         teachingClassDaoImpl.insertTeachingClass(
-                new TeachingClass(3L, "线性代数", 201901, 121257, (short) 2, "暂无简介", "3-17周", 34, 123L, studentList));
+                new TeachingClass.Builder().className("线性代数").build());
 
         List<TeachingClass> teachingClassList = teachingClassDaoImpl
                 .queryTeachingClassesByTeacherId(123L);

@@ -1,9 +1,9 @@
 package pers.jiangyinzuo.rollcall.ui.console.student;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.RollCall;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
 import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;

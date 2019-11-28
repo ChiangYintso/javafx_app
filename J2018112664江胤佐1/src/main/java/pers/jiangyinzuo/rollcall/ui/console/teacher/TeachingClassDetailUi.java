@@ -2,7 +2,7 @@ package pers.jiangyinzuo.rollcall.ui.console.teacher;
 
 import java.util.List;
 
-import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
@@ -14,7 +14,7 @@ public class TeachingClassDetailUi extends AbstractUi {
 
 	public TeachingClassDetailUi() {
 		selectedTeachingClass = SelectedTeachingClass.getSingleton();
-		studentList = this.selectedTeachingClass.getCls().getStudentList();
+//		studentList = this.selectedTeachingClass.getCls().getStudentList();
 	}
 
 	private void showTeachingList() {

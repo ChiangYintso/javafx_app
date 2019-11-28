@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 
 public interface StudentDao {
 	/**

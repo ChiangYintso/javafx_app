@@ -1,7 +1,7 @@
 package pers.jiangyinzuo.rollcall.ui.state;
 
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 
 public class UserInfo {
 	private Student student;
@@ -38,12 +38,5 @@ public class UserInfo {
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
-	}
-
-	public static void main(String[] args) {
-		UserInfo userInfo = UserInfo.getSingleton();
-		userInfo.setStudent(new Student(99L, "abc"));
-		UserInfo test = UserInfo.getSingleton();
-		test.getStudent().welcome();
 	}
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
-import pers.jiangyinzuo.rollcall.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**

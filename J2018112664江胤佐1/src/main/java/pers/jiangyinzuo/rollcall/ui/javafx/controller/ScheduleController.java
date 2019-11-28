@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import pers.jiangyinzuo.rollcall.ui.state.UserInfo;

@@ -1,8 +1,8 @@
 package pers.jiangyinzuo.rollcall.ui.console.teacher;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.Teacher;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;

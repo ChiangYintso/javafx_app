@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
 import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 

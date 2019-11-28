@@ -1,7 +1,7 @@
 package pers.jiangyinzuo.rollcall.service.validator;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 
 public class TeachingClassComparedByTeacherIdValidator implements Validator {
 

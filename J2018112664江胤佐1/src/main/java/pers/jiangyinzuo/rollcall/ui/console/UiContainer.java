@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 public class UiContainer {
     private static AbstractUi currentUi;
 
-    static void run(Class<?> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    static void run(Class<?> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         currentUi = buildUi(clazz);
         while (clazz != null) {
             clazz = currentUi.run();

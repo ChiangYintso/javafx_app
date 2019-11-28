@@ -3,8 +3,8 @@ package pers.jiangyinzuo.rollcall.service.validator;
 import java.util.ArrayList;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.Teacher;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 
 public class LoginValidator implements Validator {
 
@@ -35,9 +35,8 @@ public class LoginValidator implements Validator {
 	}
 
 	public static void main(String[] args) throws CustomException {
-		Teacher t = new Teacher(666L, "李四", "信息科学与技术学院", "男", "swjtu", "讲师", new ArrayList<>());
-		Student s = new Student(1234L, (byte)1, "jyz", "123456", "软件工程", new ArrayList<>(),
-				new ArrayList<>());
+		Teacher t = new Teacher(666L, "李四", "信息科学与技术学院", true, "swjtu", "讲师");
+		Student s = new Student(1234L, true, "jyz", "123456", "软件工程");
 		LoginValidator v = new LoginValidator();
 		v.validate(Teacher.class, t);
 		v.validate(Student.class, s);

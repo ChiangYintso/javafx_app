@@ -1,6 +1,6 @@
 package pers.jiangyinzuo.rollcall.ui.state;
 
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 
 /**
  * µ¥ÀýÄ£Ê½ 

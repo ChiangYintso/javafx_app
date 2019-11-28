@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
-import pers.jiangyinzuo.rollcall.entity.RollCall;
-import pers.jiangyinzuo.rollcall.entity.Student;
-import pers.jiangyinzuo.rollcall.entity.TeachingClass;
+import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
 import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
@@ -34,7 +34,7 @@ public class RollCallUi extends AbstractUi {
 			return;
 		}
 		this.service = new RollCallServiceImpl(this.selectedTeachingClass);
-		this.rollCallList = this.service.queryTeachingClassRollCalls();
+//		this.rollCallList = this.service.queryRollCallsByTeachingClassId();
 		this.presenceMap = new HashMap<>();
 		this.presenceMap.put(1, "已到");
 		this.presenceMap.put(2, "未到");
@@ -81,7 +81,7 @@ public class RollCallUi extends AbstractUi {
 		RollCall tempRollCall = rollCall.copy();
 		item = ConsoleIoHelper.scanItem(1, this.rollCallList.size());
 		rollCall.setPresence(presenceMap.get(Integer.valueOf(item)));
-		service.editRollCall(tempRollCall, rollCall);
+//		service.editRollCall(tempRollCall, rollCall);
 	}
 
 	/**
@@ -98,12 +98,12 @@ public class RollCallUi extends AbstractUi {
 				addRollCallRecord(service.getAbnormalStudent(), "点名");
 				return this.getClass();
 			case 2:
-				addRollCallRecord(this.selectedTeachingClass.getStudentList(), "点名");
+//				addRollCallRecord(this.selectedTeachingClass.getStudentList(), "点名");
 				return this.getClass();
 			case 3:
-				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
-				addRollCallRecord(this.service.getRandomStudent(count), "点名");
+//				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
+//				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+//				addRollCallRecord(this.service.getRandomStudent(count), "点名");
 				return this.getClass();
 			case 4:
 				try {
@@ -113,9 +113,9 @@ public class RollCallUi extends AbstractUi {
 				}
 				return this.getClass();
 			case 5:
-				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
-				addRollCallRecord(this.service.getRandomStudent(count), "提问");
+//				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
+//				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+//				addRollCallRecord(this.service.getRandomStudent(count), "提问");
 				return this.getClass();
 			case 6:
 				return TeacherMainUi.class;

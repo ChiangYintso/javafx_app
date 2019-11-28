@@ -2,7 +2,7 @@ package pers.jiangyinzuo.rollcall.dao.mysqlimpl;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.StudentDao;
-import pers.jiangyinzuo.rollcall.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
 import java.io.FileNotFoundException;
@@ -61,7 +61,7 @@ public class StudentDaoMysqlImpl implements StudentDao {
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, IOException {
         StudentDao studentDao = new StudentDaoMysqlImpl();
         try {
-            studentDao.insertStudent(new Student(2018112664L, (byte) 1, "123456", "江胤佐", "软件工程"));
+            studentDao.insertStudent(new Student(2018112664L,  true, "123456", "江胤佐", "软件工程"));
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
