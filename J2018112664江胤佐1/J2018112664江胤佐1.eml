@@ -5,5 +5,6 @@
 	<levels>
 		<level name="JavaFX13" value="project"/>
 		<level name="MySQLConnector" value="project"/>
+		<level name="Jackson2.10.0" value="project"/>
 	</levels>
 </component>

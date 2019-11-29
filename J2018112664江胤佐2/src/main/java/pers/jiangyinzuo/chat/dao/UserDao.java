@@ -1,7 +1,6 @@
 package pers.jiangyinzuo.chat.dao;
 
-import pers.jiangyinzuo.chat.entity.User;
-import java.util.List;
+import pers.jiangyinzuo.chat.domain.entity.User;
 
 public interface UserDao {
 	User queryUserByUserId(Integer userId);

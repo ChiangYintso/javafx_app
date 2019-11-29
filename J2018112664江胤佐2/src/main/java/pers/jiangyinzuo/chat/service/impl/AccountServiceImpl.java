@@ -3,7 +3,7 @@ package pers.jiangyinzuo.chat.service.impl;
 import java.util.ArrayList;
 
 import pers.jiangyinzuo.chat.common.CustomInfo;
-import pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.AccountService;
 
 public class AccountServiceImpl implements AccountService {

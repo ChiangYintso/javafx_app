@@ -1,4 +1,4 @@
-package pers.jiangyinzuo.chat.entity;
+package pers.jiangyinzuo.chat.domain.entity;
 
 public interface Session {
 	String getSessionName();

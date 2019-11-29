@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import pers.jiangyinzuo.chat.entity.Session;
+import pers.jiangyinzuo.chat.domain.entity.Session;
 import pers.jiangyinzuo.chat.ui.javafx.router.SceneRouter;
 import pers.jiangyinzuo.chat.ui.state.ChattingBoardInfo;
 

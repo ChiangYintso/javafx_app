@@ -1,6 +1,6 @@
 package pers.jiangyinzuo.chat.dao;
 
-import pers.jiangyinzuo.chat.entity.Message;
+import pers.jiangyinzuo.chat.domain.entity.Message;
 import java.time.Instant;
 import java.util.List;
 

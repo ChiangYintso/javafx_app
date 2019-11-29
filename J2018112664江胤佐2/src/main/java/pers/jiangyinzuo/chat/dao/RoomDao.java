@@ -1,6 +1,6 @@
 package pers.jiangyinzuo.chat.dao;
 
-import pers.jiangyinzuo.chat.entity.Room;
+import pers.jiangyinzuo.chat.domain.entity.Room;
 
 public interface RoomDao {
 	Room queryRoomByRoomId(Integer roomId);

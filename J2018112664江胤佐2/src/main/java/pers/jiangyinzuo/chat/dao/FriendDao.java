@@ -1,6 +1,6 @@
 package pers.jiangyinzuo.chat.dao;
 
-import pers.jiangyinzuo.chat.entity.User;
+import pers.jiangyinzuo.chat.domain.entity.User;
 import java.util.List;
 import java.util.Map;
 
