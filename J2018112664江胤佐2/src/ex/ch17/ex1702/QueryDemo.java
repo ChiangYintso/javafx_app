@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class QueryDemo {
 	public static void main(String[] args) {
 		try(Connection conn = DriverManager.getConnection(
