@@ -5,13 +5,30 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 
+import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * 网络聊天室的Server和Client之间用Json来传递消息。
  * Json必须包含"option"属性，值可以为"login"、"logout"、"message"等字符串
+ * Json格式示例如下:
+ *
+ * {
+ *     option: "message",
+ *     data: {
+ *          "sendTo": [123, 456]
+ *     }
+ * }
+ *
+ * {
+ *     option: "login",
+ *     userId: 2018112664
+ * }
+ *
  * @author Jiang Yinzuo
  */
 public class JsonHelper {
@@ -23,12 +40,50 @@ public class JsonHelper {
      * @return 字节数组
      * @throws JsonProcessingException 转换为Json格式时发生异常
      */
-    public static byte[] writeLogBytes(String option, Long userId) throws JsonProcessingException {
+    public static byte[] sendUserId(String option, Long userId) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> map = new HashMap<>(10);
         map.put("option", option);
         map.put("userId", userId);
         return objectMapper.writeValueAsBytes(map);
+    }
+
+    /**
+     * 解析userId
+     * @param bytes
+     * @return
+     */
+    public static Integer getUserId(byte[] bytes) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readTree(bytes).get("userId").asInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取收件人userId列表
+     * @param bytes
+     * @return
+     */
+    public static List<Integer> getSendToList(byte[] bytes) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Integer> result = new ArrayList<>();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(bytes).get("data").get("sendTo");
+            if (jsonNode.isArray()) {
+                for (JsonNode node : jsonNode) {
+                    result.add(node.asInt());
+                }
+            } else {
+                result.add(jsonNode.asInt());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
@@ -58,6 +113,6 @@ public class JsonHelper {
     }
 
     public static Integer getMessageSendTo(JsonNode jsonNode) {
-        return jsonNode.get("data").get("userId").asInt();
+        return jsonNode.get("data").get("sendTo").asInt();
     }
 }
