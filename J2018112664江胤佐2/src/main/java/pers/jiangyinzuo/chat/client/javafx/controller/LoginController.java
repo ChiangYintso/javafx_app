@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import pers.jiangyinzuo.chat.common.CustomInfo;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.AccountService;
 import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
@@ -17,6 +16,9 @@ import pers.jiangyinzuo.chat.client.javafx.common.CustomAlertBoard;
 import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
 import pers.jiangyinzuo.chat.client.state.UserState;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class LoginController {
     @FXML
     private Button loginBtn;
@@ -25,7 +27,7 @@ public class LoginController {
     private Button registerBtn;
 
     @FXML
-    private TextField username;
+    private TextField userIdStr;
 
     @FXML
     private Text title;
@@ -38,16 +40,23 @@ public class LoginController {
     @FXML
     void login(ActionEvent event) throws IOException {
     	
-    	if (username.getText().isBlank() || title.getText().isBlank()) {
+    	if (userIdStr.getText().isBlank() || title.getText().isBlank()) {
     		CustomAlertBoard.showAlert("≤ªƒ‹Œ™ø’");
     	} else {
+    	    Long userId;
+    	    try {
+    	        userId = Long.parseLong(userIdStr.getText());
+            } catch (Exception e) {
+    	        CustomAlertBoard.showAlert("’À∫≈∏Ò Ω¥ÌŒÛ");
+                return;
+    	    }
     		accountService = new AccountServiceImpl();
-    		CustomInfo customInfo = accountService.login(username.getText(), password.getText());
-    		if (customInfo.getStatus() != (short) 200) {
+    		User user = accountService.login(userId, password.getText());
+    		if (user == null) {
     			CustomAlertBoard.showAlert("’À∫≈ªÚ√‹¬Î¥ÌŒÛ");
     		} else {
+    		    UserState.getSingleton().setUser(user);
     			SceneRouter.closeStage("µ«¬º");
-    			UserState.getSingleton().setUser((User)customInfo.getEntity());
     			SceneRouter.showStage("Õ¯¬Á¡ƒÃÏ “", "MainBoard.fxml");
     		}
     	}

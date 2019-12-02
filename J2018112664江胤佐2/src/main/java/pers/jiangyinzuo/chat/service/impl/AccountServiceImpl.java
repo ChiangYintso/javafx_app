@@ -3,28 +3,31 @@ package pers.jiangyinzuo.chat.service.impl;
 import java.util.ArrayList;
 
 import pers.jiangyinzuo.chat.common.CustomInfo;
+import pers.jiangyinzuo.chat.dao.UserDao;
+import pers.jiangyinzuo.chat.dao.mysql.UserDaoImpl;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.AccountService;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class AccountServiceImpl implements AccountService {
+	private UserDao userDao = new UserDaoImpl();
+
 	@Override
-	public CustomInfo register(String username, String password) {
-		return null;
+	public Long register(String username, String password) {
+		return userDao.insertUser(new User.Builder()
+				.userName(username)
+				.password(password)
+				.build());
 	}
 
 	@Override
-	public CustomInfo login(String username, String password) {
-		return null;
+	public User login(Long userId, String password) {
+		User user = userDao.queryUserByUserId(userId);
+		if (user == null || !user.getPassword().equals(password)) {
+			return null;
+		}
+		return user;
 	}
-
-//	@Override
-//	public CustomInfo register(String username, String password) {
-//		return new CustomInfo((short) 200, "注册成功", new User(123, "Cindy", "Hello JavaFX",null, new ArrayList<>()));
-//	}
-//
-//	@Override
-//	public CustomInfo login(String username, String password) {
-//		return new CustomInfo((short) 200, "登录成功", new User(123, "Cindy", "Hello JavaFX",null, new ArrayList<>()));
-//	}
-
 }

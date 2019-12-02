@@ -1,6 +1,8 @@
 package pers.jiangyinzuo.chat.server;
 
 import pers.jiangyinzuo.chat.helper.JsonHelper;
+import pers.jiangyinzuo.chat.service.MessageService;
+import pers.jiangyinzuo.chat.service.impl.MessageServiceImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,6 +59,15 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
      */
     @Override
     public void onNewMessageArrived(byte[] message) {
+        String jsonOption = JsonHelper.getJsonOption(message);
+
+        if ("message".equals(jsonOption)) {
+            forwardingThreadPoolExecutor.execute(() -> {
+                MessageService messageService = new MessageServiceImpl();
+                messageService.insertMessage(message);
+            });
+        }
+
         forwardingThreadPoolExecutor.execute(() -> {
             synchronized (TcpServer.this) {
                 List<Integer> sendToList = JsonHelper.getSendToList(message);
@@ -111,7 +122,6 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                 try {
                     // 获取客户端
                     client = serverSocket.accept();
-
 
                     // 将新的客户端处理器添加进集合
                     synchronized (TcpServer.this) {

@@ -1,18 +1,39 @@
 package pers.jiangyinzuo.chat.domain.entity;
 
+import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
+import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 import pers.jiangyinzuo.chat.domain.repository.FriendRepo;
 import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
+
+import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * @author Jiang Yinzuo
  */
+@TableMapper("chat_user")
 public class User {
-	private Long userId;
-	private String userName;
-	private String password;
-	private String intro;
-	private String avatar;
+	private static final String DEFAULT_AVATAR_URL = "file:pers/jiangyinzuo/chat/ui/javafx/scenes/static/avatar.png";
 
+	@FieldMapper(name = "user_id")
+	private Long userId;
+
+	@FieldMapper(name = "user_name")
+	private String userName;
+
+	@FieldMapper(name = "password")
+	private String password;
+
+	@FieldMapper(name = "intro")
+	private String intro;
+
+	@FieldMapper(name = "user_avatar")
+	private String avatar = DEFAULT_AVATAR_URL;
+
+	/**
+	 * 作为好友时的好友分组
+	 */
+	private String friendCategory = "默认分组";
 	private GroupRepo groupRepo;
 	private FriendRepo friendRepo;
 
@@ -36,6 +57,14 @@ public class User {
 		setAvatar(builder.avatar);
 		this.groupRepo = new GroupRepo();
 		this.friendRepo = new FriendRepo();
+	}
+
+	public List<User> getFriendList() {
+		return friendRepo.getFriendList(userId);
+	}
+
+	public List<Group> getGroupList() {
+		return groupRepo.getGroupListByUserId(userId);
 	}
 
 	public Long getUserId() {
@@ -83,7 +112,7 @@ public class User {
 		private String userName;
 		private String password;
 		private String intro;
-		private String avatar;
+		private String avatar = DEFAULT_AVATAR_URL;
 
 		public Builder() {
 		}

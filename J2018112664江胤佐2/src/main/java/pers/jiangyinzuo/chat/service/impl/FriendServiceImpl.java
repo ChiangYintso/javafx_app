@@ -6,6 +6,9 @@ import java.util.List;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.FriendService;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class FriendServiceImpl implements FriendService {
 
 	@Override

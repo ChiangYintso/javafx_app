@@ -1,6 +1,7 @@
 package pers.jiangyinzuo.chat.client.console;
 
-import pers.jiangyinzuo.chat.common.CustomInfo;
+import pers.jiangyinzuo.chat.client.state.UserState;
+import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.AccountService;
 import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
 import pers.jiangyinzuo.chat.client.console.helper.ConsoleIoHelper;
@@ -10,7 +11,7 @@ import pers.jiangyinzuo.chat.client.console.helper.ConsoleIoHelper;
  */
 public class LoginUi extends AbstractUi {
 
-    private String username;
+    private String userIdStr;
     private String password;
     private AccountService accountService = new AccountServiceImpl();
 
@@ -33,7 +34,7 @@ public class LoginUi extends AbstractUi {
 
     private Class<? extends AbstractUi> register() {
         System.out.println(" ‰»Î’À∫≈");
-        username = ConsoleIoHelper.scanner.nextLine();
+        userIdStr = ConsoleIoHelper.scanner.nextLine();
         System.out.println(" ‰»Î√‹¬Î");
         password = ConsoleIoHelper.scanner.nextLine();
         System.out.println("÷ÿ–¬ ‰»Î√‹¬Î");
@@ -41,10 +42,11 @@ public class LoginUi extends AbstractUi {
         if (!repeatPassword.equals(password)) {
             System.out.println("¡Ω¥Œ√‹¬Î≤ª“ª—˘");
         } else {
-            CustomInfo customInfo = accountService.register(username, password);
-            if (customInfo.getStatus() == (short) 200) {
+            Long userId = accountService.register(userIdStr, password);
+            if (userId.equals(-1L)) {
+                System.out.println("◊¢≤· ß∞‹");
             } else {
-                System.out.println(customInfo.getErrInfo());
+                System.out.println("◊¢≤·≥…π¶, id «" + userId);
             }
         }
         return LoginUi.class;
@@ -52,14 +54,22 @@ public class LoginUi extends AbstractUi {
 
     private Class<? extends AbstractUi> login() {
         System.out.println(" ‰»Î’À∫≈");
-        username = ConsoleIoHelper.scanner.nextLine();
+        userIdStr = ConsoleIoHelper.scanner.nextLine();
+        Long userId;
+        try {
+            userId = Long.parseLong(userIdStr);
+        } catch (Exception e) {
+            System.out.println("’À∫≈∏Ò Ω¥ÌŒÛ");
+            return LoginUi.class;
+        }
         System.out.println(" ‰»Î√‹¬Î");
         password = ConsoleIoHelper.scanner.nextLine();
-        CustomInfo customInfo = accountService.login(username, password);
-        if (customInfo.getStatus() == (short) 200) {
+        User user = accountService.login(userId, password);
+        if (user != null) {
+            UserState.getSingleton().setUser(user);
             return MainBoardUi.class;
         } else {
-            System.out.println(customInfo.getErrInfo());
+            System.out.println("µ«¬º ß∞‹");
             return LoginUi.class;
         }
     }

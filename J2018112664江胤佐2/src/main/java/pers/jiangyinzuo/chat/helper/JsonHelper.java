@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -32,6 +33,21 @@ import java.util.Map;
  * @author Jiang Yinzuo
  */
 public class JsonHelper {
+
+    /**
+     * 获取Json操作选项
+     * @param rawJson 原始JSON字节码
+     * @return "message"、"login"、"logout"
+     */
+    public static String getJsonOption(byte[] rawJson) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readTree(rawJson).get("option").asText();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      * 登录登出
@@ -97,7 +113,7 @@ public class JsonHelper {
      */
     public static byte[] sendMessage(Integer messageType, String messageContent, Long sendFrom, Long sendTo) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(10);
 
         Message message = new Message.Builder()
                 .messageType(messageType)
@@ -110,6 +126,22 @@ public class JsonHelper {
         map.put("data", message);
 
         return objectMapper.writeValueAsBytes(map);
+    }
+
+    /**
+     * 将原始的字节码转换成Message实体类
+     * @param bytes 字节码
+     * @return Message实体类
+     */
+    public static Message parseToMessageEntity(byte[] bytes) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(bytes).get("data");
+            return objectMapper.readValue(jsonNode.toString(), Message.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static Integer getMessageSendTo(JsonNode jsonNode) {

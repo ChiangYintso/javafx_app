@@ -2,6 +2,9 @@ package pers.jiangyinzuo.chat.client.console;
 
 import pers.jiangyinzuo.chat.client.console.helper.ConsoleIoHelper;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class MainBoardUi extends AbstractUi {
     /**
      * 运行UI的方法

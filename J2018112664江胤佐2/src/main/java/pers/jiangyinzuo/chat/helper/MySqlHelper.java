@@ -92,6 +92,20 @@ public class MySqlHelper {
         return result;
     }
 
+    public static Long executeUpdateReturnPrimaryKey(String sql, Object... parameters) throws SQLException {
+        preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        for (int i = 1; i <= parameters.length; ++i) {
+            preparedStatement.setObject(i, parameters[i - 1]);
+        }
+        Long key = -1L;
+        preparedStatement.executeUpdate();
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        if (resultSet.next()) {
+            key = resultSet.getLong(1);
+        }
+        return key;
+    }
+
     /**
      * 批量执行SQL更新语句
      *

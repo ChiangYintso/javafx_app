@@ -11,6 +11,9 @@ import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class RegisterController {
 
     @FXML
@@ -39,8 +42,13 @@ public class RegisterController {
     		alert.setContentText("两次密码不一样");
     		alert.showAndWait();
     	} else {
-    		CustomInfo customInfo = accountService.register(username.getText(), password.getText());
-    		alert.setContentText(customInfo.getErrInfo());
+    		Long userId = accountService.register(username.getText(), password.getText());
+    		if (userId.equals(-1L)) {
+    			alert.setContentText("注册失败");
+			} else {
+				alert.setContentText("注册成功。用户名是" + userId);
+			}
+    		alert.showAndWait();
     		SceneRouter.closeStage("注册");
     	}
     }
