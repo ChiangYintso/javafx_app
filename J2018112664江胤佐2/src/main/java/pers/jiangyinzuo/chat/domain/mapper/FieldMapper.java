@@ -13,9 +13,23 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface FieldMapper {
 
-    // "column" 表示可以直接映射的字段; "reference" 表示该成员为实体类, 还需要关联查询
+    /**
+     * column" 表示可以直接映射的字段; "reference" 表示该成员为实体类, 还需要关联查询
+     * @return 类型字符串
+     */
     String type() default "column";
 
-    // 字段名, 若`type` = "reference", 则可以为空
+    /**
+     * 字段名, 若type = "reference",
+     * 则进行 `SELECT * FROM TableMapper.value() WHERE FieldMapper.joinName() = ?`
+     * 的查询
+     * @return 字段名字符串
+     */
     String name() default "";
+
+    /**
+     * type = "reference"时, 实体对应的另一张表中的字段名
+     * @return
+     */
+    String joinName() default "";
 }

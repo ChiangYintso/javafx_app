@@ -38,7 +38,7 @@ public class TeachingClass implements Serializable {
     @FieldMapper(name = "classroom")
     private String classroom;
 
-    @FieldMapper(type = "reference", name = "teacher_id")
+    @FieldMapper(type = "reference", name = "teacher_id", joinName = "teacher_id")
     private Teacher teacher;
 
     private StudentRepo studentRepo;

@@ -13,7 +13,7 @@ public class GroupRepo {
     public List<Group> getGroupListByUserId(Long userId) {
         String sql = "SELECT chat_group.* FROM " +
                 "chat_user_group_relation, chat_group " +
-                "WHERE chat_user_group_relation.user_id = ?" +
+                "WHERE chat_user_group_relation.user_id = ? " +
                 "AND chat_user_group_relation.group_id = chat_group.group_id";
         List<Group> resultList = null;
         try {

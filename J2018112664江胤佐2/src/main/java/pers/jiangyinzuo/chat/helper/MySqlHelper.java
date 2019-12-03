@@ -193,7 +193,6 @@ public class MySqlHelper {
         do {
             // 构造数据传输对象
             T dto = clazz.getDeclaredConstructor().newInstance();
-
             mapFields(resultSet, dto, fields);
             results.add(dto);
         } while (resultSet.next());
@@ -236,20 +235,18 @@ public class MySqlHelper {
                             // 表名
                             sql.append(tableMapper.value());
                             sql.append(" WHERE ");
-                            sql.append(columnName);
+                            // 字段名
+                            sql.append("".equals(fieldMapper.joinName()) ? columnName : fieldMapper.joinName());
                             sql.append(" = ?");
                         }
                         ResultSet tempResultSet = executeQuery(sql.toString(), value);
                         field.set(dto, mapRecordToEntity(field.getType(), tempResultSet));
                     }
                 } catch (SQLException e) {
-                    e.getMessage();
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
-    }
-
-    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, SQLException, IllegalAccessException {
-
     }
 }

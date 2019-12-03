@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.state.UserState;
+import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.FriendService;
 import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
@@ -56,6 +57,11 @@ public class MainBoardController {
 	 */
 	private List<User> friendList;
 
+	/**
+	 * 用户的群聊列表
+	 */
+	private List<Group> groupList;
+
 	private TreeView<String> treeView;
 
 	@FXML
@@ -79,6 +85,7 @@ public class MainBoardController {
 		this.showGroups = false;
 		this.friendService = new FriendServiceImpl();
 		this.friendList = user.getFriendList();
+		this.groupList = user.getGroupList();
 		this.username.setText(user.getUserName());
 
 		Image image = new Image(user.getAvatar());
@@ -97,6 +104,7 @@ public class MainBoardController {
 		TreeItem<String> friendTreeItem = new TreeItem<>("我的好友");
 		Map<String, Set<User>> friendCategories = new HashMap<>(20);
 
+		// 初始化好友分组名——好友集合的HashMap
 		for (User friend : friendList) {
 			if (!friendCategories.containsKey(friend.getFriendCategory())) {
 				friendCategories.put(friend.getFriendCategory(), new HashSet<>(1));
@@ -115,6 +123,11 @@ public class MainBoardController {
 
 		// 初始化群聊列表
 		TreeItem<String> groupTreeItem = new TreeItem<>("我的群聊");
+		for (Group group : groupList) {
+			TreeItem<String> treeItem = new TreeItem<>(group.getGroupName());
+			groupTreeItem.getChildren().add(treeItem);
+		}
+
 		rootItem.getChildren().addAll(friendTreeItem, groupTreeItem);
 
 		// 初始化treeView, 并加载到页面

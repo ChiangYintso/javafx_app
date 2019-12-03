@@ -6,16 +6,20 @@ import pers.jiangyinzuo.chat.domain.repository.FriendRepo;
 import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 /**
  * @author Jiang Yinzuo
  */
 @TableMapper("chat_user")
 public class User {
-	private static final String DEFAULT_AVATAR_URL = "file:pers/jiangyinzuo/chat/ui/javafx/scenes/static/avatar.png";
+	private static String DEFAULT_AVATAR_URL;
 
 	@FieldMapper(name = "user_id")
 	private Long userId;
@@ -30,13 +34,13 @@ public class User {
 	private String intro;
 
 	@FieldMapper(name = "user_avatar")
-	private String avatar = DEFAULT_AVATAR_URL;
+	private String avatar;
 
     /**
 	 * 作为好友时的好友分组
 	 */
-    @FieldMapper(name = "chat_user_group_relation.friend_category")
-	private String friendCategory = "默认分组";
+    @FieldMapper(name = "chat_friendship.friend_category")
+	private String friendCategory;
 
 	private GroupRepo groupRepo;
 	private FriendRepo friendRepo;
@@ -51,7 +55,8 @@ public class User {
 	}
 
 	public User() {
-        this.groupRepo = new GroupRepo();
+		DEFAULT_AVATAR_URL = URLDecoder.decode(User.class.getClassLoader().getResource("avatar.png").getPath(), StandardCharsets.UTF_8);
+		this.groupRepo = new GroupRepo();
         this.friendRepo = new FriendRepo();
     }
 
@@ -174,6 +179,15 @@ public class User {
 
 		public User build() {
 			return new User(this);
+		}
+	}
+
+	public static void main(String[] args) {
+		User user = new User.Builder().build();
+		try {
+			System.out.println(URLDecoder.decode(user.getAvatar(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 	}
 }
