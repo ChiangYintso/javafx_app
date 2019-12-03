@@ -55,7 +55,7 @@ public class User {
 	}
 
 	public User() {
-		DEFAULT_AVATAR_URL = URLDecoder.decode(User.class.getClassLoader().getResource("avatar.png").getPath(), StandardCharsets.UTF_8);
+		DEFAULT_AVATAR_URL = "file:" + URLDecoder.decode(User.class.getClassLoader().getResource("avatar.png").getPath(), StandardCharsets.UTF_8);
 		this.groupRepo = new GroupRepo();
         this.friendRepo = new FriendRepo();
     }
