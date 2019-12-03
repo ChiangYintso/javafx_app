@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用于映射实体类成员变量和表字段
+ * 用于将数据库字段映射为实体类成员变量, 不能反过来映射
  * @author Jiang Yinzuo
  */
 @Retention(RetentionPolicy.RUNTIME)

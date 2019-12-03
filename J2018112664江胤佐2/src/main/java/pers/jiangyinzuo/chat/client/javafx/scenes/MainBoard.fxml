@@ -4,15 +4,14 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.2268760907504363" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.MainBoardController">
+<SplitPane dividerPositions="0.3287292817679558" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.MainBoardController">
   <items>
     <AnchorPane fx:id="userinfoPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <ImageView fx:id="avator" fitHeight="95.0" fitWidth="95.0" layoutX="10.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="avatar" fitHeight="95.0" fitWidth="95.0" layoutX="10.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
             <Text fx:id="username" layoutX="24.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="用户名">
                <font>
                   <Font size="26.0" />
@@ -22,9 +21,6 @@
             <Button fx:id="showGroupsOrFriendsBtn" layoutX="20.0" layoutY="312.0" mnemonicParsing="false" onAction="#showGroupsOrFriends" prefHeight="33.0" prefWidth="85.0" text="显示群聊" />
             <Button fx:id="addBtn" layoutX="19.0" layoutY="221.0" minWidth="49.0" mnemonicParsing="false" onAction="#addFriendOrGroup" prefHeight="33.0" prefWidth="85.0" style="-fx-border-radius: 50%;" text="添加" />
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="405.0">
-         <children>
-            <VBox fx:id="friendListContainer" layoutY="-1.0" prefHeight="362.0" prefWidth="436.0" />
-         </children></AnchorPane>
+    <AnchorPane fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="369.0" />
   </items>
 </SplitPane>

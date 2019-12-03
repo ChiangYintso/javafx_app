@@ -5,8 +5,10 @@ import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 import pers.jiangyinzuo.chat.domain.repository.FriendRepo;
 import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Jiang Yinzuo
@@ -30,33 +32,36 @@ public class User {
 	@FieldMapper(name = "user_avatar")
 	private String avatar = DEFAULT_AVATAR_URL;
 
-	/**
+    /**
 	 * 作为好友时的好友分组
 	 */
+    @FieldMapper(name = "chat_user_group_relation.friend_category")
 	private String friendCategory = "默认分组";
+
 	private GroupRepo groupRepo;
 	private FriendRepo friendRepo;
 
 	public User(Long userId, String userName, String password, String intro, String avatar) {
-		this.userId = userId;
+		this();
+	    this.userId = userId;
 		this.userName = userName;
 		this.password = password;
 		this.intro = intro;
 		this.avatar = avatar;
-		this.groupRepo = new GroupRepo();
-		this.friendRepo = new FriendRepo();
 	}
 
-	public User() {}
+	public User() {
+        this.groupRepo = new GroupRepo();
+        this.friendRepo = new FriendRepo();
+    }
 
-	private User(Builder builder) {
+    private User(Builder builder) {
+	    this();
 		setUserId(builder.userId);
 		setUserName(builder.userName);
 		setPassword(builder.password);
 		setIntro(builder.intro);
 		setAvatar(builder.avatar);
-		this.groupRepo = new GroupRepo();
-		this.friendRepo = new FriendRepo();
 	}
 
 	public List<User> getFriendList() {
@@ -99,13 +104,38 @@ public class User {
 		this.intro = intro;
 	}
 
+	public String getFriendCategory() {
+        return friendCategory;
+    }
+
+    public void setFriendCategory(String friendCategory) {
+        this.friendCategory = friendCategory;
+    }
+
 	public String getAvatar() {
-		return avatar;
+		return "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}
 
 	public void setAvatar(String avatar) {
-		this.avatar = avatar;
+		this.avatar = "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return userId.equals(user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
 
 	public static final class Builder {
 		private Long userId;

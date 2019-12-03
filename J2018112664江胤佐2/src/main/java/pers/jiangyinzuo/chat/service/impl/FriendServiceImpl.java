@@ -28,13 +28,4 @@ public class FriendServiceImpl implements FriendService {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public List<User> getFriendList(User user) {
-		// TODO 将模拟数据切换成真实数据
-		List<User> friendList = new ArrayList<>();
-
-		return friendList;
-	}
-
 }

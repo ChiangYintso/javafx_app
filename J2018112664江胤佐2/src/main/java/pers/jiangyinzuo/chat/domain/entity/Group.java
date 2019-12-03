@@ -15,21 +15,23 @@ public class Group {
 	private GroupRepo groupRepo;
 
 	public Group(Long groupId, String groupName, User master, String avatar) {
+		this();
 		this.groupId = groupId;
 		this.groupName = groupName;
 		this.master = master;
 		this.avatar = avatar;
+	}
+
+	public Group() {
 		this.groupRepo = new GroupRepo();
 	}
 
-	public Group() {}
-
 	private Group(Builder builder) {
+		this();
 		setGroupId(builder.groupId);
 		setGroupName(builder.groupName);
 		setMaster(builder.master);
 		setAvatar(builder.avatar);
-		this.groupRepo = new GroupRepo();
 	}
 
 	public Long getGroupId() {
