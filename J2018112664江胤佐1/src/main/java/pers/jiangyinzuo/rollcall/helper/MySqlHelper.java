@@ -1,6 +1,5 @@
 package pers.jiangyinzuo.rollcall.helper;
 
-import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.mapper.FieldMapper;
 import pers.jiangyinzuo.rollcall.domain.mapper.TableMapper;
 
@@ -21,12 +20,11 @@ public class MySqlHelper {
      */
     private static final String USERNAME = "root";
     private static final String PASSWORD = "ABCabc123!@#";
-    private static final String URL = "jdbc:mysql://localhost:3306/rollcall?serverTimezone=GMT%2B8";
+    private static final String URL = "jdbc:mysql://localhost:3306/chat?serverTimezone=GMT%2B8";
 
     private static PreparedStatement preparedStatement;
-    private static Statement statement;
-    private static String driver;
     private static Connection conn;
+    private static ResultSet resultSet;
 
     static {
         getConnection();
@@ -91,6 +89,20 @@ public class MySqlHelper {
         int result = preparedStatement.executeUpdate();
         closeConnection();
         return result;
+    }
+
+    public static Long executeUpdateReturnPrimaryKey(String sql, Object... parameters) throws SQLException {
+        preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        for (int i = 1; i <= parameters.length; ++i) {
+            preparedStatement.setObject(i, parameters[i - 1]);
+        }
+        Long key = -1L;
+        preparedStatement.executeUpdate();
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        if (resultSet.next()) {
+            key = resultSet.getLong(1);
+        }
+        return key;
     }
 
     /**
@@ -161,7 +173,7 @@ public class MySqlHelper {
         }
 
         do {
-            iterFields(resultSet, dto, fields);
+            mapFields(resultSet, dto, fields);
         } while (resultSet.next());
         return dto;
     }
@@ -171,8 +183,6 @@ public class MySqlHelper {
         if (resultSet == null || !resultSet.next()) {
             return results;
         }
-        // 构造数据传输对象
-        T dto = clazz.getDeclaredConstructor().newInstance();
 
         // 获取实体类的实例域
         Field[] fields = clazz.getDeclaredFields();
@@ -181,48 +191,61 @@ public class MySqlHelper {
         }
 
         do {
-            iterFields(resultSet, dto, fields);
+            // 构造数据传输对象
+            T dto = clazz.getDeclaredConstructor().newInstance();
+            mapFields(resultSet, dto, fields);
             results.add(dto);
         } while (resultSet.next());
         return results;
     }
 
-    private static <T> void iterFields(ResultSet resultSet, T dto, Field[] fields) throws SQLException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+    /**
+     * 将数据库记录映射到dto上
+     * @param resultSet MySQL查询得到的结果集
+     * @param dto 数据传输对象
+     * @param fields 实例域数组
+     * @param <T> 对象类型
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     */
+    private static <T> void mapFields(ResultSet resultSet, T dto, Field[] fields) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
         for (Field field : fields) {
             // 获取实体类每个实例域上的`FieldMapper`注解
             FieldMapper fieldMapper = field.getAnnotation(FieldMapper.class);
 
             if (fieldMapper != null) {
+                // 数据库表的字段名
                 String columnName = fieldMapper.name();
-                Object value = resultSet.getObject(columnName);
-                if ("column".equals(fieldMapper.type())) {
-                    try {
-                        field.set(dto, value);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                // 字段对应的值
+                Object value;
+                try {
+                    value = resultSet.getObject(columnName);
+                    if ("column".equals(fieldMapper.type())) {
+                        try {
+                            field.set(dto, value);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if ("reference".equals(fieldMapper.type())) {
+                        StringBuilder sql = new StringBuilder("SELECT * FROM ");
+                        TableMapper tableMapper = field.getType().getAnnotation(TableMapper.class);
+                        if (tableMapper != null) {
+                            // 表名
+                            sql.append(tableMapper.value());
+                            sql.append(" WHERE ");
+                            // 字段名
+                            sql.append("".equals(fieldMapper.joinName()) ? columnName : fieldMapper.joinName());
+                            sql.append(" = ?");
+                        }
+                        ResultSet tempResultSet = executeQuery(sql.toString(), value);
+                        field.set(dto, mapRecordToEntity(field.getType(), tempResultSet));
                     }
-                } else if ("reference".equals(fieldMapper.type())) {
-                    StringBuilder sql = new StringBuilder("SELECT * FROM ");
-                    TableMapper tableMapper = field.getType().getAnnotation(TableMapper.class);
-                    if (tableMapper != null) {
-                        // 表名
-                        sql.append(tableMapper.value());
-                        sql.append(" WHERE ");
-                        sql.append(columnName);
-                        sql.append(" = ?");
-                    }
-                    ResultSet tempResultSet = executeQuery(sql.toString(), value);
-                    field.set(dto, mapRecordToEntity(field.getType(), tempResultSet));
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }
-    }
-
-    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, SQLException, IllegalAccessException {
-        String sql = "SELECT * FROM rollcall_rollcall_record WHERE rollcall_id = 3";
-        RollCall rollCall = mapRecordToEntity(RollCall.class, executeQuery(sql));
-        System.out.println(rollCall.getRollCallInfo());
-        System.out.println(rollCall.getStudent().getStudentId());
-        System.out.println(rollCall.getTeachingClass());
     }
 }

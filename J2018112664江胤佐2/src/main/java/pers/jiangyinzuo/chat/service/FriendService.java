@@ -9,6 +9,4 @@ public interface FriendService {
 	void delFriend(List<User> userList);
 	
 	void getFriendInfo(User friend);
-	
-	List<User> getFriendList(User user);
 }

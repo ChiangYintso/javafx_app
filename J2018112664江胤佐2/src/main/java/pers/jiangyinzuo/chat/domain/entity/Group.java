@@ -1,67 +1,112 @@
 package pers.jiangyinzuo.chat.domain.entity;
 
-import java.util.List;
+import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
+import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
+import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
 
-public class Group implements Session {
-	private String groupName;
-	private Integer groupId;
-	private User founder;
-	private String avatarUrl;
-	private List<User> manager;
-	private List<User> memberList;
-	private List<Message> chattingRecord;
+/**
+ * @author Jiang Yinzuo
+ */
+@TableMapper("chat_group")
+public class Group {
 
-	public Integer getGroupId() {
-		return groupId;
-	}
+	@FieldMapper(name = "group_id")
+    private Long groupId;
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
+    @FieldMapper(name = "group_name")
+    private String groupName;
 
-	public User getFounder() {
-		return founder;
-	}
+    @FieldMapper(type = "reference", name = "master_user_id", joinName = "user_id")
+    private User master;
 
-	public void setFounder(User founder) {
-		this.founder = founder;
-	}
+    @FieldMapper(name = "group_avatar")
+    private String avatar;
 
-	public List<User> getMemberList() {
-		return memberList;
-	}
+    private GroupRepo groupRepo;
 
-	public void setMemberList(List<User> memberList) {
-		this.memberList = memberList;
-	}
+    public Group(Long groupId, String groupName, User master, String avatar) {
+        this();
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.master = master;
+        this.avatar = avatar;
+    }
 
-	public List<User> getManager() {
-		return manager;
-	}
+    public Group() {
+        this.groupRepo = new GroupRepo();
+    }
 
-	public void setManager(List<User> manager) {
-		this.manager = manager;
-	}
+    private Group(Builder builder) {
+        this();
+        setGroupId(builder.groupId);
+        setGroupName(builder.groupName);
+        setMaster(builder.master);
+        setAvatar(builder.avatar);
+    }
 
-	public List<Message> getChattingRecord() {
-		return chattingRecord;
-	}
+    public Long getGroupId() {
+        return groupId;
+    }
 
-	public void setChattingRecord(List<Message> chattingRecord) {
-		this.chattingRecord = chattingRecord;
-	}
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
 
-	@Override
-	public String getSessionName() {
-		return this.groupName;
-	}
+    public String getGroupName() {
+        return groupName;
+    }
 
-	@Override
-	public String getAvatarUrl() {
-		return avatarUrl == null ? DEFAULT_AVATAR_URL : avatarUrl;
-	}
-	
-	public void setAvatarUrl(String avatarUrl) {
-		this.avatarUrl = avatarUrl;
-	}
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public User getMaster() {
+        return master;
+    }
+
+    public void setMaster(User master) {
+        this.master = master;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public static final class Builder {
+        private Long groupId;
+        private String groupName;
+        private User master;
+        private String avatar;
+
+        public Builder() {
+        }
+
+        public Builder groupId(Long val) {
+            groupId = val;
+            return this;
+        }
+
+        public Builder groupName(String val) {
+            groupName = val;
+            return this;
+        }
+
+        public Builder master(User val) {
+            master = val;
+            return this;
+        }
+
+        public Builder avatar(String val) {
+            avatar = val;
+            return this;
+        }
+
+        public Group build() {
+            return new Group(this);
+        }
+    }
 }

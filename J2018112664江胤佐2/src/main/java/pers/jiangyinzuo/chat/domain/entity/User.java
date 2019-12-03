@@ -1,58 +1,87 @@
 package pers.jiangyinzuo.chat.domain.entity;
 
+import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
+import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
+import pers.jiangyinzuo.chat.domain.repository.FriendRepo;
+import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
+
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
  * @author Jiang Yinzuo
  */
-public class User implements Session {
-	private Integer userId;
+@TableMapper("chat_user")
+public class User {
+	private static String DEFAULT_AVATAR_URL;
+
+	@FieldMapper(name = "user_id")
+	private Long userId;
+
+	@FieldMapper(name = "user_name")
 	private String userName;
-	private String pwd;
+
+	@FieldMapper(name = "password")
+	private String password;
+
+	@FieldMapper(name = "intro")
 	private String intro;
-	private String avatarUrl;
-	private List<User> friendList;
-	private List<Group> groupList;
-	private List<Group> priviledgeGroupList;
-	private Map<String, List<User>> friendCategoryMap;
 
-	@Override
-	public String getAvatarUrl() {
-		return avatarUrl == null ? DEFAULT_AVATAR_URL : avatarUrl;
-	}
+	@FieldMapper(name = "user_avatar")
+	private String avatar;
 
-	public void setAvatarUrl(String avatarUrl) {
-		this.avatarUrl = avatarUrl;
-	}
+    /**
+	 * 作为好友时的好友分组
+	 */
+    @FieldMapper(name = "chat_friendship.friend_category")
+	private String friendCategory;
 
-	public Boolean isOnLine() {
-		return isOnLine;
-	}
+	private GroupRepo groupRepo;
+	private FriendRepo friendRepo;
 
-	public void setOnLineStatus(Boolean isOnLine) {
-		this.isOnLine = isOnLine;
-	}
-
-	private Boolean isOnLine;
-
-	public User(Integer userId, String userName, String intro, String avatarUrl, List<Group> groupList) {
-		this.userId = userId;
+	public User(Long userId, String userName, String password, String intro, String avatar) {
+		this();
+	    this.userId = userId;
 		this.userName = userName;
+		this.password = password;
 		this.intro = intro;
-		this.groupList = groupList;
-		if (avatarUrl == null) {
-			this.avatarUrl = DEFAULT_AVATAR_URL;
-		} else {
-			this.avatarUrl = avatarUrl;
-		}
+		this.avatar = avatar;
 	}
 
-	public Integer getUserId() {
+	public User() {
+		DEFAULT_AVATAR_URL = "file:" + URLDecoder.decode(User.class.getClassLoader().getResource("avatar.png").getPath(), StandardCharsets.UTF_8);
+		this.groupRepo = new GroupRepo();
+        this.friendRepo = new FriendRepo();
+    }
+
+    private User(Builder builder) {
+	    this();
+		setUserId(builder.userId);
+		setUserName(builder.userName);
+		setPassword(builder.password);
+		setIntro(builder.intro);
+		setAvatar(builder.avatar);
+	}
+
+	public List<User> getFriendList() {
+		return friendRepo.getFriendList(userId);
+	}
+
+	public List<Group> getGroupList() {
+		return groupRepo.getGroupListByUserId(userId);
+	}
+
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -64,12 +93,12 @@ public class User implements Session {
 		this.userName = userName;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getIntro() {
@@ -80,40 +109,85 @@ public class User implements Session {
 		this.intro = intro;
 	}
 
-	public List<User> getFriendList() {
-		return friendList;
+	public String getFriendCategory() {
+        return friendCategory;
+    }
+
+    public void setFriendCategory(String friendCategory) {
+        this.friendCategory = friendCategory;
+    }
+
+	public String getAvatar() {
+		return "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}
 
-	public void setFriendList(List<User> friendList) {
-		this.friendList = friendList;
+	public void setAvatar(String avatar) {
+		this.avatar = "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}
 
-	public List<Group> getGroupList() {
-		return groupList;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return userId.equals(user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
+
+	public static final class Builder {
+		private Long userId;
+		private String userName;
+		private String password;
+		private String intro;
+		private String avatar = DEFAULT_AVATAR_URL;
+
+		public Builder() {
+		}
+
+		public Builder userId(Long val) {
+			userId = val;
+			return this;
+		}
+
+		public Builder userName(String val) {
+			userName = val;
+			return this;
+		}
+
+		public Builder password(String val) {
+			password = val;
+			return this;
+		}
+
+		public Builder intro(String val) {
+			intro = val;
+			return this;
+		}
+
+		public Builder avatar(String val) {
+			avatar = val;
+			return this;
+		}
+
+		public User build() {
+			return new User(this);
+		}
 	}
 
-	public void setGroupList(List<Group> groupList) {
-		this.groupList = groupList;
-	}
-
-	public List<Group> getPriviledgeGroupList() {
-		return priviledgeGroupList;
-	}
-
-	public void setPriviledgeGroupList(List<Group> priviledgeGroupList) {
-		this.priviledgeGroupList = priviledgeGroupList;
-	}
-
-	public Map<String, List<User>> getFriendCategoryMap() {
-		return friendCategoryMap;
-	}
-
-	public void setFriendCategoryMap(Map<String, List<User>> friendCategoryMap) {
-		this.friendCategoryMap = friendCategoryMap;
-	}
-
-	@Override
-	public String getSessionName() {
-		return this.userName;
+	public static void main(String[] args) {
+		User user = new User.Builder().build();
+		try {
+			System.out.println(URLDecoder.decode(user.getAvatar(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }
