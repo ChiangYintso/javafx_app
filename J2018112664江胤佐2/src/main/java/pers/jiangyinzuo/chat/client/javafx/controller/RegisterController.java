@@ -52,6 +52,4 @@ public class RegisterController {
     		SceneRouter.closeStage("зЂВс");
     	}
     }
-
-
 }

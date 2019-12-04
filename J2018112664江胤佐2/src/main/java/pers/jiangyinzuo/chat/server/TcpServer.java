@@ -1,5 +1,7 @@
 package pers.jiangyinzuo.chat.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.MessageService;
 import pers.jiangyinzuo.chat.service.impl.MessageServiceImpl;
@@ -13,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
+
+import static pers.jiangyinzuo.chat.helper.JsonHelper.Option;
 
 /**
  * @author Jiang Yinzuo
@@ -58,10 +62,37 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
      * ClientHandler.ClientReadHandler读取到来自客户端的新消息时的回调方法
      */
     @Override
-    public void onNewMessageArrived(byte[] message) {
+    public void onNewMessageArrived(byte[] message, Integer userId) {
         String jsonOption = JsonHelper.getJsonOption(message);
 
-        if ("message".equals(jsonOption)) {
+        // 询问上线总人数
+        if (Option.ASK_FOR_ONLINE_TOTAL.equals(jsonOption)) {
+
+            /*
+              向全体客户端发送消息, 用于更新全网在线人数
+              {
+                  "option": "updateOnlineTotal",
+                  "totalCount": <全网在线人数>
+              }
+            */
+            forwardingThreadPoolExecutor.execute(() -> {
+                ObjectMapper objectMapper = new ObjectMapper();
+                Map<String, Object> map = new HashMap<>(10);
+                map.put("option", Option.UPDATE_ONLINE_TOTAL);
+                map.put("totalCount", clientHandlerMap.size());
+                try {
+                    synchronized (clientHandlerMap.get(userId)) {
+                        clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
+                    }
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            });
+            return;
+        }
+
+        // 向数据库存入聊天消息记录
+        if (Option.MESSAGE.equals(jsonOption)) {
             forwardingThreadPoolExecutor.execute(() -> {
                 MessageService messageService = new MessageServiceImpl();
                 messageService.insertMessage(message);
@@ -72,8 +103,8 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
             synchronized (TcpServer.this) {
                 List<Integer> sendToList = JsonHelper.getSendToList(message);
                 ClientHandler clientHandler;
-                for (Integer userId : sendToList) {
-                    clientHandler = clientHandlerMap.get(userId);
+                for (Integer sendToUserId : sendToList) {
+                    clientHandler = clientHandlerMap.get(sendToUserId);
 
                     // 用户已经上线
                     if (clientHandler != null) {
@@ -138,6 +169,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
 
                         clientHandlerMap.put(userId, clientHandler);
 
+                        System.out.println("用户" + userId + "连接到服务器");
                         // 回送
                         bytes = JsonHelper.sendMessage(1, "用户" + userId + "已连接", 123456L, userId.longValue());
                         client.getOutputStream().write(bytes);
@@ -205,10 +237,11 @@ class ClientHandler {
          * ClientHandler.ClientReadHandler读取到来自客户端的新消息时的回调方法
          * @param message 需要TcpServer转发的字节码, 由JSON转换而来
          */
-        void onNewMessageArrived(byte[] message);
+        void onNewMessageArrived(byte[] message, Integer userId);
 
         /**
          * 退出ClientHandler
+         * @param userId 断开连接的客户端的userId
          */
         void onExitClientHandler(Integer userId);
     }
@@ -236,7 +269,7 @@ class ClientHandler {
                 try {
                     int count = inputStream.read(bytes);
                     if (count > 0) {
-                        clientHandlerCallBack.onNewMessageArrived(bytes);
+                        clientHandlerCallBack.onNewMessageArrived(bytes, userId);
                     }
                 } catch (Exception e) {
                     if (isOn) {

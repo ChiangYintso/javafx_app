@@ -1,8 +1,10 @@
 package pers.jiangyinzuo.chat.client.javafx.controller;
 
-import java.io.IOException;
 import java.util.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,17 +14,24 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
+import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.FriendService;
 import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
 import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
+
+import static pers.jiangyinzuo.chat.client.javafx.Main.getTcpClient;
 
 /**
  * @author Jiang Yinzuo
  */
 public class MainBoardController {
+
+	private static MainBoardController singleton;
 
 	@FXML
 	private AnchorPane userinfoPane;
@@ -40,15 +49,16 @@ public class MainBoardController {
 	private Button showGroupsOrFriendsBtn;
 
 	@FXML
+	private Button noticeBtn;
+
+	@FXML
 	private Button addBtn;
 
 	@FXML
-	private AnchorPane rightPane;
+	private Text onlineTotal;
 
-	/**
-	 * true：展示群聊列表；false：展示好友列表
- 	 */
-	private boolean showGroups;
+	@FXML
+	private AnchorPane rightPane;
 
 	private FriendService friendService;
 
@@ -64,33 +74,86 @@ public class MainBoardController {
 
 	private TreeView<String> treeView;
 
+	private Stage mainBoardStage;
+
+	private int newMessageCount = 0;
+
+	public ImageView getAvatar() {
+		return avatar;
+	}
+
+	public Text getUsername() {
+		return username;
+	}
+
+	public Button getNoticeBtn() {
+		return noticeBtn;
+	}
+
+	public Text getOnlineTotal() {
+		return onlineTotal;
+	}
+
+	public TreeView<String> getTreeView() {
+		return treeView;
+	}
+
+	public Stage getMainBoardStage() {
+		return mainBoardStage;
+	}
+
+	public interface Contract {
+		/**
+		 * 更新全网在线人数
+		 * @param jsonNode JSON
+		 */
+		default void onUpdateOnlineTotal(JsonNode jsonNode) {
+			int totalCount = jsonNode.get("totalCount").asInt();
+			singleton.onlineTotal.setText("全网" + totalCount + "人在线");
+		}
+
+		/**
+		 * 新的消息
+		 * @param jsonNode JSON
+		 */
+		default void onNewNoticeReceived(JsonNode jsonNode) {
+			singleton.newMessageCount++;
+			singleton.addBtn.setText("[" + singleton.newMessageCount + "]条新消息");
+		}
+	}
+
 	@FXML
 	void addFriendOrGroup(ActionEvent event) {
 		SceneRouter.showTempStage("查找面板", "AddBoard.fxml");
 	}
 
 	@FXML
-	void showGroupsOrFriends(ActionEvent event) throws IOException {
-		if (showGroups) {
-			this.showGroupsOrFriendsBtn.setText("显示群聊");
-		} else {
-			this.showGroupsOrFriendsBtn.setText("显示好友");
-		}
-		this.showGroups = !this.showGroups;
-	}
-
-	@FXML
 	public void initialize() {
 		User user = UserState.getSingleton().getUser();
-		this.showGroups = false;
 		this.friendService = new FriendServiceImpl();
 		this.friendList = user.getFriendList();
 		this.groupList = user.getGroupList();
 		this.username.setText(user.getUserName());
+		this.mainBoardStage = SceneRouter.getStage("网络聊天室");
+
+		singleton = this;
 
 		Image image = new Image(user.getAvatar());
 		avatar.setImage(image);
 		this.loadTreeView();
+		QueryOnlineTotalHandler queryOnlineTotalHandler = new QueryOnlineTotalHandler();
+		queryOnlineTotalHandler.setName("QueryOnlineTotal");
+		mainBoardStage.setOnCloseRequest((event) -> {
+			queryOnlineTotalHandler.interrupt();
+			System.out.println("界面关闭");
+		});
+		queryOnlineTotalHandler.start();
+
+	}
+
+	@FXML
+	void showNotice(ActionEvent event) {
+
 	}
 
 	/**
@@ -114,8 +177,11 @@ public class MainBoardController {
 		for (Map.Entry<String, Set<User>> kv : friendCategories.entrySet()) {
 			TreeItem<String> friendCategory = new TreeItem<>(kv.getKey());
 			for (User friend : kv.getValue()) {
+				ImageView imageView = new ImageView(new Image(friend.getAvatar()));
+				imageView.setFitWidth(30);
+				imageView.setFitHeight(30);
 				TreeItem<String> friendItem = new TreeItem<>(friend.getUserName(),
-						new ImageView(new Image(friend.getAvatar())));
+						imageView);
 				friendCategory.getChildren().add(friendItem);
 			}
 			friendTreeItem.getChildren().add(friendCategory);
@@ -138,5 +204,44 @@ public class MainBoardController {
 	@FXML
 	void showUserSettingBoard(ActionEvent event) {
 		SceneRouter.showTempStage("设置", "UserSetting.fxml");
+	}
+
+	public void changeOnlineTotal(int totalCount) {
+		this.onlineTotal.setText("全网" + totalCount +"人在线");
+	}
+
+	/**
+	 * 询问上线人数线程
+	 */
+	private class QueryOnlineTotalHandler extends Thread {
+		/**
+		 * 发送给服务端的消息
+		 */
+		private byte[] message;
+
+		QueryOnlineTotalHandler() {
+			ObjectMapper objectMapper = new ObjectMapper();
+			Map<String, Object> map = new HashMap<>(10);
+			map.put("option", JsonHelper.Option.ASK_FOR_ONLINE_TOTAL);
+			map.put("sendTo", UserState.getSingleton().getUser().getUserId());
+			try {
+				message = objectMapper.writeValueAsBytes(map);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void run() {
+			while (!isInterrupted()) {
+				try {
+					sleep(10000);
+					getTcpClient().sendMessage(message);
+					System.out.println("询问上线人数");
+				} catch (InterruptedException e) {
+					break;
+				}
+			}
+		}
 	}
 }

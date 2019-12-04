@@ -16,6 +16,8 @@ import pers.jiangyinzuo.chat.client.javafx.common.CustomAlertBoard;
 import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
 import pers.jiangyinzuo.chat.client.state.UserState;
 
+import static pers.jiangyinzuo.chat.client.javafx.Main.startTcpClient;
+
 /**
  * @author Jiang Yinzuo
  */
@@ -55,6 +57,7 @@ public class LoginController {
     		if (user == null) {
     			CustomAlertBoard.showAlert("ÕËºÅ»òÃÜÂë´íÎó");
     		} else {
+    		    startTcpClient(user.getUserId());
     		    UserState.getSingleton().setUser(user);
     			SceneRouter.closeStage("µÇÂ¼");
     			SceneRouter.showStage("ÍøÂçÁÄÌìÊÒ", "MainBoard.fxml");

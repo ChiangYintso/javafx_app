@@ -33,9 +33,11 @@ public class TcpClient {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private Broker broker = new Broker();
+
     private boolean isOn = true;
 
-    private TcpClient(Long userId) {
+    public TcpClient(Long userId) {
         socket = new Socket();
         this.userId = userId;
         try {
@@ -62,7 +64,7 @@ public class TcpClient {
                 ReadHandler readHandler = new ReadHandler(socket.getInputStream());
                 readHandler.start();
 
-                // 发送usrId
+                // 发送userId
                 sendUserId(socket.getOutputStream(), this.userId);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -94,7 +96,7 @@ public class TcpClient {
      * 向服务器发送消息
      * @param data 需要发送的字节码
      */
-    public void sendMessage(byte[] data) {
+    public synchronized void sendMessage(byte[] data) {
         try {
             this.outputStream.write(data);
         } catch (IOException e) {
@@ -133,7 +135,7 @@ public class TcpClient {
                 try {
                     int count = inputStream.read(data);
                     if (count > 0) {
-                        Broker.showMessage(objectMapper.readTree(data));
+                        broker.receiveMessage(objectMapper.readTree(data));
                     }
                 } catch (Exception e) {
                     if (TcpClient.this.isOn) {

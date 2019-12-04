@@ -34,6 +34,15 @@ import java.util.Map;
  */
 public class JsonHelper {
 
+    public static class Option {
+        public static final String MESSAGE = "message";
+        public static final String LOGIN = "login";
+        public static final String LOGOUT = "logout";
+        public static final String UPDATE_ONLINE_TOTAL = "updateOnlineTotal";
+        public static final String ASK_FOR_ONLINE_TOTAL = "askForOnlineTotal";
+        public static final String NEW_FRIEND_OR_GROUP = "newFriendOrGroup";
+    }
+
     /**
      * 获取Json操作选项
      * @param rawJson 原始JSON字节码
@@ -47,6 +56,10 @@ public class JsonHelper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getJsonOption(JsonNode jsonNode) {
+        return jsonNode.get("option").asText();
     }
 
     /**

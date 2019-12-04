@@ -1,6 +1,5 @@
 package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class ScheduleController {
 	private List<TeachingClass> teachingClassList;
 
 	@FXML
-    public void initialize() throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
+    public void initialize() throws ClassNotFoundException, IOException, CustomException {
     	teachingClassService = new TeachingClassServiceImpl();
     	if (UserInfo.getSingleton().getTeacher()!=null) {
     		this.teachingClassList = teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());

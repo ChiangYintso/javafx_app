@@ -79,6 +79,8 @@ public class TeacherMainBoardController {
     private void addTeachingClassTab() throws IOException {
     	for (TeachingClass cls : this.teachingClasses) {
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeachingClassCmp.fxml"));
+
+            // 必须调用此方法才能得到controller
         	Pane pane = fxmlLoader.load();
         	TeachingClassCmpController cmpController = fxmlLoader.getController();
         	cmpController.init(cls);

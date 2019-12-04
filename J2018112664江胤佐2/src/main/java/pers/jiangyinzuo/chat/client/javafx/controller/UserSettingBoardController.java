@@ -6,6 +6,9 @@ import javafx.scene.image.ImageView;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.client.state.UserState;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class UserSettingBoardController {
 
 	@FXML

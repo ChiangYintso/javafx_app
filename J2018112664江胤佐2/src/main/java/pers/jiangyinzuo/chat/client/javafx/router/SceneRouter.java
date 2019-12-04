@@ -53,7 +53,7 @@ public class SceneRouter {
 			e.printStackTrace();
 		}
 	}
-	private static Stage getStage(String stageName) {
+	public static Stage getStage(String stageName) {
 		Stage stage = stageMap.get(stageName);
 		if (stage == null) {
 			stage = new Stage();

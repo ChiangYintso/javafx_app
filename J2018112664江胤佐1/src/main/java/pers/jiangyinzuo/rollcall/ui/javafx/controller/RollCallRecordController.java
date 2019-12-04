@@ -5,6 +5,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class RollCallRecordController {
 
     @FXML
