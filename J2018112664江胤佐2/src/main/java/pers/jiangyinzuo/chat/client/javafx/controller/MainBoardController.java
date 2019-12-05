@@ -5,6 +5,7 @@ import java.util.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -109,8 +110,16 @@ public class MainBoardController {
 		 * @param jsonNode JSON
 		 */
 		default void onUpdateOnlineTotal(JsonNode jsonNode) {
-			int totalCount = jsonNode.get("totalCount").asInt();
-			singleton.onlineTotal.setText("全网" + totalCount + "人在线");
+			if (Platform.isFxApplicationThread()) {
+				int totalCount = jsonNode.get("totalCount").asInt();
+				singleton.onlineTotal.setText("全网" + totalCount + "人在线");
+			} else {
+				Platform.runLater(() -> {
+					int totalCount = jsonNode.get("totalCount").asInt();
+					singleton.onlineTotal.setText("全网" + totalCount + "人在线");
+				});
+			}
+
 		}
 
 		/**
@@ -118,8 +127,15 @@ public class MainBoardController {
 		 * @param jsonNode JSON
 		 */
 		default void onNewNoticeReceived(JsonNode jsonNode) {
-			singleton.newMessageCount++;
-			singleton.addBtn.setText("[" + singleton.newMessageCount + "]条新消息");
+			if (Platform.isFxApplicationThread()) {
+				singleton.newMessageCount++;
+				singleton.noticeBtn.setText("[" + singleton.newMessageCount + "]条新消息");
+			} else {
+				Platform.runLater(() -> {
+					singleton.newMessageCount++;
+					singleton.noticeBtn.setText("[" + singleton.newMessageCount + "]条新消息");
+				});
+			}
 		}
 	}
 
@@ -150,8 +166,7 @@ public class MainBoardController {
 			System.out.println("主界面关闭");
 			Main.exit();
 		});
-		queryOnlineTotalHandler.start();
-
+		Main.getClientThreadPool().execute(queryOnlineTotalHandler);
 	}
 
 	@FXML
@@ -232,11 +247,13 @@ public class MainBoardController {
 
 		@Override
 		public void run() {
-			while (!isInterrupted()) {
+			while (Main.isOn) {
 				try {
 					sleep(10000);
-					getTcpClient().sendMessage(message);
-					System.out.println("询问上线人数");
+					if (Main.isOn) {
+						getTcpClient().sendMessage(message);
+						System.out.println("询问上线人数");
+					}
 				} catch (InterruptedException e) {
 					break;
 				}

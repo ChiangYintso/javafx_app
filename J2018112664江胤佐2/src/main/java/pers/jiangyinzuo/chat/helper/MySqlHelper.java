@@ -244,7 +244,6 @@ public class MySqlHelper {
                     }
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
-                    e.printStackTrace();
                 }
             }
         }

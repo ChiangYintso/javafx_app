@@ -11,7 +11,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import pers.jiangyinzuo.chat.client.TcpClient;
 import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.client.javafx.common.CustomAlertBoard;
 import pers.jiangyinzuo.chat.client.state.UserState;
@@ -22,6 +21,7 @@ import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.RejectedExecutionException;
 
 import static pers.jiangyinzuo.chat.helper.JsonHelper.Option.ADD_FRIEND;
 
@@ -123,11 +123,14 @@ public class AddBoardController {
     @FXML
     void addFriend(ActionEvent event) {
         byte[] message = new byte[256];
-        Map map = new HashMap<>(10);
-        map.put("message", ADD_FRIEND);
+        Map<String, Object> map = new HashMap<>(10);
+        map.put("option", ADD_FRIEND);
+
+        Map<String, Object> data = new HashMap<>(10);
         if (FIND_FRIENDS.equals(radioSelected)) {
-            map.put("sendTo", userSearched.getUserId());
-            map.put("sendFrom", UserState.getSingleton().getUser().getUserId());
+            data.put("sendTo", userSearched.getUserId());
+            data.put("sendFrom", UserState.getSingleton().getUser().getUserId());
+            map.put("data", data);
             try {
                 message = objectMapper.writeValueAsBytes(map);
             } catch (JsonProcessingException e) {
@@ -135,22 +138,14 @@ public class AddBoardController {
             }
 
             byte[] finalMessage = message;
-            Main.getClientThreadPool().execute(() -> {
-                Main.getTcpClient().sendMessage(finalMessage);
-            });
-        }
 
-    }
-
-    private class AddRequestHandler implements Runnable {
-
-        AddRequestHandler() {
-
-        }
-
-        @Override
-        public void run() {
-
+            try {
+                Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
+            } catch (RejectedExecutionException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // TODO º”»∫
         }
     }
 }

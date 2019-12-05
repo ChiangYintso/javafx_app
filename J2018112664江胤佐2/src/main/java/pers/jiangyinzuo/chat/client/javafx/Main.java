@@ -13,8 +13,10 @@ import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
  */
 public class Main extends Application {
 
-    private static ExecutorService clientThreadPool = new ThreadPoolExecutor(3, 10, 30L, TimeUnit.SECONDS,
-            new SynchronousQueue<Runnable>());
+    private static ExecutorService clientThreadPool = new ThreadPoolExecutor(20, 25,
+            0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>(5),
+            Executors.defaultThreadFactory());
 
     private static TcpClient tcpClient;
 
@@ -31,7 +33,7 @@ public class Main extends Application {
         return clientThreadPool;
     }
 
-    private static boolean isOn = true;
+    public static boolean isOn = true;
 
     public static void exit() {
         if (isOn) {

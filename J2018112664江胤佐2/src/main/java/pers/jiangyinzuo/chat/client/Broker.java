@@ -22,6 +22,8 @@ public class Broker implements MainBoardController.Contract {
             case Option.UPDATE_ONLINE_TOTAL:
                 this.onUpdateOnlineTotal(jsonNode);
                 break;
+            case Option.ADD_FRIEND:
+                this.onNewNoticeReceived(jsonNode);
             default:
                 break;
         }

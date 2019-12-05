@@ -84,9 +84,10 @@ public class TcpClient {
         }
     }
 
-    public void sendMessage(JsonNode jsonNode) {
+    public synchronized void sendMessage(JsonNode jsonNode) {
         try {
             this.outputStream.write(objectMapper.writeValueAsBytes(jsonNode));
+            this.outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,9 +97,10 @@ public class TcpClient {
      * 向服务器发送消息
      * @param data 需要发送的字节码
      */
-    public synchronized void sendMessage(byte[] data) {
+    public void sendMessage(byte[] data) {
         try {
             this.outputStream.write(data);
+//            this.outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

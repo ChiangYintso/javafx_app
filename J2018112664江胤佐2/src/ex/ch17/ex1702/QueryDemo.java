@@ -20,6 +20,7 @@ public class QueryDemo {
 				String name = (String)res.getObject(1);
 				System.out.println(name);
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

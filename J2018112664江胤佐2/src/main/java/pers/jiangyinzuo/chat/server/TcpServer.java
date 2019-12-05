@@ -64,41 +64,44 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
     @Override
     public void onNewMessageArrived(byte[] message, Integer userId) {
         String jsonOption = JsonHelper.getJsonOption(message);
+        System.out.println(jsonOption);
 
-        // 询问上线总人数
-        if (Option.ASK_FOR_ONLINE_TOTAL.equals(jsonOption)) {
-
-            /*
-              向全体客户端发送消息, 用于更新全网在线人数
-              {
-                  "option": "updateOnlineTotal",
-                  "totalCount": <全网在线人数>
-              }
-            */
-            forwardingThreadPoolExecutor.execute(() -> {
-                ObjectMapper objectMapper = new ObjectMapper();
-                Map<String, Object> map = new HashMap<>(10);
-                map.put("option", Option.UPDATE_ONLINE_TOTAL);
-                map.put("totalCount", clientHandlerMap.size());
-                try {
-                    synchronized (clientHandlerMap.get(userId)) {
-                        clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
+        assert jsonOption != null;
+        switch (jsonOption) {
+            case Option.ASK_FOR_ONLINE_TOTAL:
+                /*
+                  向全体客户端发送消息, 用于更新全网在线人数
+                  {
+                      "option": "updateOnlineTotal",
+                      "totalCount": <全网在线人数>
+                  }
+                */
+                forwardingThreadPoolExecutor.execute(() -> {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Map<String, Object> map = new HashMap<>(10);
+                    map.put("option", Option.UPDATE_ONLINE_TOTAL);
+                    map.put("totalCount", clientHandlerMap.size());
+                    try {
+                        synchronized (clientHandlerMap.get(userId)) {
+                            clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
+                        }
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
                     }
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            });
-            return;
+                });
+                return;
+            case Option.MESSAGE:
+                // 向数据库存入聊天消息记录
+                forwardingThreadPoolExecutor.execute(() -> {
+                    MessageService messageService = new MessageServiceImpl();
+                    messageService.insertMessage(message);
+                });
+                break;
+            default:
+                break;
         }
 
-        // 向数据库存入聊天消息记录
-        if (Option.MESSAGE.equals(jsonOption)) {
-            forwardingThreadPoolExecutor.execute(() -> {
-                MessageService messageService = new MessageServiceImpl();
-                messageService.insertMessage(message);
-            });
-        }
-
+        // 发送消息给用户
         forwardingThreadPoolExecutor.execute(() -> {
             synchronized (TcpServer.this) {
                 List<Integer> sendToList = JsonHelper.getSendToList(message);
@@ -153,6 +156,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                 try {
                     // 获取客户端
                     client = serverSocket.accept();
+                    System.out.println("收到客户端连接");
 
                     // 将新的客户端处理器添加进集合
                     synchronized (TcpServer.this) {

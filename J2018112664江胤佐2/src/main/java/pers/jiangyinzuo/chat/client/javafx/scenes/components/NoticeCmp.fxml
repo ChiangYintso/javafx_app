@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.components.NoticeCmpController">
+   <children>
+      <Text fx:id="content" layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="agree" layoutX="197.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAgree" text="同意" />
+      <Button fx:id="reject" layoutX="253.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReject" text="拒绝" />
+   </children>
+</Pane>

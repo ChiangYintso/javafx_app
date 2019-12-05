@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 
-import java.io.DataInput;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -19,8 +18,9 @@ import java.util.Map;
  * Json格式示例如下:
  *
  * {
- *     option: "message",
+ *     option: "message | addFriend",
  *     data: {
+ *          "sendFrom": 234,
  *          "sendTo": [123, 456]
  *     }
  * }

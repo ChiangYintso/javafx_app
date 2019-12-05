@@ -13,7 +13,7 @@ public class StatementDemo {
     public static void main(String[] args) {
         ResultSet rs;
         String selectSql = "SELECT * FROM book";
-        String insertSql = "INSERT INTO book VALUES(4,'java程序设计基础','陈国军','清华大学出版社',49.0)";
+        String insertSql = "INSERT INTO book VALUES(4, 'java程序设计基础', '陈国军', '清华大学出版社', 49.0)";
         String updateSql = "UPDATE book SET price=50.0 WHERE bookId = 4";
         String deleteSql = "DELETE FROM book WHERE bookId = 4";
         try (

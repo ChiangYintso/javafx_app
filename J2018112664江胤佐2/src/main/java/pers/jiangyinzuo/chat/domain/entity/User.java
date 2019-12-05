@@ -5,14 +5,11 @@ import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 import pers.jiangyinzuo.chat.domain.repository.FriendRepo;
 import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 
 /**
  * @author Jiang Yinzuo
@@ -42,10 +39,13 @@ public class User {
     @FieldMapper(name = "chat_friendship.friend_category")
 	private String friendCategory;
 
+	@FieldMapper(name = "unhandled_notice_count")
+    private Integer unhandledNoticeCount;
+
 	private GroupRepo groupRepo;
 	private FriendRepo friendRepo;
 
-	public User(Long userId, String userName, String password, String intro, String avatar) {
+	public User(Long userId, String userName, String password, String intro, String avatar, Integer unhandledNoticeCount) {
 		this();
 	    this.userId = userId;
 		this.userName = userName;
@@ -60,13 +60,16 @@ public class User {
         this.friendRepo = new FriendRepo();
     }
 
-    private User(Builder builder) {
-	    this();
+	private User(Builder builder) {
 		setUserId(builder.userId);
 		setUserName(builder.userName);
 		setPassword(builder.password);
 		setIntro(builder.intro);
 		setAvatar(builder.avatar);
+		setFriendCategory(builder.friendCategory);
+		setUnhandledNoticeCount(builder.unhandledNoticeCount);
+		groupRepo = builder.groupRepo;
+		friendRepo = builder.friendRepo;
 	}
 
 	public List<User> getFriendList() {
@@ -125,6 +128,14 @@ public class User {
 		this.avatar = "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}
 
+	public Integer getUnhandledNoticeCount() {
+		return unhandledNoticeCount;
+	}
+
+	public void setUnhandledNoticeCount(Integer unhandledNoticeCount) {
+		this.unhandledNoticeCount = unhandledNoticeCount;
+	}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -148,6 +159,10 @@ public class User {
 		private String password;
 		private String intro;
 		private String avatar = DEFAULT_AVATAR_URL;
+		private String friendCategory;
+		private Integer unhandledNoticeCount;
+		private GroupRepo groupRepo;
+		private FriendRepo friendRepo;
 
 		public Builder() {
 		}
@@ -177,13 +192,33 @@ public class User {
 			return this;
 		}
 
+		public Builder friendCategory(String val) {
+			friendCategory = val;
+			return this;
+		}
+
+		public Builder unhandledNoticeCount(Integer val) {
+			unhandledNoticeCount = val;
+			return this;
+		}
+
+		public Builder groupRepo(GroupRepo val) {
+			groupRepo = val;
+			return this;
+		}
+
+		public Builder friendRepo(FriendRepo val) {
+			friendRepo = val;
+			return this;
+		}
+
 		public User build() {
 			return new User(this);
 		}
 	}
 
 	public static void main(String[] args) {
-		User user = new User.Builder().build();
+		User user = new Builder().build();
 		try {
 			System.out.println(URLDecoder.decode(user.getAvatar(), "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
