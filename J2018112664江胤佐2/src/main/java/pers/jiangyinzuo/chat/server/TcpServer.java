@@ -32,18 +32,12 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
      */
     private ClientListener clientListener;
 
+    private ForwardingMessageManager forwardingMessageManager = new ForwardingMessageManager(this);
+
     /**
      * 已连接上的客户端处理器映射
      */
-    private Map<Integer, ClientHandler> clientHandlerMap = new HashMap<>();
-
-    /**
-     * 消息转发线程池
-     */
-    private final ExecutorService forwardingThreadPoolExecutor = new ThreadPoolExecutor(1, 1,
-            0L, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<Runnable>(10),
-            Executors.defaultThreadFactory());
+    Map<Integer, ClientHandler> clientHandlerMap = new HashMap<>();
 
     private TcpServer(int port) {
         this.port = port;
@@ -63,60 +57,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
      */
     @Override
     public void onNewMessageArrived(byte[] message, Integer userId) {
-        String jsonOption = JsonHelper.getJsonOption(message);
-        System.out.println(jsonOption);
-
-        assert jsonOption != null;
-        switch (jsonOption) {
-            case Option.ASK_FOR_ONLINE_TOTAL:
-                /*
-                  向全体客户端发送消息, 用于更新全网在线人数
-                  {
-                      "option": "updateOnlineTotal",
-                      "totalCount": <全网在线人数>
-                  }
-                */
-                forwardingThreadPoolExecutor.execute(() -> {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Map<String, Object> map = new HashMap<>(10);
-                    map.put("option", Option.UPDATE_ONLINE_TOTAL);
-                    map.put("totalCount", clientHandlerMap.size());
-                    try {
-                        synchronized (clientHandlerMap.get(userId)) {
-                            clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
-                        }
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                });
-                return;
-            case Option.MESSAGE:
-                // 向数据库存入聊天消息记录
-                forwardingThreadPoolExecutor.execute(() -> {
-                    MessageService messageService = new MessageServiceImpl();
-                    messageService.insertMessage(message);
-                });
-                break;
-            default:
-                break;
-        }
-
-        // 发送消息给用户
-        forwardingThreadPoolExecutor.execute(() -> {
-            synchronized (TcpServer.this) {
-                List<Integer> sendToList = JsonHelper.getSendToList(message);
-                ClientHandler clientHandler;
-                for (Integer sendToUserId : sendToList) {
-                    clientHandler = clientHandlerMap.get(sendToUserId);
-
-                    // 用户已经上线
-                    if (clientHandler != null) {
-                        clientHandler.send(message);
-                    }
-                    // TODO: 用户未上线
-                }
-            }
-        });
+        forwardingMessageManager.forward(message, userId);
     }
 
     /**

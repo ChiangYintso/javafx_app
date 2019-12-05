@@ -9,5 +9,5 @@ public interface FriendDao {
 	
 	void deleteFriend(Integer userId, Integer friendId);
 	
-	void addFriend(Integer userId, Integer friendId);
+	void addFriend(Long userId, Long friendId);
 }

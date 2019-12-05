@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class RollCallRecordCmpController {
 
     @FXML

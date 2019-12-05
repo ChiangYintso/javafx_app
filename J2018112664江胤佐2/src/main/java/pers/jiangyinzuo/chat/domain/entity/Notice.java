@@ -12,9 +12,9 @@ public class Notice {
     private Long noticeId;
 
     @FieldMapper(name = "notice_type")
-    private Integer noticeType;
+    private String noticeType;
 
-    @FieldMapper(name = "notice_json")
+    @FieldMapper(name = "notice_data")
     private String noticeData;
 
     @FieldMapper(name = "send_to_id")
@@ -37,9 +37,33 @@ public class Notice {
         this.noticeId = noticeId;
     }
 
+    public String getNoticeType() {
+        return noticeType;
+    }
+
+    public void setNoticeType(String noticeType) {
+        this.noticeType = noticeType;
+    }
+
+    public String getNoticeData() {
+        return noticeData;
+    }
+
+    public void setNoticeData(String noticeData) {
+        this.noticeData = noticeData;
+    }
+
+    public Long getSendToId() {
+        return sendToId;
+    }
+
+    public void setSendToId(Long sendToId) {
+        this.sendToId = sendToId;
+    }
+
     public static final class Builder {
         private Long noticeId;
-        private Integer noticeType;
+        private String noticeType;
         private String noticeData;
         private Long sendToId;
 
@@ -51,7 +75,7 @@ public class Notice {
             return this;
         }
 
-        public Builder noticeType(Integer val) {
+        public Builder noticeType(String val) {
             noticeType = val;
             return this;
         }

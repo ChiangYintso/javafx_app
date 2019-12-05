@@ -2,6 +2,8 @@ package pers.jiangyinzuo.chat.dao;
 
 import pers.jiangyinzuo.chat.domain.entity.Notice;
 
+import java.util.List;
+
 /**
  * @author Jiang Yinzuo
  */
@@ -17,5 +19,7 @@ public interface NoticeDao {
      * @param noticeType 通知类型
      * @param sendToId 接收者id
      */
-    void queryNotices(Integer noticeType, Long sendToId);
+    List<Notice> queryNotices(String noticeType, Long sendToId);
+
+    List<Notice> queryNoticesBySendToUserId(Long sendToId);
 }

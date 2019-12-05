@@ -7,7 +7,7 @@ import java.util.List;
  * @author Jiang Yinzuo
  */
 public interface FriendService {
-	void addFriend(List<User> userList);
+	void addFriend(Long userId);
 	
 	void delFriend(List<User> userList);
 	

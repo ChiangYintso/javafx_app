@@ -46,6 +46,7 @@ public class JsonHelper {
         public static final String NEW_FRIEND_OR_GROUP = "newFriendOrGroup";
         public static final String ADD_FRIEND = "addFriend";
         public static final String JOIN_GROUP = "joinGroup";
+        public static final String GROUP_MESSAGE = "groupMessage";
     }
 
     /**
@@ -53,8 +54,7 @@ public class JsonHelper {
      * @param rawJson Ô­Ê¼JSON×Ö½ÚÂë
      * @return "message"¡¢"login"¡¢"logout"
      */
-    public static String getJsonOption(byte[] rawJson) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    public static String getJsonOption(ObjectMapper objectMapper, byte[] rawJson) {
         try {
             return objectMapper.readTree(rawJson).get("option").asText();
         } catch (IOException e) {
@@ -118,6 +118,16 @@ public class JsonHelper {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static Integer getSendToId(byte[] bytes) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readTree(bytes).get("data").get("sendTo").asInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     /**

@@ -55,28 +55,38 @@ public class MySqlHelper {
     }
 
     public static <T> List<T> queryMany(Class<T> clazz, String sql, Object... parameters) throws SQLException {
+        getConnection();
         try (ResultSet resultSet = executeQuery(sql, parameters)) {
             return mapRecordsToEntities(clazz, resultSet);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
         }
+        closeConnection();
         return null;
     }
 
     public static <T> T queryOne(Class<T> clazz, String sql, Object... parameters) {
+        getConnection();
         try (ResultSet resultSet = executeQuery(sql, parameters)) {
             return mapRecordToEntity(clazz, resultSet);
         } catch (SQLException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        try {
+            closeConnection();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public static ResultSet executeQuery(String sql, Object... parameters) {
+        getConnection();
         loadPreparedStatement(sql, parameters);
         ResultSet resultSet = null;
         try {
             resultSet = preparedStatement.executeQuery();
+            closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,6 +102,7 @@ public class MySqlHelper {
     }
 
     public static Long executeUpdateReturnPrimaryKey(String sql, Object... parameters) throws SQLException {
+        getConnection();
         preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         for (int i = 1; i <= parameters.length; ++i) {
             preparedStatement.setObject(i, parameters[i - 1]);
@@ -102,6 +113,7 @@ public class MySqlHelper {
         if (resultSet.next()) {
             key = resultSet.getLong(1);
         }
+        closeConnection();
         return key;
     }
 
@@ -114,11 +126,15 @@ public class MySqlHelper {
      * @throws SQLException SQLÖ´ÐÐÒì³£
      */
     public static int[] bulkExecuteUpdate(String sql, List<List<Object>> parametersList) throws SQLException {
+        getConnection();
         setPreparedStatement(sql);
+
         for (List<Object> list : parametersList) {
             addBatch(list);
         }
         int[] results = preparedStatement.executeBatch();
+        conn.commit();
+        conn.setAutoCommit(true);
         closeConnection();
         return results;
     }

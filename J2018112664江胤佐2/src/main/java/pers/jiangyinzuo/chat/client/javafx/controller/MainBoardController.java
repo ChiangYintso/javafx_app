@@ -1,5 +1,6 @@
 package pers.jiangyinzuo.chat.client.javafx.controller;
 
+import java.io.IOException;
 import java.util.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -17,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.Main;
+import pers.jiangyinzuo.chat.client.javafx.controller.components.NoticeCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
@@ -31,9 +34,7 @@ import static pers.jiangyinzuo.chat.client.javafx.Main.getTcpClient;
 /**
  * @author Jiang Yinzuo
  */
-public class MainBoardController {
-
-	private static MainBoardController singleton;
+public class MainBoardController implements NoticeCmpController.MainBoardContract {
 
 	@FXML
 	private AnchorPane userinfoPane;
@@ -62,7 +63,7 @@ public class MainBoardController {
 	@FXML
 	private AnchorPane rightPane;
 
-	private FriendService friendService;
+	private FriendService friendService = new FriendServiceImpl();;
 
 	/**
 	 * 用户的好友列表
@@ -112,11 +113,11 @@ public class MainBoardController {
 		default void onUpdateOnlineTotal(JsonNode jsonNode) {
 			if (Platform.isFxApplicationThread()) {
 				int totalCount = jsonNode.get("totalCount").asInt();
-				singleton.onlineTotal.setText("全网" + totalCount + "人在线");
+				ControllerProxy.getMainBoardController().onlineTotal.setText("全网" + totalCount + "人在线");
 			} else {
 				Platform.runLater(() -> {
 					int totalCount = jsonNode.get("totalCount").asInt();
-					singleton.onlineTotal.setText("全网" + totalCount + "人在线");
+					ControllerProxy.getMainBoardController().onlineTotal.setText("全网" + totalCount + "人在线");
 				});
 			}
 
@@ -128,12 +129,12 @@ public class MainBoardController {
 		 */
 		default void onNewNoticeReceived(JsonNode jsonNode) {
 			if (Platform.isFxApplicationThread()) {
-				singleton.newMessageCount++;
-				singleton.noticeBtn.setText("[" + singleton.newMessageCount + "]条新消息");
+				ControllerProxy.getMainBoardController().newMessageCount++;
+				ControllerProxy.getMainBoardController().noticeBtn.setText("[" + ControllerProxy.getMainBoardController().newMessageCount + "]条新消息");
 			} else {
 				Platform.runLater(() -> {
-					singleton.newMessageCount++;
-					singleton.noticeBtn.setText("[" + singleton.newMessageCount + "]条新消息");
+					ControllerProxy.getMainBoardController().newMessageCount++;
+					ControllerProxy.getMainBoardController().noticeBtn.setText("[" + ControllerProxy.getMainBoardController().newMessageCount + "]条新消息");
 				});
 			}
 		}
@@ -147,13 +148,10 @@ public class MainBoardController {
 	@FXML
 	public void initialize() {
 		User user = UserState.getSingleton().getUser();
-		this.friendService = new FriendServiceImpl();
-		this.friendList = user.getFriendList();
-		this.groupList = user.getGroupList();
 		this.username.setText(user.getUserName());
 		this.mainBoardStage = SceneRouter.getStage("网络聊天室");
 
-		singleton = this;
+		ControllerProxy.setMainBoardController(this);
 
 		Image image = new Image(user.getAvatar());
 		avatar.setImage(image);
@@ -171,18 +169,27 @@ public class MainBoardController {
 
 	@FXML
 	void showNotice(ActionEvent event) {
-
+		try {
+			SceneRouter.showStage("通知", "NoticeBoard.fxml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * 加载好友和群聊列表
 	 */
-	private void loadTreeView() {
+	@Override
+	public void loadTreeView() {
+		User user = UserState.getSingleton().getUser();
+		this.friendList = user.getFriendList();
+		this.groupList = user.getGroupList();
 		TreeItem<String> rootItem = new TreeItem<>("会话列表");
 		rootItem.setExpanded(true);
 
 		// 初始化好友列表
 		TreeItem<String> friendTreeItem = new TreeItem<>("我的好友");
+		friendTreeItem.setExpanded(true);
 		Map<String, Set<User>> friendCategories = new HashMap<>(20);
 
 		// 初始化好友分组名——好友集合的HashMap
