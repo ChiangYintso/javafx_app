@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.AddBoardController">
    <children>
       <TextField fx:id="inputBox" layoutX="149.0" layoutY="66.0" prefHeight="37.0" prefWidth="275.0" />
@@ -18,20 +17,20 @@
          </font>
       </Text>
       <Button fx:id="searchBtn" layoutX="440.0" layoutY="66.0" mnemonicParsing="false" onAction="#search" prefHeight="37.0" prefWidth="85.0" style="-fx-background-color: #ccddaa;" text="查找" />
-      <RadioButton fx:id="searchForFriendRadio" layoutX="149.0" layoutY="117.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="查找好友" />
+      <RadioButton fx:id="searchForFriendRadio" layoutX="149.0" layoutY="117.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" selected="true" text="查找好友" />
       <RadioButton fx:id="searchForGroupRadio" layoutX="244.0" layoutY="117.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="查找群聊" />
-      <ImageView fitHeight="65.0" fitWidth="68.0" layoutX="81.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <Text fx:id="userIdText" layoutX="182.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="userIdText" visible="false" wrappingWidth="155.6666259765625">
+      <ImageView fx:id="avatarView" fitHeight="65.0" fitWidth="68.0" layoutX="81.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <Text fx:id="idText" layoutX="182.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="idText" visible="false" wrappingWidth="155.6666259765625">
          <font>
             <Font size="28.0" />
          </font>
       </Text>
-      <Text fx:id="userNameText" layoutX="182.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="userNameText" visible="false" wrappingWidth="189.33331298828136">
+      <Text fx:id="userNameText" layoutX="182.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nameText" visible="false" wrappingWidth="189.33331298828136">
          <font>
             <Font size="26.0" />
          </font>
       </Text>
-      <Button fx:id="addBtn" layoutX="441.0" layoutY="249.0" mnemonicParsing="false" onAction="#addFriend" text="添加好友" visible="false">
+      <Button fx:id="addBtn" layoutX="441.0" layoutY="249.0" mnemonicParsing="false" onAction="#addFriend" text="申请添加" visible="false">
          <font>
             <Font size="18.0" />
          </font>

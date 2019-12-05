@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
@@ -143,9 +144,11 @@ public class MainBoardController {
 		this.loadTreeView();
 		QueryOnlineTotalHandler queryOnlineTotalHandler = new QueryOnlineTotalHandler();
 		queryOnlineTotalHandler.setName("QueryOnlineTotal");
+
 		mainBoardStage.setOnCloseRequest((event) -> {
 			queryOnlineTotalHandler.interrupt();
-			System.out.println("界面关闭");
+			System.out.println("主界面关闭");
+			Main.exit();
 		});
 		queryOnlineTotalHandler.start();
 
@@ -206,14 +209,10 @@ public class MainBoardController {
 		SceneRouter.showTempStage("设置", "UserSetting.fxml");
 	}
 
-	public void changeOnlineTotal(int totalCount) {
-		this.onlineTotal.setText("全网" + totalCount +"人在线");
-	}
-
 	/**
 	 * 询问上线人数线程
 	 */
-	private class QueryOnlineTotalHandler extends Thread {
+	private static class QueryOnlineTotalHandler extends Thread {
 		/**
 		 * 发送给服务端的消息
 		 */

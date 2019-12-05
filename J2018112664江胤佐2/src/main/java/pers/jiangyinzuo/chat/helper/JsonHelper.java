@@ -34,6 +34,9 @@ import java.util.Map;
  */
 public class JsonHelper {
 
+    /**
+     * JSON "option"  Ù–‘µƒ÷µ
+     */
     public static class Option {
         public static final String MESSAGE = "message";
         public static final String LOGIN = "login";
@@ -41,6 +44,8 @@ public class JsonHelper {
         public static final String UPDATE_ONLINE_TOTAL = "updateOnlineTotal";
         public static final String ASK_FOR_ONLINE_TOTAL = "askForOnlineTotal";
         public static final String NEW_FRIEND_OR_GROUP = "newFriendOrGroup";
+        public static final String ADD_FRIEND = "addFriend";
+        public static final String JOIN_GROUP = "joinGroup";
     }
 
     /**

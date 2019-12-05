@@ -147,6 +147,9 @@ public class TcpClient {
         }
     }
 
+    /**
+     * 断开客户端连接
+     */
     public void exit() {
         try {
             outputStream.close();

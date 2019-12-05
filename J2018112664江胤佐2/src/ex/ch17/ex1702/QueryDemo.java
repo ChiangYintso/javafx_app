@@ -21,7 +21,6 @@ public class QueryDemo {
 				System.out.println(name);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
