@@ -2,7 +2,7 @@ package pers.jiangyinzuo.chat.service.impl;
 
 import pers.jiangyinzuo.chat.dao.MessageDao;
 import pers.jiangyinzuo.chat.dao.mysql.MessageDaoImpl;
-import pers.jiangyinzuo.chat.helper.JsonHelper;
+import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.service.MessageService;
 
 /**
@@ -18,6 +18,6 @@ public class MessageServiceImpl implements MessageService {
      */
     @Override
     public void insertMessage(byte[] rawJson) {
-        messageDao.insertMessage(JsonHelper.parseToMessageEntity(rawJson));
+        messageDao.insertMessage(Message.parseToMessageEntity(rawJson));
     }
 }

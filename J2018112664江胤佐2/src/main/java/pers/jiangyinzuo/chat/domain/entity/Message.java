@@ -1,7 +1,11 @@
 package pers.jiangyinzuo.chat.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
 /**
@@ -31,6 +35,36 @@ public class Message {
 	}
 
 	public Message() {}
+
+	/**
+	 * JsonNode构造Message对象
+	 * @param data JSON中的data字段
+	 * @return Message实体类
+	 */
+	public static Message parseToMessage(JsonNode data) {
+		try {
+			return new ObjectMapper().readValue(data.toString(), Message.class);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 将原始的字节码转换成Message实体类
+	 * @param bytes 字节码
+	 * @return Message实体类
+	 */
+	public static Message parseToMessageEntity(byte[] bytes) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			JsonNode jsonNode = objectMapper.readTree(bytes).get("data");
+			return objectMapper.readValue(jsonNode.toString(), Message.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	private Message(Builder builder) {
 		setMessageId(builder.messageId);

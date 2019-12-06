@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="105.0" prefWidth="312.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.components.MessageCmpController">
    <children>
-      <Text layoutX="14.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+      <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="600.9068698883057">
          <font>
-            <Font size="21.0" />
+            <Font size="16.0" />
          </font>
       </Text>
-      <Text layoutX="14.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Message">
+      <Text fx:id="content" strokeType="OUTSIDE" strokeWidth="0.0" text="content" wrappingWidth="599.5735683441162">
          <font>
-            <Font size="19.0" />
+            <Font size="17.0" />
          </font>
       </Text>
    </children>
-</Pane>
+</FlowPane>

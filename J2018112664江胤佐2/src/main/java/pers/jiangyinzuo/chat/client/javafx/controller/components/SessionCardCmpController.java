@@ -14,8 +14,6 @@ import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
 
-import java.util.Set;
-
 /**
  * @author Jiang Yinzuo
  */
@@ -37,10 +35,10 @@ public class SessionCardCmpController implements SessionState.Distributor {
     /**
      * 新的好友消息到来
      *
-     * @param jsonNode 好友消息
+     * @param rawJson 好友消息
      */
     @Override
-    public void onNewFriendMessageArrived(JsonNode jsonNode) {
+    public void onNewFriendMessageArrived(JsonNode rawJson) {
         UpdateUiUtil.updateUi(() -> bubble.setVisible(true));
     }
 
@@ -48,7 +46,7 @@ public class SessionCardCmpController implements SessionState.Distributor {
      * 初始化Controller时注册成为订阅者
      */
     @Override
-    public void registerDistribution() {
+    public void registerAsDistributor() {
         if (session instanceof User) {
             SessionState.addToFriendSessionCardCmpDistributorMap(session.getId(), this);
         } else if (session instanceof Group) {
@@ -80,7 +78,7 @@ public class SessionCardCmpController implements SessionState.Distributor {
         name.setText(session.getName());
         avatar.setImage(new Image(session.getAvatar()));
         this.session = session;
-        this.registerDistribution();
+        this.registerAsDistributor();
     }
 
     @FXML

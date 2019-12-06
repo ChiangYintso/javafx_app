@@ -167,7 +167,7 @@ public class JsonHelper {
                 .messageContent(messageContent)
                 .sendFrom(sendFrom)
                 .sendTo(sendTo)
-                .sendTime(new Timestamp(0))
+                .sendTime(new Timestamp(System.currentTimeMillis()))
                 .build();
         map.put("option", "message");
         map.put("data", message);
@@ -187,22 +187,6 @@ public class JsonHelper {
         try {
             return objectMapper.writeValueAsBytes(map);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 将原始的字节码转换成Message实体类
-     * @param bytes 字节码
-     * @return Message实体类
-     */
-    public static Message parseToMessageEntity(byte[] bytes) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            JsonNode jsonNode = objectMapper.readTree(bytes).get("data");
-            return objectMapper.readValue(jsonNode.toString(), Message.class);
-        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
