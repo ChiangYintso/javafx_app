@@ -1,5 +1,6 @@
 package pers.jiangyinzuo.chat.client.javafx.controller;
 
+
 import java.io.IOException;
 import java.util.*;
 
@@ -9,13 +10,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.Main;
@@ -218,6 +222,10 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 				imageView.setFitHeight(30);
 				TreeItem<String> friendItem = new TreeItem<>(friend.getUserName(),
 						imageView);
+				friendItem.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+					System.out.println("显示聊天窗口");
+					SceneRouter.showTempStage("聊天窗口", "ChattingBoard.fxml");
+				} );
 				friendCategory.getChildren().add(friendItem);
 			}
 			friendTreeItem.getChildren().add(friendCategory);

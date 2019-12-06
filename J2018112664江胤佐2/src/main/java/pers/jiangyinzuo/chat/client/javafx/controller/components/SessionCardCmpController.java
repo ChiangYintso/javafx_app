@@ -17,13 +17,13 @@ public class SessionCardCmpController {
     private Pane sessionCardPane;
     
     @FXML
-    private ImageView avator;
+    private ImageView avatar;
 
     @FXML
     private Text userName;
     
-//    private Session session;
-//
+
+
 //    public void init(Session session) {
 //    	this.session = session;
 //    	this.userName.setText(session.getSessionName());
