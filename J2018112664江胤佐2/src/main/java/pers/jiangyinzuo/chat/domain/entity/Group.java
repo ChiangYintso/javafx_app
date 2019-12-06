@@ -1,5 +1,6 @@
 package pers.jiangyinzuo.chat.domain.entity;
 
+import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
 import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
@@ -8,7 +9,7 @@ import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
  * @author Jiang Yinzuo
  */
 @TableMapper("chat_group")
-public class Group {
+public class Group implements SessionCardCmpController.Session {
 
 	@FieldMapper(name = "group_id")
     private Long groupId;
@@ -68,6 +69,12 @@ public class Group {
         this.master = master;
     }
 
+    @Override
+    public String getName() {
+        return getGroupName();
+    }
+
+    @Override
     public String getAvatar() {
         return avatar;
     }

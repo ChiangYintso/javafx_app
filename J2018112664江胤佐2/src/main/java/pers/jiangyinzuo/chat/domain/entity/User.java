@@ -1,5 +1,6 @@
 package pers.jiangyinzuo.chat.domain.entity;
 
+import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
 import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 import pers.jiangyinzuo.chat.domain.repository.FriendRepo;
@@ -15,7 +16,7 @@ import java.util.Objects;
  * @author Jiang Yinzuo
  */
 @TableMapper("chat_user")
-public class User {
+public class User implements SessionCardCmpController.Session {
 	private static String DEFAULT_AVATAR_URL;
 
 	@FieldMapper(name = "user_id")
@@ -120,6 +121,12 @@ public class User {
         this.friendCategory = friendCategory;
     }
 
+	@Override
+	public String getName() {
+		return getUserName();
+	}
+
+	@Override
 	public String getAvatar() {
 		return "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}

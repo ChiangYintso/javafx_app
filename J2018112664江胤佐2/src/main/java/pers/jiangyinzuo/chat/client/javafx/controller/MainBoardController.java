@@ -23,7 +23,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.Main;
+import pers.jiangyinzuo.chat.client.javafx.controller.components.IndexPaneCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.NoticeCmpController;
+import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
@@ -81,7 +83,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	 */
 	private List<Group> groupList;
 
-	private TreeView<String> treeView;
+	private TreeView<Pane> treeView;
 
 	private Stage mainBoardStage;
 
@@ -103,7 +105,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		return onlineTotal;
 	}
 
-	public TreeView<String> getTreeView() {
+	public TreeView<Pane> getTreeView() {
 		return treeView;
 	}
 
@@ -191,58 +193,86 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		}
 	}
 
+	private TreeItem<Pane> loadIndexTreeItem(String text) {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "IndexPaneCmp.fxml"));
+		Pane pane = null;
+		try {
+			pane = fxmlLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		((IndexPaneCmpController)fxmlLoader.getController()).init(text);
+		TreeItem<Pane> treeItem = new TreeItem<>(pane);
+		treeItem.setExpanded(true);
+		return treeItem;
+	}
+
 	/**
 	 * 加载好友和群聊列表
 	 */
 	@Override
 	public void loadTreeView() {
+
 		User user = UserState.getSingleton().getUser();
 		this.friendList = user.getFriendList();
 		this.groupList = user.getGroupList();
-		TreeItem<String> rootItem = new TreeItem<>("会话列表");
-		rootItem.setExpanded(true);
+		rightPane.getChildren().removeAll();
 
-		// 初始化好友列表
-		TreeItem<String> friendTreeItem = new TreeItem<>("我的好友");
-		friendTreeItem.setExpanded(true);
-		Map<String, Set<User>> friendCategories = new HashMap<>(20);
+		try {
+			// 初始化会话列表
+			TreeItem<Pane> rootItem = loadIndexTreeItem("会话列表");
 
-		// 初始化好友分组名——好友集合的HashMap
-		for (User friend : friendList) {
-			if (!friendCategories.containsKey(friend.getFriendCategory())) {
-				friendCategories.put(friend.getFriendCategory(), new HashSet<>(1));
+			// 初始化好友列表
+			TreeItem<Pane> friendTreeItem = loadIndexTreeItem("我的好友");
+
+			FXMLLoader fxmlLoader;
+			Pane pane;
+			Map<String, Set<User>> friendCategories = new HashMap<>(20);
+
+			// 初始化好友分组名——好友集合的HashMap
+			for (User friend : friendList) {
+				if (!friendCategories.containsKey(friend.getFriendCategory())) {
+					friendCategories.put(friend.getFriendCategory(), new HashSet<>(1));
+				}
+				friendCategories.get(friend.getFriendCategory()).add(friend);
 			}
-			friendCategories.get(friend.getFriendCategory()).add(friend);
-		}
-		for (Map.Entry<String, Set<User>> kv : friendCategories.entrySet()) {
-			TreeItem<String> friendCategory = new TreeItem<>(kv.getKey());
-			for (User friend : kv.getValue()) {
-				ImageView imageView = new ImageView(new Image(friend.getAvatar()));
-				imageView.setFitWidth(30);
-				imageView.setFitHeight(30);
-				TreeItem<String> friendItem = new TreeItem<>(friend.getUserName(),
-						imageView);
-				friendItem.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-					System.out.println("显示聊天窗口");
-					SceneRouter.showTempStage("聊天窗口", "ChattingBoard.fxml");
-				} );
-				friendCategory.getChildren().add(friendItem);
+			for (Map.Entry<String, Set<User>> kv : friendCategories.entrySet()) {
+				// 初始化好友分组
+				TreeItem<Pane> friendCategory = loadIndexTreeItem(kv.getKey());
+
+				for (User friend : kv.getValue()) {
+					fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "SessionCardCmp.fxml"));
+					pane = fxmlLoader.load();
+					SessionCardCmpController sessionCardCmpController = fxmlLoader.getController();
+					sessionCardCmpController.init(friend);
+					TreeItem<Pane> friendItem = new TreeItem<>(pane);
+
+					friendCategory.getChildren().add(friendItem);
+				}
+				friendTreeItem.getChildren().add(friendCategory);
 			}
-			friendTreeItem.getChildren().add(friendCategory);
+
+			// TODO 群聊
+			// 初始化群聊列表
+//			TreeItem<Pane> groupTreeItem = loadIndexTreeItem("我的群聊");
+//			for (Group group : groupList) {
+//				TreeItem<Pane> treeItem = new TreeItem<>();
+//				groupTreeItem.getChildren().add(treeItem);
+//			}
+
+			rootItem.getChildren().addAll(friendTreeItem);
+
+			// 初始化treeView, 并加载到页面
+			treeView = new TreeView<>(rootItem);
+			treeView.setMinWidth(350);
+			treeView.setMaxWidth(1000);
+			rightPane.getChildren().add(treeView);
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
-		// 初始化群聊列表
-		TreeItem<String> groupTreeItem = new TreeItem<>("我的群聊");
-		for (Group group : groupList) {
-			TreeItem<String> treeItem = new TreeItem<>(group.getGroupName());
-			groupTreeItem.getChildren().add(treeItem);
-		}
 
-		rootItem.getChildren().addAll(friendTreeItem, groupTreeItem);
-
-		// 初始化treeView, 并加载到页面
-		treeView = new TreeView<>(rootItem);
-		rightPane.getChildren().add(treeView);
 	}
 
 	@FXML

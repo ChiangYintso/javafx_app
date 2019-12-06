@@ -20,15 +20,26 @@ public class SessionCardCmpController {
     private ImageView avatar;
 
     @FXML
-    private Text userName;
-    
+    private Text name;
 
+    public interface Session {
+        /**
+         * 获取会话名称
+         * @return 好友名或群聊名
+         */
+        String getName();
 
-//    public void init(Session session) {
-//    	this.session = session;
-//    	this.userName.setText(session.getSessionName());
-//    	avator.setImage(new Image(session.getAvatarUrl()));
-//    }
+        /**
+         * 获取头像
+         * @return 好友或群聊头像的URL
+         */
+        String getAvatar();
+    }
+
+    public <T extends Session> void init(T session) {
+        name.setText(session.getName());
+        avatar.setImage(new Image(session.getAvatar()));
+    }
     
     @FXML
     void onMouseEntered(MouseEvent event) {

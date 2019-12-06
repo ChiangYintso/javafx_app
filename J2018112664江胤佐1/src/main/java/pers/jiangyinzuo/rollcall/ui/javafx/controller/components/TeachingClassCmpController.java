@@ -9,6 +9,9 @@ import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.TeacherMainBoardController;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class TeachingClassCmpController {
     @FXML
     private Pane teachingClassPane;

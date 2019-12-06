@@ -8,7 +8,7 @@
 <Pane fx:id="sessionCardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#openChattingRoom" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="57.0" prefWidth="247.0" style="-fx-background-color: #ddddee;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController">
    <children>
       <ImageView fx:id="avatar" fitHeight="50.0" fitWidth="50.0" layoutX="12.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="userName" layoutX="62.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="126.41999816894531">
+      <Text fx:id="name" layoutX="62.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="126.41999816894531">
          <font>
             <Font size="23.0" />
          </font>
