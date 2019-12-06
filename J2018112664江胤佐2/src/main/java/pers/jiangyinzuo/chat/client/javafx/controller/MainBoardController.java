@@ -63,7 +63,9 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	@FXML
 	private AnchorPane rightPane;
 
-	private FriendService friendService = new FriendServiceImpl();;
+	private FriendService friendService = new FriendServiceImpl();
+
+	private static MainBoardController self;
 
 	/**
 	 * 用户的好友列表
@@ -113,29 +115,36 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		default void onUpdateOnlineTotal(JsonNode jsonNode) {
 			if (Platform.isFxApplicationThread()) {
 				int totalCount = jsonNode.get("totalCount").asInt();
-				ControllerProxy.getMainBoardController().onlineTotal.setText("全网" + totalCount + "人在线");
+				self.onlineTotal.setText("全网" + totalCount + "人在线");
 			} else {
 				Platform.runLater(() -> {
 					int totalCount = jsonNode.get("totalCount").asInt();
-					ControllerProxy.getMainBoardController().onlineTotal.setText("全网" + totalCount + "人在线");
+					self.onlineTotal.setText("全网" + totalCount + "人在线");
 				});
 			}
 
 		}
 
 		/**
-		 * 新的消息
+		 * 新的消息, 可以是ADD_FRIEND, AGREE_TO_ADD_FRIEND等
 		 * @param jsonNode JSON
 		 */
 		default void onNewNoticeReceived(JsonNode jsonNode) {
+			// 同意加为好友
+			if (JsonHelper.getJsonOption(jsonNode).equals(JsonHelper.Option.AGREE_TO_ADD_FRIEND)) {
+				updateUi(() -> self.loadTreeView());
+			}
+			updateUi(() -> {
+				self.newMessageCount++;
+				self.noticeBtn.setText("[" + ControllerProxy.getMainBoardController().newMessageCount + "]条新消息");
+			});
+		}
+
+		private void updateUi(Runnable runnable) {
 			if (Platform.isFxApplicationThread()) {
-				ControllerProxy.getMainBoardController().newMessageCount++;
-				ControllerProxy.getMainBoardController().noticeBtn.setText("[" + ControllerProxy.getMainBoardController().newMessageCount + "]条新消息");
+				runnable.run();
 			} else {
-				Platform.runLater(() -> {
-					ControllerProxy.getMainBoardController().newMessageCount++;
-					ControllerProxy.getMainBoardController().noticeBtn.setText("[" + ControllerProxy.getMainBoardController().newMessageCount + "]条新消息");
-				});
+				Platform.runLater(runnable);
 			}
 		}
 	}
@@ -152,6 +161,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		this.mainBoardStage = SceneRouter.getStage("网络聊天室");
 
 		ControllerProxy.setMainBoardController(this);
+		self = this;
 
 		Image image = new Image(user.getAvatar());
 		avatar.setImage(image);
@@ -164,6 +174,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 			System.out.println("主界面关闭");
 			Main.exit();
 		});
+
 		Main.getClientThreadPool().execute(queryOnlineTotalHandler);
 	}
 
@@ -258,7 +269,9 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 				try {
 					sleep(10000);
 					if (Main.isOn) {
-						getTcpClient().sendMessage(message);
+						synchronized (getTcpClient()) {
+							getTcpClient().sendMessage(message);
+						}
 						System.out.println("询问上线人数");
 					}
 				} catch (InterruptedException e) {

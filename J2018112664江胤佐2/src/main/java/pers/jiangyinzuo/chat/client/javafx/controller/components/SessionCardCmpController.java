@@ -9,6 +9,9 @@ import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
 import pers.jiangyinzuo.chat.client.state.ChattingBoardInfo;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class SessionCardCmpController {
     @FXML
     private Pane sessionCardPane;

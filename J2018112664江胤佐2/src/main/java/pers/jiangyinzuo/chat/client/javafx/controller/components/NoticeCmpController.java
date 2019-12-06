@@ -7,10 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.w3c.dom.Node;
+import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.client.javafx.controller.NoticeBoardController;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
+import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Notice;
+import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.FriendService;
 import pers.jiangyinzuo.chat.service.NoticeService;
@@ -39,18 +41,38 @@ public class NoticeCmpController {
 
     private Pane pane;
 
+    /**
+     * 消息实体类
+     */
     private Notice notice;
 
     private FriendService friendService = new FriendServiceImpl();
 
-    private Integer sendFrom;
+    /**
+     * 发件人ID
+     */
+    private Integer sendFromId;
+
+    /**
+     * 当前用户实体类
+     */
+    private User self = UserState.getSingleton().getUser();
 
     @FXML
     void onAgree(ActionEvent event) {
         // 同意加好友
         if (notice.getNoticeType().equals(JsonHelper.Option.ADD_FRIEND)) {
-            friendService.addFriend(sendFrom.longValue());
+
+            // 数据库添加好友
+            friendService.addFriend(sendFromId.longValue());
+
+            // 更新好友列表
             ControllerProxy.getMainBoardController().loadTreeView();
+
+            // 回送给发送人
+            Main.getClientThreadPool().execute(() -> {
+                Main.getTcpClient().sendMessage(JsonHelper.generateNotice(JsonHelper.Option.AGREE_TO_ADD_FRIEND, self.getUserId(), sendFromId.longValue()));
+            });
         }
         handleNotice();
     }
@@ -61,13 +83,20 @@ public class NoticeCmpController {
     }
 
     private void handleNotice() {
-        // TODO 删除数据库中的记录
+        // 删除数据库中的记录
+        noticeService.deleteNotice(notice.getNoticeId());
+
+        // 移除UI上的面板
         noticeBoardControllerCallBack.remove(pane);
     }
 
+    /**
+     * 消息面板的回调方法接口
+     */
     public interface NoticeBoardContract {
         /**
          * 移除此通知
+         *
          * @param pane
          */
         void remove(Pane pane);
@@ -85,14 +114,19 @@ public class NoticeCmpController {
         this.pane = pane;
         this.notice = notice;
         try {
-            this.sendFrom = objectMapper.readTree(notice.getNoticeData()).get("sendFrom").asInt();
+            this.sendFromId = objectMapper.readTree(notice.getNoticeData()).get("sendFrom").asInt();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         switch (notice.getNoticeType()) {
-            case JsonHelper.Option
-                    .ADD_FRIEND:
-                content.setText("用户" + sendFrom + "请求加为好友");
+            case JsonHelper.Option.ADD_FRIEND:
+                content.setText("用户" + sendFromId + "请求加为好友");
+                break;
+            case JsonHelper.Option.AGREE_TO_ADD_FRIEND:
+                content.setText("用户" + sendFromId + "同意加为好友");
+                agree.setText("已读");
+                reject.setVisible(false);
+                break;
             default:
                 break;
         }

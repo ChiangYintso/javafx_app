@@ -41,4 +41,11 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> queryNoticeByUserId(Long userId) {
         return noticeDao.queryNoticesBySendToUserId(userId);
     }
+
+    @Override
+    public void deleteNotice(Long noticeId) {
+        noticeDao.deleteNotice(noticeId);
+    }
+
+
 }

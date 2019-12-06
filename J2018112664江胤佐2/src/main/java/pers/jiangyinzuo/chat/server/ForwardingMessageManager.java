@@ -15,13 +15,13 @@ import java.util.concurrent.*;
 
 /**
  * 服务器转发消息管理类
+ * 转发的同时存入MySQL数据库
  * @author Jiang Yinzuo
  */
 public class ForwardingMessageManager {
 
     /**
      * 消息转发线程池
-     *
      */
     static ExecutorService forwardingThreadPoolExecutor = new ThreadPoolExecutor(1, 1,
             0L, TimeUnit.MILLISECONDS,
@@ -73,6 +73,7 @@ public class ForwardingMessageManager {
                 });
                 break;
             case JsonHelper.Option.ADD_FRIEND:
+            case JsonHelper.Option.AGREE_TO_ADD_FRIEND:
                 // 向数据库存入未处理的消息
                 ForwardingMessageManager.forwardingThreadPoolExecutor.execute(() -> {
                     noticeService.insertNotice(message);

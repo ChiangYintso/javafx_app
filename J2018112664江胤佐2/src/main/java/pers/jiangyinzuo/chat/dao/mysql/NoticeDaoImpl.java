@@ -46,4 +46,14 @@ public class NoticeDaoImpl implements NoticeDao {
         }
         return new ArrayList<>();
     }
+
+    @Override
+    public void deleteNotice(Long noticeId) {
+        String sql = "DELETE FROM chat_notice WHERE notice_id = ?";
+        try {
+            MySqlHelper.executeUpdate(sql, noticeId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

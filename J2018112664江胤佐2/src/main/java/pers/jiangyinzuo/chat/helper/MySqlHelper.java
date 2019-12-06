@@ -86,7 +86,6 @@ public class MySqlHelper {
         ResultSet resultSet = null;
         try {
             resultSet = preparedStatement.executeQuery();
-            closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

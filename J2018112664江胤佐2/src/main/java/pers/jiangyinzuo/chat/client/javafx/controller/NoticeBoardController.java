@@ -32,6 +32,9 @@ public class NoticeBoardController implements NoticeCmpController.NoticeBoardCon
         initNoticeBox();
     }
 
+    /**
+     * 初始化消息盒子
+     */
     private void initNoticeBox() {
         try {
             for (Notice notice : noticeList) {

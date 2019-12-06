@@ -18,11 +18,13 @@ public class Broker implements MainBoardController.Contract {
         String option = JsonHelper.getJsonOption(jsonNode);
         switch (option) {
             case Option.MESSAGE:
+                // TODO 收到好友消息
                 break;
             case Option.UPDATE_ONLINE_TOTAL:
                 this.onUpdateOnlineTotal(jsonNode);
                 break;
             case Option.ADD_FRIEND:
+            case Option.AGREE_TO_ADD_FRIEND:
                 this.onNewNoticeReceived(jsonNode);
             default:
                 break;

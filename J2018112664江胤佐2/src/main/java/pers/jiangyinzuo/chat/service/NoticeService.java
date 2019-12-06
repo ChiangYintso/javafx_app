@@ -11,4 +11,6 @@ public interface NoticeService {
     void insertNotice(byte[] message);
 
     List<Notice> queryNoticeByUserId(Long userId);
+
+    void deleteNotice(Long noticeId);
 }

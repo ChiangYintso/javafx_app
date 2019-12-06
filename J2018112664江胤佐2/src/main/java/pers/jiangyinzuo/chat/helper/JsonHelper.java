@@ -15,7 +15,9 @@ import java.util.Map;
 /**
  * 网络聊天室的Server和Client之间用Json来传递消息。
  * Json必须包含"option"属性，值可以为"login"、"logout"、"message"等字符串
+ *
  * Json格式示例如下:
+ * (sendFrom和sendTo放在data里面)
  *
  * {
  *     option: "message | addFriend",
@@ -45,6 +47,7 @@ public class JsonHelper {
         public static final String ASK_FOR_ONLINE_TOTAL = "askForOnlineTotal";
         public static final String NEW_FRIEND_OR_GROUP = "newFriendOrGroup";
         public static final String ADD_FRIEND = "addFriend";
+        public static final String AGREE_TO_ADD_FRIEND = "agreeToAddFriend";
         public static final String JOIN_GROUP = "joinGroup";
         public static final String GROUP_MESSAGE = "groupMessage";
     }
@@ -154,6 +157,23 @@ public class JsonHelper {
         map.put("data", message);
 
         return objectMapper.writeValueAsBytes(map);
+    }
+
+    public static byte[] generateNotice(String noticeOption, Long sendFromId, Long sendToId) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> map = new HashMap<>(10);
+        map.put("option", noticeOption);
+
+        Map<String, Object> data = new HashMap<>(10);
+        data.put("sendFrom", sendFromId);
+        data.put("sendTo", sendToId);
+        map.put("data", data);
+        try {
+            return objectMapper.writeValueAsBytes(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

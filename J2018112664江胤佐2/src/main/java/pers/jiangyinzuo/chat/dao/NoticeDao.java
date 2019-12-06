@@ -22,4 +22,10 @@ public interface NoticeDao {
     List<Notice> queryNotices(String noticeType, Long sendToId);
 
     List<Notice> queryNoticesBySendToUserId(Long sendToId);
+
+    /**
+     * É¾³ýÍ¨Öª
+     * @param noticeId
+     */
+    void deleteNotice(Long noticeId);
 }

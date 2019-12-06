@@ -2,6 +2,7 @@ package pers.jiangyinzuo.chat.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 
 import java.io.*;
@@ -99,8 +100,10 @@ public class TcpClient {
      */
     public void sendMessage(byte[] data) {
         try {
-            this.outputStream.write(data);
-//            this.outputStream.flush();
+            synchronized (this.outputStream) {
+                this.outputStream.write(data);
+                this.outputStream.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,9 +143,10 @@ public class TcpClient {
                         broker.receiveMessage(objectMapper.readTree(data));
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     if (TcpClient.this.isOn) {
                         System.out.println("·þÎñÆ÷¹Ø±Õ");
-                        TcpClient.this.exit();
+                        Main.exit();
                     }
                 }
             } while (TcpClient.this.isOn);
