@@ -131,6 +131,11 @@ public class User implements SessionCardCmpController.Session {
 		return "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}
 
+	@Override
+	public Long getId() {
+		return getUserId();
+	}
+
 	public void setAvatar(String avatar) {
 		this.avatar = "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
 	}

@@ -176,7 +176,7 @@ public class TcpClient {
                 Long sendTo = Long.parseLong(input.readLine());
                 System.out.println("输入收件内容");
                 String str = input.readLine();
-                sendMessage(JsonHelper.sendMessage(1, str, userId, sendTo));
+                sendMessage(JsonHelper.generateByteMessage(1, str, userId, sendTo));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -2,6 +2,7 @@ package pers.jiangyinzuo.chat.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import pers.jiangyinzuo.chat.client.javafx.controller.MainBoardController;
+import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 
 import static pers.jiangyinzuo.chat.helper.JsonHelper.Option;
@@ -16,9 +17,13 @@ public class Broker implements MainBoardController.Contract {
      */
     public void receiveMessage(JsonNode jsonNode) {
         String option = JsonHelper.getJsonOption(jsonNode);
+        System.out.println(jsonNode);
         switch (option) {
+            case Option.CONNECTION_SUCCESS:
+                System.out.println("### 连接成功 ###");
+                break;
             case Option.MESSAGE:
-                // TODO 收到好友消息
+                SessionState.notifyFriendSession(jsonNode);
                 break;
             case Option.UPDATE_ONLINE_TOTAL:
                 this.onUpdateOnlineTotal(jsonNode);
@@ -29,6 +34,5 @@ public class Broker implements MainBoardController.Contract {
             default:
                 break;
         }
-        System.out.println(jsonNode);
     }
 }

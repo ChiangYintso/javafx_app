@@ -12,12 +12,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -27,6 +25,7 @@ import pers.jiangyinzuo.chat.client.javafx.controller.components.IndexPaneCmpCon
 import pers.jiangyinzuo.chat.client.javafx.controller.components.NoticeCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
+import pers.jiangyinzuo.chat.client.javafx.controller.util.UpdateUiUtil;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
@@ -128,7 +127,6 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 					self.onlineTotal.setText("全网" + totalCount + "人在线");
 				});
 			}
-
 		}
 
 		/**
@@ -138,20 +136,12 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		default void onNewNoticeReceived(JsonNode jsonNode) {
 			// 同意加为好友
 			if (JsonHelper.getJsonOption(jsonNode).equals(JsonHelper.Option.AGREE_TO_ADD_FRIEND)) {
-				updateUi(() -> self.loadTreeView());
+				UpdateUiUtil.updateUi(() -> self.loadTreeView());
 			}
-			updateUi(() -> {
+			UpdateUiUtil.updateUi(() -> {
 				self.newMessageCount++;
 				self.noticeBtn.setText("[" + ControllerProxy.getMainBoardController().newMessageCount + "]条新消息");
 			});
-		}
-
-		private void updateUi(Runnable runnable) {
-			if (Platform.isFxApplicationThread()) {
-				runnable.run();
-			} else {
-				Platform.runLater(runnable);
-			}
 		}
 	}
 
@@ -207,72 +197,69 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		return treeItem;
 	}
 
+	private <T extends SessionCardCmpController.Session> TreeItem<Pane> loadCardItem(T session) {
+		FXMLLoader fxmlLoader;
+		Pane pane = null;
+		fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "SessionCardCmp.fxml"));
+		try {
+			pane = fxmlLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		SessionCardCmpController sessionCardCmpController = fxmlLoader.getController();
+		sessionCardCmpController.init(session);
+		return new TreeItem<>(pane);
+	}
+
 	/**
 	 * 加载好友和群聊列表
 	 */
 	@Override
 	public void loadTreeView() {
-
 		User user = UserState.getSingleton().getUser();
 		this.friendList = user.getFriendList();
 		this.groupList = user.getGroupList();
 		rightPane.getChildren().removeAll();
 
-		try {
-			// 初始化会话列表
-			TreeItem<Pane> rootItem = loadIndexTreeItem("会话列表");
+		// 初始化会话列表
+		TreeItem<Pane> rootItem = loadIndexTreeItem("会话列表");
 
-			// 初始化好友列表
-			TreeItem<Pane> friendTreeItem = loadIndexTreeItem("我的好友");
+		// 初始化好友列表
+		TreeItem<Pane> friendTreeItem = loadIndexTreeItem("我的好友");
 
-			FXMLLoader fxmlLoader;
-			Pane pane;
-			Map<String, Set<User>> friendCategories = new HashMap<>(20);
+		Map<String, Set<User>> friendCategories = new HashMap<>(20);
 
-			// 初始化好友分组名——好友集合的HashMap
-			for (User friend : friendList) {
-				if (!friendCategories.containsKey(friend.getFriendCategory())) {
-					friendCategories.put(friend.getFriendCategory(), new HashSet<>(1));
-				}
-				friendCategories.get(friend.getFriendCategory()).add(friend);
+		// 初始化好友分组名——好友集合的HashMap
+		for (User friend : friendList) {
+			if (!friendCategories.containsKey(friend.getFriendCategory())) {
+				friendCategories.put(friend.getFriendCategory(), new HashSet<>(1));
 			}
-			for (Map.Entry<String, Set<User>> kv : friendCategories.entrySet()) {
-				// 初始化好友分组
-				TreeItem<Pane> friendCategory = loadIndexTreeItem(kv.getKey());
+			friendCategories.get(friend.getFriendCategory()).add(friend);
+		}
+		for (Map.Entry<String, Set<User>> kv : friendCategories.entrySet()) {
+			// 初始化好友分组
+			TreeItem<Pane> friendCategory = loadIndexTreeItem(kv.getKey());
 
-				for (User friend : kv.getValue()) {
-					fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "SessionCardCmp.fxml"));
-					pane = fxmlLoader.load();
-					SessionCardCmpController sessionCardCmpController = fxmlLoader.getController();
-					sessionCardCmpController.init(friend);
-					TreeItem<Pane> friendItem = new TreeItem<>(pane);
-
-					friendCategory.getChildren().add(friendItem);
-				}
-				friendTreeItem.getChildren().add(friendCategory);
+			for (User friend : kv.getValue()) {
+				friendCategory.getChildren().add(loadCardItem(friend));
 			}
-
-			// TODO 群聊
-			// 初始化群聊列表
-//			TreeItem<Pane> groupTreeItem = loadIndexTreeItem("我的群聊");
-//			for (Group group : groupList) {
-//				TreeItem<Pane> treeItem = new TreeItem<>();
-//				groupTreeItem.getChildren().add(treeItem);
-//			}
-
-			rootItem.getChildren().addAll(friendTreeItem);
-
-			// 初始化treeView, 并加载到页面
-			treeView = new TreeView<>(rootItem);
-			treeView.setMinWidth(350);
-			treeView.setMaxWidth(1000);
-			rightPane.getChildren().add(treeView);
-
-		} catch (IOException e) {
-			e.printStackTrace();
+			friendTreeItem.getChildren().add(friendCategory);
 		}
 
+		// 初始化群聊列表
+		TreeItem<Pane> groupTreeItem = loadIndexTreeItem("我的群聊");
+		for (Group group : groupList) {
+			groupTreeItem.getChildren().add(loadCardItem(group));
+		}
 
+		rootItem.getChildren().addAll(friendTreeItem, groupTreeItem);
+
+		// 初始化treeView, 并加载到页面
+		treeView = new TreeView<>(rootItem);
+		treeView.setMinWidth(350);
+		treeView.setMaxWidth(1000);
+		treeView.setMinHeight(650);
+		rightPane.getChildren().add(treeView);
 	}
 
 	@FXML

@@ -1,10 +1,7 @@
 package pers.jiangyinzuo.chat.server;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
-import pers.jiangyinzuo.chat.service.MessageService;
-import pers.jiangyinzuo.chat.service.impl.MessageServiceImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,11 +9,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
-
-import static pers.jiangyinzuo.chat.helper.JsonHelper.Option;
 
 /**
  * @author Jiang Yinzuo
@@ -31,6 +25,8 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
      * 监听客户端连接
      */
     private ClientListener clientListener;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     private ForwardingMessageManager forwardingMessageManager = new ForwardingMessageManager(this);
 
@@ -115,9 +111,11 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                         clientHandlerMap.put(userId, clientHandler);
 
                         System.out.println("用户" + userId + "连接到服务器");
+
                         // 回送
-                        bytes = JsonHelper.sendMessage(1, "用户" + userId + "已连接", 123456L, userId.longValue());
-                        client.getOutputStream().write(bytes);
+                        Map<String, Object> map = new HashMap<>(10);
+                        map.put("option", JsonHelper.Option.CONNECTION_SUCCESS);
+                        client.getOutputStream().write(objectMapper.writeValueAsBytes(map));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -5,11 +5,17 @@ import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
 import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+
 /**
  * @author Jiang Yinzuo
  */
 @TableMapper("chat_group")
 public class Group implements SessionCardCmpController.Session {
+
+    private static String DEFAULT_AVATAR_URL;
 
 	@FieldMapper(name = "group_id")
     private Long groupId;
@@ -35,6 +41,7 @@ public class Group implements SessionCardCmpController.Session {
 
     public Group() {
         this.groupRepo = new GroupRepo();
+        DEFAULT_AVATAR_URL = "file:" + URLDecoder.decode(Objects.requireNonNull(User.class.getClassLoader().getResource("avatar.png")).getPath(), StandardCharsets.UTF_8);
     }
 
     private Group(Builder builder) {
@@ -76,7 +83,12 @@ public class Group implements SessionCardCmpController.Session {
 
     @Override
     public String getAvatar() {
-        return avatar;
+        return avatar == null || "".equals(avatar) ? DEFAULT_AVATAR_URL : avatar;
+    }
+
+    @Override
+    public Long getId() {
+        return getGroupId();
     }
 
     public void setAvatar(String avatar) {

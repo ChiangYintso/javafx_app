@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="600.0" style="-fx-background-color: #dddddd;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.ChattingBoardController">
    <children>
-      <TextArea layoutX="17.0" layoutY="291.0" prefHeight="105.0" prefWidth="567.0" />
+      <TextArea fx:id="inputBox" layoutX="17.0" layoutY="291.0" prefHeight="105.0" prefWidth="567.0" />
       <Button fx:id="sendBtn" layoutX="493.0" layoutY="403.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #cceedd; -fx-border-color: #111111;" text="发送">
          <font>
             <Font size="15.0" />

@@ -50,6 +50,7 @@ public class JsonHelper {
         public static final String AGREE_TO_ADD_FRIEND = "agreeToAddFriend";
         public static final String JOIN_GROUP = "joinGroup";
         public static final String GROUP_MESSAGE = "groupMessage";
+        public static final String CONNECTION_SUCCESS = "connectionSuccess";
     }
 
     /**
@@ -134,6 +135,21 @@ public class JsonHelper {
     }
 
     /**
+     * 获取发送方id
+     * @param jsonNode
+     * @return
+     */
+    public static Integer getSendFromId(JsonNode jsonNode) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return jsonNode.get("data").get("sendFrom").asInt();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
      * 发消息
      * @param messageType 消息类型
      * @param messageContent 消息内容
@@ -142,7 +158,7 @@ public class JsonHelper {
      * @return 字节数组
      * @throws JsonProcessingException 转换为Json格式时发生异常
      */
-    public static byte[] sendMessage(Integer messageType, String messageContent, Long sendFrom, Long sendTo) throws JsonProcessingException {
+    public static byte[] generateByteMessage(Integer messageType, String messageContent, Long sendFrom, Long sendTo) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> map = new HashMap<>(10);
 

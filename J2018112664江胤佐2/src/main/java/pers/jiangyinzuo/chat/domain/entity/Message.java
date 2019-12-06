@@ -11,6 +11,9 @@ public class Message {
 	@JsonIgnore
 	private Long messageId;
 
+	/**
+	 * 消息类型 1: 文本 2: 图片 3: 文件
+	 */
 	private Integer messageType;
 	private String messageContent;
 	private Timestamp sendTime;
