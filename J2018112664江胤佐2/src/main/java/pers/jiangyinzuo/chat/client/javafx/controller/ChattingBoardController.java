@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.javafx.Main;
@@ -43,6 +44,84 @@ public class ChattingBoardController implements SessionState.Subscriber {
     private Button sendBtn;
 
     @FXML
+    private Button emojiBtn;
+
+    @FXML
+    private Button emoji0;
+
+    @FXML
+    private Button emoji1;
+
+    @FXML
+    private Button emoji2;
+
+    @FXML
+    private Button emoji3;
+
+    @FXML
+    private Button emoji4;
+
+    @FXML
+    private Button emoji5;
+
+    @FXML
+    private Button emoji6;
+
+    @FXML
+    private Button emoji7;
+
+    @FXML
+    private Button emoji8;
+
+    @FXML
+    private Button emoji9;
+
+    @FXML
+    private Button emoji10;
+
+    @FXML
+    private Button emoji11;
+
+    @FXML
+    private Button emoji12;
+
+    @FXML
+    private Button emoji13;
+
+    @FXML
+    private Button emoji14;
+
+    @FXML
+    private Button emoji15;
+
+    @FXML
+    private Button emoji16;
+
+    @FXML
+    private Button emoji17;
+
+    @FXML
+    private Button emoji18;
+
+    @FXML
+    private Button emoji19;
+
+    @FXML
+    private Button emoji20;
+
+    @FXML
+    private Button emoji21;
+
+    @FXML
+    private Button emoji22;
+
+    @FXML
+    private Button emoji23;
+
+    @FXML
+    private Button emoji24;
+
+    @FXML
     private Button option;
 
     @FXML
@@ -56,6 +135,9 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
     @FXML
     ScrollPane scrollPane;
+
+    @FXML
+    private GridPane emojiPane;
 
     private SessionCardCmpController.Session session;
 
@@ -180,6 +262,17 @@ public class ChattingBoardController implements SessionState.Subscriber {
         SessionState.setSelectedSession(session);
         SceneRouter.showTempStage("好友详情", "FriendIntroBoard.fxml");
     }
+
+    @FXML
+    void selectEmoji(ActionEvent event) {
+        inputBox.appendText(((Button)event.getSource()).getText());
+    }
+
+    @FXML
+    void showEmojiPane(ActionEvent event) {
+        emojiPane.setVisible(!emojiPane.isVisible());
+    }
+
 
     /**
      * 新的好友消息到来

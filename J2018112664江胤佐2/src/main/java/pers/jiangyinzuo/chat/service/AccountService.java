@@ -21,4 +21,11 @@ public interface AccountService {
 	 * @return 登录成功返回User实体类, 失败null
 	 */
 	User login(Long userId, String password);
+
+	/**
+	 * 找回密码
+	 * @param userId
+	 * @return
+	 */
+	String retrievePassword(Long userId);
 }

@@ -6,6 +6,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class Main extends Application {
 
     @Override

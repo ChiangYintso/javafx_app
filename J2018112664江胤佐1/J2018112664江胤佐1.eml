@@ -6,5 +6,6 @@
 		<level name="JavaFX13" value="project"/>
 		<level name="MySQLConnector" value="project"/>
 		<level name="Jackson2.10.0" value="project"/>
+		<level name="emoji-java-5.1.1" value="project"/>
 	</levels>
 </component>

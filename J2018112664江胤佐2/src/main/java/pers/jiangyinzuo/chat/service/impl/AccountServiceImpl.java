@@ -30,4 +30,20 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return user;
 	}
+
+	/**
+	 * ’“ªÿ√‹¬Î
+	 *
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public String retrievePassword(Long userId) {
+		User user = userDao.queryUserByUserId(userId);
+		if (user == null) {
+			return null;
+		} else {
+			return user.getPassword();
+		}
+	}
 }

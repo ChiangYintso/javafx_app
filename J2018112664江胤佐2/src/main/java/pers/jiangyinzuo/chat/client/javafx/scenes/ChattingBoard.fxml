@@ -4,14 +4,20 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="651.0" style="-fx-background-color: #dddddd;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.ChattingBoardController">
    <children>
-      <TextArea fx:id="inputBox" layoutX="18.0" layoutY="403.0" prefHeight="126.0" prefWidth="620.0" />
+      <TextArea fx:id="inputBox" layoutX="18.0" layoutY="403.0" prefHeight="126.0" prefWidth="620.0">
+         <font>
+            <Font size="20.0" />
+         </font></TextArea>
       <Button fx:id="sendBtn" layoutX="538.0" layoutY="483.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #cceedd; -fx-border-color: #111111;" text="发送">
          <font>
             <Font size="15.0" />
@@ -32,5 +38,158 @@
             <VBox fx:id="messageBox" prefHeight="277.0" prefWidth="617.0" />
          </content>
       </ScrollPane>
+      <Button fx:id="emojiBtn" layoutX="428.0" layoutY="483.0" mnemonicParsing="false" onAction="#showEmojiPane" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #cceedd; -fx-border-color: #111111;" text="表情  😳">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <GridPane fx:id="emojiPane" gridLinesVisible="true" layoutX="17.0" layoutY="217.0" prefHeight="311.0" prefWidth="351.0" visible="false">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="70.0" text="Button">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji0" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😏">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji1" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="👀" GridPane.columnIndex="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji2" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😱" GridPane.columnIndex="2">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji3" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="👌" GridPane.columnIndex="3">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji4" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="👊" GridPane.columnIndex="4">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji5" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😲" GridPane.rowIndex="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji6" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😼" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji7" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😌" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji8" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="☀" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji9" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😀" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji10" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="🙄" GridPane.rowIndex="2">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji11" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="🚀" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji12" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="☕" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji13" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="🎈" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji14" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="✨" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji15" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="👏" GridPane.rowIndex="3">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji16" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😉" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji17" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="👍" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji18" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="💦" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji19" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😣" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji20" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="💗" GridPane.rowIndex="4">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji21" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="✋" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji22" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="💤" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji23" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="😭" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+            <Button fx:id="emoji24" mnemonicParsing="false" onAction="#selectEmoji" prefHeight="69.0" prefWidth="70.0" text="🐟" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
    </children>
 </Pane>

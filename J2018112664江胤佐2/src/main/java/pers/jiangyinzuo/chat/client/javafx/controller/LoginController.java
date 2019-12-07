@@ -29,6 +29,9 @@ public class LoginController {
     private Button registerBtn;
 
     @FXML
+    private Button retrievePasswordBtn;
+
+    @FXML
     private TextField userIdStr;
 
     @FXML
@@ -36,39 +39,43 @@ public class LoginController {
 
     @FXML
     private PasswordField password;
-    
+
     private AccountService accountService;
 
     @FXML
     void login(ActionEvent event) throws IOException {
-    	
-    	if (userIdStr.getText().isBlank() || title.getText().isBlank()) {
-    		CustomAlertBoard.showAlert("²»ÄÜÎª¿Õ");
-    	} else {
-    	    Long userId;
-    	    try {
-    	        userId = Long.parseLong(userIdStr.getText());
+
+        if (userIdStr.getText().isBlank() || title.getText().isBlank()) {
+            CustomAlertBoard.showAlert("²»ÄÜÎª¿Õ");
+        } else {
+            long userId;
+            try {
+                userId = Long.parseLong(userIdStr.getText());
             } catch (Exception e) {
-    	        CustomAlertBoard.showAlert("ÕËºÅ¸ñÊ½´íÎó");
+                CustomAlertBoard.showAlert("ÕËºÅ¸ñÊ½´íÎó");
                 return;
-    	    }
-    		accountService = new AccountServiceImpl();
-    		User user = accountService.login(userId, password.getText());
-    		if (user == null) {
-    			CustomAlertBoard.showAlert("ÕËºÅ»òÃÜÂë´íÎó");
-    		} else {
-    		    startTcpClient(user.getUserId());
-    		    UserState.getSingleton().setUser(user);
-    			SceneRouter.closeStage("µÇÂ¼");
-    			SceneRouter.showStage("ÍøÂçÁÄÌìÊÒ", "MainBoard.fxml");
-    		}
-    	}
+            }
+            accountService = new AccountServiceImpl();
+            User user = accountService.login(userId, password.getText());
+            if (user == null) {
+                CustomAlertBoard.showAlert("ÕËºÅ»òÃÜÂë´íÎó");
+            } else {
+                startTcpClient(user.getUserId());
+                UserState.getSingleton().setUser(user);
+                SceneRouter.closeStage("µÇÂ¼");
+                SceneRouter.showStage("ÍøÂçÁÄÌìÊÒ", "MainBoard.fxml");
+            }
+        }
     }
 
     @FXML
     void register(ActionEvent event) throws IOException {
-    	SceneRouter.showStage("×¢²á", "Register.fxml");
+        SceneRouter.showStage("×¢²á", "Register.fxml");
     }
 
+    @FXML
+    void retrievePassword(ActionEvent event) {
+        SceneRouter.showTempStage("ÕÒ»ØÃÜÂë", "RetrievePassword.fxml");
+    }
 }
 

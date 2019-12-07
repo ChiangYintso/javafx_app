@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Á¬½ÓMysqlµÄ¸¨ÖúÀà
+ * è¿æ¥Mysqlçš„è¾…åŠ©ç±»
  *
  * @author Jiang Yinzuo
  */
 public class MySqlHelper {
     /**
-     * Á¬½ÓÊı¾İ¿âµÄÕËºÅ¡¢ÃÜÂë¡¢URL
+     * è¿æ¥æ•°æ®åº“çš„è´¦å·ã€å¯†ç ã€URL
      */
     private static final String USERNAME = "root";
     private static final String PASSWORD = "ABCabc123!@#";
@@ -31,9 +31,9 @@ public class MySqlHelper {
     }
 
     /**
-     * µ¥ÀıÄ£Ê½»ñÈ¡Á¬½Ó
+     * å•ä¾‹æ¨¡å¼è·å–è¿æ¥
      *
-     * @return Connectionµ¥Àı¶ÔÏó
+     * @return Connectionå•ä¾‹å¯¹è±¡
      */
     private static Connection getConnection() {
         try {
@@ -120,12 +120,12 @@ public class MySqlHelper {
     }
 
     /**
-     * ÅúÁ¿Ö´ĞĞSQL¸üĞÂÓï¾ä
+     * æ‰¹é‡æ‰§è¡ŒSQLæ›´æ–°è¯­å¥
      *
-     * @param sql            SQLÓï¾ä
-     * @param parametersList ²ÎÊıÁĞ±í
-     * @return Ã¿ÌõÓï¾äµÄÓ°ÏìĞĞÊıÊı×é
-     * @throws SQLException SQLÖ´ĞĞÒì³£
+     * @param sql            SQLè¯­å¥
+     * @param parametersList å‚æ•°åˆ—è¡¨
+     * @return æ¯æ¡è¯­å¥çš„å½±å“è¡Œæ•°æ•°ç»„
+     * @throws SQLException SQLæ‰§è¡Œå¼‚å¸¸
      */
     public static int[] bulkExecuteUpdate(String sql, List<List<Object>> parametersList) throws SQLException {
         getConnection();
@@ -165,12 +165,12 @@ public class MySqlHelper {
     }
 
     /**
-     * ½«Êı¾İ¿âÖĞµÄ¼ÇÂ¼Ó³ÉäÎªÊµÌåÀà
+     * å°†æ•°æ®åº“ä¸­çš„è®°å½•æ˜ å°„ä¸ºå®ä½“ç±»
      *
-     * @param clazz     ÊµÌåÀàµÄclass
-     * @param resultSet ¶ÁÈ¡Êı¾İ¿âµÃµ½µÄ½á¹û¼¯
-     * @param <T>       ÊµÌåÀà
-     * @return Èô¼ÇÂ¼´æÔÚ£¬·µ»ØÊµÌåÀà£»·ñÔò·µ»Ønull
+     * @param clazz     å®ä½“ç±»çš„class
+     * @param resultSet è¯»å–æ•°æ®åº“å¾—åˆ°çš„ç»“æœé›†
+     * @param <T>       å®ä½“ç±»
+     * @return è‹¥è®°å½•å­˜åœ¨ï¼Œè¿”å›å®ä½“ç±»ï¼›å¦åˆ™è¿”å›null
      * @throws NoSuchMethodException
      * @throws IllegalAccessException
      * @throws InvocationTargetException
@@ -181,10 +181,10 @@ public class MySqlHelper {
         if (resultSet == null || !resultSet.next()) {
             return null;
         }
-        // ¹¹ÔìÊı¾İ´«Êä¶ÔÏó
+        // æ„é€ æ•°æ®ä¼ è¾“å¯¹è±¡
         T dto = clazz.getDeclaredConstructor().newInstance();
 
-        // »ñÈ¡ÊµÌåÀàµÄÊµÀıÓò
+        // è·å–å®ä½“ç±»çš„å®ä¾‹åŸŸ
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
@@ -202,14 +202,14 @@ public class MySqlHelper {
             return results;
         }
 
-        // »ñÈ¡ÊµÌåÀàµÄÊµÀıÓò
+        // è·å–å®ä½“ç±»çš„å®ä¾‹åŸŸ
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
         }
 
         do {
-            // ¹¹ÔìÊı¾İ´«Êä¶ÔÏó
+            // æ„é€ æ•°æ®ä¼ è¾“å¯¹è±¡
             T dto = clazz.getDeclaredConstructor().newInstance();
             mapFields(resultSet, dto, fields);
             results.add(dto);
@@ -234,11 +234,11 @@ public class MySqlHelper {
     }
 
     /**
-     * ½«Êı¾İ¿â¼ÇÂ¼Ó³Éäµ½dtoÉÏ
-     * @param resultSet MySQL²éÑ¯µÃµ½µÄ½á¹û¼¯
-     * @param dto Êı¾İ´«Êä¶ÔÏó
-     * @param fields ÊµÀıÓòÊı×é
-     * @param <T> ¶ÔÏóÀàĞÍ
+     * å°†æ•°æ®åº“è®°å½•æ˜ å°„åˆ°dtoä¸Š
+     * @param resultSet MySQLæŸ¥è¯¢å¾—åˆ°çš„ç»“æœé›†
+     * @param dto æ•°æ®ä¼ è¾“å¯¹è±¡
+     * @param fields å®ä¾‹åŸŸæ•°ç»„
+     * @param <T> å¯¹è±¡ç±»å‹
      * @throws IllegalAccessException
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
@@ -246,13 +246,13 @@ public class MySqlHelper {
      */
     private static <T> void mapFields(ResultSet resultSet, T dto, Field[] fields) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
         for (Field field : fields) {
-            // »ñÈ¡ÊµÌåÀàÃ¿¸öÊµÀıÓòÉÏµÄ`FieldMapper`×¢½â
+            // è·å–å®ä½“ç±»æ¯ä¸ªå®ä¾‹åŸŸä¸Šçš„`FieldMapper`æ³¨è§£
             FieldMapper fieldMapper = field.getAnnotation(FieldMapper.class);
 
             if (fieldMapper != null) {
-                // Êı¾İ¿â±íµÄ×Ö¶ÎÃû
+                // æ•°æ®åº“è¡¨çš„å­—æ®µå
                 String columnName = fieldMapper.name();
-                // ×Ö¶Î¶ÔÓ¦µÄÖµ
+                // å­—æ®µå¯¹åº”çš„å€¼
                 Object value;
                 try {
                     value = resultSet.getObject(columnName);
@@ -266,10 +266,10 @@ public class MySqlHelper {
                         StringBuilder sql = new StringBuilder("SELECT * FROM ");
                         TableMapper tableMapper = field.getType().getAnnotation(TableMapper.class);
                         if (tableMapper != null) {
-                            // ±íÃû
+                            // è¡¨å
                             sql.append(tableMapper.value());
                             sql.append(" WHERE ");
-                            // ×Ö¶ÎÃû
+                            // å­—æ®µå
                             sql.append("".equals(fieldMapper.joinName()) ? columnName : fieldMapper.joinName());
                             sql.append(" = ?");
                         }

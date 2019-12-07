@@ -1,8 +1,11 @@
 package pers.jiangyinzuo.chat.client.javafx;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 
+import com.vdurmont.emoji.EmojiParser;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.TcpClient;
@@ -49,7 +52,7 @@ public class Main extends Application {
         SceneRouter.showStage("µÇÂ¼", "Login.fxml");
     }
 
-    void main(String[] args) {
+    public static void main(String[] args) {
         try {
             launch();
         } finally {

@@ -16,7 +16,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-      		<Button fx:id="registerBtn" layoutX="46.0" layoutY="191.0" mnemonicParsing="false" onAction="#register" prefHeight="36.0" prefWidth="247.0" text="注册">
+      		<Button fx:id="registerBtn" layoutX="46.0" layoutY="191.0" mnemonicParsing="false" onAction="#register" prefHeight="36.0" prefWidth="118.0" text="注册">
                <font>
                   <Font size="15.0" />
                </font>
@@ -33,6 +33,11 @@
                </font>
             </Text>
             <PasswordField fx:id="password" layoutX="99.0" layoutY="93.0" prefHeight="36.0" prefWidth="196.0" />
+            <Button fx:id="retrievePasswordBtn" layoutX="175.0" layoutY="193.0" mnemonicParsing="false" onAction="#retrievePassword" prefHeight="36.0" prefWidth="118.0" text="找回密码">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
 		<Text fx:id="title" fill="WHITE" layoutX="143.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="网络聊天室">
