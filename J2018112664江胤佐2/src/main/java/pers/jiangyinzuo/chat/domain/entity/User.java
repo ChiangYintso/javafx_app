@@ -77,8 +77,8 @@ public class User implements SessionCardCmpController.Session {
 		return friendRepo.getFriendList(userId);
 	}
 
-	public List<Group> getGroupList() {
-		return groupRepo.getGroupListByUserId(userId);
+	public List<Group> getGroupList(boolean update) {
+		return groupRepo.getGroupListByUserId(userId, update);
 	}
 
 	public Long getUserId() {
@@ -122,7 +122,7 @@ public class User implements SessionCardCmpController.Session {
     }
 
 	@Override
-	public String getName() {
+	public String getSessionName() {
 		return getUserName();
 	}
 

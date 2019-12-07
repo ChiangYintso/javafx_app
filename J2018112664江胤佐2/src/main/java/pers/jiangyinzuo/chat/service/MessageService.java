@@ -20,4 +20,6 @@ public interface MessageService {
      * @return
      */
     List<Message> queryRecentMessage(Long userId, Long friendId);
+
+    List<Message> queryGroupRecentMessage(Long groupId);
 }

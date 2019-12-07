@@ -19,7 +19,16 @@ public interface MessageDao {
      */
     List<Message> queryMessagesByUserId(Long user1Id, Long user2Id, Integer row, Integer offset);
 
-    List<Message> queryMessagesByGroupId(Instant fromTime, Integer groupId);
+    /**
+     * 根据sendToId和messageType查询Message
+     *
+     * @param sendToId
+     * @param messageType > 10: 查询群聊消息; < 10: 查询好友聊天消息
+     * @param row
+     * @param offset      偏移量
+     * @return
+     */
+    List<Message> queryMessagesBySendToId(Long sendToId, Integer messageType, Integer row, Integer offset);
 
     void insertMessage(Message message);
 

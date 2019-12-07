@@ -16,17 +16,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SessionState {
 
-	public interface Distributor {
+	public interface Subscriber {
 		/**
 		 * 新的好友消息到来
-		 * @param rowJson 好友消息
+		 * @param rawJson 好友消息
 		 */
-		void onNewFriendMessageArrived(JsonNode rowJson);
+		void onNewFriendMessageArrived(JsonNode rawJson);
 
 		/**
 		 * 注册成为订阅者
 		 */
-		void registerAsDistributor();
+		void registerAsSubscriber();
 	}
 
 	private static SessionCardCmpController.Session selectedSession;
@@ -55,11 +55,11 @@ public class SessionState {
 		groupSessionCardCmpDistributorMap.put(groupId, controller);
 	}
 
-	public static void addToFriendChattingBoardDistributorMap(Long sendFromId, ChattingBoardController controller) {
+	public static void addToFriendChattingBoardSubscriberMap(Long sendFromId, ChattingBoardController controller) {
 		friendChattingBoardDistributorMap.put(sendFromId, controller);
 	}
 
-	public static void addToGroupChattingBoardDistributorMap(Long sendFromId, ChattingBoardController controller) {
+	public static void addToGroupChattingBoardSubscriberMap(Long sendFromId, ChattingBoardController controller) {
 		groupChattingBoardDistributorMap.put(sendFromId, controller);
 	}
 

@@ -32,8 +32,14 @@ public class MessageDaoImpl implements MessageDao {
     }
 
     @Override
-    public List<Message> queryMessagesByGroupId(Instant fromTime, Integer groupId) {
-        return null;
+    public List<Message> queryMessagesBySendToId(Long sendToId, Integer messageType, Integer row, Integer offset) {
+        String sql = "SELECT * FROM chat_message WHERE send_to = ? AND message_type > ? ORDER BY send_time DESC LIMIT ?, ?";
+        try {
+            return MySqlHelper.queryMany(Message.class, sql, sendToId, messageType, row, offset);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     @Override

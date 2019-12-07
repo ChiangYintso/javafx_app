@@ -10,7 +10,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.javafx.Main;
@@ -35,10 +34,10 @@ import java.util.List;
 /**
  * @author Jiang Yinzuo
  */
-public class ChattingBoardController implements SessionState.Distributor {
+public class ChattingBoardController implements SessionState.Subscriber {
 
     @FXML
-    private TextArea inputBox;
+    TextArea inputBox;
 
     @FXML
     private Button sendBtn;
@@ -50,63 +49,58 @@ public class ChattingBoardController implements SessionState.Distributor {
     private Text sessionNameField;
 
     @FXML
-    private VBox messageBox;
+    VBox messageBox;
 
     @FXML
-    private ImageView avatar;
+    ImageView avatar;
 
     @FXML
-    private ScrollPane scrollPane;
-    
+    ScrollPane scrollPane;
+
     private SessionCardCmpController.Session session;
 
-    private User friend = null;
+    User self = null;
 
     private Group group = null;
 
-    private MessageService messageService = new MessageServiceImpl();
+    MessageService messageService = new MessageServiceImpl();
+
+    private SessionHandler sessionHandler = null;
+
+    interface SessionHandler extends SessionState.Subscriber {
+        List<Message> getMessage();
+
+        void sendMessage();
+    }
 
     @FXML
     void sendMessage(ActionEvent event) {
-        byte[] message = new byte[256];
-        if (friend != null) {
-            try {
-                message = JsonHelper.generateByteMessage(1, inputBox.getText(), UserState.getSingleton().getUser().getUserId(), friend.getUserId());
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
-        byte[] finalMessage = message;
-
-        FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml", Message.parseToMessageEntity(message), UserState.getSingleton().getUser());
-        fxmlLoaderUtil.getController().rightAlign();
-
-        UpdateUiUtil.updateUi(() -> messageBox.getChildren().add(fxmlLoaderUtil.getPane()));
-
-        Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
-        inputBox.setText("");
+        sessionHandler.sendMessage();
     }
 
     @FXML
     void initialize() {
-    	session = SessionState.getSelectedSession();
-    	if (session instanceof User) {
-    	    friend = (User) session;
+        session = SessionState.getSelectedSession();
+
+        // 注册SessionHandler
+        if (session instanceof User) {
+            sessionHandler = new FriendHandler((User) session, this);
         } else if (session instanceof Group) {
-    	    group = (Group) session;
+            sessionHandler = new GroupHandler((Group) session, this);
         } else {
-    	    throw new RuntimeException();
+            throw new RuntimeException();
         }
-    	avatar.setImage(new Image(session.getAvatar()));
-    	sessionNameField.setText(session.getName());
-    	this.registerAsDistributor();
-    	this.messageBox.setMaxHeight(450);
 
-    	// 当前客户端用户
-    	User user = UserState.getSingleton().getUser();
+        avatar.setImage(new Image(session.getAvatar()));
+        sessionNameField.setText(session.getSessionName());
+        this.registerAsSubscriber();
+        this.messageBox.setMaxHeight(450);
 
-    	// 查询数据库获取聊天记录
-    	List<Message> messageList = messageService.queryRecentMessage(user.getUserId(), friend.getUserId());
+        // 当前客户端用户
+        this.self = UserState.getSingleton().getUser();
+
+        // 查询数据库获取聊天记录
+        List<Message> messageList = sessionHandler.getMessage();
 
         List<FlowPane> paneList = new ArrayList<>();
 
@@ -115,10 +109,10 @@ public class ChattingBoardController implements SessionState.Distributor {
             Long sendFromId = messageList.get(i).getSendFrom();
 
             FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml",
-                    messageList.get(i), sendFromId.equals(user.getUserId()) ? user : friend);
+                    messageList.get(i), sendFromId.equals(self.getUserId()) ? self : friendHandler.getFriend());
 
             // 用户发的消息放到右边
-            if (sendFromId.equals(user.getUserId())) {
+            if (sendFromId.equals(self.getUserId())) {
                 fxmlLoaderUtil.getController().rightAlign();
             }
 
@@ -128,11 +122,66 @@ public class ChattingBoardController implements SessionState.Distributor {
 
         messageBox.heightProperty().addListener(e -> scrollPane.setVvalue(1));
     }
-    
+
     @FXML
     void showOption(ActionEvent event) {
         SessionState.setSelectedSession(session);
-    	SceneRouter.showTempStage("好友详情", "FriendIntroBoard.fxml");
+        SceneRouter.showTempStage("好友详情", "FriendIntroBoard.fxml");
+    }
+
+    /**
+     * 新的好友消息到来
+     *
+     * @param rawJson 好友消息
+     */
+    @Override
+    public void onNewFriendMessageArrived(JsonNode rawJson) {
+        sessionHandler.onNewFriendMessageArrived(rawJson);
+    }
+
+    /**
+     * 注册成为订阅者
+     */
+    @Override
+    public void registerAsSubscriber() {
+        sessionHandler.registerAsSubscriber();
+    }
+}
+
+class FriendHandler implements ChattingBoardController.SessionHandler {
+
+    private User friend;
+
+    private ChattingBoardController controllerCallback;
+
+    FriendHandler(User friend, ChattingBoardController controllerCallback) {
+        this.controllerCallback = controllerCallback;
+        this.friend = friend;
+    }
+
+    @Override
+    public List<Message> getMessage() {
+        return controllerCallback.messageService.queryRecentMessage(controllerCallback.self.getUserId(), friend.getUserId());
+    }
+
+    @Override
+    public void sendMessage() {
+        byte[] message = new byte[256];
+        try {
+            message = JsonHelper.generateByteMessage(1, controllerCallback.inputBox.getText(), UserState.getSingleton().getUser().getUserId(), friend.getUserId());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        byte[] finalMessage = message;
+
+        FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml", Message.parseToMessageEntity(message), UserState.getSingleton().getUser());
+        fxmlLoaderUtil.getController().rightAlign();
+
+        UpdateUiUtil.updateUi(() -> controllerCallback.messageBox.getChildren().add(fxmlLoaderUtil.getPane()));
+
+        Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
+        controllerCallback.inputBox.setText("");
     }
 
     /**
@@ -143,29 +192,53 @@ public class ChattingBoardController implements SessionState.Distributor {
     @Override
     public void onNewFriendMessageArrived(JsonNode rawJson) {
         FlowPane flowPane = null;
-        if (friend != null) {
-            try {
-                flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), friend);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), friendHandler.getFriend());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        // TODO: 群聊
         FlowPane finalFlowPane = flowPane;
-        UpdateUiUtil.updateUi(() -> messageBox.getChildren().add(finalFlowPane));
+        UpdateUiUtil.updateUi(() -> controllerCallback.messageBox.getChildren().add(finalFlowPane));
+    }
+
+    @Override
+    public void registerAsSubscriber() {
+        SessionState.addToFriendChattingBoardSubscriberMap(friend.getUserId(), controllerCallback);
+    }
+}
+
+class GroupHandler implements ChattingBoardController.SessionHandler {
+    private Group group;
+
+    private ChattingBoardController controllerCallback;
+
+    GroupHandler(Group group, ChattingBoardController controllerCallback) {
+        this.controllerCallback = controllerCallback;
+        this.group = group;
+    }
+
+    @Override
+    public List<Message> getMessage() {
+        return controllerCallback.messageService.queryGroupRecentMessage(group.getGroupId());
+    }
+
+    @Override
+    public void sendMessage() {
+
     }
 
     /**
-     * 注册成为订阅者
+     * 新的好友消息到来
+     *
+     * @param rawJson 好友消息
      */
     @Override
-    public void registerAsDistributor() {
-        if (friend != null) {
-            SessionState.addToFriendChattingBoardDistributorMap(friend.getUserId(), this);
-        } else if (group != null) {
-            SessionState.addToGroupChattingBoardDistributorMap(group.getGroupId(), this);
-        } else {
-            throw new RuntimeException();
-        }
+    public void onNewFriendMessageArrived(JsonNode rawJson) {
+
+    }
+
+    @Override
+    public void registerAsSubscriber() {
+        SessionState.addToGroupChattingBoardSubscriberMap(group.getGroupId(), controllerCallback);
     }
 }

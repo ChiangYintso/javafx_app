@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import pers.jiangyinzuo.chat.client.javafx.controller.FxController;
+import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.domain.entity.User;
 
@@ -33,7 +34,11 @@ public class MessageCmpController implements FxController {
         } else if (params[0] instanceof Message) {
             message = (Message) params[0];
         }
-        title.setText(((User)params[1]).getUserName() + " " + message.getSendTime().toLocalDateTime());
+        if (params[1] instanceof User) {
+            title.setText(((User)params[1]).getUserName() + " " + message.getSendTime().toLocalDateTime());
+        } else if (params[1] instanceof Group) {
+            // TODO group–≈œ¢
+        }
         content.setText(message.getMessageContent());
     }
 

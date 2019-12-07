@@ -77,7 +77,7 @@ public class Group implements SessionCardCmpController.Session {
     }
 
     @Override
-    public String getName() {
+    public String getSessionName() {
         return getGroupName();
     }
 

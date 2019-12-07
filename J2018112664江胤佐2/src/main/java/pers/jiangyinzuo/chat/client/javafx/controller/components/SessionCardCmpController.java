@@ -17,7 +17,7 @@ import pers.jiangyinzuo.chat.domain.entity.User;
 /**
  * @author Jiang Yinzuo
  */
-public class SessionCardCmpController implements SessionState.Distributor {
+public class SessionCardCmpController implements SessionState.Subscriber {
     @FXML
     private Circle bubble;
 
@@ -46,7 +46,7 @@ public class SessionCardCmpController implements SessionState.Distributor {
      * 初始化Controller时注册成为订阅者
      */
     @Override
-    public void registerAsDistributor() {
+    public void registerAsSubscriber() {
         if (session instanceof User) {
             SessionState.addToFriendSessionCardCmpDistributorMap(session.getId(), this);
         } else if (session instanceof Group) {
@@ -62,7 +62,7 @@ public class SessionCardCmpController implements SessionState.Distributor {
          *
          * @return 好友名或群聊名
          */
-        String getName();
+        String getSessionName();
 
         /**
          * 获取头像
@@ -75,10 +75,10 @@ public class SessionCardCmpController implements SessionState.Distributor {
     }
 
     public <T extends Session> void init(T session) {
-        name.setText(session.getName());
+        name.setText(session.getSessionName());
         avatar.setImage(new Image(session.getAvatar()));
         this.session = session;
-        this.registerAsDistributor();
+        this.registerAsSubscriber();
     }
 
     @FXML
@@ -96,9 +96,5 @@ public class SessionCardCmpController implements SessionState.Distributor {
         SessionState.setSelectedSession(session);
         SceneRouter.showTempStage("会话窗口", "ChattingBoard.fxml");
         this.bubble.setVisible(false);
-    }
-
-    public void onNewFriendMessageArrived() {
-
     }
 }

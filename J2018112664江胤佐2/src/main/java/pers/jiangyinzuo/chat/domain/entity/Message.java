@@ -22,6 +22,7 @@ public class Message {
 
 	/**
 	 * 消息类型 1: 文本 2: 图片 3: 文件
+	 * 11: 群聊文本 12: 群聊图片 13: 群聊文件
 	 */
 	@FieldMapper(name = "message_type")
 	private Integer messageType;
@@ -35,6 +36,9 @@ public class Message {
 	@FieldMapper(name = "send_from")
 	private Long sendFrom;
 
+	/**
+	 * 用户ID或群聊ID
+	 */
 	@FieldMapper(name = "send_to")
 	private Long sendTo;
 

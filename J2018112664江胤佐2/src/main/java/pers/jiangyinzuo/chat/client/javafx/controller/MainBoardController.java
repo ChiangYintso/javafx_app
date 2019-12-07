@@ -218,7 +218,9 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	public void loadTreeView() {
 		User user = UserState.getSingleton().getUser();
 		this.friendList = user.getFriendList();
-		this.groupList = user.getGroupList();
+
+		// 从数据库更新群聊列表
+		this.groupList = user.getGroupList(true);
 		rightPane.getChildren().removeAll();
 
 		// 初始化会话列表
