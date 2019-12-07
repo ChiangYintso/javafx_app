@@ -53,6 +53,10 @@ public class Message {
 
 	public Message() {}
 
+	public static boolean isFriendMessage(int messageType) {
+		return messageType < 10;
+	}
+
 	/**
 	 * JsonNode构造Message对象
 	 * @param data JSON中的data字段

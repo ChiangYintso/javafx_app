@@ -23,7 +23,7 @@ public class Broker implements MainBoardController.Contract {
                 System.out.println("### 连接成功 ###");
                 break;
             case Option.MESSAGE:
-                SessionState.notifyFriendSession(jsonNode);
+                SessionState.notifySession(jsonNode);
                 break;
             case Option.UPDATE_ONLINE_TOTAL:
                 this.onUpdateOnlineTotal(jsonNode);

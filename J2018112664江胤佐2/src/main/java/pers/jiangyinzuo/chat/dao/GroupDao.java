@@ -1,14 +1,10 @@
 package pers.jiangyinzuo.chat.dao;
 
-import pers.jiangyinzuo.chat.domain.entity.Group;
 import java.util.List;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public interface GroupDao {
-	List<Group> queryGroupsByUserId(Integer userId);
-	
-	void insertGroup(Integer groupId);
-	
-	void deleteGroup(Integer groupId);
-	
-	void updateGroupByGroupId(Integer groupId);
+	List<Long> queryUserIdInGroup(Long groupId);
 }

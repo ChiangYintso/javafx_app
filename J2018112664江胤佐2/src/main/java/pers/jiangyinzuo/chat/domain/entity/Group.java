@@ -37,6 +37,7 @@ public class Group implements SessionCardCmpController.Session {
         this.groupName = groupName;
         this.master = master;
         this.avatar = avatar;
+        this.groupRepo.updateMemberMap(groupId);
     }
 
     public Group() {
@@ -50,6 +51,7 @@ public class Group implements SessionCardCmpController.Session {
         setGroupName(builder.groupName);
         setMaster(builder.master);
         setAvatar(builder.avatar);
+        this.groupRepo.updateMemberMap(groupId);
     }
 
     public Long getGroupId() {
@@ -74,6 +76,10 @@ public class Group implements SessionCardCmpController.Session {
 
     public void setMaster(User master) {
         this.master = master;
+    }
+
+    public User getMessageSendFrom(Long userId) {
+        return this.groupRepo.getMemberMap(groupId, false).get(userId);
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.domain.entity.Message;
+import pers.jiangyinzuo.chat.service.GroupService;
+import pers.jiangyinzuo.chat.service.impl.GroupServiceImpl;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -101,27 +103,53 @@ public class JsonHelper {
         return null;
     }
 
+    public static int getMessageType(JsonNode jsonNode) {
+        return jsonNode.get("data").get("messageType").asInt();
+    }
+
     /**
      * 获取收件人userId列表
      * @param bytes
      * @return
      */
-    public static List<Integer> getSendToList(byte[] bytes) {
+    public static List<Long> getSendToList(byte[] bytes) {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Integer> result = new ArrayList<>();
+        List<Long> result = new ArrayList<>();
+
         try {
-            JsonNode jsonNode = objectMapper.readTree(bytes).get("data").get("sendTo");
-            if (jsonNode.isArray()) {
-                for (JsonNode node : jsonNode) {
-                    result.add(node.asInt());
+            JsonNode jsonNode = objectMapper.readTree(bytes);
+            // 获取操作类型
+            String option = jsonNode.get("option").asText();
+
+            // 消息
+            if (Option.MESSAGE.equals(option)) {
+                int messageType = objectMapper.readTree(bytes).get("data").get("messageType").asInt();
+                // TODO 更多消息类型的判断
+                // 发到群里的消息
+                if (!Message.isFriendMessage(messageType)) {
+                    GroupService groupService = new GroupServiceImpl();
+                    List<Long> userIdList =  groupService.getUserIdsInGroup(objectMapper.readTree(bytes).get("data").get("sendTo").asLong());
+                    userIdList.remove(JsonHelper.getSendFromId(jsonNode));
+                    return userIdList;
+                }
+            }
+
+            JsonNode sendToJsonNode = objectMapper.readTree(bytes).get("data").get("sendTo");
+            if (sendToJsonNode.isArray()) {
+                for (JsonNode node : sendToJsonNode) {
+                    result.add((long) node.asInt());
                 }
             } else {
-                result.add(jsonNode.asInt());
+                result.add((long) sendToJsonNode.asInt());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static long getSendToGroupId(JsonNode jsonNode) {
+        return jsonNode.get("data").get("sendTo").asInt();
     }
 
     public static Integer getSendToId(byte[] bytes) {
@@ -139,7 +167,7 @@ public class JsonHelper {
      * @param jsonNode
      * @return
      */
-    public static Integer getSendFromId(JsonNode jsonNode) {
+    public static long getSendFromId(JsonNode jsonNode) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return jsonNode.get("data").get("sendFrom").asInt();
@@ -154,7 +182,7 @@ public class JsonHelper {
      * @param messageType 消息类型
      * @param messageContent 消息内容
      * @param sendFrom 发送方id
-     * @param sendTo 接收方id
+     * @param sendTo 好友id或群聊id
      * @return 字节数组
      * @throws JsonProcessingException 转换为Json格式时发生异常
      */

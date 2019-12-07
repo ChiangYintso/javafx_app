@@ -65,12 +65,64 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
     MessageService messageService = new MessageServiceImpl();
 
-    private SessionHandler sessionHandler = null;
+    private AbstractSessionHandler sessionHandler = null;
 
-    interface SessionHandler extends SessionState.Subscriber {
-        List<Message> getMessage();
+    abstract static class AbstractSessionHandler implements SessionState.Subscriber {
 
-        void sendMessage();
+        protected ChattingBoardController controllerCallBack;
+
+        protected SessionCardCmpController.Session session;
+
+        abstract List<Message> getMessage();
+
+        AbstractSessionHandler(ChattingBoardController controllerCallBack, SessionCardCmpController.Session session) {
+            this.controllerCallBack = controllerCallBack;
+            this.session = session;
+        }
+
+        Long getSessionId() {
+            return session.getId();
+        }
+
+        // 发送消息, 若为群聊, sendTo为群聊ID; 若为好友聊天, sendTo为好友ID
+        void sendMessage() {
+            byte[] message = new byte[256];
+            try {
+                message = JsonHelper.generateByteMessage(getMessageType(), controllerCallBack.inputBox.getText(), UserState.getSingleton().getUser().getUserId(), getSessionId());
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+
+            byte[] finalMessage = message;
+
+            FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml", Message.parseToMessageEntity(message), UserState.getSingleton().getUser());
+            fxmlLoaderUtil.getController().rightAlign();
+
+            UpdateUiUtil.updateUi(() -> controllerCallBack.messageBox.getChildren().add(fxmlLoaderUtil.getPane()));
+
+            Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
+            controllerCallBack.inputBox.setText("");
+        }
+
+        /**
+         * 获取发送消息的User实体类
+         * @return
+         */
+        abstract User getSendFrom(Long sendFromId);
+
+        abstract Integer getMessageType();
+
+        @Override
+        public void onNewFriendMessageArrived(JsonNode rawJson) {
+            FlowPane flowPane = null;
+            try {
+                flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), session);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            FlowPane finalFlowPane = flowPane;
+            UpdateUiUtil.updateUi(() -> controllerCallBack.messageBox.getChildren().add(finalFlowPane));
+        }
     }
 
     @FXML
@@ -84,9 +136,9 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
         // 注册SessionHandler
         if (session instanceof User) {
-            sessionHandler = new FriendHandler((User) session, this);
+            sessionHandler = new FriendHandler(this, (User) session);
         } else if (session instanceof Group) {
-            sessionHandler = new GroupHandler((Group) session, this);
+            sessionHandler = new GroupHandler(this, (Group) session);
         } else {
             throw new RuntimeException();
         }
@@ -109,7 +161,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
             Long sendFromId = messageList.get(i).getSendFrom();
 
             FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml",
-                    messageList.get(i), sendFromId.equals(self.getUserId()) ? self : friendHandler.getFriend());
+                    messageList.get(i), sendFromId.equals(self.getUserId()) ? self : sessionHandler.getSendFrom(messageList.get(i).getSendFrom()));
 
             // 用户发的消息放到右边
             if (sendFromId.equals(self.getUserId())) {
@@ -148,97 +200,70 @@ public class ChattingBoardController implements SessionState.Subscriber {
     }
 }
 
-class FriendHandler implements ChattingBoardController.SessionHandler {
+class FriendHandler extends ChattingBoardController.AbstractSessionHandler {
 
-    private User friend;
-
-    private ChattingBoardController controllerCallback;
-
-    FriendHandler(User friend, ChattingBoardController controllerCallback) {
-        this.controllerCallback = controllerCallback;
-        this.friend = friend;
+    FriendHandler(ChattingBoardController controllerCallBack, SessionCardCmpController.Session session) {
+        super(controllerCallBack, session);
     }
 
     @Override
     public List<Message> getMessage() {
-        return controllerCallback.messageService.queryRecentMessage(controllerCallback.self.getUserId(), friend.getUserId());
-    }
-
-    @Override
-    public void sendMessage() {
-        byte[] message = new byte[256];
-        try {
-            message = JsonHelper.generateByteMessage(1, controllerCallback.inputBox.getText(), UserState.getSingleton().getUser().getUserId(), friend.getUserId());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        byte[] finalMessage = message;
-
-        FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml", Message.parseToMessageEntity(message), UserState.getSingleton().getUser());
-        fxmlLoaderUtil.getController().rightAlign();
-
-        UpdateUiUtil.updateUi(() -> controllerCallback.messageBox.getChildren().add(fxmlLoaderUtil.getPane()));
-
-        Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
-        controllerCallback.inputBox.setText("");
+        return controllerCallBack.messageService.queryRecentMessage(controllerCallBack.self.getUserId(), getSessionId());
     }
 
     /**
-     * 新的好友消息到来
+     * 获取发送消息的User实体类
      *
-     * @param rawJson 好友消息
+     * @param sendFromId
+     * @return
      */
     @Override
-    public void onNewFriendMessageArrived(JsonNode rawJson) {
-        FlowPane flowPane = null;
-        try {
-            flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), friendHandler.getFriend());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        FlowPane finalFlowPane = flowPane;
-        UpdateUiUtil.updateUi(() -> controllerCallback.messageBox.getChildren().add(finalFlowPane));
+    public User getSendFrom(Long sendFromId) {
+        return (User) session;
+    }
+
+    @Override
+    public Integer getMessageType() {
+        // TODO 消息类型
+        return 1;
     }
 
     @Override
     public void registerAsSubscriber() {
-        SessionState.addToFriendChattingBoardSubscriberMap(friend.getUserId(), controllerCallback);
+        SessionState.addToFriendChattingBoardSubscriberMap(getSessionId(), controllerCallBack);
     }
 }
 
-class GroupHandler implements ChattingBoardController.SessionHandler {
-    private Group group;
+class GroupHandler extends ChattingBoardController.AbstractSessionHandler {
 
-    private ChattingBoardController controllerCallback;
-
-    GroupHandler(Group group, ChattingBoardController controllerCallback) {
-        this.controllerCallback = controllerCallback;
-        this.group = group;
+    GroupHandler(ChattingBoardController controllerCallBack, SessionCardCmpController.Session session) {
+        super(controllerCallBack, session);
     }
 
     @Override
     public List<Message> getMessage() {
-        return controllerCallback.messageService.queryGroupRecentMessage(group.getGroupId());
-    }
-
-    @Override
-    public void sendMessage() {
-
+        return controllerCallBack.messageService.queryGroupRecentMessage(getSessionId());
     }
 
     /**
-     * 新的好友消息到来
+     * 获取发送消息的User实体类
      *
-     * @param rawJson 好友消息
+     * @param sendFromId
+     * @return User实体类; 若该成员不在群内, 返回null
      */
     @Override
-    public void onNewFriendMessageArrived(JsonNode rawJson) {
+    public User getSendFrom(Long sendFromId) {
+        return ((Group)session).getMessageSendFrom(sendFromId);
+    }
 
+    @Override
+    public Integer getMessageType() {
+        // TODO 消息类型
+        return 11;
     }
 
     @Override
     public void registerAsSubscriber() {
-        SessionState.addToGroupChattingBoardSubscriberMap(group.getGroupId(), controllerCallback);
+        SessionState.addToGroupChattingBoardSubscriberMap(getSessionId(), controllerCallBack);
     }
 }

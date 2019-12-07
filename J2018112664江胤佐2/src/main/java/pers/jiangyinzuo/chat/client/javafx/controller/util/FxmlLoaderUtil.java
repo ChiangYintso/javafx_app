@@ -14,7 +14,7 @@ public class FxmlLoaderUtil<T, C extends FxController> {
     private C controller = null;
 
     public static <T, C extends FxController> T loadFxComponent(String fxmlFileName, Object ...params) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(FxmlLoaderUtil.class.getResource("../../scenes/components/" + "MessageCmp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(FxmlLoaderUtil.class.getResource("../../scenes/components/" + fxmlFileName));
         T pane = fxmlLoader.load();
         C controller = fxmlLoader.getController();
         controller.init(params);

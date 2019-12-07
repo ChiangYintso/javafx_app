@@ -58,8 +58,10 @@ public class ForwardingMessageManager {
                     map.put("option", JsonHelper.Option.UPDATE_ONLINE_TOTAL);
                     map.put("totalCount", tcpServer.clientHandlerMap.size());
                     try {
-                        synchronized (tcpServer.clientHandlerMap.get(userId)) {
-                            tcpServer.clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
+                        if(tcpServer.clientHandlerMap.get(userId) != null) {
+                            synchronized (tcpServer.clientHandlerMap.get(userId)) {
+                                tcpServer.clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
+                            }
                         }
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
@@ -86,16 +88,15 @@ public class ForwardingMessageManager {
         // 发送消息给用户
         ForwardingMessageManager.forwardingThreadPoolExecutor.execute(() -> {
             synchronized (this.tcpServer) {
-                List<Integer> sendToList = JsonHelper.getSendToList(message);
+                List<Long> sendToList = JsonHelper.getSendToList(message);
                 ClientHandler clientHandler;
-                for (Integer sendToUserId : sendToList) {
+                for (Long sendToUserId : sendToList) {
                     clientHandler = tcpServer.clientHandlerMap.get(sendToUserId);
 
                     // 用户已经上线
                     if (clientHandler != null) {
                         clientHandler.send(message);
                     }
-                    // TODO: 用户未上线
                 }
             }
         });

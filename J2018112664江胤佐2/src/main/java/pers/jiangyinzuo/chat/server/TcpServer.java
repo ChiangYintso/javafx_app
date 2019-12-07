@@ -33,7 +33,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
     /**
      * 已连接上的客户端处理器映射
      */
-    Map<Integer, ClientHandler> clientHandlerMap = new HashMap<>();
+    Map<Long, ClientHandler> clientHandlerMap = new HashMap<>();
 
     private TcpServer(int port) {
         this.port = port;
@@ -108,7 +108,8 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                         // 连接成功后构造一个客户端处理器线程, 并传入TcpServer.this用于执行客户端收到消息后的回调方法
                         ClientHandler clientHandler = new ClientHandler(client, TcpServer.this, userId);
 
-                        clientHandlerMap.put(userId, clientHandler);
+                        assert userId != null;
+                        clientHandlerMap.put(userId.longValue(), clientHandler);
 
                         System.out.println("用户" + userId + "连接到服务器");
 

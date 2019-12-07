@@ -57,6 +57,9 @@ public class MySqlHelper {
     public static <T> List<T> queryMany(Class<T> clazz, String sql, Object... parameters) throws SQLException {
         getConnection();
         try (ResultSet resultSet = executeQuery(sql, parameters)) {
+            if (Number.class.isAssignableFrom(clazz)) {
+                return mapRecordsToNumber(clazz, resultSet);
+            }
             return mapRecordsToEntities(clazz, resultSet);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
@@ -211,6 +214,22 @@ public class MySqlHelper {
             mapFields(resultSet, dto, fields);
             results.add(dto);
         } while (resultSet.next());
+        return results;
+    }
+
+    private static <T> List<T> mapRecordsToNumber(Class<T> clazz, ResultSet resultSet) {
+        List<T> results = new ArrayList<>();
+        try {
+            if (resultSet == null || !resultSet.next()) {
+                return results;
+            }
+            do {
+                T number = (T)resultSet.getObject(1);
+                results.add(number);
+            } while(resultSet.next());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return results;
     }
 

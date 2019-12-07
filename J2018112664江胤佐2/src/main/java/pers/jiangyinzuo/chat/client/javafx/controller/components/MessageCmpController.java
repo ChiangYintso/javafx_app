@@ -25,19 +25,25 @@ public class MessageCmpController implements FxController {
 
     /**
      * 初始化Message
+     *
      * @param params 第一个参数为JsonNode或者Message, 第二个参数为发送消息的User
      */
     @Override
-    public void init(Object ...params) {
+    public void init(Object... params) {
         if (params[0] instanceof JsonNode) {
             message = Message.parseToMessage((JsonNode) params[0]);
         } else if (params[0] instanceof Message) {
             message = (Message) params[0];
         }
-        if (params[1] instanceof User) {
-            title.setText(((User)params[1]).getUserName() + " " + message.getSendTime().toLocalDateTime());
+        assert message != null;
+        // 该成员已经不在群内
+        if (params[1] == null) {
+            title.setText(message.getSendFrom() + " " + message.getSendTime().toLocalDateTime());
+        } else if (params[1] instanceof User) {
+            title.setText(((User) params[1]).getUserName() + " " + message.getSendTime().toLocalDateTime());
         } else if (params[1] instanceof Group) {
-            // TODO group信息
+            title.setText(((Group) params[1]).getMessageSendFrom(message.getSendFrom()).getUserName()
+            + " " + message.getSendTime().toLocalDateTime());
         }
         content.setText(message.getMessageContent());
     }
