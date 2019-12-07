@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -27,8 +25,12 @@ import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
+import pers.jiangyinzuo.chat.service.MessageService;
+import pers.jiangyinzuo.chat.service.impl.MessageServiceImpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jiang Yinzuo
@@ -52,19 +54,24 @@ public class ChattingBoardController implements SessionState.Distributor {
 
     @FXML
     private ImageView avatar;
+
+    @FXML
+    private ScrollPane scrollPane;
     
     private SessionCardCmpController.Session session;
 
-    private User user = null;
+    private User friend = null;
 
     private Group group = null;
+
+    private MessageService messageService = new MessageServiceImpl();
 
     @FXML
     void sendMessage(ActionEvent event) {
         byte[] message = new byte[256];
-        if (user != null) {
+        if (friend != null) {
             try {
-                message = JsonHelper.generateByteMessage(1, inputBox.getText(), UserState.getSingleton().getUser().getUserId(), user.getUserId());
+                message = JsonHelper.generateByteMessage(1, inputBox.getText(), UserState.getSingleton().getUser().getUserId(), friend.getUserId());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -75,6 +82,7 @@ public class ChattingBoardController implements SessionState.Distributor {
         fxmlLoaderUtil.getController().rightAlign();
 
         UpdateUiUtil.updateUi(() -> messageBox.getChildren().add(fxmlLoaderUtil.getPane()));
+
         Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
         inputBox.setText("");
     }
@@ -83,7 +91,7 @@ public class ChattingBoardController implements SessionState.Distributor {
     void initialize() {
     	session = SessionState.getSelectedSession();
     	if (session instanceof User) {
-    	    user = (User) session;
+    	    friend = (User) session;
         } else if (session instanceof Group) {
     	    group = (Group) session;
         } else {
@@ -93,6 +101,32 @@ public class ChattingBoardController implements SessionState.Distributor {
     	sessionNameField.setText(session.getName());
     	this.registerAsDistributor();
     	this.messageBox.setMaxHeight(450);
+
+    	// 当前客户端用户
+    	User user = UserState.getSingleton().getUser();
+
+    	// 查询数据库获取聊天记录
+    	List<Message> messageList = messageService.queryRecentMessage(user.getUserId(), friend.getUserId());
+
+        List<FlowPane> paneList = new ArrayList<>();
+
+        // 反向遍历列表
+        for (int i = messageList.size() - 1; i >= 0; --i) {
+            Long sendFromId = messageList.get(i).getSendFrom();
+
+            FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml",
+                    messageList.get(i), sendFromId.equals(user.getUserId()) ? user : friend);
+
+            // 用户发的消息放到右边
+            if (sendFromId.equals(user.getUserId())) {
+                fxmlLoaderUtil.getController().rightAlign();
+            }
+
+            paneList.add(fxmlLoaderUtil.getPane());
+        }
+        UpdateUiUtil.updateUi(() -> messageBox.getChildren().addAll(paneList));
+
+        messageBox.heightProperty().addListener(e -> scrollPane.setVvalue(1));
     }
     
     @FXML
@@ -109,9 +143,9 @@ public class ChattingBoardController implements SessionState.Distributor {
     @Override
     public void onNewFriendMessageArrived(JsonNode rawJson) {
         FlowPane flowPane = null;
-        if (user != null) {
+        if (friend != null) {
             try {
-                flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), user);
+                flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), friend);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,13 +160,12 @@ public class ChattingBoardController implements SessionState.Distributor {
      */
     @Override
     public void registerAsDistributor() {
-        if (user != null) {
-            SessionState.addToFriendChattingBoardDistributorMap(user.getUserId(), this);
+        if (friend != null) {
+            SessionState.addToFriendChattingBoardDistributorMap(friend.getUserId(), this);
         } else if (group != null) {
             SessionState.addToGroupChattingBoardDistributorMap(group.getGroupId(), this);
         } else {
             throw new RuntimeException();
         }
-
     }
 }

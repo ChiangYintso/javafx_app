@@ -6,15 +6,29 @@ import pers.jiangyinzuo.chat.helper.MySqlHelper;
 
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Jiang Yinzuo
  */
 public class MessageDaoImpl implements MessageDao {
+
+    /**
+     * 返回最近的count条聊天记录
+     *
+     * @param user1Id 好友id
+     * @return
+     */
     @Override
-    public List<Message> queryMessagesByRoomId(Instant fromTime, Integer roomId) {
-        return null;
+    public List<Message> queryMessagesByUserId(Long user1Id, Long user2Id, Integer row, Integer offset) {
+        String sql = "SELECT * FROM chat_message WHERE (send_from = ? AND send_to = ?) OR (send_from = ? AND send_to = ?) ORDER BY send_time DESC LIMIT ?, ?";
+        try {
+            return MySqlHelper.queryMany(Message.class, sql, user1Id, user2Id, user2Id, user1Id, row, offset);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     @Override

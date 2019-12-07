@@ -21,6 +21,11 @@ public class FxmlLoaderUtil<T, C extends FxController> {
         return pane;
     }
 
+    /**
+     * 创建 Pane(自定义组件)及其Controller的实例对象, 并调用controller.init(Object... params)方法
+     * @param fxmlFileName
+     * @param params
+     */
     public FxmlLoaderUtil(String fxmlFileName, Object ...params) {
         FXMLLoader fxmlLoader = new FXMLLoader(FxmlLoaderUtil.class.getResource("../../scenes/components/" + "MessageCmp.fxml"));
         try {

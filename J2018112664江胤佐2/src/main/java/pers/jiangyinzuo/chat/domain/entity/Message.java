@@ -4,25 +4,38 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
+import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 
 /**
  * @author Jiang Yinzuo
  */
+@TableMapper("chat_message")
 public class Message {
 	@JsonIgnore
+	@FieldMapper(name = "message_id")
 	private Long messageId;
 
 	/**
 	 * 消息类型 1: 文本 2: 图片 3: 文件
 	 */
+	@FieldMapper(name = "message_type")
 	private Integer messageType;
+
+	@FieldMapper(name = "message_content")
 	private String messageContent;
+
+	@FieldMapper(name = "send_time")
 	private Timestamp sendTime;
 
+	@FieldMapper(name = "send_from")
 	private Long sendFrom;
+
+	@FieldMapper(name = "send_to")
 	private Long sendTo;
 
 	public Message(Long messageId, Integer messageType, String messageContent, Timestamp sendTime, Long sendFrom, Long sendTo) {

@@ -27,7 +27,7 @@
          </font>
       </Button>
       <ImageView fx:id="avatar" fitHeight="39.0" fitWidth="41.0" layoutX="17.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
-      <ScrollPane layoutX="19.0" layoutY="63.0" prefHeight="327.0" prefWidth="620.0">
+      <ScrollPane fx:id="scrollPane" layoutX="19.0" layoutY="63.0" prefHeight="327.0" prefWidth="620.0">
          <content>
             <VBox fx:id="messageBox" prefHeight="277.0" prefWidth="617.0" />
          </content>
