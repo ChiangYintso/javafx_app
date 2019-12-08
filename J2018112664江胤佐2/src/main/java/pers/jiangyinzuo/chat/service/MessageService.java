@@ -2,6 +2,7 @@ package pers.jiangyinzuo.chat.service;
 
 import pers.jiangyinzuo.chat.domain.entity.Message;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -22,6 +23,14 @@ public interface MessageService {
     List<Message> queryRecentMessage(Long userId, Long friendId);
 
     List<Message> queryGroupRecentMessage(Long groupId);
+
+    List<Message> queryGroupMessage(Long groupId, int start, int offset, Timestamp limitTime);
+
+    List<Message> queryUserMessageInGroup(Long userId, Long groupId, int start, int offset, Timestamp limitTime);
+
+    List<Message> queryUserMessageToAllFriends(Long userId, int start, int offset, Timestamp limitTime);
+
+    List<Message> queryUserMessageToFriends(Long userId, Long friendId, int start, int offset, Timestamp limitTime);
 
     List<String> querySensitiveWords();
 

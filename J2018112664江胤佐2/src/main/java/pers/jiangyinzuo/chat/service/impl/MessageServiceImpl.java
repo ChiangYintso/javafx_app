@@ -8,6 +8,7 @@ import pers.jiangyinzuo.chat.dao.mysql.SensitiveWordDaoImpl;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.service.MessageService;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +46,26 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Message> queryGroupRecentMessage(Long groupId) {
         return messageDao.queryMessagesBySendToId(groupId, 10, 0, 5);
+    }
+
+    @Override
+    public List<Message> queryGroupMessage(Long groupId, int start, int offset, Timestamp limitTime) {
+        return messageDao.queryMessagesBySendToId(groupId, 10, start, offset, limitTime);
+    }
+
+    @Override
+    public List<Message> queryUserMessageInGroup(Long userId, Long groupId, int start, int offset, Timestamp limitTime) {
+        return messageDao.queryMessagesByUserIdAndGroupId(userId, groupId, start, offset, limitTime);
+    }
+
+    @Override
+    public List<Message> queryUserMessageToAllFriends(Long userId, int start, int offset, Timestamp limitTime) {
+        return messageDao.queryMessagesBySendToId(userId, 1, start, offset, limitTime);
+    }
+
+    @Override
+    public List<Message> queryUserMessageToFriends(Long userId, Long friendId, int start, int offset, Timestamp limitTime) {
+        return messageDao.queryMessagesByUserId(userId, friendId, start, offset, limitTime);
     }
 
     @Override

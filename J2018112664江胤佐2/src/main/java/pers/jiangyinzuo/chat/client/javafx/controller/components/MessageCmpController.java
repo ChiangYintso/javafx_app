@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import pers.jiangyinzuo.chat.client.javafx.controller.FxController;
+import pers.jiangyinzuo.chat.common.javafx.controller.FxController;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.domain.entity.User;

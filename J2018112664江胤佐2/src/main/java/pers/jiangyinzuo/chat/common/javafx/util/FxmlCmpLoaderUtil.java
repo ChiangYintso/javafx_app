@@ -1,7 +1,7 @@
 package pers.jiangyinzuo.chat.common.javafx.util;
 
 import javafx.fxml.FXMLLoader;
-import pers.jiangyinzuo.chat.client.javafx.controller.FxController;
+import pers.jiangyinzuo.chat.common.javafx.controller.FxController;
 
 import java.io.IOException;
 

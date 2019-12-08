@@ -1,4 +1,4 @@
-package pers.jiangyinzuo.chat.client.javafx.controller;
+package pers.jiangyinzuo.chat.common.javafx.controller;
 
 /**
  * @author Jiang Yinzuo

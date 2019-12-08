@@ -24,6 +24,9 @@ public class MainBoardController {
     private Button serverSwitchBtn;
 
     @FXML
+    private Button chattingRecordManagementBtn;
+
+    @FXML
     private Button sensitiveWordBtn;
 
     private static final TcpServer tcpServer = new TcpServer(20000);
@@ -35,6 +38,11 @@ public class MainBoardController {
             new LinkedBlockingQueue<Runnable>(10));
 
     private boolean AppIsOn = true;
+
+    @FXML
+    void showChattingRecordManagementBoard(ActionEvent event) {
+        SceneRouter.showTempStage("聊天记录管理面板", "ChattingRecordManagementBoard.fxml", "server");
+    }
 
     @FXML
     void switchServer(ActionEvent event) {

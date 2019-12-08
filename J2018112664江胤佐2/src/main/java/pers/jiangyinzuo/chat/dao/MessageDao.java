@@ -13,11 +13,15 @@ public interface MessageDao {
     /**
      * 返回最近的count条聊天记录
      *
-     * @param user1Id 用户1id
-     * @param user2Id 用户2id
+     * @param sendFromId 用户1id
+     * @param sendToId 用户2id
      * @return
      */
-    List<Message> queryMessagesByUserId(Long user1Id, Long user2Id, Integer row, Integer offset);
+    List<Message> queryMessagesByUserId(Long sendFromId, Long sendToId, Integer row, Integer offset);
+
+    List<Message> queryMessagesByUserIdAndGroupId(Long userId, Long groupId, Integer row, Integer offset, Timestamp timestamp);
+
+    List<Message> queryMessagesByUserId(Long sendFromId, Long sendToId, Integer row, Integer offset, Timestamp timestamp);
 
     /**
      * 根据sendToId和messageType查询Message
@@ -28,6 +32,8 @@ public interface MessageDao {
      * @param offset      偏移量
      * @return
      */
+    List<Message> queryMessagesBySendToId(Long sendToId, Integer messageType, Integer row, Integer offset, Timestamp limitTime);
+
     List<Message> queryMessagesBySendToId(Long sendToId, Integer messageType, Integer row, Integer offset);
 
     void insertMessage(Message message);

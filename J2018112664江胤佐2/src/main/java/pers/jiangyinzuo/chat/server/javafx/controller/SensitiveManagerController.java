@@ -40,9 +40,7 @@ public class SensitiveManagerController implements SensitiveWordsCmpController.P
         Collections.replaceAll(sensitiveWordList, oldWord, newWord);
     }
 
-
     private List<String> sensitiveWordList = new ArrayList<>();
-
 
     @FXML
     void addSensitiveWord(ActionEvent event) {

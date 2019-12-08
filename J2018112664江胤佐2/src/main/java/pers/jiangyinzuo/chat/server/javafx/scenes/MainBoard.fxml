@@ -2,14 +2,18 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.MainBoardController">
    <children>
-      <Text layoutX="275.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="主面板" />
+      <Text layoutX="219.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="网络聊天室管理面板">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
       <Text fx:id="totalCountText" layoutX="41.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="当前用户上线总数:" />
       <Button fx:id="serverSwitchBtn" layoutX="448.0" layoutY="56.0" mnemonicParsing="false" onAction="#switchServer" prefHeight="37.0" prefWidth="113.0" text="启动服务器" />
       <Button fx:id="sensitiveWordBtn" layoutX="448.0" layoutY="125.0" mnemonicParsing="false" onAction="#editSensitiveWords" prefHeight="37.0" prefWidth="113.0" text="敏感词管理" />
+      <Button fx:id="chattingRecordManagementBtn" layoutX="448.0" layoutY="197.0" mnemonicParsing="false" onAction="#showChattingRecordManagementBoard" prefHeight="37.0" prefWidth="113.0" text="聊天记录查询" />
    </children>
 </Pane>
