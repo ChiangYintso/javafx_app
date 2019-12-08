@@ -1,9 +1,9 @@
 package pers.jiangyinzuo.chat.server;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
+import pers.jiangyinzuo.chat.server.javafx.GuiBroker;
 import pers.jiangyinzuo.chat.service.MessageService;
 import pers.jiangyinzuo.chat.service.NoticeService;
 import pers.jiangyinzuo.chat.service.impl.MessageServiceImpl;
@@ -23,6 +23,17 @@ import java.util.concurrent.*;
  * @author Jiang Yinzuo
  */
 public class ForwardingMessageManager {
+    private static boolean serverGuiIsOn = false;
+
+    private static GuiBroker serverGuiGuiBroker = new GuiBroker();
+
+    public static boolean isServerGuiIsOn() {
+        return serverGuiIsOn;
+    }
+
+    public static void setServerGuiIsOn(boolean serverGuiIsOn) {
+        ForwardingMessageManager.serverGuiIsOn = serverGuiIsOn;
+    }
 
     /**
      * 消息转发线程池
@@ -102,6 +113,13 @@ public class ForwardingMessageManager {
                         e.printStackTrace();
                     }
                 });
+                return;
+            case JsonHelper.Option.FOUND_GROUP:
+
+                // 若管理端图形界面已开启, 通知管理端图形界面
+                if (serverGuiIsOn) {
+                    serverGuiGuiBroker.onNewMessageArrived(message, userId);
+                }
                 return;
             default:
                 break;

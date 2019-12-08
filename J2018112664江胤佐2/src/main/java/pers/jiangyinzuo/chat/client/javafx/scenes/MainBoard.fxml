@@ -21,6 +21,7 @@
             <Button fx:id="addBtn" layoutX="19.0" layoutY="210.0" minWidth="49.0" mnemonicParsing="false" onAction="#addFriendOrGroup" prefHeight="33.0" prefWidth="85.0" style="-fx-border-radius: 50%;" text="添加" />
             <Text fx:id="onlineTotal" layoutX="27.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="全网在线人数" wrappingWidth="71.33339436848962" />
             <Button fx:id="noticeBtn" layoutX="19.0" layoutY="312.0" mnemonicParsing="false" onAction="#showNotice" prefHeight="33.0" prefWidth="85.0" text="通知" />
+            <Button fx:id="foundGroupBtn" layoutX="19.0" layoutY="358.0" mnemonicParsing="false" onAction="#foundGroup" prefHeight="33.0" prefWidth="85.0" text="新建群聊" />
          </children></AnchorPane>
     <AnchorPane fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="360.0" prefWidth="373.0" />
   </items>

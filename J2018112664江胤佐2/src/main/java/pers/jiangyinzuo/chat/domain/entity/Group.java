@@ -29,9 +29,12 @@ public class Group implements SessionCardCmpController.Session {
     @FieldMapper(name = "group_avatar")
     private String avatar;
 
+    @FieldMapper(name = "groupIntro")
+    private String groupIntro;
+
     private GroupRepo groupRepo;
 
-    public Group(Long groupId, String groupName, User master, String avatar) {
+    public Group(Long groupId, String groupName, User master, String avatar, String groupIntro) {
         this();
         this.groupId = groupId;
         this.groupName = groupName;
@@ -46,12 +49,19 @@ public class Group implements SessionCardCmpController.Session {
     }
 
     private Group(Builder builder) {
-        this();
         setGroupId(builder.groupId);
         setGroupName(builder.groupName);
         setMaster(builder.master);
         setAvatar(builder.avatar);
-        this.groupRepo.updateMemberMap(groupId);
+        setGroupIntro(builder.groupIntro);
+    }
+
+    public String getGroupIntro() {
+        return groupIntro;
+    }
+
+    public void setGroupIntro(String groupIntro) {
+        this.groupIntro = groupIntro;
     }
 
     public Long getGroupId() {
@@ -112,6 +122,7 @@ public class Group implements SessionCardCmpController.Session {
         private String groupName;
         private User master;
         private String avatar;
+        private String groupIntro;
 
         public Builder() {
         }
@@ -133,6 +144,11 @@ public class Group implements SessionCardCmpController.Session {
 
         public Builder avatar(String val) {
             avatar = val;
+            return this;
+        }
+
+        public Builder groupIntro(String val) {
+            groupIntro = val;
             return this;
         }
 

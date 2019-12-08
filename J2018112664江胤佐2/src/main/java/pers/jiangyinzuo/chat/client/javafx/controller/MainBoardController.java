@@ -60,6 +60,9 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	private Button addBtn;
 
 	@FXML
+	private Button foundGroupBtn;
+
+	@FXML
 	private Text onlineTotal;
 
 	@FXML
@@ -176,6 +179,15 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 			System.out.println("主界面关闭");
 			Main.exit();
 		});
+	}
+
+	/**
+	 * 新建群聊
+	 * @param event
+	 */
+	@FXML
+	void foundGroup(ActionEvent event) {
+		SceneRouter.showTempStage("新建群聊", "FoundGroupBoard.fxml", "client");
 	}
 
 	@FXML

@@ -44,6 +44,7 @@ public class JsonHelper {
      * JSON "option"  Ù–‘µƒ÷µ
      */
     public static class Option {
+        public static final String FOUND_GROUP = "foundGroup";
         public static final String MESSAGE = "message";
         public static final String UPDATE_ONLINE_TOTAL = "updateOnlineTotal";
         public static final String NEW_FRIEND_OR_GROUP = "newFriendOrGroup";
