@@ -16,9 +16,9 @@ import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.MessageCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
-import pers.jiangyinzuo.chat.client.javafx.controller.util.FxmlLoaderUtil;
-import pers.jiangyinzuo.chat.client.javafx.controller.util.UpdateUiUtil;
-import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
+import pers.jiangyinzuo.chat.common.javafx.util.UpdateUiUtil;
+import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
 import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
@@ -168,17 +168,21 @@ public class ChattingBoardController implements SessionState.Subscriber {
         void sendMessage() {
             byte[] message = new byte[256];
             try {
-                message = JsonHelper.generateByteMessage(getMessageType(), controllerCallBack.inputBox.getText(), UserState.getSingleton().getUser().getUserId(), getSessionId());
+                Long sendFrom = UserState.getSingleton().getUser().getUserId();
+                // 过滤敏感消息并上传数据库
+                message = JsonHelper.generateByteMessage(getMessageType(),
+                        Message.filterSensitiveWords(sendFrom, controllerCallBack.inputBox.getText(), true),
+                        sendFrom, getSessionId());
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
 
             byte[] finalMessage = message;
 
-            FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml", Message.parseToMessageEntity(message), UserState.getSingleton().getUser());
-            fxmlLoaderUtil.getController().rightAlign();
+            FxmlCmpLoaderUtil<FlowPane, MessageCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil<>("client", "MessageCmp.fxml", Message.parseToMessageEntity(message), UserState.getSingleton().getUser());
+            fxmlCmpLoaderUtil.getController().rightAlign();
 
-            UpdateUiUtil.updateUi(() -> controllerCallBack.messageBox.getChildren().add(fxmlLoaderUtil.getPane()));
+            UpdateUiUtil.updateUi(() -> controllerCallBack.messageBox.getChildren().add(fxmlCmpLoaderUtil.getPane()));
 
             Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
             controllerCallBack.inputBox.setText("");
@@ -196,7 +200,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
         public void onNewMessageArrived(JsonNode rawJson) {
             FlowPane flowPane = null;
             try {
-                flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), controllerCallBack.session);
+                flowPane = FxmlCmpLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("client", "MessageCmp.fxml", rawJson.get("data"), controllerCallBack.session);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -247,15 +251,15 @@ public class ChattingBoardController implements SessionState.Subscriber {
         for (int i = messageList.size() - 1; i >= 0; --i) {
             Long sendFromId = messageList.get(i).getSendFrom();
 
-            FxmlLoaderUtil<FlowPane, MessageCmpController> fxmlLoaderUtil = new FxmlLoaderUtil<>("MessageCmp.fxml",
+            FxmlCmpLoaderUtil<FlowPane, MessageCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil<>("client", "MessageCmp.fxml",
                     messageList.get(i), sendFromId.equals(self.getUserId()) ? self : sessionHandler.getSendFrom(messageList.get(i).getSendFrom()));
 
             // 用户发的消息放到右边
             if (sendFromId.equals(self.getUserId())) {
-                fxmlLoaderUtil.getController().rightAlign();
+                fxmlCmpLoaderUtil.getController().rightAlign();
             }
 
-            paneList.add(fxmlLoaderUtil.getPane());
+            paneList.add(fxmlCmpLoaderUtil.getPane());
         }
         UpdateUiUtil.updateUi(() -> messageBox.getChildren().addAll(paneList));
 
@@ -265,7 +269,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
     @FXML
     void showOption(ActionEvent event) {
         SessionState.setSelectedSession(session);
-        SceneRouter.showTempStage("好友详情", "FriendIntroBoard.fxml");
+        SceneRouter.showTempStage("好友详情", "FriendIntroBoard.fxml", "client");
     }
 
     @FXML

@@ -1,4 +1,4 @@
-package pers.jiangyinzuo.chat.client.javafx.controller.util;
+package pers.jiangyinzuo.chat.common.javafx.util;
 
 import javafx.application.Platform;
 

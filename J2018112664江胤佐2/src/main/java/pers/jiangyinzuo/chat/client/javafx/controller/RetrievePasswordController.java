@@ -7,7 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import pers.jiangyinzuo.chat.client.javafx.common.CustomAlertBoard;
+import pers.jiangyinzuo.chat.common.javafx.CustomAlertBoard;
 import pers.jiangyinzuo.chat.service.AccountService;
 import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
 

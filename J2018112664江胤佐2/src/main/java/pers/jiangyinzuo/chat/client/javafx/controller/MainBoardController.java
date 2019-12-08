@@ -23,13 +23,13 @@ import pers.jiangyinzuo.chat.client.javafx.controller.components.IndexPaneCmpCon
 import pers.jiangyinzuo.chat.client.javafx.controller.components.NoticeCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
-import pers.jiangyinzuo.chat.client.javafx.controller.util.UpdateUiUtil;
+import pers.jiangyinzuo.chat.common.javafx.util.UpdateUiUtil;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.FriendService;
-import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
 import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
 
 
@@ -145,7 +145,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 
 	@FXML
 	void addFriendOrGroup(ActionEvent event) {
-		SceneRouter.showTempStage("查找面板", "AddBoard.fxml");
+		SceneRouter.showTempStage("查找面板", "AddBoard.fxml", "client");
 	}
 
 	/**
@@ -180,11 +180,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 
 	@FXML
 	void showNotice(ActionEvent event) {
-		try {
-			SceneRouter.showStage("通知", "NoticeBoard.fxml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		SceneRouter.showStage("通知", "NoticeBoard.fxml", "client");
 	}
 
 	private TreeItem<Pane> loadIndexTreeItem(String text) {
@@ -270,6 +266,6 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 
 	@FXML
 	void showSettingBoard(ActionEvent event) {
-		SceneRouter.showTempStage("设置", "SettingBoard.fxml");
+		SceneRouter.showTempStage("设置", "SettingBoard.fxml", "client");
 	}
 }

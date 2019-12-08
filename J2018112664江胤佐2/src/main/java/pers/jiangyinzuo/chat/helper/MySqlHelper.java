@@ -57,8 +57,8 @@ public class MySqlHelper {
     public static <T> List<T> queryMany(Class<T> clazz, String sql, Object... parameters) throws SQLException {
         getConnection();
         try (ResultSet resultSet = executeQuery(sql, parameters)) {
-            if (Number.class.isAssignableFrom(clazz)) {
-                return mapRecordsToNumber(clazz, resultSet);
+            if (Number.class.isAssignableFrom(clazz) || String.class.isAssignableFrom(clazz)) {
+                return mapRecordsSystemType(clazz, resultSet);
             }
             return mapRecordsToEntities(clazz, resultSet);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
@@ -217,7 +217,7 @@ public class MySqlHelper {
         return results;
     }
 
-    private static <T> List<T> mapRecordsToNumber(Class<T> clazz, ResultSet resultSet) {
+    private static <T> List<T> mapRecordsSystemType(Class<T> clazz, ResultSet resultSet) {
         List<T> results = new ArrayList<>();
         try {
             if (resultSet == null || !resultSet.next()) {

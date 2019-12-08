@@ -1,15 +1,15 @@
 package pers.jiangyinzuo.chat.client.javafx;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 
-import com.vdurmont.emoji.EmojiParser;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.TcpClient;
-import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
+import pers.jiangyinzuo.chat.domain.repository.MessageRepo;
+
+import static pers.jiangyinzuo.chat.client.state.SensitiveWordsState.loadSensitiveWords;
 
 /**
  * @author Jiang Yinzuo
@@ -40,6 +40,7 @@ public class Main extends Application {
 
     public static void exit() {
         if (isOn) {
+            MessageRepo.shutDownThreadPool();
             clientThreadPool.shutdown();
             tcpClient.exit();
             isOn = false;
@@ -47,9 +48,12 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
+        // ¼ÓÔØÃô¸Ð´Ê
+        loadSensitiveWords();
+
         SceneRouter.addStage(primaryStage, "µÇÂ¼");
-        SceneRouter.showStage("µÇÂ¼", "Login.fxml");
+        SceneRouter.showStage("µÇÂ¼", "Login.fxml", "client");
     }
 
     public static void main(String[] args) {

@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.javafx.Main;
-import pers.jiangyinzuo.chat.client.javafx.common.CustomAlertBoard;
+import pers.jiangyinzuo.chat.common.javafx.CustomAlertBoard;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;

@@ -4,10 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import pers.jiangyinzuo.chat.common.CustomInfo;
 import pers.jiangyinzuo.chat.service.AccountService;
 import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
-import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 

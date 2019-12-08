@@ -34,34 +34,60 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
 
     private ForwardingMessageManager forwardingMessageManager = new ForwardingMessageManager(this);
 
-    private boolean serverIsOn = true;
+    private ExecutorService clientListenerThreadPool;
+
+    private boolean serverIsOn = false;
     /**
      * 已连接上的客户端处理器映射
      */
     Map<Long, ClientHandler> clientHandlerMap = new HashMap<>();
 
-    private TcpServer(int port) {
+    public TcpServer(int port) {
         this.port = port;
+    }
+
+    public boolean isServerOn() {
+        return serverIsOn;
     }
 
     /**
      * 开始运行服务器
      */
-    public void run() {
+    public void runServer() {
+        serverIsOn = true;
         clientListener = new ClientListener(port);
-        // 启动客户端监听线程
-        clientListener.start();
+        clientListenerThreadPool = Executors.newSingleThreadExecutor();
+        clientListenerThreadPool.execute(clientListener);
 
         // 启动心跳检测线程
         ForwardingMessageManager.forwardingThreadPoolExecutor.execute(new HeartBeatMonitor());
     }
 
     /**
+     * 关闭服务器
+     */
+    public void exitServer() {
+
+        serverIsOn = false;
+
+        clientListenerThreadPool.shutdown();
+        clientListener.exit();
+        for (ClientHandler clientHandler : clientHandlerMap.values()) {
+            clientHandler.exit();
+        }
+        ForwardingMessageManager.forwardingThreadPoolExecutor.shutdown();
+    }
+
+    public int getTotalOnlineCount() {
+        return clientHandlerMap.size();
+    }
+
+    /**
      * 发送给全体客户端全网在线人数, 作为心跳检测
      * <p>
      * {
-     *      "option": "updateOnlineTotal",
-     *      "totalCount": <全网在线人数>
+     * "option": "updateOnlineTotal",
+     * "totalCount": <全网在线人数>
      * }
      */
     private class HeartBeatMonitor extends Thread {
@@ -72,7 +98,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                     ObjectMapper objectMapper = new ObjectMapper();
                     Map<String, Object> map = new HashMap<>(10);
                     map.put("option", JsonHelper.Option.UPDATE_ONLINE_TOTAL);
-                    map.put("totalCount", clientHandlerMap.size());
+                    map.put("totalCount", getTotalOnlineCount());
                     try {
                         if (clientHandlerMap.get(userId) != null) {
                             synchronized (clientHandlerMap.get(userId)) {
@@ -123,6 +149,14 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
      * 用于监听客户端连接的线程
      */
     private class ClientListener extends Thread {
+
+        public void exit() {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         private ServerSocket serverSocket;
 
@@ -193,7 +227,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
 
     public static void main(String[] args) {
         TcpServer tcpServer = new TcpServer(20000);
-        tcpServer.run();
+        tcpServer.runServer();
     }
 }
 

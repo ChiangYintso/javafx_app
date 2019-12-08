@@ -22,4 +22,14 @@ public interface MessageService {
     List<Message> queryRecentMessage(Long userId, Long friendId);
 
     List<Message> queryGroupRecentMessage(Long groupId);
+
+    List<String> querySensitiveWords();
+
+    List<String> getSensitiveWords();
+
+    void addSensitiveWord(String word);
+
+    void deleteSensitiveWord(String word);
+
+    void updateSensitiveWord(String newWord, String oldWord);
 }

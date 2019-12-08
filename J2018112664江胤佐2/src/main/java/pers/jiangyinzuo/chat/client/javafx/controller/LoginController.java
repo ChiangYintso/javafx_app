@@ -12,8 +12,8 @@ import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.AccountService;
 import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
-import pers.jiangyinzuo.chat.client.javafx.common.CustomAlertBoard;
-import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.CustomAlertBoard;
+import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
 import pers.jiangyinzuo.chat.client.state.UserState;
 
 import static pers.jiangyinzuo.chat.client.javafx.Main.startTcpClient;
@@ -63,19 +63,19 @@ public class LoginController {
                 startTcpClient(user.getUserId());
                 UserState.getSingleton().setUser(user);
                 SceneRouter.closeStage("µÇÂ¼");
-                SceneRouter.showStage("ÍøÂçÁÄÌìÊÒ", "MainBoard.fxml");
+                SceneRouter.showStage("ÍøÂçÁÄÌìÊÒ", "MainBoard.fxml", "client");
             }
         }
     }
 
     @FXML
     void register(ActionEvent event) throws IOException {
-        SceneRouter.showStage("×¢²á", "Register.fxml");
+        SceneRouter.showStage("×¢²á", "Register.fxml", "client");
     }
 
     @FXML
     void retrievePassword(ActionEvent event) {
-        SceneRouter.showTempStage("ÕÒ»ØÃÜÂë", "RetrievePassword.fxml");
+        SceneRouter.showTempStage("ÕÒ»ØÃÜÂë", "RetrievePassword.fxml", "client");
     }
 }
 

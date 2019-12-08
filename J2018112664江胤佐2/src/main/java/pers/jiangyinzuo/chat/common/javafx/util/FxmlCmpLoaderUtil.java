@@ -1,4 +1,4 @@
-package pers.jiangyinzuo.chat.client.javafx.controller.util;
+package pers.jiangyinzuo.chat.common.javafx.util;
 
 import javafx.fxml.FXMLLoader;
 import pers.jiangyinzuo.chat.client.javafx.controller.FxController;
@@ -8,13 +8,13 @@ import java.io.IOException;
 /**
  * @author Jiang Yinzuo
  */
-public class FxmlLoaderUtil<T, C extends FxController> {
+public class FxmlCmpLoaderUtil<T, C extends FxController> {
 
     private T pane = null;
     private C controller = null;
 
-    public static <T, C extends FxController> T loadFxComponent(String fxmlFileName, Object ...params) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(FxmlLoaderUtil.class.getResource("../../scenes/components/" + fxmlFileName));
+    public static <T, C extends FxController> T loadFxComponent(String path, String fxmlFileName, Object ...params) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(FxmlCmpLoaderUtil.class.getResource("../../../" + path + "/javafx/scenes/components/" + fxmlFileName));
         T pane = fxmlLoader.load();
         C controller = fxmlLoader.getController();
         controller.init(params);
@@ -26,8 +26,12 @@ public class FxmlLoaderUtil<T, C extends FxController> {
      * @param fxmlFileName
      * @param params
      */
-    public FxmlLoaderUtil(String fxmlFileName, Object ...params) {
-        FXMLLoader fxmlLoader = new FXMLLoader(FxmlLoaderUtil.class.getResource("../../scenes/components/" + "MessageCmp.fxml"));
+    public FxmlCmpLoaderUtil(String path, String fxmlFileName, Object ...params) {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                FxmlCmpLoaderUtil.class.getResource(
+                        "../../../" + path + "/javafx/scenes/components/" + fxmlFileName
+                )
+        );
         try {
             T pane = fxmlLoader.load();
             C controller = fxmlLoader.getController();
