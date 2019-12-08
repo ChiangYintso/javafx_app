@@ -97,6 +97,12 @@ public class Group implements SessionCardCmpController.Session {
         return getGroupId();
     }
 
+    @Override
+    public String getStatus() {
+        // TODO ÈºÁÄ×´Ì¬
+        return "";
+    }
+
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }

@@ -13,6 +13,7 @@ import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
 import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
+import pers.jiangyinzuo.chat.helper.JsonHelper;
 
 /**
  * @author Jiang Yinzuo
@@ -28,6 +29,9 @@ public class SessionCardCmpController implements SessionState.Subscriber {
     private ImageView avatar;
 
     @FXML
+    private Text statusText;
+
+    @FXML
     private Text name;
 
     private Session session;
@@ -38,8 +42,19 @@ public class SessionCardCmpController implements SessionState.Subscriber {
      * @param rawJson 好友消息
      */
     @Override
-    public void onNewFriendMessageArrived(JsonNode rawJson) {
+    public void onNewMessageArrived(JsonNode rawJson) {
         UpdateUiUtil.updateUi(() -> bubble.setVisible(true));
+    }
+
+    /**
+     * 好友或群聊的状态发生改变
+     *
+     * @param rawJson 原始JSON数据
+     */
+    @Override
+    public void onStatusChanged(JsonNode rawJson) {
+        // TODO 群聊状态变化
+        UpdateUiUtil.updateUi(() -> init(JsonHelper.getStatusChangedUser(rawJson)));
     }
 
     /**
@@ -54,6 +69,27 @@ public class SessionCardCmpController implements SessionState.Subscriber {
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public interface Publisher {
+        /**
+         * 更新好友上线情况
+         * 收到的JSON:
+         * {
+         *     "option": Option.FRIENDS_ONLINE_STATUS,
+         *     "sendTo": <发送给客户端的id>,
+         *     "onLineList": <上线的好友id>
+         * }
+         * @param jsonNode
+         */
+        void onUpdateFriendOnlineStatus(JsonNode jsonNode);
+    }
+
+    /**
+     * 刚上线时显示好友在线
+     */
+    public void changeOnlineStatus() {
+        UpdateUiUtil.updateUi(() -> this.statusText.setText("在线"));
     }
 
     public interface Session {
@@ -72,11 +108,14 @@ public class SessionCardCmpController implements SessionState.Subscriber {
         String getAvatar();
 
         Long getId();
+
+        String getStatus();
     }
 
     public <T extends Session> void init(T session) {
         name.setText(session.getSessionName());
         avatar.setImage(new Image(session.getAvatar()));
+        statusText.setText(session.getStatus());
         this.session = session;
         this.registerAsSubscriber();
     }

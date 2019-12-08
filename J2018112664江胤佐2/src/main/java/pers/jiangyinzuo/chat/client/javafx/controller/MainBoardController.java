@@ -4,9 +4,7 @@ package pers.jiangyinzuo.chat.client.javafx.controller;
 import java.io.IOException;
 import java.util.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +32,6 @@ import pers.jiangyinzuo.chat.service.FriendService;
 import pers.jiangyinzuo.chat.client.javafx.router.SceneRouter;
 import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
 
-import static pers.jiangyinzuo.chat.client.javafx.Main.getTcpClient;
 
 /**
  * @author Jiang Yinzuo
@@ -112,7 +109,8 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		return mainBoardStage;
 	}
 
-	public interface Contract {
+	public interface Publisher {
+
 		/**
 		 * 更新全网在线人数
 		 * @param jsonNode JSON
@@ -150,28 +148,34 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		SceneRouter.showTempStage("查找面板", "AddBoard.fxml");
 	}
 
+	/**
+	 * 更新用户信息
+	 */
+	public void updateUserInfo() {
+		UpdateUiUtil.updateUi(() -> {
+			User user = UserState.getSingleton().getUser();
+			this.username.setText(user.getUserName());
+			Image image = new Image(user.getAvatar());
+			avatar.setImage(image);
+		});
+	}
+
 	@FXML
 	public void initialize() {
-		User user = UserState.getSingleton().getUser();
-		this.username.setText(user.getUserName());
+		updateUserInfo();
 		this.mainBoardStage = SceneRouter.getStage("网络聊天室");
-
 		ControllerProxy.setMainBoardController(this);
 		self = this;
 
-		Image image = new Image(user.getAvatar());
-		avatar.setImage(image);
 		this.loadTreeView();
-		QueryOnlineTotalHandler queryOnlineTotalHandler = new QueryOnlineTotalHandler();
-		queryOnlineTotalHandler.setName("QueryOnlineTotal");
+
+		// 询问好友在线情况
+		Main.getClientThreadPool().execute(() -> friendService.requestForFriendsStatus(UserState.getSingleton().getUser().getUserId()));
 
 		mainBoardStage.setOnCloseRequest((event) -> {
-			queryOnlineTotalHandler.interrupt();
 			System.out.println("主界面关闭");
 			Main.exit();
 		});
-
-		Main.getClientThreadPool().execute(queryOnlineTotalHandler);
 	}
 
 	@FXML
@@ -265,46 +269,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	}
 
 	@FXML
-	void showUserSettingBoard(ActionEvent event) {
-		SceneRouter.showTempStage("设置", "UserSetting.fxml");
-	}
-
-	/**
-	 * 询问上线人数线程
-	 */
-	private static class QueryOnlineTotalHandler extends Thread {
-		/**
-		 * 发送给服务端的消息
-		 */
-		private byte[] message;
-
-		QueryOnlineTotalHandler() {
-			ObjectMapper objectMapper = new ObjectMapper();
-			Map<String, Object> map = new HashMap<>(10);
-			map.put("option", JsonHelper.Option.ASK_FOR_ONLINE_TOTAL);
-			map.put("sendTo", UserState.getSingleton().getUser().getUserId());
-			try {
-				message = objectMapper.writeValueAsBytes(map);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public void run() {
-			while (Main.isOn) {
-				try {
-					sleep(10000);
-					if (Main.isOn) {
-						synchronized (getTcpClient()) {
-							getTcpClient().sendMessage(message);
-						}
-						System.out.println("询问上线人数");
-					}
-				} catch (InterruptedException e) {
-					break;
-				}
-			}
-		}
+	void showSettingBoard(ActionEvent event) {
+		SceneRouter.showTempStage("设置", "SettingBoard.fxml");
 	}
 }

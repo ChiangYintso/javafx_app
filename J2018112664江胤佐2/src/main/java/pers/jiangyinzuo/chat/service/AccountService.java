@@ -28,4 +28,6 @@ public interface AccountService {
 	 * @return
 	 */
 	String retrievePassword(Long userId);
+
+	void updateUserInfo(User user);
 }

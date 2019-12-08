@@ -32,8 +32,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateUserByUserId(Integer userId, User user) {
-
+    public void updateUser(User user) {
+        String sql = "UPDATE chat_user SET user_name = ?, user_avatar = ?, password = ?, intro = ? WHERE user_id = ?";
+        try {
+            MySqlHelper.executeUpdate(sql, user.getUserName(), user.getAvatar(), user.getPassword(), user.getIntro(), user.getUserId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -20,7 +20,7 @@ public interface UserDao {
 	 */
 	Long insertUser(User user);
 
-	void updateUserByUserId(Integer userId, User user);
+	void updateUser(User user);
 
 	void deleteUserByUserId(Integer userId);
 }

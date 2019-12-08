@@ -1,7 +1,11 @@
 package pers.jiangyinzuo.chat.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
+import pers.jiangyinzuo.chat.service.FriendService;
+import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +34,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
 
     private ForwardingMessageManager forwardingMessageManager = new ForwardingMessageManager(this);
 
+    private boolean serverIsOn = true;
     /**
      * 已连接上的客户端处理器映射
      */
@@ -46,31 +51,79 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
         clientListener = new ClientListener(port);
         // 启动客户端监听线程
         clientListener.start();
+
+        // 启动心跳检测线程
+        ForwardingMessageManager.forwardingThreadPoolExecutor.execute(new HeartBeatMonitor());
+    }
+
+    /**
+     * 发送给全体客户端全网在线人数, 作为心跳检测
+     * <p>
+     * {
+     *      "option": "updateOnlineTotal",
+     *      "totalCount": <全网在线人数>
+     * }
+     */
+    private class HeartBeatMonitor extends Thread {
+        @Override
+        public void run() {
+            while (serverIsOn) {
+                for (Long userId : clientHandlerMap.keySet()) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Map<String, Object> map = new HashMap<>(10);
+                    map.put("option", JsonHelper.Option.UPDATE_ONLINE_TOTAL);
+                    map.put("totalCount", clientHandlerMap.size());
+                    try {
+                        if (clientHandlerMap.get(userId) != null) {
+                            synchronized (clientHandlerMap.get(userId)) {
+                                clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
+                            }
+                        } else {
+                            TcpServer.broadCastUserOnlineStatusToFriends(false, userId);
+                        }
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
      * ClientHandler.ClientReadHandler读取到来自客户端的新消息时的回调方法
      */
     @Override
-    public void onNewMessageArrived(byte[] message, Integer userId) {
+    public void onNewMessageArrived(byte[] message, Long userId) {
         forwardingMessageManager.forward(message, userId);
     }
 
     /**
      * 退出ClientHandler
      *
-     * @param userId 关闭客户端处理器的userId
+     * @param clientHandler 关闭客户端处理器
      */
     @Override
-    public void onExitClientHandler(Integer userId) {
-        clientHandlerMap.remove(userId);
+    public void onExitClientHandler(ClientHandler clientHandler) {
+        System.out.println("客户端 " + clientHandler.client.getInetAddress()
+                + " p: " + clientHandler.client.getPort() + " 断开了连接");
+        clientHandler.isOn = false;
+
+        // 向用户的好友广播其已经下线
+        TcpServer.broadCastUserOnlineStatusToFriends(false, clientHandler.userId);
+        clientHandler.exit();
+        clientHandlerMap.remove(clientHandler.userId);
     }
 
     /**
      * 用于监听客户端连接的线程
      */
     private class ClientListener extends Thread {
-        private boolean isOn = true;
+
         private ServerSocket serverSocket;
 
         ClientListener(int port) {
@@ -103,17 +156,18 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
 
                         // 解析客户端的userId
                         int count = inputStream.read(bytes);
-                        Integer userId = JsonHelper.getUserId(bytes);
+                        long userId = JsonHelper.getUserId(bytes);
 
                         // 连接成功后构造一个客户端处理器线程, 并传入TcpServer.this用于执行客户端收到消息后的回调方法
                         ClientHandler clientHandler = new ClientHandler(client, TcpServer.this, userId);
 
-                        assert userId != null;
-                        clientHandlerMap.put(userId.longValue(), clientHandler);
+                        assert userId != -1;
+                        clientHandlerMap.put(userId, clientHandler);
 
                         System.out.println("用户" + userId + "连接到服务器");
+                        TcpServer.broadCastUserOnlineStatusToFriends(true, userId);
 
-                        // 回送
+                        // 回送连接成功
                         Map<String, Object> map = new HashMap<>(10);
                         map.put("option", JsonHelper.Option.CONNECTION_SUCCESS);
                         client.getOutputStream().write(objectMapper.writeValueAsBytes(map));
@@ -121,9 +175,20 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } while (isOn);
+            } while (serverIsOn);
             System.out.println("服务器关闭");
         }
+    }
+
+    /**
+     * 用户上下线时, 向用户的好友广播该用户状态
+     */
+    public static void broadCastUserOnlineStatusToFriends(boolean isOnline, Long userId) {
+        FriendService friendService = new FriendServiceImpl();
+        User user = friendService.searchUser(userId);
+        user.setOnline(isOnline ? 1 : 0);
+        byte[] bytes = JsonHelper.writeFriendStatusChangedBytes(user);
+        ForwardingMessageManager.sendMessage(bytes);
     }
 
     public static void main(String[] args) {
@@ -136,25 +201,33 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
  * 客户端处理器
  */
 class ClientHandler {
-    private final Socket client;
+    final Socket client;
 
     /**
      * 读处理器，开一个线程用于读取一个client的消息
      */
-    private ReadHandler readHandler;
+    ReadHandler readHandler;
 
     /**
      * 写处理器
      */
-    private WriteHandler writeHandler;
+    WriteHandler writeHandler;
 
-    private Integer userId;
+    TcpServer clientHandlerCallback;
 
-    ClientHandler(Socket client, TcpServer clientHandlerCallBack, Integer userId) {
+    /**
+     * 客户端用户ID
+     */
+    Long userId;
+
+    boolean isOn = true;
+
+    ClientHandler(Socket client, TcpServer clientHandlerCallBack, Long userId) {
         this.client = client;
         this.userId = userId;
+        this.clientHandlerCallback = clientHandlerCallBack;
         try {
-            this.readHandler = new ReadHandler(client.getInputStream(), clientHandlerCallBack);
+            this.readHandler = new ReadHandler(client.getInputStream());
             this.writeHandler = new WriteHandler(client.getOutputStream());
             this.readHandler.start();
         } catch (IOException e) {
@@ -179,31 +252,28 @@ class ClientHandler {
     public interface ClientHandlerCallback {
         /**
          * ClientHandler.ClientReadHandler读取到来自客户端的新消息时的回调方法
+         *
          * @param message 需要TcpServer转发的字节码, 由JSON转换而来
+         * @param userId  客户端的用户ID
          */
-        void onNewMessageArrived(byte[] message, Integer userId);
+        void onNewMessageArrived(byte[] message, Long userId);
 
         /**
          * 退出ClientHandler
-         * @param userId 断开连接的客户端的userId
+         *
+         * @param clientHandler 断开连接的客户端
          */
-        void onExitClientHandler(Integer userId);
+        void onExitClientHandler(ClientHandler clientHandler);
     }
 
     /**
      * 客户端读取消息处理器。每读取一条消息就执行ClientHandlerCallBack的回调方法
      */
     private class ReadHandler extends Thread {
-        private boolean isOn = true;
         private final InputStream inputStream;
-        /**
-         * 回调
-         */
-        private final ClientHandlerCallback clientHandlerCallBack;
 
-        ReadHandler(InputStream inputStream, ClientHandlerCallback clientHandlerCallBack) {
+        ReadHandler(InputStream inputStream) {
             this.inputStream = inputStream;
-            this.clientHandlerCallBack = clientHandlerCallBack;
         }
 
         @Override
@@ -213,15 +283,11 @@ class ClientHandler {
                 try {
                     int count = inputStream.read(bytes);
                     if (count > 0) {
-                        clientHandlerCallBack.onNewMessageArrived(bytes, userId);
+                        clientHandlerCallback.onNewMessageArrived(bytes, userId);
                     }
                 } catch (Exception e) {
                     if (isOn) {
-                        System.out.println("客户端 " + ClientHandler.this.client.getInetAddress()
-                                +" p: " + ClientHandler.this.client.getPort() + " 断开了连接");
-                        isOn = false;
-                        ClientHandler.this.exit();
-                        clientHandlerCallBack.onExitClientHandler(ClientHandler.this.userId);
+                        clientHandlerCallback.onExitClientHandler(ClientHandler.this);
                     }
                 }
             } while (isOn);
@@ -240,7 +306,6 @@ class ClientHandler {
      * 写处理器类
      */
     private class WriteHandler {
-        private boolean isOn = true;
         private OutputStream outputStream;
 
         // 多线程写
@@ -275,11 +340,13 @@ class ClientHandler {
 
             @Override
             public void run() {
-                if (WriteHandler.this.isOn) {
+                if (isOn) {
                     try {
                         WriteHandler.this.outputStream.write(bytes);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        if (isOn) {
+                            clientHandlerCallback.onExitClientHandler(ClientHandler.this);
+                        }
                     }
                 }
             }

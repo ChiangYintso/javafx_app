@@ -139,7 +139,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
     @FXML
     private GridPane emojiPane;
 
-    private SessionCardCmpController.Session session;
+    SessionCardCmpController.Session session;
 
     User self = null;
 
@@ -153,17 +153,15 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
         protected ChattingBoardController controllerCallBack;
 
-        protected SessionCardCmpController.Session session;
-
         abstract List<Message> getMessage();
 
         AbstractSessionHandler(ChattingBoardController controllerCallBack, SessionCardCmpController.Session session) {
             this.controllerCallBack = controllerCallBack;
-            this.session = session;
+            controllerCallBack.session = session;
         }
 
         Long getSessionId() {
-            return session.getId();
+            return controllerCallBack.session.getId();
         }
 
         // 发送消息, 若为群聊, sendTo为群聊ID; 若为好友聊天, sendTo为好友ID
@@ -195,10 +193,10 @@ public class ChattingBoardController implements SessionState.Subscriber {
         abstract Integer getMessageType();
 
         @Override
-        public void onNewFriendMessageArrived(JsonNode rawJson) {
+        public void onNewMessageArrived(JsonNode rawJson) {
             FlowPane flowPane = null;
             try {
-                flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), session);
+                flowPane = FxmlLoaderUtil.<FlowPane, MessageCmpController>loadFxComponent("MessageCmp.fxml", rawJson.get("data"), controllerCallBack.session);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -210,6 +208,14 @@ public class ChattingBoardController implements SessionState.Subscriber {
     @FXML
     void sendMessage(ActionEvent event) {
         sessionHandler.sendMessage();
+    }
+
+    void updateChattingBoardInfo() {
+        UpdateUiUtil.updateUi(() -> {
+            avatar.setImage(new Image(session.getAvatar()));
+            sessionNameField.setText(session.getSessionName());
+
+        });
     }
 
     @FXML
@@ -225,8 +231,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
             throw new RuntimeException();
         }
 
-        avatar.setImage(new Image(session.getAvatar()));
-        sessionNameField.setText(session.getSessionName());
+        updateChattingBoardInfo();
         this.registerAsSubscriber();
         this.messageBox.setMaxHeight(450);
 
@@ -273,15 +278,24 @@ public class ChattingBoardController implements SessionState.Subscriber {
         emojiPane.setVisible(!emojiPane.isVisible());
     }
 
-
     /**
      * 新的好友消息到来
      *
      * @param rawJson 好友消息
      */
     @Override
-    public void onNewFriendMessageArrived(JsonNode rawJson) {
-        sessionHandler.onNewFriendMessageArrived(rawJson);
+    public void onNewMessageArrived(JsonNode rawJson) {
+        sessionHandler.onNewMessageArrived(rawJson);
+    }
+
+    /**
+     * 好友或群聊的状态发生改变
+     *
+     * @param rawJson 原始JSON数据
+     */
+    @Override
+    public void onStatusChanged(JsonNode rawJson) {
+        sessionHandler.onStatusChanged(rawJson);
     }
 
     /**
@@ -312,13 +326,24 @@ class FriendHandler extends ChattingBoardController.AbstractSessionHandler {
      */
     @Override
     public User getSendFrom(Long sendFromId) {
-        return (User) session;
+        return (User) controllerCallBack.session;
     }
 
     @Override
     public Integer getMessageType() {
         // TODO 消息类型
         return 1;
+    }
+
+    /**
+     * 好友的状态发生改变
+     *
+     * @param rawJson 原始JSON数据
+     */
+    @Override
+    public void onStatusChanged(JsonNode rawJson) {
+        controllerCallBack.session = JsonHelper.getStatusChangedUser(rawJson);
+        controllerCallBack.updateChattingBoardInfo();
     }
 
     @Override
@@ -346,13 +371,24 @@ class GroupHandler extends ChattingBoardController.AbstractSessionHandler {
      */
     @Override
     public User getSendFrom(Long sendFromId) {
-        return ((Group)session).getMessageSendFrom(sendFromId);
+        return ((Group)controllerCallBack.session).getMessageSendFrom(sendFromId);
     }
 
     @Override
     public Integer getMessageType() {
         // TODO 消息类型
         return 11;
+    }
+
+    /**
+     * 好友或群聊的状态发生改变
+     *
+     * @param rawJson 原始JSON数据
+     */
+    @Override
+    public void onStatusChanged(JsonNode rawJson) {
+        // TODO 获取群聊信息
+        controllerCallBack.updateChattingBoardInfo();
     }
 
     @Override

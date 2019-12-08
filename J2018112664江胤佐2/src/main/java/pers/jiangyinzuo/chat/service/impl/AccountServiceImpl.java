@@ -46,4 +46,9 @@ public class AccountServiceImpl implements AccountService {
 			return user.getPassword();
 		}
 	}
+
+	@Override
+	public void updateUserInfo(User user) {
+		userDao.updateUser(user);
+	}
 }
