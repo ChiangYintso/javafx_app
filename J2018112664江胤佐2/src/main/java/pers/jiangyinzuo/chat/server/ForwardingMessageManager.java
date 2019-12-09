@@ -128,6 +128,17 @@ public class ForwardingMessageManager {
         sendMessage(message);
     }
 
+    /**
+     * 必备字段
+     * {
+     *      "option":
+     *      "data": {
+     *          "sendFrom": <发送人, -1代表系统消息>
+     *          "sendTo":
+     *      }
+     * }
+     * @param message
+     */
     public static void sendMessage(byte[] message) {
         // 发送消息给用户
         ForwardingMessageManager.forwardingThreadPoolExecutor.execute(() -> {

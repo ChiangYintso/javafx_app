@@ -2,9 +2,11 @@ package pers.jiangyinzuo.chat.client.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Control;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.NoticeCmpController;
+import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Notice;
 import pers.jiangyinzuo.chat.service.NoticeService;
@@ -52,5 +54,6 @@ public class NoticeBoardController implements NoticeCmpController.NoticeBoardCon
     @Override
     public void remove(Pane pane) {
         this.noticeBox.getChildren().remove(pane);
+        ControllerProxy.getMainBoardController().decreaseNewNoticeCount();
     }
 }

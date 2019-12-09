@@ -127,6 +127,11 @@ public class NoticeCmpController {
                 agree.setText("已读");
                 reject.setVisible(false);
                 break;
+            case JsonHelper.Option.FOUND_GROUP_ACCEPTED:
+                content.setText("建群成功");
+                agree.setText("已读");
+                reject.setVisible(false);
+                break;
             default:
                 break;
         }

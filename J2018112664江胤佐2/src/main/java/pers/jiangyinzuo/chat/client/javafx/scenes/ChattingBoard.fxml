@@ -27,7 +27,7 @@
             <Font size="23.0" />
          </font>
       </Text>
-      <Button fx:id="option" layoutX="557.0" layoutY="16.0" mnemonicParsing="false" onAction="#showOption" prefHeight="39.0" prefWidth="79.0" style="-fx-background-color: #88eeee;" text="查看">
+      <Button fx:id="option" layoutX="524.0" layoutY="16.0" mnemonicParsing="false" onAction="#showOption" prefHeight="39.0" prefWidth="112.0" style="-fx-background-color: #88eeee;" text="查看资料">
          <font>
             <Font size="18.0" />
          </font>
@@ -191,5 +191,10 @@
             </Button>
          </children>
       </GridPane>
+      <Button fx:id="chattingRecordBtn" layoutX="368.0" layoutY="16.0" mnemonicParsing="false" onAction="#showChattingRecord" prefHeight="39.0" prefWidth="143.0" style="-fx-background-color: #88eeee;" text="查看聊天记录">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

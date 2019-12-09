@@ -24,6 +24,13 @@ public interface NoticeDao {
     List<Notice> queryNoticesBySendToUserId(Long sendToId);
 
     /**
+     * 查询用户未处理的消息数量
+     * @param userId
+     * @return
+     */
+    int queryUnhandledNoticeCount(Long userId);
+
+    /**
      * 删除通知
      * @param noticeId
      */

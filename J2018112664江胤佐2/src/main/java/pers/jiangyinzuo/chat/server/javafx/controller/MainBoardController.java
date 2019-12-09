@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -18,7 +17,7 @@ import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.server.ForwardingMessageManager;
 import pers.jiangyinzuo.chat.server.TcpServer;
 import pers.jiangyinzuo.chat.server.javafx.GuiBroker;
-import pers.jiangyinzuo.chat.server.javafx.controller.components.ToReviewCmpController;
+import pers.jiangyinzuo.chat.server.javafx.controller.components.ToReviewGroupCmpController;
 
 import java.io.IOException;
 import java.util.concurrent.*;
@@ -129,7 +128,7 @@ public class MainBoardController {
         String option = JsonHelper.getJsonOption(rawJson);
         AnchorPane pane = null;
         if (option.equals(JsonHelper.Option.FOUND_GROUP)) {
-            FxmlCmpLoaderUtil<AnchorPane, ToReviewCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil("server", "ToReviewGroupCmp.fxml", rawJson, userId.toString());
+            FxmlCmpLoaderUtil<AnchorPane, ToReviewGroupCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil("server", "ToReviewGroupCmp.fxml", rawJson, userId.toString());
             pane = fxmlCmpLoaderUtil.getPane();
             fxmlCmpLoaderUtil.getController().setSelf(pane);
         }

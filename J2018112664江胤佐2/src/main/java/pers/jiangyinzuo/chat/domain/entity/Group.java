@@ -29,7 +29,7 @@ public class Group implements SessionCardCmpController.Session {
     @FieldMapper(name = "group_avatar")
     private String avatar;
 
-    @FieldMapper(name = "groupIntro")
+    @FieldMapper(name = "group_intro")
     private String groupIntro;
 
     private GroupRepo groupRepo;

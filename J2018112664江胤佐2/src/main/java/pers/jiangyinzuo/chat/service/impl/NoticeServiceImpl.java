@@ -18,6 +18,14 @@ public class NoticeServiceImpl implements NoticeService {
 
     private NoticeDao noticeDao = new NoticeDaoImpl();
 
+    /**
+     * {
+     *     "option":
+     *     "data":
+     *     "sendToId":
+     * }
+     * @param message
+     */
     @Override
     public void insertNotice(byte[] message) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -38,6 +46,18 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    public void insertNotice(JsonNode jsonNode) {
+        String noticeType = jsonNode.get("option").asText();
+        String noticeData = jsonNode.get("data").toString();
+        long sendToId = jsonNode.get("data").get("sendTo").asInt();
+        noticeDao.insertNotice(new Notice.Builder()
+                .noticeType(noticeType)
+                .noticeData(noticeData)
+                .sendToId(sendToId)
+                .build());
+    }
+
+    @Override
     public List<Notice> queryNoticeByUserId(Long userId) {
         return noticeDao.queryNoticesBySendToUserId(userId);
     }
@@ -45,6 +65,11 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public void deleteNotice(Long noticeId) {
         noticeDao.deleteNotice(noticeId);
+    }
+
+    @Override
+    public int getUnhandledNoticeCount(Long userId) {
+        return noticeDao.queryUnhandledNoticeCount(userId);
     }
 
 

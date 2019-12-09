@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.common.javafx.CustomAlertBoard;
-import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 
 import java.util.HashMap;
@@ -42,7 +41,7 @@ public class FoundGroupBoardController {
                 "data": {
                     "groupName": <群聊名>,
                     "groupIntro": <群聊简介>,
-                    "master": <创立者>
+                    "sendTo": <创立者>
                 }
             }
          */
@@ -53,7 +52,7 @@ public class FoundGroupBoardController {
         Map<String, Object> groupMap = new HashMap<>(10);
         groupMap.put("groupName", groupName.getText());
         groupMap.put("groupIntro", groupIntro.getText());
-        groupMap.put("master", UserState.getSingleton().getUser().getUserId());
+        groupMap.put("sendTo", UserState.getSingleton().getUser().getUserId());
 
         map.put("data", groupMap);
         Main.getClientThreadPool().execute(() -> {

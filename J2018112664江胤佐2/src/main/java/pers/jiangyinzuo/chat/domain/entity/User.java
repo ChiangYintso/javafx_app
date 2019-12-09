@@ -40,9 +40,6 @@ public class User implements SessionCardCmpController.Session {
     @FieldMapper(name = "chat_friendship.friend_category")
     private String friendCategory;
 
-    @FieldMapper(name = "unhandled_notice_count")
-    private Integer unhandledNoticeCount;
-
     private Integer isOnline = 0;
 
     private GroupRepo groupRepo;
@@ -70,7 +67,6 @@ public class User implements SessionCardCmpController.Session {
         setIntro(builder.intro);
         setAvatar(builder.avatar);
         setFriendCategory(builder.friendCategory);
-        setUnhandledNoticeCount(builder.unhandledNoticeCount);
         isOnline = builder.isOnline;
         groupRepo = builder.groupRepo;
         friendRepo = builder.friendRepo;
@@ -156,14 +152,6 @@ public class User implements SessionCardCmpController.Session {
         this.avatar = "".equals(avatar) || avatar == null ? DEFAULT_AVATAR_URL : avatar;
     }
 
-    public Integer getUnhandledNoticeCount() {
-        return unhandledNoticeCount;
-    }
-
-    public void setUnhandledNoticeCount(Integer unhandledNoticeCount) {
-        this.unhandledNoticeCount = unhandledNoticeCount;
-    }
-
     public Integer isOnline() {
         return isOnline;
     }
@@ -196,7 +184,6 @@ public class User implements SessionCardCmpController.Session {
         private String intro;
         private String avatar = DEFAULT_AVATAR_URL;
         private String friendCategory;
-        private Integer unhandledNoticeCount;
         private Integer isOnline;
         private GroupRepo groupRepo;
         private FriendRepo friendRepo;
@@ -231,11 +218,6 @@ public class User implements SessionCardCmpController.Session {
 
         public Builder friendCategory(String val) {
             friendCategory = val;
-            return this;
-        }
-
-        public Builder unhandledNoticeCount(Integer val) {
-            unhandledNoticeCount = val;
             return this;
         }
 

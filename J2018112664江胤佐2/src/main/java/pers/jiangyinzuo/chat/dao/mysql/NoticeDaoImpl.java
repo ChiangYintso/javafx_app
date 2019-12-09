@@ -47,6 +47,18 @@ public class NoticeDaoImpl implements NoticeDao {
         return new ArrayList<>();
     }
 
+    /**
+     * 查询用户未处理的消息数量
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public int queryUnhandledNoticeCount(Long userId) {
+        String sql = "SELECT COUNT(*) FROM chat_notice WHERE send_to_id = ?";
+        return MySqlHelper.executeQueryCount(sql, userId);
+    }
+
     @Override
     public void deleteNotice(Long noticeId) {
         String sql = "DELETE FROM chat_notice WHERE notice_id = ?";

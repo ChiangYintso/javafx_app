@@ -31,6 +31,7 @@ import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.FriendService;
 import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
 import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
+import pers.jiangyinzuo.chat.service.impl.NoticeServiceImpl;
 
 
 /**
@@ -131,20 +132,38 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		}
 
 		/**
-		 * 新的消息, 可以是ADD_FRIEND, AGREE_TO_ADD_FRIEND等
+		 * 新的消息, 可以是ADD_FRIEND, AGREE_TO_ADD_FRIEND, GROUP_MANAGEMENT
 		 * @param jsonNode JSON
 		 */
 		default void onNewNoticeReceived(JsonNode jsonNode) {
+			String option = JsonHelper.getJsonOption(jsonNode);
 			// 同意加为好友
-			if (JsonHelper.getJsonOption(jsonNode).equals(JsonHelper.Option.AGREE_TO_ADD_FRIEND)) {
+			if (option.equals(JsonHelper.Option.AGREE_TO_ADD_FRIEND) ||
+					(option.equals(JsonHelper.Option.FOUND_GROUP_ACCEPTED))) {
 				UpdateUiUtil.updateUi(() -> self.loadTreeView());
 			}
-			UpdateUiUtil.updateUi(() -> {
-				self.newMessageCount++;
-				self.noticeBtn.setText("[" + ControllerProxy.getMainBoardController().newMessageCount + "]条新消息");
-			});
+			self.increaseNewNoticeCount();
 		}
 	}
+
+	private void initNewNoticeCount(int newMessageCount) {
+		UpdateUiUtil.updateUi(() -> {
+			self.noticeBtn.setText("[" + newMessageCount + "]条新消息");
+		});
+	}
+
+	public void increaseNewNoticeCount() {
+		UpdateUiUtil.updateUi(() -> {
+			self.noticeBtn.setText("[" + ++newMessageCount + "]条新消息");
+		});
+	}
+
+	public void decreaseNewNoticeCount() {
+		UpdateUiUtil.updateUi(() -> {
+			self.noticeBtn.setText("[" + --newMessageCount + "]条新消息");
+		});
+	}
+
 
 	@FXML
 	void addFriendOrGroup(ActionEvent event) {
@@ -170,7 +189,12 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		ControllerProxy.setMainBoardController(this);
 		self = this;
 
+		// 加载好友群聊分组
 		this.loadTreeView();
+
+		// 更新通知按钮的文字
+		this.newMessageCount = new NoticeServiceImpl().getUnhandledNoticeCount(UserState.getSingleton().getUser().getUserId());
+		this.initNewNoticeCount(newMessageCount);
 
 		// 询问好友在线情况
 		Main.getClientThreadPool().execute(() -> friendService.requestForFriendsStatus(UserState.getSingleton().getUser().getUserId()));
@@ -192,7 +216,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 
 	@FXML
 	void showNotice(ActionEvent event) {
-		SceneRouter.showStage("通知", "NoticeBoard.fxml", "client");
+		SceneRouter.showTempStage("通知", "NoticeBoard.fxml", "client");
 	}
 
 	private TreeItem<Pane> loadIndexTreeItem(String text) {

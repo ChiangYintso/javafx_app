@@ -143,8 +143,6 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
     User self = null;
 
-    private Group group = null;
-
     MessageService messageService = new MessageServiceImpl();
 
     private AbstractSessionHandler sessionHandler = null;
@@ -218,8 +216,12 @@ public class ChattingBoardController implements SessionState.Subscriber {
         UpdateUiUtil.updateUi(() -> {
             avatar.setImage(new Image(session.getAvatar()));
             sessionNameField.setText(session.getSessionName());
-
         });
+    }
+
+    @FXML
+    void showChattingRecord(ActionEvent event) {
+        SceneRouter.showTempStage("ÁÄÌì¼ÇÂ¼", "ChattingRecordBoard.fxml", "client");
     }
 
     @FXML

@@ -95,6 +95,20 @@ public class MySqlHelper {
         return resultSet;
     }
 
+    public static int executeQueryCount(String sql, Object... parameters) {
+        getConnection();
+        loadPreparedStatement(sql, parameters);
+        ResultSet resultSet = null;
+        try {
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public static int executeUpdate(String sql, Object... parameters) throws SQLException {
         getConnection();
         loadPreparedStatement(sql, parameters);

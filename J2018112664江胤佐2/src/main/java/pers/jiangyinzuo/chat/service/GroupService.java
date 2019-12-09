@@ -1,5 +1,7 @@
 package pers.jiangyinzuo.chat.service;
 
+import pers.jiangyinzuo.chat.domain.entity.Group;
+
 import java.util.List;
 
 /**
@@ -7,4 +9,6 @@ import java.util.List;
  */
 public interface GroupService {
 	List<Long> getUserIdsInGroup(Long groupId);
+
+	void foundGroup(Group group, Long masterId);
 }

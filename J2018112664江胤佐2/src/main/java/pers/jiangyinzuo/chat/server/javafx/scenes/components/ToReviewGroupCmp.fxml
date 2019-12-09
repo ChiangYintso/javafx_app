@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="144.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.components.ToReviewCmpController">
+<AnchorPane prefHeight="144.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.components.ToReviewGroupCmpController">
    <children>
       <Text fx:id="option" layoutX="21.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Option" />
       <Text fx:id="groupName" layoutX="85.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GroupName" wrappingWidth="212.634765625" />

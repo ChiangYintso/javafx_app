@@ -8,6 +8,10 @@ import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
  */
 @TableMapper("chat_notice")
 public class Notice {
+
+    public static final String ADD_FRIEND = "addFriend";
+    public static final String GROUP_FOUNDED = "groupFounded";
+
     @FieldMapper(name = "notice_id")
     private Long noticeId;
 
