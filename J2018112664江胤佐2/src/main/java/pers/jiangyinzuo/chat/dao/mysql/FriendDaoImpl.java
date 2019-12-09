@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class FriendDaoImpl implements FriendDao {
     @Override
     public Map<String, List<User>> queryFriendCategoryMapByUserId(Integer userId) {
@@ -16,8 +19,9 @@ public class FriendDaoImpl implements FriendDao {
     }
 
     @Override
-    public void deleteFriend(Integer userId, Integer friendId) {
-
+    public void deleteFriendship(Long userId, Long friendId) {
+        String sql = "DELETE FROM chat_friendship WHERE user_id = ? AND friend_id = ? OR user_id = ? AND friend_id = ?";
+        MySqlHelper.executeUpdate(sql, userId, friendId, friendId, userId);
     }
 
     @Override
@@ -37,5 +41,17 @@ public class FriendDaoImpl implements FriendDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 更新好友分组
+     *
+     * @param friendId
+     * @param friendCategory
+     */
+    @Override
+    public void updateFriendCategory(Long userId, Long friendId, String friendCategory) {
+        String sql = "UPDATE chat_friendship SET friend_category = ? WHERE user_id = ? AND friend_id = ?";
+        MySqlHelper.executeUpdate(sql, friendCategory, userId, friendId);
     }
 }

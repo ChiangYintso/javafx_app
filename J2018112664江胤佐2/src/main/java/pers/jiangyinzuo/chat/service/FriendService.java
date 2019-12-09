@@ -9,8 +9,12 @@ import java.util.Map;
  */
 public interface FriendService {
 	void addFriend(Long userId);
-	
-	void delFriend(List<User> userList);
+
+	/**
+	 * É¾³ýºÃÓÑ
+	 * @param friendId ºÃÓÑID
+	 */
+	void deleteFriend(Long friendId);
 	
 	void getFriendInfo(User friend);
 
@@ -22,4 +26,6 @@ public interface FriendService {
 	User searchUser(Long userId);
 
 	void requestForFriendsStatus(Long userId);
+
+	void updateFriendCategory(Long friendId, String friendCategory);
 }

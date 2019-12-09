@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.common.javafx.util.UpdateUiUtil;
-import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
@@ -133,7 +133,7 @@ public class SessionCardCmpController implements SessionState.Subscriber {
     @FXML
     void onClickedCard(MouseEvent event) {
         SessionState.setSelectedSession(session);
-        SceneRouter.showTempStage("会话窗口", "ChattingBoard.fxml", "client");
+        StageManager.showTempStage("会话窗口", "ChattingBoard.fxml", "client");
         this.bubble.setVisible(false);
     }
 }

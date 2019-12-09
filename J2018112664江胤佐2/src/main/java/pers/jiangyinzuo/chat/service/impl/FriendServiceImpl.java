@@ -36,8 +36,8 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void delFriend(List<User> userList) {
-
+    public void deleteFriend(Long friendId) {
+        friendDao.deleteFriendship(UserState.getSingleton().getUser().getUserId(), friendId);
     }
 
     @Override
@@ -70,5 +70,10 @@ public class FriendServiceImpl implements FriendService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void updateFriendCategory(Long friendId, String friendCategory) {
+        friendDao.updateFriendCategory(UserState.getSingleton().getUser().getUserId(), friendId, friendCategory);
     }
 }

@@ -18,7 +18,7 @@ import pers.jiangyinzuo.chat.client.javafx.controller.components.MessageCmpContr
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.chat.common.javafx.util.UpdateUiUtil;
-import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
@@ -221,12 +221,14 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
     @FXML
     void showChattingRecord(ActionEvent event) {
-        SceneRouter.showTempStage("聊天记录", "ChattingRecordBoard.fxml", "client");
+        SessionState.setSelectedSession(session);
+        StageManager.showTempStage("聊天记录", "ChattingRecordBoard.fxml", "client");
     }
 
     @FXML
     void initialize() {
         session = SessionState.getSelectedSession();
+        StageManager.friendChattingBoardStageMap.put(session.getId(), StageManager.getCurrentStage());
 
         // 注册SessionHandler
         if (session instanceof User) {
@@ -271,7 +273,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
     @FXML
     void showOption(ActionEvent event) {
         SessionState.setSelectedSession(session);
-        SceneRouter.showTempStage("好友详情", "FriendIntroBoard.fxml", "client");
+        StageManager.showTempStage("好友详情", "FriendIntroBoard.fxml", "client");
     }
 
     @FXML

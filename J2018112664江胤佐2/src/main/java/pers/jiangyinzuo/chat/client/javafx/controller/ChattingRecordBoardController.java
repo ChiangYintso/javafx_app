@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.client.state.UserState;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.server.javafx.controller.components.MessageRecordCmpController;
@@ -36,6 +38,8 @@ public class ChattingRecordBoardController {
 
     private List<Message> messageList;
 
+    private SessionCardCmpController.Session session;
+
     @FXML
     void onNext(ActionEvent event) {
         prevBtn.setDisable(false);
@@ -58,6 +62,8 @@ public class ChattingRecordBoardController {
 
     @FXML
     public void initialize() {
+        session = SessionState.getSelectedSession();
+        StageManager.friendChattingRecordBoardStageMap.put(session.getId(), StageManager.getCurrentStage());
         nextBtn.setDisable(true);
         queryMessageAndLoad();
     }
@@ -65,7 +71,7 @@ public class ChattingRecordBoardController {
     private void queryMessageAndLoad() {
         messageList = messageService.queryUserMessageToFriends(
                 UserState.getSingleton().getUser().getUserId(),
-                SessionState.getSelectedSession().getId(), start, 5,
+                session.getId(), start, 5,
                 new Timestamp(System.currentTimeMillis()));
 
         if (messageList.size() == 0) {

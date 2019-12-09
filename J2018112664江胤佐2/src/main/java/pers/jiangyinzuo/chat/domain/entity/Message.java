@@ -38,9 +38,6 @@ public class Message {
 	@FieldMapper(name = "send_from")
 	private Long sendFrom;
 
-	@FieldMapper(name = "sensitive_words_count")
-	private Integer sensitiveWordsCount;
-
 	/**
 	 * 用户ID或群聊ID
 	 */
@@ -98,7 +95,6 @@ public class Message {
 		setMessageContent(builder.messageContent);
 		setSendTime(builder.sendTime);
 		setSendFrom(builder.sendFrom);
-		setSensitiveWordsCount(builder.sensitiveWordsCount);
 		setSendTo(builder.sendTo);
 	}
 
@@ -165,21 +161,12 @@ public class Message {
 		this.sendTo = sendTo;
 	}
 
-	public Integer getSensitiveWordsCount() {
-		return sensitiveWordsCount;
-	}
-
-	public void setSensitiveWordsCount(Integer sensitiveWordsCount) {
-		this.sensitiveWordsCount = sensitiveWordsCount;
-	}
-
 	public static final class Builder {
 		private Long messageId;
 		private Integer messageType;
 		private String messageContent;
 		private Timestamp sendTime;
 		private Long sendFrom;
-		private Integer sensitiveWordsCount;
 		private Long sendTo;
 
 		public Builder() {
@@ -207,11 +194,6 @@ public class Message {
 
 		public Builder sendFrom(Long val) {
 			sendFrom = val;
-			return this;
-		}
-
-		public Builder sensitiveWordsCount(Integer val) {
-			sensitiveWordsCount = val;
 			return this;
 		}
 

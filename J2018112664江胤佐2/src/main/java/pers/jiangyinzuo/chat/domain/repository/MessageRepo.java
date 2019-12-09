@@ -23,11 +23,7 @@ public class MessageRepo {
     public static void updateUserSensitiveCount(Long userId, int count) {
         String sql = "UPDATE chat_user SET sensitive_words_count = sensitive_words_count + ? WHERE user_id = ?";
         threadPool.execute(() -> {
-            try {
-                MySqlHelper.executeUpdate(sql, count, userId);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            MySqlHelper.executeUpdate(sql, count, userId);
         });
     }
 }

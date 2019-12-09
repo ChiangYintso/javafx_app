@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.chat.common.javafx.util.UpdateUiUtil;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
@@ -56,7 +56,7 @@ public class MainBoardController {
 
     @FXML
     void showChattingRecordManagementBoard(ActionEvent event) {
-        SceneRouter.showTempStage("聊天记录管理面板", "ChattingRecordManagementBoard.fxml", "server");
+        StageManager.showTempStage("聊天记录管理面板", "ChattingRecordManagementBoard.fxml", "server");
     }
 
     @FXML
@@ -76,7 +76,7 @@ public class MainBoardController {
         // 向Gui代理类注册Controller单例
         GuiBroker.setSingleMainBoardController(this);
 
-        mainStage = SceneRouter.getStage("管理端主面板");
+        mainStage = StageManager.getStage("管理端主面板");
         mainStage.setOnCloseRequest((e) -> {
             // 通知服务器转发管理程序GUI已经关闭
             ForwardingMessageManager.setServerGuiIsOn(false);
@@ -108,7 +108,7 @@ public class MainBoardController {
 
     @FXML
     void editSensitiveWords(ActionEvent event) {
-        SceneRouter.showTempStage("管理端敏感词管理", "SensitiveWordsManager.fxml", "server");
+        StageManager.showTempStage("管理端敏感词管理", "SensitiveWordsManager.fxml", "server");
     }
 
     /**

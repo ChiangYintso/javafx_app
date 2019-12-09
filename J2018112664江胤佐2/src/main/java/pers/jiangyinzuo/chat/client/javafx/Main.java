@@ -1,12 +1,11 @@
 package pers.jiangyinzuo.chat.client.javafx;
 
-import java.io.IOException;
 import java.util.concurrent.*;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.TcpClient;
-import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.domain.repository.MessageRepo;
 
 import static pers.jiangyinzuo.chat.client.state.SensitiveWordsState.loadSensitiveWords;
@@ -52,8 +51,8 @@ public class Main extends Application {
         // ¼ÓÔØÃô¸Ð´Ê
         loadSensitiveWords();
 
-        SceneRouter.addStage(primaryStage, "µÇÂ¼");
-        SceneRouter.showStage("µÇÂ¼", "Login.fxml", "client");
+        StageManager.addStage(primaryStage, "µÇÂ¼");
+        StageManager.showStage("µÇÂ¼", "Login.fxml", "client");
     }
 
     public static void main(String[] args) {

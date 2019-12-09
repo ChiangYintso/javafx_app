@@ -109,11 +109,16 @@ public class MySqlHelper {
         return -1;
     }
 
-    public static int executeUpdate(String sql, Object... parameters) throws SQLException {
+    public static int executeUpdate(String sql, Object... parameters) {
         getConnection();
         loadPreparedStatement(sql, parameters);
-        int result = preparedStatement.executeUpdate();
-        closeConnection();
+        int result = 0;
+        try {
+            result = preparedStatement.executeUpdate();
+            closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 

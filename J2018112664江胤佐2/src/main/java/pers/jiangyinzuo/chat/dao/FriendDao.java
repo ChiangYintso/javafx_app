@@ -10,7 +10,14 @@ import java.util.Map;
 public interface FriendDao {
 	Map<String, List<User>> queryFriendCategoryMapByUserId(Integer userId);
 	
-	void deleteFriend(Integer userId, Integer friendId);
+	void deleteFriendship(Long userId, Long friendId);
 	
 	void addFriend(Long userId, Long friendId);
+
+	/**
+	 * 更新好友分组
+	 * @param friendId 好友ID
+	 * @param friendCategory
+	 */
+	void updateFriendCategory(Long userId, Long friendId, String friendCategory);
 }

@@ -6,7 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import pers.jiangyinzuo.chat.service.AccountService;
 import pers.jiangyinzuo.chat.service.impl.AccountServiceImpl;
-import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -48,7 +48,7 @@ public class RegisterController {
 				alert.setContentText("注册成功。用户名是" + userId);
 			}
     		alert.showAndWait();
-    		SceneRouter.closeStage("注册");
+    		StageManager.closeStage("注册");
     	}
     }
 }

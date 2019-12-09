@@ -17,11 +17,7 @@ public class NoticeDaoImpl implements NoticeDao {
     public void insertNotice(Notice notice) {
         String sql = "INSERT INTO chat_notice(NOTICE_TYPE, NOTICE_DATA, SEND_TO_ID)" +
                 " VALUES(?, ?, ?)";
-        try {
-            MySqlHelper.executeUpdate(sql, notice.getNoticeType(), notice.getNoticeData(), notice.getSendToId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, notice.getNoticeType(), notice.getNoticeData(), notice.getSendToId());
     }
 
     @Override
@@ -62,10 +58,6 @@ public class NoticeDaoImpl implements NoticeDao {
     @Override
     public void deleteNotice(Long noticeId) {
         String sql = "DELETE FROM chat_notice WHERE notice_id = ?";
-        try {
-            MySqlHelper.executeUpdate(sql, noticeId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, noticeId);
     }
 }

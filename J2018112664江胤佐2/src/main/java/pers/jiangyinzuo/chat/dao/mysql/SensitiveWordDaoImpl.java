@@ -25,30 +25,18 @@ public class SensitiveWordDaoImpl implements SensitiveWordDao {
     @Override
     public void addSensitiveWord(String word) {
         String sql = "INSERT INTO chat_sensitive_word_dict(sensitive_word) VALUES (?)";
-        try {
-            MySqlHelper.executeUpdate(sql, word);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, word);
     }
 
     @Override
     public void deleteSensitiveWord(String word) {
         String sql = "DELETE FROM chat_sensitive_word_dict WHERE sensitive_word = ?";
-        try {
-            MySqlHelper.executeUpdate(sql, word);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, word);
     }
 
     @Override
     public void updateSensitiveWord(String newWord, String oldWord) {
         String sql = "UPDATE chat_sensitive_word_dict SET sensitive_word = ? WHERE sensitive_word = ?";
-        try {
-            MySqlHelper.executeUpdate(sql, newWord, oldWord);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, newWord, oldWord);
     }
 }

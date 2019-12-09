@@ -29,7 +29,7 @@ import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.FriendService;
-import pers.jiangyinzuo.chat.common.javafx.SceneRouter;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
 import pers.jiangyinzuo.chat.service.impl.NoticeServiceImpl;
 
@@ -167,7 +167,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 
 	@FXML
 	void addFriendOrGroup(ActionEvent event) {
-		SceneRouter.showTempStage("查找面板", "AddBoard.fxml", "client");
+		StageManager.showTempStage("查找面板", "AddBoard.fxml", "client");
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	@FXML
 	public void initialize() {
 		updateUserInfo();
-		this.mainBoardStage = SceneRouter.getStage("网络聊天室");
+		this.mainBoardStage = StageManager.getStage("网络聊天室");
 		ControllerProxy.setMainBoardController(this);
 		self = this;
 
@@ -195,9 +195,6 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		// 更新通知按钮的文字
 		this.newMessageCount = new NoticeServiceImpl().getUnhandledNoticeCount(UserState.getSingleton().getUser().getUserId());
 		this.initNewNoticeCount(newMessageCount);
-
-		// 询问好友在线情况
-		Main.getClientThreadPool().execute(() -> friendService.requestForFriendsStatus(UserState.getSingleton().getUser().getUserId()));
 
 		mainBoardStage.setOnCloseRequest((event) -> {
 			System.out.println("主界面关闭");
@@ -211,12 +208,12 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	 */
 	@FXML
 	void foundGroup(ActionEvent event) {
-		SceneRouter.showTempStage("新建群聊", "FoundGroupBoard.fxml", "client");
+		StageManager.showTempStage("新建群聊", "FoundGroupBoard.fxml", "client");
 	}
 
 	@FXML
 	void showNotice(ActionEvent event) {
-		SceneRouter.showTempStage("通知", "NoticeBoard.fxml", "client");
+		StageManager.showTempStage("通知", "NoticeBoard.fxml", "client");
 	}
 
 	private TreeItem<Pane> loadIndexTreeItem(String text) {
@@ -298,10 +295,13 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		treeView.setMaxWidth(1000);
 		treeView.setMinHeight(650);
 		rightPane.getChildren().add(treeView);
+
+		// 询问好友在线情况
+		Main.getClientThreadPool().execute(() -> friendService.requestForFriendsStatus(UserState.getSingleton().getUser().getUserId()));
 	}
 
 	@FXML
 	void showSettingBoard(ActionEvent event) {
-		SceneRouter.showTempStage("设置", "SettingBoard.fxml", "client");
+		StageManager.showTempStage("设置", "SettingBoard.fxml", "client");
 	}
 }

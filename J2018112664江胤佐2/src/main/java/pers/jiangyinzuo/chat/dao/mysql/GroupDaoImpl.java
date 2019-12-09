@@ -42,11 +42,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public void addMember(Long groupId, Long userId) {
         String sql = "INSERT INTO chat_user_group_relation(user_id, group_id) VALUES (?, ?)";
-        try {
-            MySqlHelper.executeUpdate(sql, userId, groupId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, userId, groupId);
     }
 
     public static void main(String[] args) {

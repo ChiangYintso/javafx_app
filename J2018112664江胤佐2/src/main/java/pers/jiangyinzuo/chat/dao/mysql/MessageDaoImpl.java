@@ -103,15 +103,11 @@ public class MessageDaoImpl implements MessageDao {
         String sql = "INSERT INTO chat_message(message_type, message_content," +
                 "send_from, send_to, send_time)" +
                 " VALUES(?, ?, ?, ?, NOW())";
-        try {
-            MySqlHelper.executeUpdate(sql,
-                    message.getMessageType(),
-                    message.getMessageContent(),
-                    message.getSendFrom(),
-                    message.getSendTo());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql,
+                message.getMessageType(),
+                message.getMessageContent(),
+                message.getSendFrom(),
+                message.getSendTo());
     }
 
     @Override
