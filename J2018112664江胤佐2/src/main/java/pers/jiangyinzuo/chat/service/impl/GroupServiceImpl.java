@@ -21,6 +21,6 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void foundGroup(Group group, Long masterId) {
-        groupDao.addMember(groupDao.addGroup(group, masterId), masterId);
+        groupDao.addMember(groupDao.addGroup(group, masterId), masterId, 3L);
     }
 }

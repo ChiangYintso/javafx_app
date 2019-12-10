@@ -34,12 +34,12 @@ public class User implements SessionCardCmpController.Session {
     @FieldMapper(name = "user_avatar")
     private String avatar;
 
-    public Integer getSensitiveWordsCount() {
+    public Long getSensitiveWordsCount() {
         return sensitiveWordsCount;
     }
 
     @FieldMapper(name = "sensitive_words_count")
-    private Integer sensitiveWordsCount;
+    private Long sensitiveWordsCount;
 
     /**
      * 作为好友时的好友分组
@@ -191,7 +191,7 @@ public class User implements SessionCardCmpController.Session {
         private String password;
         private String intro;
         private String avatar = DEFAULT_AVATAR_URL;
-        private Integer sensitiveWordsCount;
+        private Long sensitiveWordsCount;
         private String friendCategory;
         private Integer isOnline;
         private GroupRepo groupRepo;
@@ -225,7 +225,7 @@ public class User implements SessionCardCmpController.Session {
             return this;
         }
 
-        public Builder sensitiveWordsCount(Integer val) {
+        public Builder sensitiveWordsCount(Long val) {
             sensitiveWordsCount = val;
             return this;
         }

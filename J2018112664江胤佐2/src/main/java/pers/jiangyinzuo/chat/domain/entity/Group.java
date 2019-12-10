@@ -1,12 +1,15 @@
 package pers.jiangyinzuo.chat.domain.entity;
 
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
+import pers.jiangyinzuo.chat.domain.dto.GroupMemberDTO;
 import pers.jiangyinzuo.chat.domain.mapper.FieldMapper;
 import pers.jiangyinzuo.chat.domain.mapper.TableMapper;
 import pers.jiangyinzuo.chat.domain.repository.GroupRepo;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -111,6 +114,14 @@ public class Group implements SessionCardCmpController.Session {
     public String getStatus() {
         // TODO ÈºÁÄ×´Ì¬
         return "";
+    }
+
+    public Map<Long, User> getGroupMemberMap() {
+        return groupRepo.getMemberMap(groupId, true);
+    }
+
+    public List<GroupMemberDTO> getGroupMemberList() {
+        return groupRepo.getGroupMemberDTOList(groupId);
     }
 
     public void setAvatar(String avatar) {

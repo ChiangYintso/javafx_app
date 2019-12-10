@@ -13,4 +13,6 @@ public interface GroupDao {
 	Long addGroup(Group group, Long masterId);
 
 	void addMember(Long groupId, Long userId);
+
+    void addMember(Long groupId, Long userId, Long privilege);
 }

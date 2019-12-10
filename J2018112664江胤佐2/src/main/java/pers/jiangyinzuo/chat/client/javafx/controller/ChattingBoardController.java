@@ -153,6 +153,11 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
         abstract List<Message> getMessage();
 
+        /**
+         * 展现会话资料面板
+         */
+        abstract void showSessionInfo();
+
         AbstractSessionHandler(ChattingBoardController controllerCallBack, SessionCardCmpController.Session session) {
             this.controllerCallBack = controllerCallBack;
             controllerCallBack.session = session;
@@ -273,7 +278,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
     @FXML
     void showOption(ActionEvent event) {
         SessionState.setSelectedSession(session);
-        StageManager.showTempStage("好友详情", "FriendIntroBoard.fxml", "client");
+        sessionHandler.showSessionInfo();
     }
 
     @FXML
@@ -327,6 +332,14 @@ class FriendHandler extends ChattingBoardController.AbstractSessionHandler {
     }
 
     /**
+     * 展现会话资料面板
+     */
+    @Override
+    void showSessionInfo() {
+        StageManager.showTempStage("好友详情", "FriendIntroBoard.fxml", "client");
+    }
+
+    /**
      * 获取发送消息的User实体类
      *
      * @param sendFromId
@@ -369,6 +382,14 @@ class GroupHandler extends ChattingBoardController.AbstractSessionHandler {
     @Override
     public List<Message> getMessage() {
         return controllerCallBack.messageService.queryGroupRecentMessage(getSessionId());
+    }
+
+    /**
+     * 展现会话资料面板
+     */
+    @Override
+    void showSessionInfo() {
+        StageManager.showTempStage("群聊详情", "GroupInfoBoard.fxml", "client");
     }
 
     /**

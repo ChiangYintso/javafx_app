@@ -1,10 +1,12 @@
 package pers.jiangyinzuo.chat.domain.repository;
 
+import pers.jiangyinzuo.chat.domain.dto.GroupMemberDTO;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.MySqlHelper;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ public class GroupRepo {
      * 用户的群聊列表
      */
     private List<Group> userGroupList = null;
+
+    private List<GroupMemberDTO> groupMemberDTOList = null;
 
     /**
      * 群成员ID与实体类的映射
@@ -54,11 +58,31 @@ public class GroupRepo {
         return memberMap;
     }
 
+    public List<GroupMemberDTO> getGroupMemberDTOList(Long groupId) {
+        if (groupMemberDTOList != null) {
+            return groupMemberDTOList;
+        }
+        return updateGroupMemberDTOList(groupId);
+    }
+
+    public List<GroupMemberDTO> updateGroupMemberDTOList(Long groupId) {
+        String sql = "SELECT chat_user_group_relation.user_privilege," +
+                " chat_user.user_id, chat_user.user_name FROM chat_user_group_relation, chat_user WHERE chat_user_group_relation.group_id = ? " +
+                "AND chat_user.user_id = chat_user_group_relation.user_id";
+        try {
+            return MySqlHelper.queryMany(GroupMemberDTO.class, sql, groupId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
     public void updateMemberMap(Long groupId) {
         String sql = "SELECT chat_user.* FROM chat_user, chat_user_group_relation WHERE group_id = ? AND chat_user.user_id = chat_user_group_relation.user_id";
         Map<Long, User> resultMap = new HashMap<>(20);
         try {
             List<User> list = MySqlHelper.queryMany(User.class, sql, groupId);
+            assert list != null;
             for (User user : list) {
                 resultMap.put(user.getUserId(), user);
             }
