@@ -11,4 +11,8 @@ public interface GroupService {
 	List<Long> getUserIdsInGroup(Long groupId);
 
 	void foundGroup(Group group, Long masterId);
+
+	void changeMemberPrivilege(Long userId, Long privilege, Long groupId);
+
+	void removeGroupMember(Long userId, Long groupId);
 }

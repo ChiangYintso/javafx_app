@@ -10,7 +10,7 @@
       <Text fx:id="userIdText" layoutX="26.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="52.240230560302734" />
       <Text fx:id="userNameText" layoutX="113.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="95.75323486328125" />
       <Text fx:id="privilegeText" layoutX="241.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="privilege" />
-      <Button fx:id="changePrivilegeBtn" layoutX="321.0" layoutY="15.0" mnemonicParsing="false" onAction="#changePrivilege" text="Button" />
-      <Button fx:id="quitBtn" layoutX="389.0" layoutY="15.0" mnemonicParsing="false" onAction="#quit" text="Button" />
+      <Button fx:id="changePrivilegeBtn" layoutX="321.0" layoutY="15.0" mnemonicParsing="false" onAction="#changePrivilege" text="privilege" />
+      <Button fx:id="quitBtn" layoutX="412.0" layoutY="15.0" mnemonicParsing="false" onAction="#quit" text="踢群" />
    </children>
 </AnchorPane>

@@ -15,4 +15,8 @@ public interface GroupDao {
 	void addMember(Long groupId, Long userId);
 
     void addMember(Long groupId, Long userId, Long privilege);
+
+	void updateMemberPrivilege(Long userId, Long privilege, Long groupId);
+
+	void deleteGroupMember(Long userId, Long groupId);
 }

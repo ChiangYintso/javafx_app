@@ -51,6 +51,18 @@ public class GroupDaoImpl implements GroupDao {
         MySqlHelper.executeUpdate(sql, userId, groupId, privilege);
     }
 
+    @Override
+    public void updateMemberPrivilege(Long userId, Long privilege, Long groupId) {
+        String sql = "UPDATE chat_user_group_relation SET user_privilege = ? WHERE user_id = ? AND group_id = ?";
+        MySqlHelper.executeUpdate(sql, privilege, userId, groupId);
+    }
+
+    @Override
+    public void deleteGroupMember(Long userId, Long groupId) {
+        String sql = "DELETE FROM chat_user_group_relation WHERE user_id = ? AND group_id = ?";
+        MySqlHelper.executeUpdate(sql, userId, groupId);
+    }
+
     public static void main(String[] args) {
         GroupDao dao = new GroupDaoImpl();
         List<Long> longs = dao.queryUserIdInGroup(2L);

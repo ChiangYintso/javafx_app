@@ -59,13 +59,6 @@ public class GroupRepo {
     }
 
     public List<GroupMemberDTO> getGroupMemberDTOList(Long groupId) {
-        if (groupMemberDTOList != null) {
-            return groupMemberDTOList;
-        }
-        return updateGroupMemberDTOList(groupId);
-    }
-
-    public List<GroupMemberDTO> updateGroupMemberDTOList(Long groupId) {
         String sql = "SELECT chat_user_group_relation.user_privilege," +
                 " chat_user.user_id, chat_user.user_name FROM chat_user_group_relation, chat_user WHERE chat_user_group_relation.group_id = ? " +
                 "AND chat_user.user_id = chat_user_group_relation.user_id";

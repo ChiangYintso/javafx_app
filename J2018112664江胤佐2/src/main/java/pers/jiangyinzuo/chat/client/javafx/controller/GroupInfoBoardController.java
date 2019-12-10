@@ -91,10 +91,13 @@ public class GroupInfoBoardController {
         }
         for (GroupMemberDTO groupMemberDTO : groupMemberList) {
             FxmlCmpLoaderUtil<AnchorPane, GroupMemberCmpController> fxmlCmpLoaderUtil
-                    = new FxmlCmpLoaderUtil<>("client", "GroupMemberCmp.fxml", groupMemberDTO, privilege);
+                    = new FxmlCmpLoaderUtil<>("client", "GroupMemberCmp.fxml", groupMemberDTO, privilege, group, this);
             groupMember.getChildren().add(fxmlCmpLoaderUtil.getPane());
         }
 
     }
 
+    public void remove(GroupMemberCmpController groupMemberCmpPane) {
+        groupMember.getChildren().remove(groupMemberCmpPane);
+    }
 }
