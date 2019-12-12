@@ -23,11 +23,7 @@ public class TeacherDaoMysqlImpl implements TeacherDao {
     @Override
     public void insertTeacher(Teacher teacher) throws IllegalArgumentException, SecurityException {
         String sql = "INSERT INTO rollcall_teacher(teacher_id, teacher_name, department, gender, password, title) VALUES(?, ?, ?, ?, ?, ?)";
-        try {
-            MySqlHelper.executeUpdate(sql, teacher.getTeacherId(), teacher.getTeacherName(), teacher.getDepartment(), teacher.getGender(), teacher.getPassword(), teacher.getTitle());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, teacher.getTeacherId(), teacher.getTeacherName(), teacher.getDepartment(), teacher.getGender(), teacher.getPassword(), teacher.getTitle());
     }
 
     /**

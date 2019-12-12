@@ -20,15 +20,11 @@ public class TeachingClassDaoMysqlImpl implements TeachingClassDao {
         String sql = "INSERT INTO rollcall_teaching_class(class_name, teacher_id, class_session, " +
                 "course_code, classroom, class_intro, semester, credit, weeks)" +
                 " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            MySqlHelper.executeUpdate(sql, teachingClass.getClassName(),
-                    teachingClass.getTeacherId(), teachingClass.getSession(),
-                    teachingClass.getCourseCode(), teachingClass.getClassroom(),
-                    teachingClass.getIntro(), teachingClass.getSemester(),
-                    teachingClass.getCredit(), teachingClass.getWeeks());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        MySqlHelper.executeUpdate(sql, teachingClass.getClassName(),
+                teachingClass.getTeacherId(), teachingClass.getSession(),
+                teachingClass.getCourseCode(), teachingClass.getClassroom(),
+                teachingClass.getIntro(), teachingClass.getSemester(),
+                teachingClass.getCredit(), teachingClass.getWeeks());
     }
 
     @Override
