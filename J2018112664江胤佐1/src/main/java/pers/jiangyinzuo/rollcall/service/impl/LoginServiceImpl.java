@@ -20,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 	private TeacherDao teacherDao;
 	private StudentDao studentDao;
 
-	public LoginServiceImpl() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+	public LoginServiceImpl() {
 		teacherDao = DaoFactory.createDao(TeacherDao.class);
 		studentDao = DaoFactory.createDao(StudentDao.class);
 	}
@@ -30,12 +30,13 @@ public class LoginServiceImpl implements LoginService {
 	 * @throws CustomException 
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
+	 *
 	 */
 	@Override
-	public Teacher teacherLogin(Long teacherId, String password) throws ClassNotFoundException, IOException, CustomException {
+	public Teacher teacherLogin(Long teacherId, String password) {
 		try {
 			return teacherDao.queryTeacher(teacherId, password);
-		} catch (FileNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -46,11 +47,10 @@ public class LoginServiceImpl implements LoginService {
 	 * @throws ClassNotFoundException 
 	 */
 	@Override
-	public Student studentLogin(Long studentId, String password)
-			throws IOException, ClassNotFoundException {
+	public Student studentLogin(Long studentId, String password) {
 		try {
 			return studentDao.queryStudent(studentId, password);
-		} catch (FileNotFoundException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;

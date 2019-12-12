@@ -26,7 +26,7 @@ public class RollCallServiceImpl implements RollCallService {
 	private TeachingClass teachingClass;
 
 	public RollCallServiceImpl(TeachingClass teachingClass)
-			throws ClassNotFoundException, CustomException, IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+			throws ClassNotFoundException, CustomException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
 		// 反射实例化Dao
 		this.dao = DaoFactory.createDao(RollCallDao.class);
@@ -64,9 +64,20 @@ public class RollCallServiceImpl implements RollCallService {
 		return null;
 	}
 
-	@Override
-	public void insertRollCall(Student student, String presence, String rollCallType) throws IOException, SQLException {
 
+	/**
+	 * 插入一条rollCall
+	 *
+	 * @param studentId
+	 * @param classId
+	 * @param presence
+	 * @param rollCallType
+	 */
+	@Override
+	public void insertRollCall(Long studentId, Long classId, String presence, Integer rollCallType) {
+		TeachingClass teachingClass = new TeachingClass.Builder().classId(classId).build();
+		this.dao.insertRollCall(new RollCall.Builder().rollCallId(studentId)
+				.teachingClass(teachingClass).rollCallType(rollCallType).build());
 	}
 
 	/**
@@ -83,7 +94,7 @@ public class RollCallServiceImpl implements RollCallService {
 
 
 	@Override
-	public void deleteRollCall(RollCall rollCall) throws IOException, SQLException {
+	public void deleteRollCall(Long rollCallId) {
 
 	}
 
@@ -129,34 +140,6 @@ public class RollCallServiceImpl implements RollCallService {
 //		this.bulkWriteRollCalls(this.totalRollCallList);
 //	}
 
-	@Override
-	public List<Student> getAbnormalStudent() {
-		List<Student> abnormalStudentList = new ArrayList<>();
-		for (RollCall r : this.teachingClassRollCallList) {
-			if (!r.getPresence().equals("已到")) {
-				abnormalStudentList.add(r.getStudent());
-			}
-		}
-		return abnormalStudentList;
-	}
-
-	@Override
-	public List<Student> getRandomStudent(int count) {
-//		List<Student> studentList = this.teachingClass.getStudentList();
-//		if (count < 0 || count > studentList.size()) {
-//			return studentList;
-//		}
-//		List<Student> resultList = new ArrayList<>();
-//		Set<Integer> set = new HashSet<>();
-//		while (set.size() < count) {
-//			set.add((int) (Math.random() * studentList.size()));
-//		}
-//		for (Integer i : set) {
-//			resultList.add(studentList.get(i));
-//		}
-//		return resultList;
-		return null;
-	}
 
 	@Override
 	public List<RollCall> queryRollCallsByStudentId(Long studentId) {

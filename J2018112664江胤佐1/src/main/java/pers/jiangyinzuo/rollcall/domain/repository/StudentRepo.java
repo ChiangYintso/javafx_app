@@ -1,6 +1,10 @@
 package pers.jiangyinzuo.rollcall.domain.repository;
 
+import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.factory.DaoFactory;
+
+import java.util.List;
 
 /**
  * @author Jiang Yinzuo
@@ -18,5 +22,11 @@ public class StudentRepo {
 
             return null;
         }
+    }
+
+    public List<Student> getTeachingClassList(Long classId) {
+        TeachingClassDao teachingClassDao = DaoFactory.createDao(TeachingClassDao.class);
+        // TODO
+        return null;
     }
 }

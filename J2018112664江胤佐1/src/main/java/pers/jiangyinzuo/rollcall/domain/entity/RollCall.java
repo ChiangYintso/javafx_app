@@ -50,6 +50,15 @@ public class RollCall implements Serializable {
         this.rollCallId = rollCallId;
     }
 
+    private RollCall(Builder builder) {
+        setRollCallId(builder.rollCallId);
+        setPresence(builder.presence);
+        setRollCallType(builder.rollCallType);
+        setRollCallTime(builder.rollCallTime);
+        setTeachingClass(builder.teachingClass);
+        setStudent(builder.student);
+    }
+
     public RollCall copy() {
         return new RollCall(rollCallId, presence, rollCallType, teachingClass, student);
     }
@@ -129,5 +138,51 @@ public class RollCall implements Serializable {
 
     public Long getStudentId() {
         return this.student.getStudentId();
+    }
+
+    public static final class Builder {
+        private Long rollCallId;
+        private String presence;
+        private Integer rollCallType;
+        private Timestamp rollCallTime;
+        private TeachingClass teachingClass;
+        private Student student;
+
+        public Builder() {
+        }
+
+        public Builder rollCallId(Long val) {
+            rollCallId = val;
+            return this;
+        }
+
+        public Builder presence(String val) {
+            presence = val;
+            return this;
+        }
+
+        public Builder rollCallType(Integer val) {
+            rollCallType = val;
+            return this;
+        }
+
+        public Builder rollCallTime(Timestamp val) {
+            rollCallTime = val;
+            return this;
+        }
+
+        public Builder teachingClass(TeachingClass val) {
+            teachingClass = val;
+            return this;
+        }
+
+        public Builder student(Student val) {
+            student = val;
+            return this;
+        }
+
+        public RollCall build() {
+            return new RollCall(this);
+        }
     }
 }

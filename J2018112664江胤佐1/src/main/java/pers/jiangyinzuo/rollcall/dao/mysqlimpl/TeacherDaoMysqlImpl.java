@@ -62,7 +62,7 @@ public class TeacherDaoMysqlImpl implements TeacherDao {
                     .gender(true)
                     .title("¸±½ÌÊÚ")
                     .build());
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | IOException e) {
+        } catch ( NoSuchMethodException | IllegalAccessException | InvocationTargetException  | IOException e) {
             e.printStackTrace();
         }
     }

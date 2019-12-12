@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class RollCallDaoMysqlImpl implements RollCallDao {
     @Override
-    public void insertRollCall(RollCall rollCall) throws SQLException {
+    public void insertRollCall(RollCall rollCall) {
         String sql = "INSERT INTO rollcall_rollcall_record(`rollcall_type`, `rollcall_time`, `presence`, `class_id`, `student_id`)";
         MySqlHelper.executeUpdate(sql, rollCall.getRollCallType(), rollCall.getRollCallTime(), rollCall.getPresence(), rollCall.getTeachingClass().getClassId(), rollCall.getStudent().getStudentId());
     }

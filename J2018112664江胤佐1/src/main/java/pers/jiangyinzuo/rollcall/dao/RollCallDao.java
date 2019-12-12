@@ -12,7 +12,7 @@ import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
  */
 public interface RollCallDao {
 
-	void insertRollCall(RollCall rollCall) throws IOException, SQLException;
+	void insertRollCall(RollCall rollCall);
 
 	void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException;
 	

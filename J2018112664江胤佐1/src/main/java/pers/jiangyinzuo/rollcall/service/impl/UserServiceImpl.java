@@ -2,6 +2,9 @@ package pers.jiangyinzuo.rollcall.service.impl;
 
 import pers.jiangyinzuo.rollcall.service.UserService;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class UserServiceImpl implements UserService {
 
 	private static UserServiceImpl userServiceImpl = null;

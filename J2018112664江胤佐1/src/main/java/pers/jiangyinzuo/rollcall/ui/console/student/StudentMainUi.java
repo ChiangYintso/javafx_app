@@ -76,7 +76,7 @@ public class StudentMainUi extends AbstractUi {
 			for (RollCall rollCall : resultList) {
                 System.out.println(rollCall.getRollCallInfo());
 			}
-		} catch (ClassNotFoundException | CustomException | IOException | InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
+		} catch (ClassNotFoundException | CustomException  | InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
     }

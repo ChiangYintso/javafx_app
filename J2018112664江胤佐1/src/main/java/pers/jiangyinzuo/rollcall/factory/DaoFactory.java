@@ -38,11 +38,16 @@ public class DaoFactory {
      * @throws InvocationTargetException
      * @throws InstantiationException
      */
-    public static <T> T createDao(Class<T> daoInterface) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        return (T) Class.forName(DAO_PACKAGE_NAME + "." + daoImpl.toLowerCase() + "impl." + daoInterface.getSimpleName() + daoImpl + "Impl").getDeclaredConstructor().newInstance();
+    public static <T> T createDao(Class<T> daoInterface) {
+        try {
+            return (T) Class.forName(DAO_PACKAGE_NAME + "." + daoImpl.toLowerCase() + "impl." + daoInterface.getSimpleName() + daoImpl + "Impl").getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) {
         RollCallDao rollCallDao = createDao(RollCallDao.class);
         System.out.println(rollCallDao.toString());
         System.out.println(RollCallDao.class.getName());

@@ -5,6 +5,7 @@ import pers.jiangyinzuo.rollcall.domain.mapper.TableMapper;
 import pers.jiangyinzuo.rollcall.domain.repository.StudentRepo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Jiang Yinzuo
@@ -78,6 +79,10 @@ public class TeachingClass implements Serializable {
      * 空参构造函数用于反射创建对象
      */
     public TeachingClass() {
+    }
+
+    public List<Student> getStudentList() {
+        return studentRepo.getTeachingClassList(classId);
     }
 
     public TeachingClass(Long classId) {

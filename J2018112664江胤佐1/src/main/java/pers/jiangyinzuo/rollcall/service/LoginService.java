@@ -7,8 +7,11 @@ import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public interface LoginService {
-	Teacher teacherLogin(Long teacherId, String password) throws CustomException, FileNotFoundException, IOException, ClassNotFoundException;
+	Teacher teacherLogin(Long teacherId, String password);
 
-	Student studentLogin(Long studentId, String password) throws CustomException, FileNotFoundException, IOException, ClassNotFoundException;
+	Student studentLogin(Long studentId, String password);
 }

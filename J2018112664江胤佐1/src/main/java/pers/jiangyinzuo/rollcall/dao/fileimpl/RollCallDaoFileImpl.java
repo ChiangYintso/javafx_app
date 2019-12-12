@@ -17,8 +17,12 @@ public class RollCallDaoFileImpl implements RollCallDao {
 	private static final String FILE_NAME = "rollcalls.txt";
 
 	@Override
-	public void insertRollCall(RollCall rollCall) throws IOException {
-		FileHelper.writeSerializableEntity(rollCall, FILE_NAME);
+	public void insertRollCall(RollCall rollCall) {
+		try {
+			FileHelper.writeSerializableEntity(rollCall, FILE_NAME);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -17,14 +17,8 @@ public interface RollCallService {
 
 	/**
 	 * 插入一条rollCall
-	 * @param student
-	 * @param presence
-	 * @param rollCallType
-	 * @throws IOException
-	 * @throws SQLException
 	 */
-	void insertRollCall(Student student, String presence, String rollCallType)
-			throws IOException, SQLException;
+	void insertRollCall(Long studentId, Long classId, String presence, Integer rollCallType);
 
 	/**
 	 * 根据id修改rollCall
@@ -36,11 +30,10 @@ public interface RollCallService {
 
 	/**
 	 * 根据id删除rollCall
-	 * @param rollCall
 	 * @throws IOException
 	 * @throws SQLException
 	 */
-	void deleteRollCall(RollCall rollCall) throws IOException, SQLException;
+	void deleteRollCall(Long rollCallId) throws IOException, SQLException;
 	
 	void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException;
 
@@ -50,10 +43,6 @@ public interface RollCallService {
 	 * @return
 	 */
 	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId);
-	
-	List<Student> getAbnormalStudent();
-	
-	List<Student> getRandomStudent(int count);
 
 	List<RollCall> queryRollCallsByStudentId(Long studentId);
 }
