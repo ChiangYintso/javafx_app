@@ -16,8 +16,7 @@ public class TeacherDaoFileImpl implements TeacherDao {
     private static final String FILE_NAME = "teachers.txt";
 
     @Override
-    public void insertTeacher(Teacher teacher) throws IOException, IllegalArgumentException,
-            SecurityException {
+    public void insertTeacher(Teacher teacher) {
         FileHelper.writeSerializableEntity(teacher, FILE_NAME);
     }
 
@@ -39,7 +38,7 @@ public class TeacherDaoFileImpl implements TeacherDao {
      * @return 若查找成功返回教师实体类, 否则返回null
      */
     @Override
-    public Teacher queryTeacher(Long teacherId, String password) throws IOException, ClassNotFoundException {
+    public Teacher queryTeacher(Long teacherId, String password) {
         Teacher teacher = FileHelper.readSerializableEntity(FILE_NAME, new Teacher.Builder()
                 .teacherId(teacherId)
                 .password(password)
@@ -51,8 +50,7 @@ public class TeacherDaoFileImpl implements TeacherDao {
         }
     }
 
-    public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, NoSuchMethodException, SecurityException, CustomException {
+    public static void main(String[] args) {
         TeacherDao s = new TeacherDaoFileImpl();
         s.insertTeacher(new Teacher(123L, "张三", "信息科学与技术学院", true, "123456", "讲师"));
         if (s.queryTeacher(123L).getTeacherId().equals(123L)) {

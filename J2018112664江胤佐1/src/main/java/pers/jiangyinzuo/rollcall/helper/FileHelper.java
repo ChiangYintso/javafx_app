@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import pers.jiangyinzuo.rollcall.dao.fileimpl.TeachingClassDaoFileImpl;
-import pers.jiangyinzuo.rollcall.service.validator.Validator;
-import pers.jiangyinzuo.rollcall.common.CustomException;
 
 /**
  * 文件读写类, 负责程序的IO操作
@@ -32,25 +29,6 @@ public class FileHelper {
 		}
 	}
 
-	public static Object readSerializableEntity(String fileSuffix, Validator query, Class clazz, Object... obj)
-			throws IOException, ClassNotFoundException, CustomException {
-		try (FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileSuffix));
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);) {
-			Object tempObj;
-			if (query == null) {
-				return objectInputStream.readObject();
-			}
-			while ((tempObj = objectInputStream.readObject()) != null) {
-				if (query.validate(clazz, tempObj, obj)) {
-					return tempObj;
-				}
-			}
-			return null;
-		} catch (EOFException e) {
-			throw new CustomException("entity not found", false);
-		}
-	}
-
 	/**
 	 * 调用equals方法读取和t相等的实体类
 	 * @param fileName
@@ -60,7 +38,7 @@ public class FileHelper {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static <T> T readSerializableEntity(String fileName, T t) throws IOException, ClassNotFoundException {
+	public static <T> T readSerializableEntity(String fileName, T t) {
 		try (FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
 			 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
 			T result;
@@ -70,7 +48,10 @@ public class FileHelper {
 				}
 			}
 			return null;
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	public static <T> List<T> readAllSerializableEntities(String fileName) {

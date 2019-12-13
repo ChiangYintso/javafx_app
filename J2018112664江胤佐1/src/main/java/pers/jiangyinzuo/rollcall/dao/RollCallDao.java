@@ -1,9 +1,6 @@
 package pers.jiangyinzuo.rollcall.dao;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 
@@ -23,4 +20,6 @@ public interface RollCallDao {
 	void updateRollCall(RollCall rollCall);
 
 	void bulkUpdateRollCalls(List<RollCall> rollCallList);
+
+	void deleteRollCall(Long rollCallId);
 }

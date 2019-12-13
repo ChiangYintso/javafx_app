@@ -41,6 +41,12 @@ public class RollCallDaoFileImpl implements RollCallDao {
 		FileHelper.<RollCall>bulkWriteSerializableEntities(FILE_NAME, allRollCallList, false);
 	}
 
+	@Override
+	public void deleteRollCall(Long rollCallId) {
+		List<RollCall> tempRollCallList = getAllRollCalls();
+		tempRollCallList.removeIf(rollCall -> rollCall.getRollCallId().equals(rollCallId));
+		FileHelper.bulkWriteSerializableEntities(FILE_NAME, tempRollCallList, false);
+	}
 
 
 	@Override

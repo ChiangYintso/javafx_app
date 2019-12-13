@@ -23,19 +23,15 @@ public interface RollCallService {
 	/**
 	 * 根据id修改rollCall
 	 * @param rollCall
-	 * @throws IOException
-	 * @throws SQLException
 	 */
-	void editRollCall(RollCall rollCall) throws IOException, SQLException;
+	void editRollCall(RollCall rollCall);
 
 	/**
 	 * 根据id删除rollCall
-	 * @throws IOException
-	 * @throws SQLException
 	 */
-	void deleteRollCall(Long rollCallId) throws IOException, SQLException;
+	void deleteRollCall(Long rollCallId);
 	
-	void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException;
+	void bulkInsertRollCalls(List<RollCall> rollCallList);
 
 	/**
 	 * 根据教学班id查找点名记录

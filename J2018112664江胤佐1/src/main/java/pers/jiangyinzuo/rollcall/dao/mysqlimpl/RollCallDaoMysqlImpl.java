@@ -68,4 +68,10 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
         }
         MySqlHelper.bulkExecuteUpdate(sql, parametersList);
     }
+
+    @Override
+    public void deleteRollCall(Long rollCallId) {
+        String sql = "DELETE FROM rollcall.rollcall_rollcall_record WHERE rollcall_id = ?";
+        MySqlHelper.executeUpdate(sql, rollCallId);
+    }
 }

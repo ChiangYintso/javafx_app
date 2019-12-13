@@ -27,32 +27,18 @@ public class LoginServiceImpl implements LoginService {
 
 	/**
 	 * @return 教师实体类, 若不存在则返回null
-	 * @throws CustomException 
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
 	 *
 	 */
 	@Override
 	public Teacher teacherLogin(Long teacherId, String password) {
-		try {
-			return teacherDao.queryTeacher(teacherId, password);
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return teacherDao.queryTeacher(teacherId, password);
 	}
 
 	/**
 	 * @return 学生实体类, 若不存在则返回null
-	 * @throws ClassNotFoundException 
 	 */
 	@Override
 	public Student studentLogin(Long studentId, String password) {
-		try {
-			return studentDao.queryStudent(studentId, password);
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return studentDao.queryStudent(studentId, password);
 	}
 }

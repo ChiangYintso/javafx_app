@@ -52,18 +52,14 @@ public class TeacherDaoMysqlImpl implements TeacherDao {
     }
 
     public static void main(String[] args) {
-        try {
-            TeacherDao dao = DaoFactory.createDao(TeacherDao.class);
-            dao.insertTeacher(new Teacher.Builder()
-                    .teacherId(2018112664L)
-                    .password("222")
-                    .teacherName("江胤佐")
-                    .department("信息科学与技术学院")
-                    .gender(true)
-                    .title("副教授")
-                    .build());
-        } catch ( NoSuchMethodException | IllegalAccessException | InvocationTargetException  | IOException e) {
-            e.printStackTrace();
-        }
+        TeacherDao dao = DaoFactory.createDao(TeacherDao.class);
+        dao.insertTeacher(new Teacher.Builder()
+                .teacherId(2018112664L)
+                .password("222")
+                .teacherName("江胤佐")
+                .department("信息科学与技术学院")
+                .gender(true)
+                .title("副教授")
+                .build());
     }
 }

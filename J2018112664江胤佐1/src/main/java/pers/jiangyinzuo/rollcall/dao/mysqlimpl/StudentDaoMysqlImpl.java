@@ -22,7 +22,7 @@ public class StudentDaoMysqlImpl implements StudentDao {
      * @throws IllegalArgumentException
      */
     @Override
-    public void insertStudent(Student student) throws IllegalArgumentException, SecurityException, SQLException {
+    public void insertStudent(Student student) {
         String sql = "INSERT INTO rollcall_student(`student_id`, `student_name`, `gender`, `password`, `major`) VALUES(?, ?, ?, ?, ?)";
         MySqlHelper.executeUpdate(sql, student.getStudentId(), student.getStudentName(), student.getGender(), student.getPwd(), student.getMajor());
     }
@@ -47,23 +47,19 @@ public class StudentDaoMysqlImpl implements StudentDao {
      * @return 若存在，返回学生实体类；若不存在，返回null
      */
     @Override
-    public Student queryStudent(Long studentId, String password) throws IOException, ClassNotFoundException {
+    public Student queryStudent(Long studentId, String password) {
         String sql = "SELECT * FROM rollcall_student WHERE student_id = ? AND password = ?";
         return MySqlHelper.queryOne(Student.class, sql, studentId, password);
     }
 
-    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, IOException {
+    public static void main(String[] args) {
         StudentDao studentDao = new StudentDaoMysqlImpl();
-        try {
-            Student student = studentDao.queryStudent(2018112664L, "123456");
-            if (student == null) {
-                System.out.println("no such student");
-            } else {
-                System.out.println(student.getStudentId());
-                System.out.println(student.getPwd());
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        Student student = studentDao.queryStudent(2018112664L, "123456");
+        if (student == null) {
+            System.out.println("no such student");
+        } else {
+            System.out.println(student.getStudentId());
+            System.out.println(student.getPwd());
         }
     }
 }

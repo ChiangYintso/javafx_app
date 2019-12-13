@@ -1,14 +1,9 @@
 package pers.jiangyinzuo.rollcall.dao.mysqlimpl;
 
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,23 +29,13 @@ public class TeachingClassDaoMysqlImpl implements TeachingClassDao {
                 "INNER JOIN rollcall_class_selection " +
                 "ON rollcall_teaching_class.class_id = ?" +
                 "AND rollcall_class_selection.class_id = ?";
-        try {
-            return MySqlHelper.queryMany(TeachingClass.class, sql, studentId, studentId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(TeachingClass.class, sql, studentId, studentId);
     }
 
     @Override
-    public List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId) throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
+    public List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId) {
         String sql = "SELECT * FROM " +
                 "rollcall_teaching_class WHERE teacher_id = ?";
-        try {
-            return MySqlHelper.queryMany(TeachingClass.class, sql, teacherId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(TeachingClass.class, sql, teacherId);
     }
 }

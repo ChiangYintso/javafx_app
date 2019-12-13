@@ -18,28 +18,23 @@ public class StudentDaoFileImpl implements StudentDao {
 	private static final String FILE_NAME = "student.txt";
 
 	@Override
-	public void insertStudent(Student student) throws IOException, IllegalArgumentException,
-			SecurityException {
+	public void insertStudent(Student student) {
 		FileHelper.writeSerializableEntity(student, FILE_NAME);
 	}
 
 	@Override
-	public Student queryStudent(Long studentId) throws IOException {
-		try {
-			List<Student> list = FileHelper.readAllSerializableEntities("student.txt");
-			for (Student s : list) {
-				if (s.getStudentId().equals(studentId)) {
-					return s;
-				}
+	public Student queryStudent(Long studentId) {
+		List<Student> list = FileHelper.readAllSerializableEntities("student.txt");
+		for (Student s : list) {
+			if (s.getStudentId().equals(studentId)) {
+				return s;
 			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public Student queryStudent(Long studentId, String password) throws IOException, ClassNotFoundException {
+	public Student queryStudent(Long studentId, String password) {
 		Student student =  FileHelper.readSerializableEntity(FILE_NAME, new Student.Builder()
 				.studentId(studentId)
 				.password(password)
@@ -51,8 +46,7 @@ public class StudentDaoFileImpl implements StudentDao {
 		}
 	}
 
-	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException, CustomException, SQLException {
+	public static void main(String[] args) {
 		StudentDao s = new StudentDaoFileImpl();
 		s.insertStudent(new Student(123L, true, "jyz", "123456", "Èí¼þ¹¤³Ì"));
 		System.out.println(s.queryStudent(123L).getStudentId());
