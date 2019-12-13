@@ -4,14 +4,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
-import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.factory.DaoFactory;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
@@ -21,15 +18,15 @@ import pers.jiangyinzuo.rollcall.service.RollCallService;
  */
 public class RollCallServiceImpl implements RollCallService {
 
-	private RollCallDao dao;
+	private RollCallDao rollCallDao;
 	private List<RollCall> teachingClassRollCallList;
 	private TeachingClass teachingClass;
 
 	public RollCallServiceImpl(TeachingClass teachingClass)
-			throws ClassNotFoundException, CustomException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+			throws CustomException {
 
 		// 反射实例化Dao
-		this.dao = DaoFactory.createDao(RollCallDao.class);
+		this.rollCallDao = DaoFactory.createDao(RollCallDao.class);
 
 		if (teachingClass == null) {
 			throw new CustomException("未选择班级", false);
@@ -38,19 +35,12 @@ public class RollCallServiceImpl implements RollCallService {
 //		this.teachingClassRollCallList = this.dao.queryRollCallsByTeachingClassId(teachingClass.getClassId());
 	}
 
-//	@Override
-//	public void insertRollCall(RollCall rollCall) throws IOException, SQLException, ClassNotFoundException {
-//		rollCall.setRollCallId(this.dao.getRecordCount() + 1);
-//		this.dao.insertRollCall(rollCall);
-//		this.teachingClassRollCallList.add(rollCall);
-//	}
-
 	@Override
 	public void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException {
 
 		this.teachingClassRollCallList = rollCallList;
 
-		this.dao.bulkInsertRollCalls(rollCallList);
+		this.rollCallDao.bulkInsertRollCalls(rollCallList);
 	}
 
 	/**
@@ -76,7 +66,7 @@ public class RollCallServiceImpl implements RollCallService {
 	@Override
 	public void insertRollCall(Long studentId, Long classId, String presence, Integer rollCallType) {
 		TeachingClass teachingClass = new TeachingClass.Builder().classId(classId).build();
-		this.dao.insertRollCall(new RollCall.Builder().rollCallId(studentId)
+		this.rollCallDao.insertRollCall(new RollCall.Builder().rollCallId(studentId)
 				.teachingClass(teachingClass).rollCallType(rollCallType).build());
 	}
 
@@ -88,8 +78,8 @@ public class RollCallServiceImpl implements RollCallService {
 	 * @throws SQLException
 	 */
 	@Override
-	public void editRollCall(RollCall rollCall) throws IOException, SQLException {
-
+	public void editRollCall(RollCall rollCall) {
+		this.rollCallDao.updateRollCall(rollCall);
 	}
 
 

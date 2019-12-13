@@ -14,13 +14,13 @@ public interface RollCallDao {
 
 	void insertRollCall(RollCall rollCall);
 
-	void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException, ClassNotFoundException;
+	void bulkInsertRollCalls(List<RollCall> rollCallList);
 	
-	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws ClassNotFoundException, IOException, SQLException;
+	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId);
 
-	List<RollCall> queryRollCallsByStudentId(Long studentId) throws IOException, ClassNotFoundException, SQLException;
+	List<RollCall> queryRollCallsByStudentId(Long studentId);
 
-	void updateRollCall(RollCall rollCall, Long rollCallId) throws IOException, ClassNotFoundException, SQLException;
+	void updateRollCall(RollCall rollCall);
 
-	void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws IOException, ClassNotFoundException, SQLException;
+	void bulkUpdateRollCalls(List<RollCall> rollCallList);
 }

@@ -18,26 +18,22 @@ public class RollCallDaoFileImpl implements RollCallDao {
 
 	@Override
 	public void insertRollCall(RollCall rollCall) {
-		try {
-			FileHelper.writeSerializableEntity(rollCall, FILE_NAME);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		FileHelper.writeSerializableEntity(rollCall, FILE_NAME);
 	}
 
 	@Override
-	public void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, ClassNotFoundException {
+	public void bulkInsertRollCalls(List<RollCall> rollCallList) {
 		FileHelper.<RollCall>bulkWriteSerializableEntities(FILE_NAME, rollCallList, true);
 	}
 
 	@Override
-	public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws IOException, ClassNotFoundException {
+	public void bulkUpdateRollCalls(List<RollCall> rollCallList) {
 		List<RollCall> allRollCallList = getAllRollCalls();
-		for (Map.Entry<Long, RollCall> entry : rollCallMap.entrySet()) {
+		for (RollCall newRollCall : rollCallList) {
 			for (RollCall rollCall : allRollCallList) {
-				if (rollCall.getRollCallId().equals(entry.getKey())) {
+				if (rollCall.getRollCallId().equals(newRollCall.getRollCallId())) {
 					allRollCallList.remove(rollCall);
-					allRollCallList.add(entry.getValue());
+					allRollCallList.add(newRollCall);
 					break;
 				}
 			}
@@ -48,8 +44,7 @@ public class RollCallDaoFileImpl implements RollCallDao {
 
 
 	@Override
-	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId)
-			throws ClassNotFoundException, IOException {
+	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) {
 		 List<RollCall> rollCallList = FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 		 List<RollCall> results = new ArrayList<>();
 		 for (RollCall rollCall : rollCallList) {
@@ -61,7 +56,7 @@ public class RollCallDaoFileImpl implements RollCallDao {
 	}
 
 	@Override
-	public List<RollCall> queryRollCallsByStudentId(Long studentId) throws IOException, ClassNotFoundException {
+	public List<RollCall> queryRollCallsByStudentId(Long studentId) {
 		List<RollCall> rollCallList = FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 		List<RollCall> results = new ArrayList<>();
 		for (RollCall rollCall : rollCallList) {
@@ -73,7 +68,7 @@ public class RollCallDaoFileImpl implements RollCallDao {
 	}
 
 	@Override
-	public void updateRollCall(RollCall rollCall, Long rollCallId) throws IOException, ClassNotFoundException {
+	public void updateRollCall(RollCall rollCall) {
 		List<RollCall> rollCallList = FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 		for (int i = 0; i < rollCallList.size(); ++i) {
 			if (rollCallList.get(i).equals(rollCall)) {
@@ -83,7 +78,7 @@ public class RollCallDaoFileImpl implements RollCallDao {
 		}
 	}
 
-	private List<RollCall> getAllRollCalls() throws ClassNotFoundException, IOException {
+	private List<RollCall> getAllRollCalls() {
 		return FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 	}
 }

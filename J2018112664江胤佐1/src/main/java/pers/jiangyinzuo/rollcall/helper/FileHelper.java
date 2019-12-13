@@ -20,16 +20,20 @@ public class FileHelper {
 		return new File(System.getProperty("user.dir") +"/files/"+ fileName);
 	}
 
-	public static void writeSerializableEntity(Object obj, String fileName) throws IOException {
+	public static void writeSerializableEntity(Object obj, String fileName) {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(FileHelper.getFile(fileName), true);
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);) {
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 			objectOutputStream.writeObject(obj);
 			System.out.println("–¥»Î≥…π¶");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	public static Object readSerializableEntity(String fileSuffix, Validator query, Class clazz, Object... obj)
-			throws FileNotFoundException, IOException, ClassNotFoundException, CustomException {
+			throws IOException, ClassNotFoundException, CustomException {
 		try (FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileSuffix));
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);) {
 			Object tempObj;
@@ -69,15 +73,18 @@ public class FileHelper {
 		}
 	}
 
-	public static <T> List<T> readAllSerializableEntities(String fileName) throws ClassNotFoundException, IOException {
+	public static <T> List<T> readAllSerializableEntities(String fileName) {
 		List<T> results = new ArrayList<>();
 
-		FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));
-		while (fileInputStream.available() > 0) {
-			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-			results.add((T) objectInputStream.readObject());
+		try (FileInputStream fileInputStream = new FileInputStream(FileHelper.getFile(fileName));){
+			while (fileInputStream.available() > 0) {
+				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+				results.add((T) objectInputStream.readObject());
+			}
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-		fileInputStream.close();
+
 		return results;
 	}
 

@@ -24,7 +24,6 @@ public class MySqlHelper {
 
     private static PreparedStatement preparedStatement;
     private static Connection conn;
-    private static ResultSet resultSet;
 
     static {
         getConnection();
@@ -48,20 +47,24 @@ public class MySqlHelper {
         return conn;
     }
 
-    private static void closeConnection() throws SQLException {
+    private static void closeConnection() {
         if (conn != null) {
-            conn.close();
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public static <T> List<T> queryMany(Class<T> clazz, String sql, Object... parameters) throws SQLException {
+    public static <T> List<T> queryMany(Class<T> clazz, String sql, Object... parameters) {
         getConnection();
         try (ResultSet resultSet = executeQuery(sql, parameters)) {
             if (Number.class.isAssignableFrom(clazz) || String.class.isAssignableFrom(clazz)) {
                 return mapRecordsSystemType(clazz, resultSet);
             }
             return mapRecordsToEntities(clazz, resultSet);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | SQLException e) {
             e.printStackTrace();
         }
         closeConnection();
@@ -74,11 +77,8 @@ public class MySqlHelper {
             return mapRecordToEntity(clazz, resultSet);
         } catch (SQLException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             e.printStackTrace();
-        }
-        try {
+        } finally {
             closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -115,9 +115,10 @@ public class MySqlHelper {
         int result = 0;
         try {
             result = preparedStatement.executeUpdate();
-            closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
         return result;
     }
@@ -146,18 +147,23 @@ public class MySqlHelper {
      * @return 每条语句的影响行数数组
      * @throws SQLException SQL执行异常
      */
-    public static int[] bulkExecuteUpdate(String sql, List<List<Object>> parametersList) throws SQLException {
+    public static int[] bulkExecuteUpdate(String sql, List<List<Object>> parametersList) {
         getConnection();
-        setPreparedStatement(sql);
-
-        for (List<Object> list : parametersList) {
-            addBatch(list);
+        try {
+            for (List<Object> list : parametersList) {
+                addBatch(list);
+            }
+            int[] results = preparedStatement.executeBatch();
+            conn.commit();
+            conn.setAutoCommit(true);
+            closeConnection();
+            setPreparedStatement(sql);
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        int[] results = preparedStatement.executeBatch();
-        conn.commit();
-        conn.setAutoCommit(true);
-        closeConnection();
-        return results;
+
+        return null;
     }
 
     private static void setPreparedStatement(String sql) throws SQLException {

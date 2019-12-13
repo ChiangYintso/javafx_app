@@ -21,7 +21,7 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     }
 
     @Override
-    public void bulkInsertRollCalls(List<RollCall> rollCallList) throws IOException, SQLException {
+    public void bulkInsertRollCalls(List<RollCall> rollCallList) {
         String sql = "INSERT INTO rollcall_rollcall_record(`rollcall_type`, `rollcall_time`, `presence`, `class_id`, `student_id`)";
         List<List<Object>> parametersList = new ArrayList<>();
         for (RollCall rollCall : rollCallList) {
@@ -37,33 +37,33 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     }
 
     @Override
-    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) throws SQLException {
+    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) {
         String sql = "SELECT * FROM rollcall_rollcall_record WHERE `class_id` = ?";
         return MySqlHelper.queryMany(RollCall.class, sql, teachingClassId);
     }
 
     @Override
-    public List<RollCall> queryRollCallsByStudentId(Long studentId) throws SQLException {
+    public List<RollCall> queryRollCallsByStudentId(Long studentId) {
         String sql = "SELECT * FROM rollcall_rollcall_record WHERE `student_id` = ?";
         return MySqlHelper.queryMany(RollCall.class, sql, studentId);
     }
 
     @Override
-    public void updateRollCall(RollCall rollCall, Long rollCallId) throws SQLException {
+    public void updateRollCall(RollCall rollCall) {
         String sql = "UPDATE rollcall_rollcall_record SET rollcall_type = ?," +
                 " presence = ? WHERE rollcall_id = ?";
         MySqlHelper.executeUpdate(sql, rollCall.getRollCallType(), rollCall.getPresence(), rollCall.getRollCallId());
     }
 
     @Override
-    public void bulkUpdateRollCalls(Map<Long, RollCall> rollCallMap) throws SQLException {
+    public void bulkUpdateRollCalls(List<RollCall> rollCallList) {
         String sql = "UPDATE rollcall_rollcall_record SET rollcall_type = ?," +
                 " presence = ? WHERE rollcall_id = ?";
         List<List<Object>> parametersList = new ArrayList<>();
-        for (Map.Entry<Long, RollCall> kv : rollCallMap.entrySet()) {
+        for (RollCall rollCall : rollCallList) {
             List<Object> params = new ArrayList<>();
-            params.add(kv.getKey());
-            params.add(kv.getValue());
+            params.add(rollCall.getRollCallId());
+            params.add(rollCall);
             parametersList.add(params);
         }
         MySqlHelper.bulkExecuteUpdate(sql, parametersList);
