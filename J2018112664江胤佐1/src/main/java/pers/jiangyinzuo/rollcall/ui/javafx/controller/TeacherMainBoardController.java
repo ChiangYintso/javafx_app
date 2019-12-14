@@ -62,12 +62,12 @@ public class TeacherMainBoardController {
     private List<TeachingClass> teachingClasses;
 
     @FXML
-    void showSchedule(ActionEvent event) throws IOException {
+    void showSchedule(ActionEvent event) {
     	SceneRouter.showStage("课表", "Schedule.fxml");
     }
     
     @FXML
-    public void initialize() throws FileNotFoundException, ClassNotFoundException, IOException, CustomException {
+    public void initialize() {
     	this.teachingClassService = new TeachingClassServiceImpl();
     	this.teachingClasses = this.teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
     	this.addTeachingClassTab();
@@ -76,13 +76,18 @@ public class TeacherMainBoardController {
     }
     
     // 动态添加课程信息
-    private void addTeachingClassTab() throws IOException {
+    private void addTeachingClassTab() {
     	for (TeachingClass cls : this.teachingClasses) {
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeachingClassCmp.fxml"));
 
             // 必须调用此方法才能得到controller
-        	Pane pane = fxmlLoader.load();
-        	TeachingClassCmpController cmpController = fxmlLoader.getController();
+            Pane pane = null;
+            try {
+                pane = fxmlLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            TeachingClassCmpController cmpController = fxmlLoader.getController();
         	cmpController.init(cls);
         	this.teachingClassList.getChildren().add(pane);
     	}
@@ -90,6 +95,11 @@ public class TeacherMainBoardController {
     
     public void changeTip(Integer classId) {
     	
+    }
+
+    @FXML
+    void showStudentManagement(ActionEvent event) {
+        SceneRouter.showTempStage("学生管理", "StudentManagement.fxml");
     }
 }
 

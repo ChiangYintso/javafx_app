@@ -22,7 +22,7 @@ public class RollCall implements Serializable {
     private String presence;
 
     @FieldMapper(name = "rollcall_type")
-    private Integer rollCallType;
+    private Long rollCallType;
 
     @FieldMapper(name = "rollcall_time")
     private Timestamp rollCallTime;
@@ -36,7 +36,7 @@ public class RollCall implements Serializable {
     public RollCall() {
     }
 
-    public RollCall(Long rollCallId, String presence, Integer rollCallType,
+    public RollCall(Long rollCallId, String presence, Long rollCallType,
                     TeachingClass teachingClass, Student student) {
         this.rollCallId = rollCallId;
         this.presence = presence;
@@ -86,7 +86,7 @@ public class RollCall implements Serializable {
         return "µãÃû";
     }
 
-    public void setRollCallType(Integer rollCallType) {
+    public void setRollCallType(Long rollCallType) {
         this.rollCallType = rollCallType;
     }
 
@@ -143,7 +143,7 @@ public class RollCall implements Serializable {
     public static final class Builder {
         private Long rollCallId;
         private String presence;
-        private Integer rollCallType;
+        private Long rollCallType;
         private Timestamp rollCallTime;
         private TeachingClass teachingClass;
         private Student student;
@@ -161,7 +161,7 @@ public class RollCall implements Serializable {
             return this;
         }
 
-        public Builder rollCallType(Integer val) {
+        public Builder rollCallType(Long val) {
             rollCallType = val;
             return this;
         }

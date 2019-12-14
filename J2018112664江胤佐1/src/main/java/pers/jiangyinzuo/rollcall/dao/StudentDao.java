@@ -35,4 +35,8 @@ public interface StudentDao {
 	 * @return 若存在，返回学生实体类；若不存在，返回null
 	 */
 	Student queryStudent(Long studentId, String password);
+
+	void updateStudent(Student student);
+
+	void deleteStudent(Long studentId);
 }

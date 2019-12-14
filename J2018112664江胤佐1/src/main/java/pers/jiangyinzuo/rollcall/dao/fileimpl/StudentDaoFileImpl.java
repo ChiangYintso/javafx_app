@@ -46,6 +46,31 @@ public class StudentDaoFileImpl implements StudentDao {
 		}
 	}
 
+	@Override
+	public void updateStudent(Student student) {
+		List<Student> list = FileHelper.readAllSerializableEntities(FILE_NAME);
+		for (Student s : list) {
+			if (s.getStudentId().equals(student.getStudentId())) {
+				list.remove(s);
+				list.add(student);
+				break;
+			}
+		}
+		FileHelper.bulkWriteSerializableEntities(FILE_NAME, list, false);
+	}
+
+	@Override
+	public void deleteStudent(Long studentId) {
+		List<Student> list = FileHelper.readAllSerializableEntities(FILE_NAME);
+		for (Student s : list) {
+			if (s.getStudentId().equals(studentId)) {
+				list.remove(s);
+				break;
+			}
+		}
+		FileHelper.bulkWriteSerializableEntities(FILE_NAME, list, false);
+	}
+
 	public static void main(String[] args) {
 		StudentDao s = new StudentDaoFileImpl();
 		s.insertStudent(new Student(123L, true, "jyz", "123456", "Èí¼þ¹¤³Ì"));

@@ -20,9 +20,13 @@ public class SceneRouter {
 	// ´æ·ÅÎèÌ¨µÄÈÝÆ÷
 	private static Map<String, Stage> stageMap = new HashMap<>();
 
-	private static Scene getScene(String sceneName) throws IOException {
+	private static Scene getScene(String sceneName) {
 		if (sceneMap.get(sceneName) == null) {
-			createScene(sceneName);
+			try {
+				createScene(sceneName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return sceneMap.get(sceneName);
 	}
@@ -36,7 +40,7 @@ public class SceneRouter {
 		}
 	}
 
-	public static void showStage(String stageName, String sceneName) throws IOException {
+	public static void showStage(String stageName, String sceneName) {
 		Stage stage = getStage(stageName);
 		stage.setScene(getScene(sceneName));
 		stage.setTitle(stageName);

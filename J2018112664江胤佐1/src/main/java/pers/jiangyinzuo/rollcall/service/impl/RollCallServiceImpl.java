@@ -48,7 +48,7 @@ public class RollCallServiceImpl implements RollCallService {
 	 * @param rollCallType
 	 */
 	@Override
-	public void insertRollCall(Long studentId, Long classId, String presence, Integer rollCallType) {
+	public void insertRollCall(Long studentId, Long classId, String presence, Long rollCallType) {
 		TeachingClass teachingClass = new TeachingClass.Builder().classId(classId).build();
 		this.rollCallDao.insertRollCall(new RollCall.Builder().rollCallId(studentId)
 				.teachingClass(teachingClass).rollCallType(rollCallType).build());

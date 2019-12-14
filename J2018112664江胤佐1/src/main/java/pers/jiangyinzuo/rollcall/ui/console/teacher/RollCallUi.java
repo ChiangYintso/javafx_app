@@ -41,7 +41,7 @@ public class RollCallUi extends AbstractUi {
         this.presenceMap.put(5, "早退");
     }
 
-    private void addRollCallRecord(List<Student> studentList, Integer rollCallType) {
+    private void addRollCallRecord(List<Student> studentList, Long rollCallType) {
         if (studentList == null || studentList.size() == 0) {
             System.out.println("无点名记录");
             return;
@@ -88,7 +88,7 @@ public class RollCallUi extends AbstractUi {
         switch (item) {
             case 1:
                 addRollCallRecord(RollCallManager.getAbnormalStudent(rollCallService.
-                        queryRollCallsByTeachingClassId(selectedTeachingClass.getClassId())), 1);
+                        queryRollCallsByTeachingClassId(selectedTeachingClass.getClassId())), 1L);
                 return this.getClass();
             case 2:
 //				addRollCallRecord(this.selectedTeachingClass.getStudentList(), "点名");

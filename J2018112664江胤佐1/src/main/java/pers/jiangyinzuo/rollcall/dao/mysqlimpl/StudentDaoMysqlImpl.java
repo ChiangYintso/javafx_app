@@ -52,6 +52,20 @@ public class StudentDaoMysqlImpl implements StudentDao {
         return MySqlHelper.queryOne(Student.class, sql, studentId, password);
     }
 
+    @Override
+    public void updateStudent(Student student) {
+        String sql = "UPDATE rollcall.rollcall_student SET student_name = ? , major = ? , gender = ? , password = ?" +
+                " WHERE student_id = ?";
+        MySqlHelper.executeUpdate(sql, student.getStudentName(), student.getMajor(), student.getGender(), student.getPwd(),
+                student.getStudentId());
+    }
+
+    @Override
+    public void deleteStudent(Long studentId) {
+        String sql = "DELETE FROM rollcall.rollcall_student WHERE student_id = ?";
+        MySqlHelper.executeUpdate(sql, studentId);
+    }
+
     public static void main(String[] args) {
         StudentDao studentDao = new StudentDaoMysqlImpl();
         Student student = studentDao.queryStudent(2018112664L, "123456");

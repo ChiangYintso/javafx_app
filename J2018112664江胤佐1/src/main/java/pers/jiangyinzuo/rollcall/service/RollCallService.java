@@ -18,7 +18,7 @@ public interface RollCallService {
 	/**
 	 * 插入一条rollCall
 	 */
-	void insertRollCall(Long studentId, Long classId, String presence, Integer rollCallType);
+	void insertRollCall(Long studentId, Long classId, String presence, Long rollCallType);
 
 	/**
 	 * 根据id修改rollCall

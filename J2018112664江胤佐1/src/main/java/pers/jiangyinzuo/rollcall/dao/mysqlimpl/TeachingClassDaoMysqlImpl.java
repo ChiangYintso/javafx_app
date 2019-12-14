@@ -28,7 +28,7 @@ public class TeachingClassDaoMysqlImpl implements TeachingClassDao {
         String sql = "SELECT rollcall_teaching_class.* FROM" +
                 " rollcall.rollcall_teaching_class, rollcall.rollcall_class_selection " +
                 " WHERE rollcall.rollcall_class_selection.student_id = ? AND rollcall.rollcall_class_selection.student_id = rollcall_class_selection.student_id ";
-        return MySqlHelper.queryMany(TeachingClass.class, sql, studentId, studentId);
+        return MySqlHelper.queryMany(TeachingClass.class, sql, studentId);
     }
 
     @Override
