@@ -65,7 +65,12 @@ public class TeacherMainBoardController {
     void showSchedule(ActionEvent event) {
     	SceneRouter.showStage("课表", "Schedule.fxml");
     }
-    
+
+    @FXML
+    void addTeachingClass(ActionEvent event) {
+        SceneRouter.showTempStage("新建教学班", "AddTeachingClass.fxml");
+    }
+
     @FXML
     public void initialize() {
     	this.teachingClassService = new TeachingClassServiceImpl();

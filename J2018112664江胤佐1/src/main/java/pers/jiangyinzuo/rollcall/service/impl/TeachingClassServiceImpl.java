@@ -24,6 +24,11 @@ public class TeachingClassServiceImpl implements TeachingClassService {
 		return teachingClassDao.queryTeachingClassesByTeacherId(teacherId);
 	}
 
+	@Override
+	public void addTeachingClass(TeachingClass teachingClass) {
+		teachingClassDao.insertTeachingClass(teachingClass);
+	}
+
 	public static void main(String[] args) {
 		TeachingClassService service = new TeachingClassServiceImpl();
 		List<TeachingClass> list = service.queryTeachingClassesByStudentId(123L);

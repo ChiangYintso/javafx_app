@@ -153,8 +153,8 @@ public class TeachingClass implements Serializable {
         this.intro = intro;
     }
 
-    public Teacher getTeacherId() {
-        return teacher;
+    public Long getTeacherId() {
+        return teacher.getTeacherId();
     }
 
     public String getClassroom() {

@@ -11,4 +11,6 @@ public interface TeachingClassService {
 	List<TeachingClass> queryTeachingClassesByStudentId(Long studentId);
 
 	List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId);
+
+	void addTeachingClass(TeachingClass teachingClass);
 }

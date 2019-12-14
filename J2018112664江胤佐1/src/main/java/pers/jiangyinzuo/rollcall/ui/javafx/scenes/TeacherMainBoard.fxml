@@ -65,6 +65,7 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button fx:id="studentManagementBtn" layoutX="55.0" layoutY="32.0" mnemonicParsing="false" onAction="#showStudentManagement" text="学生管理" />
+      <Button fx:id="studentManagementBtn" layoutX="18.0" layoutY="14.0" mnemonicParsing="false" onAction="#showStudentManagement" text="学生管理" />
+      <Button fx:id="addTeachingClassBtn" layoutX="18.0" layoutY="47.0" mnemonicParsing="false" onAction="#addTeachingClass" text="新建教学班" />
    </children>
 </Pane>
