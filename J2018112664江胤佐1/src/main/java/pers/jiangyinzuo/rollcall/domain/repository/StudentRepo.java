@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class StudentRepo {
     private Student student;
+    private TeachingClassDao teachingClassDao = DaoFactory.createDao(TeachingClassDao.class);
 
     public void setStudent(Student student) {
         this.student = student;
@@ -19,14 +20,11 @@ public class StudentRepo {
         if (student != null && rollCallId.equals(student.getStudentId())) {
             return student;
         } else {
-
             return null;
         }
     }
 
-    public List<Student> getTeachingClassList(Long classId) {
-        TeachingClassDao teachingClassDao = DaoFactory.createDao(TeachingClassDao.class);
-        // TODO
-        return null;
+    public List<Student> getStudentList(Long classId) {
+        return teachingClassDao.queryStudentList(classId);
     }
 }

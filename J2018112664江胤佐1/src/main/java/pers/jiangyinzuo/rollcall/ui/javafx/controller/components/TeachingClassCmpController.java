@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.TeacherMainBoardController;
-import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
 /**
  * @author Jiang Yinzuo
@@ -37,7 +37,7 @@ public class TeachingClassCmpController {
     
     @FXML
     void onSelectClass(MouseEvent event) {
-    	SelectedTeachingClass.getSingleton().setCls(teachingClass);
+    	SelectedTeachingClassState.getSingleton().setCls(teachingClass);
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeacherMainBoard.fxml"));
     	TeacherMainBoardController controller = fxmlLoader.getController();
     }

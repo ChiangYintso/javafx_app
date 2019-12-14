@@ -58,9 +58,6 @@ public class LoginController {
 	 * 登录
 	 * @param event
 	 * @throws NumberFormatException
-	 * @throws FileNotFoundException
-	 * @throws CustomException
-	 * @throws IOException
 	 */
 	@FXML
 	void login(ActionEvent event) {
@@ -85,13 +82,10 @@ public class LoginController {
 					SceneRouter.showStage("教师主界面", "TeacherMainBoard.fxml");
 					SceneRouter.closeStage("登录");
 				}
-			} catch (CustomException e) {
-				CustomAlertBoard.showAlert("账号或密码错误");
 			} catch (Exception e) {
 				CustomAlertBoard.showAlert("未知错误");
 				e.printStackTrace();
 			}
-
 		}
 	}
 

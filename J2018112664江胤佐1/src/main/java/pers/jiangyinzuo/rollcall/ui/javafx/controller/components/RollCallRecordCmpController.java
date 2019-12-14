@@ -3,11 +3,12 @@ package pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.ui.javafx.controller.FxController;
 
 /**
  * @author Jiang Yinzuo
  */
-public class RollCallRecordCmpController {
+public class RollCallRecordCmpController implements FxController {
 
     @FXML
     private Text prescene;
@@ -20,12 +21,16 @@ public class RollCallRecordCmpController {
 
     @FXML
     private Text className;
-    
-    // 初始化操作
-    public void init(RollCall rollCall) {
-    	this.prescene.setText(rollCall.getPresence());
-    	this.rollCallType.setText(rollCall.getRollCallType());
-    	this.instant.setText(rollCall.getRollCallTime().toString());
-    }
 
+    /**
+     * 初始化
+     *
+     * @param params
+     */
+    @Override
+    public void init(Object... params) {
+        this.prescene.setText(((RollCall)params[0]).getPresence());
+        this.rollCallType.setText(((RollCall)params[0]).getRollCallType());
+        this.instant.setText(((RollCall)params[0]).getRollCallTime().toString());
+    }
 }

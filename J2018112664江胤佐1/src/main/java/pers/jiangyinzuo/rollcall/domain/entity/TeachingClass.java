@@ -81,8 +81,12 @@ public class TeachingClass implements Serializable {
     public TeachingClass() {
     }
 
+    /**
+     * 获取教学班的教学名单
+     * @return
+     */
     public List<Student> getStudentList() {
-        return studentRepo.getTeachingClassList(classId);
+        return studentRepo.getStudentList(classId);
     }
 
     public TeachingClass(Long classId) {

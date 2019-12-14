@@ -28,11 +28,7 @@ public class StudentMainUi extends AbstractUi {
     public StudentMainUi() {
         teachingClassService = new TeachingClassServiceImpl();
         student = UserInfo.getSingleton().getStudent();
-        try {
-            classList = teachingClassService.queryTeachingClassesByStudentId(student.getStudentId());
-        } catch (ClassNotFoundException | IOException | CustomException e) {
-            e.printStackTrace();
-        }
+        classList = teachingClassService.queryTeachingClassesByStudentId(student.getStudentId());
     }
 
     /**
@@ -61,24 +57,22 @@ public class StudentMainUi extends AbstractUi {
     }
 
     private void showRollCallRecord() {
-    	int i = 1;
-		System.out.println("选择教学班");
-    	for (TeachingClass cls : classList) {
-			System.out.println(i++ + ". " + cls.getSchedule());
-		}
-    	int item = ConsoleIoHelper.scanItem(1, classList.size());
-		try {
-			RollCallService rollCallService = new RollCallServiceImpl(classList.get(item - 1));
-			List<RollCall> resultList = rollCallService.queryRollCallsByStudentId(student.getStudentId());
-			if (resultList.size() == 0) {
-				System.out.println("暂无点名记录");
-			}
-			for (RollCall rollCall : resultList) {
-                System.out.println(rollCall.getRollCallInfo());
-			}
-		} catch (ClassNotFoundException | CustomException  | InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
+        int i = 1;
+        System.out.println("选择教学班");
+        for (TeachingClass cls : classList) {
+            System.out.println(i++ + ". " + cls.getSchedule());
+        }
+        int item = ConsoleIoHelper.scanItem(1, classList.size());
+
+        RollCallService rollCallService = new RollCallServiceImpl();
+        List<RollCall> resultList = rollCallService.queryRollCallsByStudentId(student.getStudentId());
+        if (resultList.size() == 0) {
+            System.out.println("暂无点名记录");
+        }
+        for (RollCall rollCall : resultList) {
+            System.out.println(rollCall.getRollCallInfo());
+
+        }
     }
 
     /**

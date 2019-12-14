@@ -3,6 +3,9 @@ package pers.jiangyinzuo.rollcall.ui.state;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 
+/**
+ * @author Jiang Yinzuo
+ */
 public class UserInfo {
 	private Student student;
 	private Teacher teacher;

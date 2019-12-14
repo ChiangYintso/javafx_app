@@ -5,15 +5,15 @@ import java.util.List;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
 public class TeachingClassDetailUi extends AbstractUi {
 
-	private SelectedTeachingClass selectedTeachingClass;
+	private SelectedTeachingClassState selectedTeachingClass;
 	private List<Student> studentList;
 
 	public TeachingClassDetailUi() {
-		selectedTeachingClass = SelectedTeachingClass.getSingleton();
+		selectedTeachingClass = SelectedTeachingClassState.getSingleton();
 //		studentList = this.selectedTeachingClass.getCls().getStudentList();
 	}
 

@@ -1,12 +1,10 @@
 package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
+import pers.jiangyinzuo.rollcall.domain.dto.ClassSelectionRecordDTO;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
@@ -17,28 +15,47 @@ import pers.jiangyinzuo.rollcall.helper.FileHelper;
 public class TeachingClassDaoFileImpl implements TeachingClassDao {
 
     private static final String FILE_NAME = "teachingClasses.txt";
+    private static final String CLASS_SELECTION_FILE_NAME = "classSelection.txt";
 
     @Override
-    public void insertTeachingClass(TeachingClass teachingClass) throws IOException,
-            IllegalArgumentException, SecurityException {
+    public void insertTeachingClass(TeachingClass teachingClass) {
         FileHelper.writeSerializableEntity(teachingClass, FILE_NAME);
     }
 
     @Override
-    public List<TeachingClass> queryTeachingClassesByStudentId(Long studentId)
-            throws ClassNotFoundException, IOException {
+    public List<TeachingClass> queryTeachingClassesByStudentId(Long studentId) {
         return FileHelper.<TeachingClass>filterEntities(studentId, TeachingClass::isSelectedThisClass, FILE_NAME);
     }
 
     @Override
-    public List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId)
-            throws ClassNotFoundException, IOException {
+    public List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId) {
         return FileHelper.<TeachingClass>filterEntities(teacherId, TeachingClass::isTeachThisClass, FILE_NAME);
     }
 
+    @Override
+    public List<Student> queryStudentList(Long classId) {
+        List<ClassSelectionRecordDTO> dtoList = FileHelper.readAllSerializableEntities(CLASS_SELECTION_FILE_NAME);
+        List<Long> studentIdList = new ArrayList<>();
+        for (ClassSelectionRecordDTO dto : dtoList) {
+            if (dto.getClassId().equals(classId)) {
+                studentIdList.add(dto.getStudentId());
+            }
+        }
+
+        List<Student> studentList = FileHelper.readAllSerializableEntities(FILE_NAME);
+        List<Student> results = new ArrayList<>();
+        for (Student student : studentList) {
+            for (Long studentId : studentIdList) {
+                if (student.getStudentId().equals(studentId)) {
+                    results.add(student);
+                }
+            }
+        }
+        return results;
+    }
+
     public static void main(String[] args)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-            SecurityException, IOException, ClassNotFoundException, CustomException {
+            throws IllegalArgumentException {
         TeachingClassDao teachingClassDaoImpl = new TeachingClassDaoFileImpl();
 
         List<Student> studentList = new ArrayList<>();

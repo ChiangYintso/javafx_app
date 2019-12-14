@@ -1,16 +1,15 @@
 package pers.jiangyinzuo.rollcall.ui.console.teacher;
 
-import pers.jiangyinzuo.rollcall.common.CustomException;
+
 import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,11 +24,7 @@ public class TeacherMainUi extends AbstractUi {
 	public TeacherMainUi() {
 		teachingClassService = new TeachingClassServiceImpl();
 		teacher = UserInfo.getSingleton().getTeacher();
-		try {
-			classList = teachingClassService.queryTeachingClassesByTeacherId(teacher.getTeacherId());
-		} catch (ClassNotFoundException | IOException | CustomException e) {
-			e.printStackTrace();
-		}
+		classList = teachingClassService.queryTeachingClassesByTeacherId(teacher.getTeacherId());
 	}
 
 	/**
@@ -67,6 +62,6 @@ public class TeacherMainUi extends AbstractUi {
 			System.out.println(i++ + ". " + cls.getTeachingClassInfo());
 		}
 		int item = ConsoleIoHelper.scanItem(1, classList.size());
-		SelectedTeachingClass.getSingleton().setCls(classList.get(item - 1));
+		SelectedTeachingClassState.getSingleton().setCls(classList.get(item - 1));
 	}
 }

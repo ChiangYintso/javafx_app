@@ -32,11 +32,6 @@ public class DaoFactory {
      * @param daoInterface 需要创建的Dao接口
      * @param <T>
      * @return 对应Dao的实现类
-     * @throws ClassNotFoundException
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
      */
     public static <T> T createDao(Class<T> daoInterface) {
         try {

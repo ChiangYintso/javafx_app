@@ -5,9 +5,6 @@ import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.factory.DaoFactory;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 
 /**
  * @author Jiang Yinzuo
@@ -53,6 +50,7 @@ public class TeacherDaoMysqlImpl implements TeacherDao {
 
     public static void main(String[] args) {
         TeacherDao dao = DaoFactory.createDao(TeacherDao.class);
+        assert dao != null;
         dao.insertTeacher(new Teacher.Builder()
                 .teacherId(2018112664L)
                 .password("222")

@@ -19,7 +19,7 @@ import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.components.TeachingClassCmpController;
 import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
-import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClass;
+import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
 
 public class TeacherMainBoardController {
@@ -46,7 +46,7 @@ public class TeacherMainBoardController {
 
     @FXML
     void rollCall(ActionEvent event) throws IOException {
-    	if (SelectedTeachingClass.getSingleton().getCls() == null) {
+    	if (SelectedTeachingClassState.getSingleton().getCls() == null) {
     		CustomAlertBoard.showAlert("请选择班级");
     	} else {
     		SceneRouter.showTempStage("点名面板", "RollCallBoard.fxml");

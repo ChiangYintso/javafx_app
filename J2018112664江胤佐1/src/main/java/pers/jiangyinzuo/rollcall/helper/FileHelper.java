@@ -88,10 +88,8 @@ public class FileHelper {
 	 * @param filter
 	 * @param <T>
 	 * @return
-	 * @throws IOException
-	 * @throws ClassNotFoundException
 	 */
-	public static <T> List<T> filterEntities(Long id, BiFunction<T, Long, Boolean> filter, String fileName) throws IOException, ClassNotFoundException {
+	public static <T> List<T> filterEntities(Long id, BiFunction<T, Long, Boolean> filter, String fileName) {
 		List<T> list = FileHelper.<T>readAllSerializableEntities(fileName);
 		List<T> results = new ArrayList<>();
 		for (T t : list) {

@@ -11,6 +11,7 @@ import pers.jiangyinzuo.rollcall.service.TeachingClassService;
  * @author Jiang Yinzuo
  */
 public class TeachingClassServiceImpl implements TeachingClassService {
+
 	private TeachingClassDao teachingClassDao = DaoFactory.createDao(TeachingClassDao.class);
 
 	@Override

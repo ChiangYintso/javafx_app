@@ -3,7 +3,14 @@ package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
+import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
+import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+
+import java.util.List;
 
 /**
  * @author Jiang Yinzuo
@@ -25,16 +32,19 @@ public class RollCallRecordController {
     @FXML
     private Text className;
 
-    private RollCallService rollcallService;
-    
+    private RollCallService rollcallService = new RollCallServiceImpl();
+    private Student student;
+
+    private List<RollCall> rollCallList;
+
     @FXML
     public void initialize() {
-
-    }
-    
-    // 动态添加点名记录
-    private void addRollCallRecord() {
-    	
+        student = UserInfo.getSingleton().getStudent();
+        rollCallList = rollcallService.queryRollCallsByStudentId(student.getStudentId());
+        showRollCallRecord();
     }
 
+    private void showRollCallRecord() {
+
+    }
 }

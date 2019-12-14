@@ -21,32 +21,31 @@ import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
  */
 public class ScheduleController {
 
-	@FXML
-	private GridPane schedule;
+    @FXML
+    private GridPane schedule;
 
-	private TeachingClassService teachingClassService;
+    private TeachingClassService teachingClassService = new TeachingClassServiceImpl();
 
-	private List<TeachingClass> teachingClassList;
+    private List<TeachingClass> teachingClassList;
 
-	@FXML
-    public void initialize() throws ClassNotFoundException, IOException, CustomException {
-    	teachingClassService = new TeachingClassServiceImpl();
-    	if (UserInfo.getSingleton().getTeacher()!=null) {
-    		this.teachingClassList = teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
-    	} else if (UserInfo.getSingleton().getStudent()!=null) {
-    		this.teachingClassList = teachingClassService.queryTeachingClassesByStudentId(UserInfo.getSingleton().getStudent().getStudentId());
-    	}
-    	
-    	for (TeachingClass cls : teachingClassList) {
-    		Text text = new Text();
-    		text.setText(cls.getClassName());
-    		text.setFont(new Font(20));
-    		int session = cls.getSession();
-    		schedule.add(text, session / 10, session % 10);
-    	}
-    	for (Node node : schedule.getChildren()) {
-    		GridPane.setValignment(node, VPos.CENTER);
-    		GridPane.setHalignment(node, HPos.CENTER);
-    	}
+    @FXML
+    public void initialize() {
+        if (UserInfo.getSingleton().getTeacher() != null) {
+            this.teachingClassList = teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
+        } else if (UserInfo.getSingleton().getStudent() != null) {
+            this.teachingClassList = teachingClassService.queryTeachingClassesByStudentId(UserInfo.getSingleton().getStudent().getStudentId());
+        }
+
+        for (TeachingClass cls : teachingClassList) {
+            Text text = new Text();
+            text.setText(cls.getClassName());
+            text.setFont(new Font(20));
+            int session = cls.getSession();
+            schedule.add(text, session / 10, session % 10);
+        }
+        for (Node node : schedule.getChildren()) {
+            GridPane.setValignment(node, VPos.CENTER);
+            GridPane.setHalignment(node, HPos.CENTER);
+        }
     }
 }

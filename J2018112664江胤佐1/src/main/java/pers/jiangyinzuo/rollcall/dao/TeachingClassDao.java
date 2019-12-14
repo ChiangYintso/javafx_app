@@ -2,6 +2,7 @@ package pers.jiangyinzuo.rollcall.dao;
 
 import java.util.List;
 
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 
 /**
@@ -13,4 +14,6 @@ public interface TeachingClassDao {
 	List<TeachingClass> queryTeachingClassesByStudentId(Long studentId);
 	
 	List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId);
+
+	List<Student> queryStudentList(Long classId);
 }
