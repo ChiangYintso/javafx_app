@@ -6,6 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.StudentService;
@@ -17,6 +23,8 @@ import pers.jiangyinzuo.rollcall.ui.javafx.controller.components.StudentCmpContr
 import pers.jiangyinzuo.rollcall.ui.javafx.utils.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -34,7 +42,7 @@ public class StudentListController {
     private VBox studentBox;
 
     @FXML
-    private Button exportBtn;
+    private Button importBtn;
 
     private List<Student> studentList;
 
@@ -64,8 +72,27 @@ public class StudentListController {
     }
 
     @FXML
-    void exportToExcel(ActionEvent event) {
-
+    void importFromExcel(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文件类型", "*.xls"));
+        File xlsFile = fileChooser.showOpenDialog(new Stage());
+        try {
+            Workbook workbook = Workbook.getWorkbook(xlsFile);
+            Sheet sheet = workbook.getSheet(0);
+            int rows = sheet.getRows();
+            int columns = sheet.getColumns();
+            Cell cell;
+            for (int i = 0; i < rows; ++i) {
+                for (int j = 0; j < columns; ++j) {
+                    cell = sheet.getCell(j, i);
+                    CustomAlertBoard.showAlert(cell.getContents());
+                }
+            }
+            workbook.close();
+        } catch (IOException | BiffException e) {
+            CustomAlertBoard.showAlert("导入失败");
+            e.printStackTrace();
+        }
     }
 
     @FXML

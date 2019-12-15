@@ -3,7 +3,6 @@ package pers.jiangyinzuo.rollcall.service.impl;
 import java.sql.Timestamp;
 import java.util.List;
 
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;

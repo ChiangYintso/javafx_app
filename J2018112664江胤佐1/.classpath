@@ -11,5 +11,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQLConnector"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jackson2.10.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/emoji-java-5.1.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jxl-2.6.12"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

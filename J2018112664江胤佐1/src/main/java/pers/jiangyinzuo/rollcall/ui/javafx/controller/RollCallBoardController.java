@@ -175,7 +175,7 @@ public class RollCallBoardController {
             statisticMap.put(rollCall.getPresence(), statisticMap.get(rollCall.getPresence()) + 1);
         }
         rollCallService.bulkInsertRollCalls(teachingClassRollCallList);
-        CustomAlertBoard.showAlert(statisticMap.toString());
+        statistic(statisticMap, teachingClassRollCallList.size());
         RollCallManager.setLastRollCall(selectedTeachingClass.getClassId(), studentList);
     }
 
@@ -185,5 +185,13 @@ public class RollCallBoardController {
         if (studentList != null) {
             addToStudentBox(studentList);
         }
+    }
+
+    private void statistic(Map<String, Integer> statisticMap, int total) {
+        StringBuilder result = new StringBuilder("点名结果汇总: \n" + "共点名" + total + "人\n");
+        for (String presence : statisticMap.keySet()) {
+            result.append(presence + statisticMap.get(presence) + "人, 占" + String.format("%.2f", (double) statisticMap.get(presence) / total * 100) + "%\n");
+        }
+        CustomAlertBoard.showAlert(result.toString());
     }
 }
