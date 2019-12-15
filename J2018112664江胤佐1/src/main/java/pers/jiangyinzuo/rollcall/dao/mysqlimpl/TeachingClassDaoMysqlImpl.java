@@ -44,4 +44,16 @@ public class TeachingClassDaoMysqlImpl implements TeachingClassDao {
                 "WHERE rollcall_class_selection.class_id = ? AND rollcall_class_selection.student_id = rollcall_student.student_id";
         return MySqlHelper.queryMany(Student.class, sql, classId);
     }
+
+    @Override
+    public void deleteClassSelectionRecord(Long classId, Long studentId) {
+        String sql = "DELETE FROM rollcall.rollcall_class_selection WHERE class_id = ? AND student_id = ?";
+        MySqlHelper.executeUpdate(sql, classId, studentId);
+    }
+
+    @Override
+    public void insertClassSelectionRecord(Long classId, Long studentId) {
+        String sql = "INSERT INTO rollcall.rollcall_class_selection(student_id, class_id) VALUES (?, ?)";
+        MySqlHelper.executeUpdate(sql, studentId, classId);
+    }
 }

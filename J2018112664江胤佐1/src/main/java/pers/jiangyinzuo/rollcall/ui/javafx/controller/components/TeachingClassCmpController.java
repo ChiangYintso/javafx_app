@@ -48,6 +48,7 @@ public class TeachingClassCmpController {
 
     @FXML
     void editClass(ActionEvent event) {
+        SelectedTeachingClassState.getSingleton().setCls(teachingClass);
 
     }
 
@@ -57,13 +58,6 @@ public class TeachingClassCmpController {
         this.schedule.setText(teachingClass.getWeeks() + "  周" + teachingClass.getSession() / 10 + "第" + teachingClass.getSession() % 10 + "讲");
         this.teachingClass = teachingClass;
         this.teachingClassPane.setStyle("-fx-background-color: #88ccdd");
-    }
-
-    @Deprecated
-    void onSelectClass(MouseEvent event) {
-        SelectedTeachingClassState.getSingleton().setCls(teachingClass);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeacherMainBoard.fxml"));
-        TeacherMainBoardController controller = fxmlLoader.getController();
     }
 
     @FXML
@@ -84,6 +78,7 @@ public class TeachingClassCmpController {
 
     @FXML
     void showStudentList(ActionEvent event) {
-
+        SelectedTeachingClassState.getSingleton().setCls(teachingClass);
+        SceneRouter.showTempStage("教学名单", "StudentList.fxml");
     }
 }

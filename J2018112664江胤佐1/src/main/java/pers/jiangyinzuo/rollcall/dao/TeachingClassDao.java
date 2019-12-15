@@ -16,4 +16,8 @@ public interface TeachingClassDao {
 	List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId);
 
 	List<Student> queryStudentList(Long classId);
+
+    void deleteClassSelectionRecord(Long classId, Long studentId);
+
+    void insertClassSelectionRecord(Long classId, Long studentId);
 }

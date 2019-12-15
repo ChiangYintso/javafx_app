@@ -2,6 +2,7 @@ package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
 
 import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
 import pers.jiangyinzuo.rollcall.domain.dto.ClassSelectionRecordDTO;
@@ -52,6 +53,25 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
             }
         }
         return results;
+    }
+
+    @Override
+    public void deleteClassSelectionRecord(Long classId, Long studentId) {
+        List<ClassSelectionRecordDTO> list = FileHelper.readAllSerializableEntities(CLASS_SELECTION_FILE_NAME);
+        for (ClassSelectionRecordDTO dto : list) {
+            if (dto.getClassId().equals(classId) && dto.getStudentId().equals(studentId)) {
+                list.remove(dto);
+                break;
+            }
+        }
+        FileHelper.bulkWriteSerializableEntities(CLASS_SELECTION_FILE_NAME, list, false);
+    }
+
+    @Override
+    public void insertClassSelectionRecord(Long classId, Long studentId) {
+        ClassSelectionRecordDTO dto = new ClassSelectionRecordDTO.Builder().classId(classId).studentId(studentId).build();
+        FileHelper.writeSerializableEntity(dto, CLASS_SELECTION_FILE_NAME);
+
     }
 
     public static void main(String[] args)
