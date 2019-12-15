@@ -9,6 +9,9 @@ import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -51,6 +54,22 @@ public class RollCallBoardController {
     @FXML
     private Button showRollCallRecordBtn;
 
+
+    @FXML
+    private RadioButton rollCallRadio;
+
+    @FXML
+    private RadioButton questionRadio;
+
+    @FXML
+    private ToggleGroup rollCallTypeToggleGroup;
+
+    @FXML
+    private Button repeatRollCallBtn;
+
+    @FXML
+    private TextField randomTotal;
+
     private TeachingClass selectedTeachingClass = SelectedTeachingClassState.getSingleton().getCls();
 
     private List<RollCall> teachingClassRollCallList = new ArrayList<>();
@@ -59,30 +78,69 @@ public class RollCallBoardController {
 
     private List<Student> studentList;
 
+    private List<Student> totalStudentList;
+
+    private Long rollCallType = 1L;
+
+    @FXML
+    void chooseRollCallType(ActionEvent event) {
+        if (event.getSource().equals(randomRollCallBtn)) {
+            rollCallType = 1L;
+        } else {
+            rollCallType = 2L;
+        }
+        rollCallBox.getChildren().clear();
+    }
+
     @FXML
     public void initialize() {
         teachingClassName.setText(selectedTeachingClass.getClassName());
         studentList = selectedTeachingClass.getStudentList();
+        totalStudentList = selectedTeachingClass.getStudentList();
     }
 
     @FXML
     void abnormalRollCall(ActionEvent event) {
-        rollCallBox.getChildren().clear();
-        List<Student> student = RollCallManager.getAbnormalStudent(this.teachingClassRollCallList);
+        studentList = rollCallService.queryAbnormalStudent(selectedTeachingClass.getClassId());
+        if (studentList.size() == 0) {
+            CustomAlertBoard.showAlert("没有异常");
+        } else {
+            addToStudentBox(studentList);
+        }
+
     }
 
     @FXML
     void randomRollCall(ActionEvent event) {
-        rollCallBox.getChildren().clear();
+        int total;
+        try {
+            total = Integer.parseInt(randomTotal.getText());
+        } catch (NumberFormatException e) {
+            CustomAlertBoard.showAlert("请输入数字 1 - " + totalStudentList.size());
+            return;
+        }
+        if (total > totalStudentList.size() || total < 1) {
+            CustomAlertBoard.showAlert("请输入数字 1 - " + totalStudentList.size());
+            return;
+        }
+        studentList = rollCallService.queryAbnormalStudent(selectedTeachingClass.getClassId());
+
+        addToStudentBox(studentList);
     }
 
     @FXML
     void wholeRollCall(ActionEvent event) {
+        studentList = totalStudentList;
+        addToStudentBox(studentList);
+    }
+
+    private void addToStudentBox(List<Student> students) {
         rollCallBox.getChildren().clear();
-        for (Student student : studentList) {
-            RollCall rollCall = createRollCall(1L);
+        teachingClassRollCallList.clear();
+        for (Student student : students) {
+            RollCall rollCall = createRollCall(rollCallType);
             teachingClassRollCallList.add(rollCall);
-            FxmlCmpLoaderUtil<AnchorPane, RollCallCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil<>("RollCallCmp.fxml", student, rollCall);
+            FxmlCmpLoaderUtil<AnchorPane, RollCallCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil<>("RollCallCmp.fxml", student, rollCall, rollCallType);
             rollCallBox.getChildren().addAll(fxmlCmpLoaderUtil.getPane());
         }
     }
@@ -102,16 +160,30 @@ public class RollCallBoardController {
     @FXML
     void submitRollCall(ActionEvent event) {
         Map<String, Integer> statisticMap = new HashMap<>(5);
-        statisticMap.put(RollCall.PRESENCE, 0);
-        statisticMap.put(RollCall.ABSENT, 0);
-        statisticMap.put(RollCall.ASK_FOR_LEAVE, 0);
-        statisticMap.put(RollCall.LATE, 0);
-        statisticMap.put(RollCall.LEAVE_EARLY, 0);
+        if (rollCallType == 1L) {
+            statisticMap.put(RollCall.PRESENCE, 0);
+            statisticMap.put(RollCall.ABSENT, 0);
+            statisticMap.put(RollCall.ASK_FOR_LEAVE, 0);
+            statisticMap.put(RollCall.LATE, 0);
+            statisticMap.put(RollCall.LEAVE_EARLY, 0);
+        } else {
+            statisticMap.put(RollCall.AWARD, 0);
+            statisticMap.put(RollCall.PUNISH, 0);
+        }
+
         for (RollCall rollCall : teachingClassRollCallList) {
             statisticMap.put(rollCall.getPresence(), statisticMap.get(rollCall.getPresence()) + 1);
         }
         rollCallService.bulkInsertRollCalls(teachingClassRollCallList);
         CustomAlertBoard.showAlert(statisticMap.toString());
+        RollCallManager.setLastRollCall(selectedTeachingClass.getClassId(), studentList);
+    }
 
+    @FXML
+    void repeatRollCall(ActionEvent event) {
+        studentList = RollCallManager.getLastRollCall(selectedTeachingClass.getClassId());
+        if (studentList != null) {
+            addToStudentBox(studentList);
+        }
     }
 }

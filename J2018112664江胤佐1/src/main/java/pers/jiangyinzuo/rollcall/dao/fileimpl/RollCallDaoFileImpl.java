@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
+import pers.jiangyinzuo.rollcall.dao.StudentDao;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
 
 /**
@@ -46,6 +48,20 @@ public class RollCallDaoFileImpl implements RollCallDao {
 		List<RollCall> tempRollCallList = getAllRollCalls();
 		tempRollCallList.removeIf(rollCall -> rollCall.getRollCallId().equals(rollCallId));
 		FileHelper.bulkWriteSerializableEntities(FILE_NAME, tempRollCallList, false);
+	}
+
+	@Override
+	public List<Student> queryAbnormalRollCallsByTeachingClassId(Long classId) {
+		List<RollCall> tempRollCallList = getAllRollCalls();
+		List<Student> students = new ArrayList<>();
+		StudentDao studentDao = new StudentDaoFileImpl();
+		for (RollCall rollCall : tempRollCallList) {
+			if (rollCall.getTeachingClassId().equals(classId) &&
+					!RollCall.PRESENCE.equals(rollCall.getPresence())) {
+				students.add(studentDao.queryStudent(rollCall.getStudentId()));
+			}
+		}
+		return students;
 	}
 
 

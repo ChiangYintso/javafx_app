@@ -2,6 +2,7 @@ package pers.jiangyinzuo.rollcall.dao.mysqlimpl;
 
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
 import java.util.ArrayList;
@@ -13,8 +14,9 @@ import java.util.List;
 public class RollCallDaoMysqlImpl implements RollCallDao {
     @Override
     public void insertRollCall(RollCall rollCall) {
-        String sql = "INSERT INTO rollcall_rollcall_record(`rollcall_type`, `rollcall_time`, `presence`, `class_id`, `student_id`)";
-        MySqlHelper.executeUpdate(sql, rollCall.getRollCallTypeString(), rollCall.getRollCallTime(), rollCall.getPresence(), rollCall.getTeachingClass().getClassId(), rollCall.getStudent().getStudentId());
+        String sql = "INSERT INTO rollcall_rollcall_record(`rollcall_type`, `rollcall_time`, `presence`, `class_id`, `student_id`)" +
+                " VALUES (?, ?, ?, ?, ?)";
+        MySqlHelper.executeUpdate(sql, rollCall.getRollCallTypeLong(), rollCall.getRollCallTime(), rollCall.getPresence(), rollCall.getTeachingClass().getClassId(), rollCall.getStudent().getStudentId());
     }
 
     @Override
@@ -70,5 +72,12 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     public void deleteRollCall(Long rollCallId) {
         String sql = "DELETE FROM rollcall.rollcall_rollcall_record WHERE rollcall_id = ?";
         MySqlHelper.executeUpdate(sql, rollCallId);
+    }
+
+    @Override
+    public List<Student> queryAbnormalRollCallsByTeachingClassId(Long classId) {
+        String sql = "SELECT DISTINCT rollcall.rollcall_student.* FROM rollcall.rollcall_rollcall_record, rollcall.rollcall_student" +
+                " WHERE `class_id` = ? AND rollcall_type = 1 AND presence <> ? AND rollcall_student.student_id = rollcall_rollcall_record.student_id";
+        return MySqlHelper.queryMany(Student.class, sql, classId, RollCall.PRESENCE);
     }
 }

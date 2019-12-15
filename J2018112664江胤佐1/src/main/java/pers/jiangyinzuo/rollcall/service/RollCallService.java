@@ -41,4 +41,6 @@ public interface RollCallService {
 	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId);
 
 	List<RollCall> queryRollCallsByStudentId(Long studentId);
+
+	List<Student> queryAbnormalStudent(Long classId);
 }

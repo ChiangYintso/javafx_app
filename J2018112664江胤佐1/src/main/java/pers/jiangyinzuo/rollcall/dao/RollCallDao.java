@@ -3,6 +3,7 @@ package pers.jiangyinzuo.rollcall.dao;
 import java.util.List;
 
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 
 /**
  * @author Jiang Yinzuo
@@ -22,4 +23,6 @@ public interface RollCallDao {
 	void bulkUpdateRollCalls(List<RollCall> rollCallList);
 
 	void deleteRollCall(Long rollCallId);
+
+	List<Student> queryAbnormalRollCallsByTeachingClassId(Long classId);
 }

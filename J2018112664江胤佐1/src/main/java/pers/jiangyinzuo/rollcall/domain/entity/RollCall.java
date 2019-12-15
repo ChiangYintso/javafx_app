@@ -17,6 +17,8 @@ public class RollCall implements Serializable {
     public static final String LATE = "³Ùµ½";
     public static final String ASK_FOR_LEAVE = "Çë¼Ù";
     public static final String LEAVE_EARLY = "ÔçÍË";
+    public static final String AWARD = "½±Àø";
+    public static final String PUNISH = "´¦·£";
 
 	@FieldMapper(name = "rollcall_id")
     private Long rollCallId;

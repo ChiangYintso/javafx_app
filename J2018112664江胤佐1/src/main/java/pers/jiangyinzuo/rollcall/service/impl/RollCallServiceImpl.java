@@ -1,10 +1,12 @@
 package pers.jiangyinzuo.rollcall.service.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
+import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.factory.DaoFactory;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
@@ -50,8 +52,11 @@ public class RollCallServiceImpl implements RollCallService {
 	@Override
 	public void insertRollCall(Long studentId, Long classId, String presence, Long rollCallType) {
 		TeachingClass teachingClass = new TeachingClass.Builder().classId(classId).build();
-		this.rollCallDao.insertRollCall(new RollCall.Builder().rollCallId(studentId)
-				.teachingClass(teachingClass).rollCallType(rollCallType).build());
+		this.rollCallDao.insertRollCall(new RollCall.Builder().student(
+				new Student.Builder().studentId(studentId).build())
+				.presence(presence)
+				.teachingClass(teachingClass).rollCallType(rollCallType)
+				.rollCallTime(new Timestamp(System.currentTimeMillis())).build());
 	}
 
 	/**
@@ -73,5 +78,10 @@ public class RollCallServiceImpl implements RollCallService {
 	@Override
 	public List<RollCall> queryRollCallsByStudentId(Long studentId) {
 		return rollCallDao.queryRollCallsByStudentId(studentId);
+	}
+
+	@Override
+	public List<Student> queryAbnormalStudent(Long classId) {
+		return rollCallDao.queryAbnormalRollCallsByTeachingClassId(classId);
 	}
 }
