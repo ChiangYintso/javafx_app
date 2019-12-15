@@ -1,7 +1,5 @@
 package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javafx.event.ActionEvent;
@@ -11,14 +9,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.service.LoginService;
 import pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
 import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
-import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.StageManager;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 /**
  * @author Jiang Yinzuo
@@ -69,18 +66,18 @@ public class LoginController {
 						CustomAlertBoard.showAlert("账号或密码错误");
 						return;
 					}
-					UserInfo.getSingleton().setStudent(student);
-					SceneRouter.showStage("学生主界面", "StudentMainBoard.fxml");
-					SceneRouter.closeStage("登录");
+					UserState.getSingleton().setStudent(student);
+					StageManager.showStage("学生主界面", "StudentMainBoard.fxml");
+					StageManager.closeStage("登录");
 				} else if (teacherRadio.isSelected()) {
 					Teacher teacher = loginService.teacherLogin(Long.parseLong(usernameField.getText()), passwordField.getText());
 					if (teacher == null) {
 						CustomAlertBoard.showAlert("账号或密码错误");
 						return;
 					}
-					UserInfo.getSingleton().setTeacher(teacher);
-					SceneRouter.showStage("教师主界面", "TeacherMainBoard.fxml");
-					SceneRouter.closeStage("登录");
+					UserState.getSingleton().setTeacher(teacher);
+					StageManager.showStage("教师主界面", "TeacherMainBoard.fxml");
+					StageManager.closeStage("登录");
 				}
 			} catch (Exception e) {
 				CustomAlertBoard.showAlert("未知错误");

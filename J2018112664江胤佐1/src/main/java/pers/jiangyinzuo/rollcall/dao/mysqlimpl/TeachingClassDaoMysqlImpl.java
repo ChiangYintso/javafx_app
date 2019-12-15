@@ -52,8 +52,31 @@ public class TeachingClassDaoMysqlImpl implements TeachingClassDao {
     }
 
     @Override
+    public void deleteClassSelectionRecords(Long classId) {
+        String sql = "DELETE FROM rollcall.rollcall_class_selection WHERE class_id = ?";
+        MySqlHelper.executeUpdate(sql, classId);
+    }
+
+    @Override
     public void insertClassSelectionRecord(Long classId, Long studentId) {
         String sql = "INSERT INTO rollcall.rollcall_class_selection(student_id, class_id) VALUES (?, ?)";
         MySqlHelper.executeUpdate(sql, studentId, classId);
+    }
+
+    @Override
+    public void deleteClass(Long classId) {
+        String sql = "DELETE FROM rollcall.rollcall_teaching_class WHERE class_id = ?";
+        MySqlHelper.executeUpdate(sql, classId);
+    }
+
+    @Override
+    public void updateTeachingClass(TeachingClass selectedTeachingClass) {
+        String sql = "UPDATE rollcall.rollcall_teaching_class SET " +
+                "class_name = ?, class_intro = ?, class_session = ?" +
+                ", classroom = ?, credit = ?, weeks = ? WHERE  class_id = ?";
+        MySqlHelper.executeUpdate(sql, selectedTeachingClass.getClassName(),
+                selectedTeachingClass.getIntro(), selectedTeachingClass.getSession(),
+                selectedTeachingClass.getClassroom(), selectedTeachingClass.getCredit(),
+                selectedTeachingClass.getWeeks(), selectedTeachingClass.getClassId());
     }
 }

@@ -2,15 +2,13 @@ package pers.jiangyinzuo.rollcall.ui.javafx.controller.components;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
-import pers.jiangyinzuo.rollcall.ui.javafx.controller.TeacherMainBoardController;
-import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.StageManager;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
 /**
@@ -49,7 +47,7 @@ public class TeachingClassCmpController {
     @FXML
     void editClass(ActionEvent event) {
         SelectedTeachingClassState.getSingleton().setCls(teachingClass);
-
+        StageManager.showTempStage("修改教学班", "EditClass.fxml");
     }
 
     public void init(TeachingClass teachingClass) {
@@ -73,12 +71,12 @@ public class TeachingClassCmpController {
     @FXML
     void rollCall(ActionEvent event) {
         SelectedTeachingClassState.getSingleton().setCls(teachingClass);
-        SceneRouter.showTempStage("点名面板", "RollCallBoard.fxml");
+        StageManager.showTempStage("点名面板", "RollCallBoard.fxml");
     }
 
     @FXML
     void showStudentList(ActionEvent event) {
         SelectedTeachingClassState.getSingleton().setCls(teachingClass);
-        SceneRouter.showTempStage("教学名单", "StudentList.fxml");
+        StageManager.showTempStage("教学名单", "StudentList.fxml");
     }
 }

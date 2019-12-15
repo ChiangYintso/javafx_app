@@ -2,7 +2,6 @@ package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.FileHandler;
 
 import pers.jiangyinzuo.rollcall.dao.TeachingClassDao;
 import pers.jiangyinzuo.rollcall.domain.dto.ClassSelectionRecordDTO;
@@ -15,22 +14,22 @@ import pers.jiangyinzuo.rollcall.helper.FileHelper;
  */
 public class TeachingClassDaoFileImpl implements TeachingClassDao {
 
-    private static final String FILE_NAME = "teachingClasses.txt";
+    private static final String TEACHING_CLASS_FILE_NAME = "teachingClasses.txt";
     private static final String CLASS_SELECTION_FILE_NAME = "classSelection.txt";
 
     @Override
     public void insertTeachingClass(TeachingClass teachingClass) {
-        FileHelper.writeSerializableEntity(teachingClass, FILE_NAME);
+        FileHelper.writeSerializableEntity(teachingClass, TEACHING_CLASS_FILE_NAME);
     }
 
     @Override
     public List<TeachingClass> queryTeachingClassesByStudentId(Long studentId) {
-        return FileHelper.<TeachingClass>filterEntities(studentId, TeachingClass::isSelectedThisClass, FILE_NAME);
+        return FileHelper.<TeachingClass>filterEntities(studentId, TeachingClass::isSelectedThisClass, TEACHING_CLASS_FILE_NAME);
     }
 
     @Override
     public List<TeachingClass> queryTeachingClassesByTeacherId(Long teacherId) {
-        return FileHelper.<TeachingClass>filterEntities(teacherId, TeachingClass::isTeachThisClass, FILE_NAME);
+        return FileHelper.<TeachingClass>filterEntities(teacherId, TeachingClass::isTeachThisClass, TEACHING_CLASS_FILE_NAME);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
             }
         }
 
-        List<Student> studentList = FileHelper.readAllSerializableEntities(FILE_NAME);
+        List<Student> studentList = FileHelper.readAllSerializableEntities(TEACHING_CLASS_FILE_NAME);
         List<Student> results = new ArrayList<>();
         for (Student student : studentList) {
             for (Long studentId : studentIdList) {
@@ -68,10 +67,47 @@ public class TeachingClassDaoFileImpl implements TeachingClassDao {
     }
 
     @Override
+    public void deleteClassSelectionRecords(Long classId) {
+        List<ClassSelectionRecordDTO> list = FileHelper.readAllSerializableEntities(CLASS_SELECTION_FILE_NAME);
+        for (ClassSelectionRecordDTO selectionRecordDTO : list) {
+            if (selectionRecordDTO.getClassId().equals(classId)) {
+                list.remove(selectionRecordDTO);
+                break;
+            }
+        }
+        FileHelper.bulkWriteSerializableEntities(CLASS_SELECTION_FILE_NAME, list,false);
+    }
+
+    @Override
     public void insertClassSelectionRecord(Long classId, Long studentId) {
         ClassSelectionRecordDTO dto = new ClassSelectionRecordDTO.Builder().classId(classId).studentId(studentId).build();
         FileHelper.writeSerializableEntity(dto, CLASS_SELECTION_FILE_NAME);
 
+    }
+
+    @Override
+    public void deleteClass(Long classId) {
+        List<TeachingClass> list = FileHelper.readAllSerializableEntities(TEACHING_CLASS_FILE_NAME);
+        for (TeachingClass teachingClass : list) {
+            if (teachingClass.getClassId().equals(classId)) {
+                list.remove(teachingClass);
+                break;
+            }
+        }
+        FileHelper.bulkWriteSerializableEntities(TEACHING_CLASS_FILE_NAME, list, false);
+    }
+
+    @Override
+    public void updateTeachingClass(TeachingClass selectedTeachingClass) {
+        List<TeachingClass> list = FileHelper.readAllSerializableEntities(TEACHING_CLASS_FILE_NAME);
+        for (TeachingClass teachingClass : list) {
+            if (teachingClass.getClassId().equals(selectedTeachingClass.getClassId())) {
+                list.remove(teachingClass);
+                list.add(selectedTeachingClass);
+                break;
+            }
+        }
+        FileHelper.bulkWriteSerializableEntities(TEACHING_CLASS_FILE_NAME, list, false);
     }
 
     public static void main(String[] args)

@@ -1,6 +1,5 @@
 package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -8,19 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
-import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.components.TeachingClassCmpController;
-import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
-import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.javafx.controller.proxy.ControllerProxy;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.StageManager;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 public class TeacherMainBoardController {
 
@@ -45,25 +41,30 @@ public class TeacherMainBoardController {
 
     @FXML
     void showSchedule(ActionEvent event) {
-    	SceneRouter.showStage("课表", "Schedule.fxml");
+    	StageManager.showStage("课表", "Schedule.fxml");
     }
 
     @FXML
     void addTeachingClass(ActionEvent event) {
-        SceneRouter.showTempStage("新建教学班", "AddTeachingClass.fxml");
+        StageManager.showTempStage("新建教学班", "AddTeachingClass.fxml");
     }
 
     @FXML
     public void initialize() {
+        ControllerProxy.setTeacherMainBoardController(this);
     	this.teachingClassService = new TeachingClassServiceImpl();
-    	this.teachingClasses = this.teachingClassService.queryTeachingClassesByTeacherId(UserInfo.getSingleton().getTeacher().getTeacherId());
+
     	this.addTeachingClassTab();
-    	this.teacherName.setText(UserInfo.getSingleton().getTeacher().getTeacherName());
-    	this.teacherId.setText(UserInfo.getSingleton().getTeacher().getTeacherId().toString());
+    	this.teacherName.setText(UserState.getSingleton().getTeacher().getTeacherName());
+    	this.teacherId.setText(UserState.getSingleton().getTeacher().getTeacherId().toString());
     }
-    
-    // 动态添加课程信息
-    private void addTeachingClassTab() {
+
+    /**
+     * 添加教学班到列表
+     */
+    public void addTeachingClassTab() {
+        this.teachingClassList.getChildren().clear();
+        this.teachingClasses = this.teachingClassService.queryTeachingClassesByTeacherId(UserState.getSingleton().getTeacher().getTeacherId());
     	for (TeachingClass cls : this.teachingClasses) {
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeachingClassCmp.fxml"));
 
@@ -82,7 +83,7 @@ public class TeacherMainBoardController {
 
     @FXML
     void showStudentManagement(ActionEvent event) {
-        SceneRouter.showTempStage("学生管理", "StudentManagement.fxml");
+        StageManager.showTempStage("学生管理", "StudentManagement.fxml");
     }
 }
 

@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
-import pers.jiangyinzuo.rollcall.ui.javafx.router.SceneRouter;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.StageManager;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 /**
  * @author Jiang Yinzuo
@@ -35,7 +35,7 @@ public class StudentMainBoardController {
     
     @FXML
     public void initialize() {
-    	Student student = UserInfo.getSingleton().getStudent();
+    	Student student = UserState.getSingleton().getStudent();
     	this.studentId.setText(student.getStudentId().toString());
     	this.studentName.setText(student.getStudentName());
     	this.major.setText(student.getMajor());
@@ -43,12 +43,12 @@ public class StudentMainBoardController {
     
     @FXML
     void showRollCallRecord(ActionEvent event) throws IOException {
-    	SceneRouter.showStage("点名记录", "RollCallRecord.fxml");
+    	StageManager.showStage("点名记录", "RollCallRecord.fxml");
     }
 
     
     @FXML
     void showSchedule(ActionEvent event) throws IOException {
-    	SceneRouter.showStage("课表", "Schedule.fxml");
+    	StageManager.showStage("课表", "Schedule.fxml");
     }
 }

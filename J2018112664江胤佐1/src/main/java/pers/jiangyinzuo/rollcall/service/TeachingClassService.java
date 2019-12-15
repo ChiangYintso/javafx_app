@@ -17,4 +17,9 @@ public interface TeachingClassService {
 	void removeStudent(Long classId, Long studentId);
 
 	void addStudent(Long classId, Long studentId);
+
+	void deleteClass(Long classId);
+
+	void editClass(TeachingClass selectedTeachingClass);
+
 }

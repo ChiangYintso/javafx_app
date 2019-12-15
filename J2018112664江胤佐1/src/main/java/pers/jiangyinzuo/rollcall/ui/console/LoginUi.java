@@ -1,10 +1,7 @@
 package pers.jiangyinzuo.rollcall.ui.console;
 
-import java.io.IOException;
-import java.io.StreamCorruptedException;
 import java.lang.reflect.InvocationTargetException;
 
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
@@ -12,7 +9,7 @@ import pers.jiangyinzuo.rollcall.service.LoginService;
 import pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
 import pers.jiangyinzuo.rollcall.ui.console.teacher.TeacherMainUi;
 import pers.jiangyinzuo.rollcall.ui.console.student.StudentMainUi;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 /**
  * @author Jiang Yinzuo
@@ -58,7 +55,7 @@ public class LoginUi extends AbstractUi {
                 if (pwd.equals("#")) {
                     break;
                 }
-                UserInfo userInfo = UserInfo.getSingleton();
+                UserState userInfo = UserState.getSingleton();
                 if (isStudent.equals("1")) {
                     Student student = loginService.studentLogin(Long.parseLong(id), pwd);
                     if (student != null) {

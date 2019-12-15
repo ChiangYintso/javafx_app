@@ -7,7 +7,8 @@ import javafx.scene.control.TextField;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.javafx.controller.proxy.ControllerProxy;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 public class AddTeachingClassController {
 
@@ -54,9 +55,10 @@ public class AddTeachingClassController {
                 .semester(Integer.parseInt(semesterField.getText()))
                 .weeks(weeksField.getText())
                 .session(Integer.parseInt(weekField.getText()+sessionField.getText()))
-                .teacher(UserInfo.getSingleton().getTeacher())
+                .teacher(UserState.getSingleton().getTeacher())
                 .build();
         teachingClassService.addTeachingClass(teachingClass);
+        ControllerProxy.getTeacherMainBoardController().addTeachingClassTab();
     }
 
 }

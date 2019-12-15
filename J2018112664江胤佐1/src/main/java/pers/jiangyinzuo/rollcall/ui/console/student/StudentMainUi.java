@@ -1,6 +1,5 @@
 package pers.jiangyinzuo.rollcall.ui.console.student;
 
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
@@ -10,10 +9,8 @@ import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -27,7 +24,7 @@ public class StudentMainUi extends AbstractUi {
 
     public StudentMainUi() {
         teachingClassService = new TeachingClassServiceImpl();
-        student = UserInfo.getSingleton().getStudent();
+        student = UserState.getSingleton().getStudent();
         classList = teachingClassService.queryTeachingClassesByStudentId(student.getStudentId());
     }
 
@@ -38,7 +35,7 @@ public class StudentMainUi extends AbstractUi {
      */
     @Override
     public Class<? extends AbstractUi> run() {
-        System.out.println(UserInfo.getSingleton().getStudent().welcome());
+        System.out.println(UserState.getSingleton().getStudent().welcome());
         ConsoleIoHelper.printMenu(new String[]{"1. 查看点名记录", "2. 查看课表", "3. 查看教学班详情", "4. 退出"});
         int item = ConsoleIoHelper.scanItem(1, 4);
         switch (item) {

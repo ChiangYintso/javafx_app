@@ -19,5 +19,12 @@ public interface TeachingClassDao {
 
     void deleteClassSelectionRecord(Long classId, Long studentId);
 
+	void deleteClassSelectionRecords(Long classId);
+
     void insertClassSelectionRecord(Long classId, Long studentId);
+
+	void deleteClass(Long classId);
+
+	void updateTeachingClass(TeachingClass selectedTeachingClass);
+
 }

@@ -12,7 +12,13 @@ import javafx.stage.Stage;
 /**
  * @author Jiang Yinzuo
  */
-public class SceneRouter {
+public class StageManager {
+
+	private static Stage currentStage;
+
+	public static Stage getCurrentStage() {
+		return currentStage;
+	}
 
 	// ´æ·ÅÒ³ÃæµÄÈÝÆ÷
 	private static Map<String, Scene> sceneMap = new HashMap<>();
@@ -34,7 +40,7 @@ public class SceneRouter {
 	private static void createScene(String sceneName) throws IOException {
 		for (int i = 0; i < sceneName.length(); ++i) {
 			if (sceneName.charAt(i) == '.') {
-				Parent root = FXMLLoader.load(SceneRouter.class.getResource("../scenes/" + sceneName));
+				Parent root = FXMLLoader.load(StageManager.class.getResource("../scenes/" + sceneName));
 				sceneMap.put(sceneName, new Scene(root));
 			}
 		}
@@ -51,11 +57,12 @@ public class SceneRouter {
 	public static void showTempStage(String stageTitle, String fxmlFileName) {
 		try {
 			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(SceneRouter.class.getResource("../scenes/" + fxmlFileName));
+			Parent root = FXMLLoader.load(StageManager.class.getResource("../scenes/" + fxmlFileName));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.setTitle(stageTitle);
 			stage.show();
+			currentStage = stage;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

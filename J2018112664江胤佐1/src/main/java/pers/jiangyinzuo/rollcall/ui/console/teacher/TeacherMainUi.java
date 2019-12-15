@@ -8,7 +8,7 @@ import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.ui.console.AbstractUi;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class TeacherMainUi extends AbstractUi {
 
 	public TeacherMainUi() {
 		teachingClassService = new TeachingClassServiceImpl();
-		teacher = UserInfo.getSingleton().getTeacher();
+		teacher = UserState.getSingleton().getTeacher();
 		classList = teachingClassService.queryTeachingClassesByTeacherId(teacher.getTeacherId());
 	}
 
@@ -34,7 +34,7 @@ public class TeacherMainUi extends AbstractUi {
 	 */
 	@Override
 	public Class<? extends AbstractUi> run() {
-		UserInfo userInfo = UserInfo.getSingleton();
+		UserState userInfo = UserState.getSingleton();
 		System.out.println(userInfo.getTeacher().welcome());
 		int item = ConsoleIoHelper.selectMenuItem(new String[] {"1. 查看课表", "2. 选择教学班", "3. 退出"});
 		switch (item) {

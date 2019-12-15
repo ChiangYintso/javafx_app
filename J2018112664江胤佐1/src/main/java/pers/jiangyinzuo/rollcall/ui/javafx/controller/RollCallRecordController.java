@@ -5,10 +5,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
-import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
 import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
-import pers.jiangyinzuo.rollcall.ui.state.UserInfo;
+import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class RollCallRecordController {
 
     @FXML
     public void initialize() {
-        student = UserInfo.getSingleton().getStudent();
+        student = UserState.getSingleton().getStudent();
         rollCallList = rollcallService.queryRollCallsByStudentId(student.getStudentId());
         showRollCallRecord();
     }
