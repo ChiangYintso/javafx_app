@@ -30,7 +30,7 @@
       </Text>
       <VBox fx:id="teachingClassList" layoutX="33.0" layoutY="151.0" prefHeight="221.0" prefWidth="542.0" style="-fx-background-color: #cceddd;">
          <children>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onSelectTeachingClass" prefHeight="52.0" prefWidth="537.0">
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="52.0" prefWidth="537.0">
                <children>
                   <Text fx:id="teachingClassName" layoutX="145.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课程名称" wrappingWidth="123.33331298828125">
                      <font>
@@ -53,16 +53,6 @@
       <Text fill="#4f4b4b" layoutX="35.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="本学期您的教学班列表">
          <font>
             <Font size="17.0" />
-         </font>
-      </Text>
-      <Button fx:id="rollCallBtn" layoutX="449.0" layoutY="93.0" mnemonicParsing="false" onAction="#rollCall" prefHeight="45.0" prefWidth="126.0" style="-fx-background-color: #aabbcc;" text="点名">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Button>
-      <Text fx:id="selectedTip" fill="#423434" layoutX="227.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="当前选中课程ID： 尚未选择">
-         <font>
-            <Font size="15.0" />
          </font>
       </Text>
       <Button fx:id="studentManagementBtn" layoutX="18.0" layoutY="14.0" mnemonicParsing="false" onAction="#showStudentManagement" text="学生管理" />

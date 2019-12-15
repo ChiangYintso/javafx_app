@@ -42,7 +42,7 @@ public class TeachingClass implements Serializable {
     @FieldMapper(type = "reference", name = "teacher_id", joinName = "teacher_id")
     private Teacher teacher;
 
-    private StudentRepo studentRepo;
+    private StudentRepo studentRepo = new StudentRepo();
 
     private TeachingClass(Builder builder) {
         setClassId(builder.classId);
@@ -55,7 +55,6 @@ public class TeachingClass implements Serializable {
         setSession(builder.session);
         setClassroom(builder.classroom);
         setTeacher(builder.teacher);
-        studentRepo = builder.studentRepo;
     }
 
     public Long getClassId() {

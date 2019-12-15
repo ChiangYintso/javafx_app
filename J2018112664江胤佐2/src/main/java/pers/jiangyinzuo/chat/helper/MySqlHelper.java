@@ -98,7 +98,7 @@ public class MySqlHelper {
     public static int executeQueryCount(String sql, Object... parameters) {
         getConnection();
         loadPreparedStatement(sql, parameters);
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         try {
             resultSet = preparedStatement.executeQuery();
             resultSet.next();

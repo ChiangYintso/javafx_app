@@ -12,6 +12,12 @@ import java.sql.Timestamp;
 @TableMapper("rollcall_rollcall_record")
 public class RollCall implements Serializable {
 
+    public static final String PRESENCE = "已到";
+    public static final String ABSENT = "未到";
+    public static final String LATE = "迟到";
+    public static final String ASK_FOR_LEAVE = "请假";
+    public static final String LEAVE_EARLY = "早退";
+
 	@FieldMapper(name = "rollcall_id")
     private Long rollCallId;
 
@@ -79,11 +85,15 @@ public class RollCall implements Serializable {
         this.presence = presence;
     }
 
-    public String getRollCallType() {
+    public String getRollCallTypeString() {
         if (rollCallType == 2) {
             return "提问";
         }
         return "点名";
+    }
+
+    public Long getRollCallTypeLong() {
+        return rollCallType;
     }
 
     public void setRollCallType(Long rollCallType) {

@@ -4,11 +4,8 @@ import pers.jiangyinzuo.rollcall.dao.RollCallDao;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Jiang Yinzuo
@@ -17,17 +14,17 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     @Override
     public void insertRollCall(RollCall rollCall) {
         String sql = "INSERT INTO rollcall_rollcall_record(`rollcall_type`, `rollcall_time`, `presence`, `class_id`, `student_id`)";
-        MySqlHelper.executeUpdate(sql, rollCall.getRollCallType(), rollCall.getRollCallTime(), rollCall.getPresence(), rollCall.getTeachingClass().getClassId(), rollCall.getStudent().getStudentId());
+        MySqlHelper.executeUpdate(sql, rollCall.getRollCallTypeString(), rollCall.getRollCallTime(), rollCall.getPresence(), rollCall.getTeachingClass().getClassId(), rollCall.getStudent().getStudentId());
     }
 
     @Override
     public void bulkInsertRollCalls(List<RollCall> rollCallList) {
-        String sql = "INSERT INTO rollcall_rollcall_record(`rollcall_type`, `rollcall_time`, `presence`, `class_id`, `student_id`)";
+        String sql = "INSERT INTO rollcall.rollcall_rollcall_record(rollcall_type, presence, class_id, student_id)" +
+                " VALUES(?, ?, ?, ?)";
         List<List<Object>> parametersList = new ArrayList<>();
         for (RollCall rollCall : rollCallList) {
             List<Object> parameters = new ArrayList<>();
-            parameters.add(rollCall.getRollCallType());
-            parameters.add(rollCall.getRollCallTime());
+            parameters.add(rollCall.getRollCallTypeLong());
             parameters.add(rollCall.getPresence());
             parameters.add(rollCall.getTeachingClass().getClassId());
             parameters.add(rollCall.getStudent().getStudentId());
@@ -52,7 +49,7 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     public void updateRollCall(RollCall rollCall) {
         String sql = "UPDATE rollcall_rollcall_record SET rollcall_type = ?," +
                 " presence = ? WHERE rollcall_id = ?";
-        MySqlHelper.executeUpdate(sql, rollCall.getRollCallType(), rollCall.getPresence(), rollCall.getRollCallId());
+        MySqlHelper.executeUpdate(sql, rollCall.getRollCallTypeString(), rollCall.getPresence(), rollCall.getRollCallId());
     }
 
     @Override

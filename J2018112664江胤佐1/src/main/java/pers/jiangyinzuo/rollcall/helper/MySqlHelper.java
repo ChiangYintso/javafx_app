@@ -150,6 +150,7 @@ public class MySqlHelper {
     public static int[] bulkExecuteUpdate(String sql, List<List<Object>> parametersList) {
         getConnection();
         try {
+            setPreparedStatement(sql);
             for (List<Object> list : parametersList) {
                 addBatch(list);
             }
@@ -157,7 +158,7 @@ public class MySqlHelper {
             conn.commit();
             conn.setAutoCommit(true);
             closeConnection();
-            setPreparedStatement(sql);
+
             return results;
         } catch (SQLException e) {
             e.printStackTrace();

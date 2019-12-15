@@ -30,7 +30,7 @@ public class RollCallRecordCmpController implements FxController {
     @Override
     public void init(Object... params) {
         this.prescene.setText(((RollCall)params[0]).getPresence());
-        this.rollCallType.setText(((RollCall)params[0]).getRollCallType());
+        this.rollCallType.setText(((RollCall)params[0]).getRollCallTypeString());
         this.instant.setText(((RollCall)params[0]).getRollCallTime().toString());
     }
 }

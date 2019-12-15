@@ -35,28 +35,10 @@ public class TeacherMainBoardController {
 
     @FXML
     private VBox teachingClassList;
-    
-    @FXML
-    private Button rollCallBtn;
 
-    @FXML
-    private Text selectedTip;
     
     private TeachingClassService teachingClassService;
 
-    @FXML
-    void rollCall(ActionEvent event) throws IOException {
-    	if (SelectedTeachingClassState.getSingleton().getCls() == null) {
-    		CustomAlertBoard.showAlert("请选择班级");
-    	} else {
-    		SceneRouter.showTempStage("点名面板", "RollCallBoard.fxml");
-    	}
-    	
-    }
-    
-    @FXML
-    void onSelectTeachingClass(MouseEvent event) {
-    }
     
     // 教学班列表
     private List<TeachingClass> teachingClasses;
@@ -96,10 +78,6 @@ public class TeacherMainBoardController {
         	cmpController.init(cls);
         	this.teachingClassList.getChildren().add(pane);
     	}
-    }
-    
-    public void changeTip(Integer classId) {
-    	
     }
 
     @FXML

@@ -13,8 +13,8 @@ public class FxmlCmpLoaderUtil<T, C extends FxController> {
     private T pane = null;
     private C controller = null;
 
-    public static <T, C extends FxController> T loadFxComponent(String path, String fxmlFileName, Object ...params) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(FxmlCmpLoaderUtil.class.getResource("../../../" + path + "/javafx/scenes/components/" + fxmlFileName));
+    public static <T, C extends FxController> T loadFxComponent(String fxmlFileName, Object ...params) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(FxmlCmpLoaderUtil.class.getResource("../" + "scenes/components/" + fxmlFileName));
         T pane = fxmlLoader.load();
         C controller = fxmlLoader.getController();
         controller.init(params);
