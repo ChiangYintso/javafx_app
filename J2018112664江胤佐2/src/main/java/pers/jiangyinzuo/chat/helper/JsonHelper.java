@@ -58,6 +58,8 @@ public class JsonHelper {
         public static final String ASK_FOR_FRIEND_IF_IS_ONLINE = "askForFriendIfIsOnline";
         public static final String FRIENDS_ONLINE_STATUS = "friendsOnlineStatus";
         public static final String FOUND_GROUP_ACCEPTED = "foundGroupAccepted";
+        public static final String ADD_GROUP = "addGroup";
+        public static final String AGREE_TO_JOIN_GROUP = "agreeToJoinGroup";
     }
 
     /**

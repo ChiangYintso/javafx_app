@@ -33,4 +33,14 @@ public class GroupServiceImpl implements GroupService {
     public void removeGroupMember(Long userId, Long groupId) {
         groupDao.deleteGroupMember(userId, groupId);
     }
+
+    @Override
+    public Group queryGroup(Long groupId) {
+        return groupDao.queryGroup(groupId);
+    }
+
+    @Override
+    public void addMember(long groupId, long userId) {
+        groupDao.addMember(groupId, userId);
+    }
 }

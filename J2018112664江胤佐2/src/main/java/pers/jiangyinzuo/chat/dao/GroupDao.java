@@ -19,4 +19,6 @@ public interface GroupDao {
 	void updateMemberPrivilege(Long userId, Long privilege, Long groupId);
 
 	void deleteGroupMember(Long userId, Long groupId);
+
+    Group queryGroup(Long groupId);
 }

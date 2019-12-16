@@ -64,7 +64,6 @@ public class MySqlHelper {
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
         }
-        closeConnection();
         return null;
     }
 

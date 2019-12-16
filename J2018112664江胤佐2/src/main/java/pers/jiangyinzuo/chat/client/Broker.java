@@ -31,7 +31,9 @@ public class Broker implements MainBoardController.Publisher, SessionCardCmpCont
                 this.onUpdateOnlineTotal(jsonNode);
                 break;
             case Option.ADD_FRIEND:
+            case Option.ADD_GROUP:
             case Option.AGREE_TO_ADD_FRIEND:
+            case Option.AGREE_TO_JOIN_GROUP:
             case Option.FOUND_GROUP_ACCEPTED:
                 this.onNewNoticeReceived(jsonNode);
                 break;

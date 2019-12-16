@@ -12,12 +12,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.javafx.Main;
+import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.common.javafx.CustomAlertBoard;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.User;
+import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.FriendService;
+import pers.jiangyinzuo.chat.service.GroupService;
 import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
+import pers.jiangyinzuo.chat.service.impl.GroupServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,10 +67,11 @@ public class AddBoardController {
      * 当前选中的radio
      */
     private String radioSelected = "查找好友";
-    private User userSearched = null;
+    private SessionCardCmpController.Session sessionSearched = null;
     private Group groupSearched = null;
 
     private FriendService friendService;
+    private GroupService groupService = new GroupServiceImpl();
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -86,16 +91,16 @@ public class AddBoardController {
     void search(ActionEvent event) {
 
         class VisibleHandler {
-            void setVisible(boolean isVisible, User user) {
+            void setVisible(boolean isVisible, SessionCardCmpController.Session session) {
                 addBtn.setVisible(isVisible);
                 idText.setVisible(isVisible);
                 userNameText.setVisible(isVisible);
                 avatarView.setVisible(isVisible);
-                userSearched = user;
+                sessionSearched = session;
                 if (isVisible) {
-                    idText.setText(user.getUserId().toString());
-                    userNameText.setText(user.getUserName());
-                    avatarView.setImage(new Image(user.getAvatar()));
+                    idText.setText(session.getId().toString());
+                    userNameText.setText(session.getSessionName());
+                    avatarView.setImage(new Image(session.getAvatar()));
                 } else {
                     inputBox.setText("");
                 }
@@ -117,35 +122,48 @@ public class AddBoardController {
             } else {
                 new VisibleHandler().setVisible(true, user);
             }
+        } else {
+            Group group = groupService.queryGroup(Long.parseLong(inputBox.getText()));
+            if (group == null) {
+                new VisibleHandler().setVisible(false, null);
+                CustomAlertBoard.showAlert("未找到");
+            } else {
+                new VisibleHandler().setVisible(true, group);
+            }
         }
     }
 
     @FXML
-    void addFriend(ActionEvent event) {
+    void addFriendOrGroup(ActionEvent event) {
         byte[] message = new byte[256];
         Map<String, Object> map = new HashMap<>(10);
-        map.put("option", ADD_FRIEND);
 
-        Map<String, Object> data = new HashMap<>(10);
         if (FIND_FRIENDS.equals(radioSelected)) {
-            data.put("sendTo", userSearched.getUserId());
+            map.put("option", ADD_FRIEND);
+            Map<String, Object> data = new HashMap<>(10);
+            data.put("sendTo", sessionSearched.getId());
             data.put("sendFrom", UserState.getSingleton().getUser().getUserId());
             map.put("data", data);
-            try {
-                message = objectMapper.writeValueAsBytes(map);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-
-            byte[] finalMessage = message;
-
-            try {
-                Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
-            } catch (RejectedExecutionException e) {
-                e.printStackTrace();
-            }
         } else {
-            // TODO 加群
+            map.put("option", JsonHelper.Option.ADD_GROUP);
+            Map<String, Object> data = new HashMap<>(10);
+            data.put("sendTo", ((Group)sessionSearched).getMaster().getUserId());
+            data.put("sendFrom", UserState.getSingleton().getUser().getUserId());
+            data.put("groupId", sessionSearched.getId());
+            map.put("data", data);
+        }
+        try {
+            message = objectMapper.writeValueAsBytes(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        byte[] finalMessage = message;
+
+        try {
+            Main.getClientThreadPool().execute(() -> Main.getTcpClient().sendMessage(finalMessage));
+        } catch (RejectedExecutionException e) {
+            e.printStackTrace();
         }
     }
 }

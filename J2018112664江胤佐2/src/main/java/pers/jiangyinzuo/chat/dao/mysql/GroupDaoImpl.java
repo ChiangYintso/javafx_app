@@ -1,16 +1,12 @@
 package pers.jiangyinzuo.chat.dao.mysql;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.dao.GroupDao;
 import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.helper.MySqlHelper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Jiang Yinzuo
@@ -61,6 +57,12 @@ public class GroupDaoImpl implements GroupDao {
     public void deleteGroupMember(Long userId, Long groupId) {
         String sql = "DELETE FROM chat_user_group_relation WHERE user_id = ? AND group_id = ?";
         MySqlHelper.executeUpdate(sql, userId, groupId);
+    }
+
+    @Override
+    public Group queryGroup(Long groupId) {
+        String sql = "SELECT * FROM chat_group WHERE group_id = ?";
+        return MySqlHelper.queryOne(Group.class, sql, groupId);
     }
 
     public static void main(String[] args) {

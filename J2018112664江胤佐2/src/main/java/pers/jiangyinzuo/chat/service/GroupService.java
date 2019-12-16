@@ -15,4 +15,11 @@ public interface GroupService {
 	void changeMemberPrivilege(Long userId, Long privilege, Long groupId);
 
 	void removeGroupMember(Long userId, Long groupId);
+
+	Group queryGroup(Long groupId);
+
+	/**
+	 * º”»∫
+	 */
+	void addMember(long groupId, long userId);
 }

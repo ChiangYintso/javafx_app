@@ -139,7 +139,8 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 			String option = JsonHelper.getJsonOption(jsonNode);
 			// 同意加为好友
 			if (option.equals(JsonHelper.Option.AGREE_TO_ADD_FRIEND) ||
-					(option.equals(JsonHelper.Option.FOUND_GROUP_ACCEPTED))) {
+					(option.equals(JsonHelper.Option.FOUND_GROUP_ACCEPTED) ||
+							option.equals(JsonHelper.Option.AGREE_TO_JOIN_GROUP))) {
 				UpdateUiUtil.updateUi(() -> self.loadTreeView());
 			}
 			self.increaseNewNoticeCount();

@@ -15,8 +15,10 @@ import pers.jiangyinzuo.chat.domain.entity.Notice;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 import pers.jiangyinzuo.chat.service.FriendService;
+import pers.jiangyinzuo.chat.service.GroupService;
 import pers.jiangyinzuo.chat.service.NoticeService;
 import pers.jiangyinzuo.chat.service.impl.FriendServiceImpl;
+import pers.jiangyinzuo.chat.service.impl.GroupServiceImpl;
 import pers.jiangyinzuo.chat.service.impl.NoticeServiceImpl;
 
 /**
@@ -47,11 +49,14 @@ public class NoticeCmpController {
     private Notice notice;
 
     private FriendService friendService = new FriendServiceImpl();
+    private GroupService groupService = new GroupServiceImpl();
 
     /**
      * 发件人ID
      */
     private Integer sendFromId;
+
+    private long groupId;
 
     /**
      * 当前用户实体类
@@ -72,6 +77,13 @@ public class NoticeCmpController {
             // 回送给发送人
             Main.getClientThreadPool().execute(() -> {
                 Main.getTcpClient().sendMessage(JsonHelper.generateNotice(JsonHelper.Option.AGREE_TO_ADD_FRIEND, self.getUserId(), sendFromId.longValue()));
+            });
+        } else if (notice.getNoticeType().equals(JsonHelper.Option.ADD_GROUP)) {
+            groupService.addMember(groupId, sendFromId.longValue());
+
+            // 回送给发送人
+            Main.getClientThreadPool().execute(() -> {
+                Main.getTcpClient().sendMessage(JsonHelper.generateNotice(JsonHelper.Option.AGREE_TO_JOIN_GROUP, self.getUserId(), sendFromId.longValue()));
             });
         }
         handleNotice();
@@ -132,6 +144,18 @@ public class NoticeCmpController {
                 agree.setText("已读");
                 reject.setVisible(false);
                 break;
+            case JsonHelper.Option.AGREE_TO_JOIN_GROUP:
+                content.setText("你已加入群聊");
+                agree.setText("已读");
+                reject.setVisible(false);
+                break;
+            case JsonHelper.Option.ADD_GROUP:
+                try {
+                    groupId = objectMapper.readTree(notice.getNoticeData()).get("groupId").asInt();
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                content.setText("用户" + sendFromId + "请求加入群聊" + groupId);
             default:
                 break;
         }

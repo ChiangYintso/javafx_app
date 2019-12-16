@@ -30,7 +30,7 @@
             <Font size="26.0" />
          </font>
       </Text>
-      <Button fx:id="addBtn" layoutX="441.0" layoutY="249.0" mnemonicParsing="false" onAction="#addFriend" text="申请添加" visible="false">
+      <Button fx:id="addBtn" layoutX="441.0" layoutY="249.0" mnemonicParsing="false" onAction="#addFriendOrGroup" text="申请添加" visible="false">
          <font>
             <Font size="18.0" />
          </font>

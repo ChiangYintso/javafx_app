@@ -67,6 +67,8 @@ public class ForwardingMessageManager {
                 break;
             case JsonHelper.Option.ADD_FRIEND:
             case JsonHelper.Option.AGREE_TO_ADD_FRIEND:
+            case JsonHelper.Option.ADD_GROUP:
+            case JsonHelper.Option.AGREE_TO_JOIN_GROUP:
                 // 向数据库存入未处理的消息
                 ForwardingMessageManager.forwardingThreadPoolExecutor.execute(() -> {
                     noticeService.insertNotice(message);
