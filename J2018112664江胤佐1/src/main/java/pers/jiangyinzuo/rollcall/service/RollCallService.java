@@ -38,7 +38,7 @@ public interface RollCallService {
 	 * @param teachingClassId ½ÌÑ§°àid
 	 * @return
 	 */
-	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId);
+	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId, int row, String presence);
 
 	List<RollCall> queryRollCallsByStudentId(Long studentId);
 

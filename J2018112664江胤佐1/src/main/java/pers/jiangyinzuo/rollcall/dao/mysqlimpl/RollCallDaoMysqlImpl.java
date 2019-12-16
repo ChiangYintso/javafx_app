@@ -36,9 +36,14 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     }
 
     @Override
-    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) {
-        String sql = "SELECT * FROM rollcall_rollcall_record WHERE `class_id` = ?";
-        return MySqlHelper.queryMany(RollCall.class, sql, teachingClassId);
+    public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId, int row, String presence) {
+        if ("È«²¿".equals(presence)) {
+            String sql = "SELECT * FROM rollcall_rollcall_record WHERE `class_id` = ? ORDER BY rollcall_time DESC LIMIT ?, 10";
+            return MySqlHelper.queryMany(RollCall.class, sql, teachingClassId, row);
+        } else {
+            String sql = "SELECT * FROM rollcall_rollcall_record WHERE `class_id` = ? AND `presence` = ? ORDER BY rollcall_time DESC LIMIT ?, 10";
+            return MySqlHelper.queryMany(RollCall.class, sql, teachingClassId, presence, row);
+        }
     }
 
     @Override
@@ -51,7 +56,7 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
     public void updateRollCall(RollCall rollCall) {
         String sql = "UPDATE rollcall_rollcall_record SET rollcall_type = ?," +
                 " presence = ? WHERE rollcall_id = ?";
-        MySqlHelper.executeUpdate(sql, rollCall.getRollCallTypeString(), rollCall.getPresence(), rollCall.getRollCallId());
+        MySqlHelper.executeUpdate(sql, rollCall.getRollCallTypeLong(), rollCall.getPresence(), rollCall.getRollCallId());
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface RollCallDao {
 
 	void bulkInsertRollCalls(List<RollCall> rollCallList);
 	
-	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId);
+	List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId, int row, String presence);
 
 	List<RollCall> queryRollCallsByStudentId(Long studentId);
 

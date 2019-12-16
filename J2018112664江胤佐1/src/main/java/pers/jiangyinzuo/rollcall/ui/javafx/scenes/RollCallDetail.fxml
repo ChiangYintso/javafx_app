@@ -9,25 +9,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.RollCallDetailController">
+<AnchorPane prefHeight="400.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.RollCallDetailController">
    <children>
-      <Text layoutX="268.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="点名详情">
+      <Text layoutX="338.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="点名详情">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <ScrollPane layoutX="41.0" layoutY="82.0">
+      <ScrollPane layoutX="16.0" layoutY="82.0" prefHeight="305.0" prefWidth="688.0">
          <content>
-            <VBox prefHeight="303.0" prefWidth="517.0" />
+            <VBox fx:id="rollCallRecordBox" prefHeight="303.0" prefWidth="661.0" />
          </content>
       </ScrollPane>
-      <MenuButton layoutX="48.0" layoutY="47.0" mnemonicParsing="false" text="MenuButton">
+      <MenuButton fx:id="filter" layoutX="16.0" layoutY="47.0" mnemonicParsing="false" onAction="#changeRollCallType" text="全部">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
+            <MenuItem fx:id="item0" mnemonicParsing="false" onAction="#changeRollCallType" text="全部" />
+          <MenuItem fx:id="item1" mnemonicParsing="false" onAction="#changeRollCallType" text="已到" />
+          <MenuItem fx:id="item2" mnemonicParsing="false" onAction="#changeRollCallType" text="迟到" />
+            <MenuItem fx:id="item3" mnemonicParsing="false" onAction="#changeRollCallType" text="请假" />
+            <MenuItem fx:id="item4" mnemonicParsing="false" onAction="#changeRollCallType" text="早退" />
+            <MenuItem fx:id="item5" mnemonicParsing="false" onAction="#changeRollCallType" text="奖励" />
+            <MenuItem fx:id="item6" mnemonicParsing="false" onAction="#changeRollCallType" text="处罚" />
         </items>
       </MenuButton>
-      <Button layoutX="496.0" layoutY="47.0" mnemonicParsing="false" text="人员统计" />
+      <Button fx:id="statisticBtn" layoutX="631.0" layoutY="47.0" mnemonicParsing="false" onAction="#showStatistic" text="人员统计" />
+      <Button fx:id="nextBtn" layoutX="172.0" layoutY="47.0" mnemonicParsing="false" onAction="#showNextRecord" text="下一页" />
+      <Button fx:id="preBtn" disable="true" layoutX="103.0" layoutY="47.0" mnemonicParsing="false" onAction="#showPreRecord" text="上一页" />
    </children>
 </AnchorPane>

@@ -88,7 +88,7 @@ public class RollCallUi extends AbstractUi {
         switch (item) {
             case 1:
                 addRollCallRecord(RollCallManager.getAbnormalStudent(rollCallService.
-                        queryRollCallsByTeachingClassId(selectedTeachingClass.getClassId())), 1L);
+                        queryRollCallsByTeachingClassId(selectedTeachingClass.getClassId(), 0, "全部")), 1L);
                 return this.getClass();
             case 2:
 //				addRollCallRecord(this.selectedTeachingClass.getStudentList(), "点名");

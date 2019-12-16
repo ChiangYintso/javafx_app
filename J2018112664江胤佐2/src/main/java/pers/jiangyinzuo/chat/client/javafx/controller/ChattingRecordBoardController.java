@@ -58,8 +58,6 @@ public class ChattingRecordBoardController {
         queryMessageAndLoad();
     }
 
-
-
     @FXML
     public void initialize() {
         session = SessionState.getSelectedSession();

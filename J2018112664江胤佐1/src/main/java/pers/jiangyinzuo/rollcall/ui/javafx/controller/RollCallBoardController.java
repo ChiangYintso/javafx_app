@@ -19,12 +19,11 @@ import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
-import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
-import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
 import pers.jiangyinzuo.rollcall.ui.common.RollCallManager;
 import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.components.RollCallCmpController;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.StageManager;
 import pers.jiangyinzuo.rollcall.ui.javafx.utils.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
@@ -107,7 +106,6 @@ public class RollCallBoardController {
         } else {
             addToStudentBox(studentList);
         }
-
     }
 
     @FXML
@@ -154,7 +152,7 @@ public class RollCallBoardController {
 
     @FXML
     void showRollCallRecord(ActionEvent event) {
-
+        StageManager.showTempStage("µ„√˚œÍ«È", "RollCallDetail.fxml");
     }
 
     @FXML

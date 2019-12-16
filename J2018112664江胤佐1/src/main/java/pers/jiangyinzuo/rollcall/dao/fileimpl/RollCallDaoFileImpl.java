@@ -66,7 +66,7 @@ public class RollCallDaoFileImpl implements RollCallDao {
 
 
 	@Override
-	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) {
+	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId, int row, String presence) {
 		 List<RollCall> rollCallList = FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 		 List<RollCall> results = new ArrayList<>();
 		 for (RollCall rollCall : rollCallList) {

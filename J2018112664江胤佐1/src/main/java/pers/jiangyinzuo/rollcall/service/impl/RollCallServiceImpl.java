@@ -35,8 +35,8 @@ public class RollCallServiceImpl implements RollCallService {
 	 * @return
 	 */
 	@Override
-	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId) {
-		return null;
+	public List<RollCall> queryRollCallsByTeachingClassId(Long teachingClassId, int row, String presence) {
+		return rollCallDao.queryRollCallsByTeachingClassId(teachingClassId, row, presence);
 	}
 
 
