@@ -32,7 +32,7 @@ public class RollCallUi extends AbstractUi {
             return;
         }
         this.rollCallService = new RollCallServiceImpl();
-//		this.rollCallList = this.service.queryRollCallsByTeachingClassId();
+		this.rollCallList = this.rollCallService.queryRollCallsByTeachingClassId(selectedTeachingClass.getClassId(), 0, "全部");
         this.presenceMap = new HashMap<>();
         this.presenceMap.put(1, "已到");
         this.presenceMap.put(2, "未到");
@@ -70,10 +70,9 @@ public class RollCallUi extends AbstractUi {
         int item = ConsoleIoHelper.scanItem(1, this.rollCallList.size());
         System.out.println("1. 已到；2. 未到； 3. 迟到； 4. 请假； 5. 早退");
         RollCall rollCall = this.rollCallList.get(item - 1);
-        RollCall tempRollCall = rollCall.copy();
         item = ConsoleIoHelper.scanItem(1, this.rollCallList.size());
         rollCall.setPresence(presenceMap.get(Integer.valueOf(item)));
-//		service.editRollCall(tempRollCall, rollCall);
+        rollCallService.editRollCall(rollCall);
     }
 
     /**
@@ -91,12 +90,12 @@ public class RollCallUi extends AbstractUi {
                         queryRollCallsByTeachingClassId(selectedTeachingClass.getClassId(), 0, "全部")), 1L);
                 return this.getClass();
             case 2:
-//				addRollCallRecord(this.selectedTeachingClass.getStudentList(), "点名");
+				addRollCallRecord(this.selectedTeachingClass.getStudentList(), 1L);
                 return this.getClass();
             case 3:
-//				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-//				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
-//				addRollCallRecord(this.service.getRandomStudent(count), "点名");
+				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
+				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+				addRollCallRecord(RollCallManager.getRandomStudent(count, selectedTeachingClass.getStudentList()), 1L);
                 return this.getClass();
             case 4:
                 editRollCallRecord();

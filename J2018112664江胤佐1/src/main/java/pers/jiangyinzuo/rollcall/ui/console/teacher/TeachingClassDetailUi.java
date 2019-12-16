@@ -14,7 +14,7 @@ public class TeachingClassDetailUi extends AbstractUi {
 
 	public TeachingClassDetailUi() {
 		selectedTeachingClass = SelectedTeachingClassState.getSingleton();
-//		studentList = this.selectedTeachingClass.getCls().getStudentList();
+		studentList = this.selectedTeachingClass.getCls().getStudentList();
 	}
 
 	private void showTeachingList() {
