@@ -1,6 +1,7 @@
 package pers.jiangyinzuo.rollcall.dao.mysqlimpl;
 
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
+import pers.jiangyinzuo.rollcall.domain.dto.StudentRollCallResultDTO;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
@@ -84,5 +85,24 @@ public class RollCallDaoMysqlImpl implements RollCallDao {
         String sql = "SELECT DISTINCT rollcall.rollcall_student.* FROM rollcall.rollcall_rollcall_record, rollcall.rollcall_student" +
                 " WHERE `class_id` = ? AND rollcall_type = 1 AND presence <> ? AND rollcall_student.student_id = rollcall_rollcall_record.student_id";
         return MySqlHelper.queryMany(Student.class, sql, classId, RollCall.PRESENCE);
+    }
+
+    @Override
+    public List<StudentRollCallResultDTO> queryRollCallStatistic(Long classId) {
+        String sql =
+                "SELECT \n" +
+                "count(case when presence = \"未到\" then presence end) as \"absent\",\n" +
+                "count(case when presence = \"迟到\" then presence end) as \"late\",\n" +
+                "count(case when presence = \"早退\" then presence end) as \"leave_early\",\n" +
+                "count(case when presence = \"请假\" then presence end) as \"ask_for_leave\",\n" +
+                "count(case when presence = \"已到\" then presence end) as \"arrived\",\n" +
+                "rollcall_rollcall_record.student_id,\n" +
+                "rollcall_student.student_name\n" +
+                "FROM \n" +
+                "rollcall_rollcall_record,\n" +
+                "rollcall_student\n" +
+                "WHERE class_id = ? AND rollcall_rollcall_record.student_id = rollcall_student.student_id\n" +
+                "GROUP BY rollcall_rollcall_record.student_id ;";
+        return MySqlHelper.queryMany(StudentRollCallResultDTO.class, sql, classId);
     }
 }

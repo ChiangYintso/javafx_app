@@ -11,6 +11,7 @@ import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
 import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.components.RollCallRecordCmpController;
+import pers.jiangyinzuo.rollcall.ui.javafx.router.StageManager;
 import pers.jiangyinzuo.rollcall.ui.javafx.utils.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
@@ -72,7 +73,7 @@ public class RollCallDetailController {
 
     @FXML
     void showStatistic(ActionEvent event) {
-
+        StageManager.showTempStage("Í³¼Æ", "RollCallStatistic.fxml");
     }
 
     @FXML

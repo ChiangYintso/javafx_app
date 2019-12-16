@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import pers.jiangyinzuo.rollcall.domain.dto.StudentRollCallResultDTO;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 
@@ -43,4 +44,6 @@ public interface RollCallService {
 	List<RollCall> queryRollCallsByStudentId(Long studentId);
 
 	List<Student> queryAbnormalStudent(Long classId);
+
+	List<StudentRollCallResultDTO> queryRollCallStatistic(Long classId);
 }

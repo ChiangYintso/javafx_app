@@ -2,6 +2,7 @@ package pers.jiangyinzuo.rollcall.dao;
 
 import java.util.List;
 
+import pers.jiangyinzuo.rollcall.domain.dto.StudentRollCallResultDTO;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 
@@ -25,4 +26,6 @@ public interface RollCallDao {
 	void deleteRollCall(Long rollCallId);
 
 	List<Student> queryAbnormalRollCallsByTeachingClassId(Long classId);
+
+	List<StudentRollCallResultDTO> queryRollCallStatistic(Long classId);
 }

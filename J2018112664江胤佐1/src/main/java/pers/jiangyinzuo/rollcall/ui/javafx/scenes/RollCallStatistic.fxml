@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.RollCallStatisticController">
+   <children>
+      <Text layoutX="276.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="统计结果" />
+      <Button fx:id="exportBtn" layoutX="498.0" layoutY="42.0" mnemonicParsing="false" onAction="#exportToExcel" text="导出考勤表格" />
+      <VBox fx:id="abnormalStudentBox" layoutX="35.0" layoutY="78.0" prefHeight="300.0" prefWidth="539.0" />
+   </children>
+</AnchorPane>

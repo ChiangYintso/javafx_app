@@ -7,6 +7,7 @@ import java.util.Map;
 
 import pers.jiangyinzuo.rollcall.dao.RollCallDao;
 import pers.jiangyinzuo.rollcall.dao.StudentDao;
+import pers.jiangyinzuo.rollcall.domain.dto.StudentRollCallResultDTO;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
@@ -62,6 +63,11 @@ public class RollCallDaoFileImpl implements RollCallDao {
 			}
 		}
 		return students;
+	}
+
+	@Override
+	public List<StudentRollCallResultDTO> queryRollCallStatistic(Long classId) {
+		return null;
 	}
 
 
