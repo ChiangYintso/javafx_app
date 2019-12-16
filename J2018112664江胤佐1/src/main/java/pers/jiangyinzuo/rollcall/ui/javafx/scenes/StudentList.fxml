@@ -24,5 +24,6 @@
          </content>
       </ScrollPane>
       <Button fx:id="importBtn" layoutX="506.0" layoutY="45.0" mnemonicParsing="false" onAction="#importFromExcel" text="导入Excel" />
+      <Button fx:id="exportToExcelBtn" layoutX="407.0" layoutY="45.0" mnemonicParsing="false" onAction="#exportToExcel" text="导出为Excel" />
    </children>
 </AnchorPane>

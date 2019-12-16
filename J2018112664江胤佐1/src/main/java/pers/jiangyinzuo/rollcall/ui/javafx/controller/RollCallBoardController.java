@@ -123,7 +123,7 @@ public class RollCallBoardController {
             CustomAlertBoard.showAlert("«Î ‰»Î ˝◊÷ 1 - " + totalStudentList.size());
             return;
         }
-        studentList = rollCallService.queryAbnormalStudent(selectedTeachingClass.getClassId());
+        studentList = RollCallManager.getRandomStudent(Integer.parseInt(randomTotal.getText()), totalStudentList);
 
         addToStudentBox(studentList);
     }

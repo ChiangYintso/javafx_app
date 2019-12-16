@@ -12,6 +12,11 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.StudentService;
@@ -25,7 +30,9 @@ import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Jiang Yinzuo
@@ -44,7 +51,12 @@ public class StudentListController {
     @FXML
     private Button importBtn;
 
+    @FXML
+    private Button exportToExcelBtn;
+
     private List<Student> studentList;
+
+    private Set<Long> studentIdSet = new HashSet<>();
 
     private TeachingClass selectedTeachingClass;
 
@@ -72,6 +84,38 @@ public class StudentListController {
     }
 
     @FXML
+    void exportToExcel(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文件类型", "*.xls"));
+        fileChooser.setInitialFileName(selectedTeachingClass.getClassName() + "教学名单.xls");
+        File xlsFile = fileChooser.showSaveDialog(new Stage());
+
+        if (xlsFile != null) {
+            if (xlsFile.exists()) {
+                xlsFile.delete();
+            }
+            try {
+                WritableWorkbook workbook = Workbook.createWorkbook(xlsFile);
+                WritableSheet sheet = workbook.createSheet("sheet1", 0);
+                sheet.addCell(new Label(0, 0, "学号"));
+                sheet.addCell(new Label(1, 0, "姓名"));
+                sheet.addCell(new Label(2, 0, "性别"));
+                sheet.addCell(new Label(3, 0, "专业"));
+                for (int row = 1, length = studentList.size(); row <= length; row++) {
+                    sheet.addCell(new Label(0, row, studentList.get(row - 1).getStudentId().toString()));
+                    sheet.addCell(new Label(1, row, studentList.get(row - 1).getStudentName()));
+                    sheet.addCell(new Label(2, row, studentList.get(row - 1).getGenderStr()));
+                    sheet.addCell(new Label(3, row, studentList.get(row - 1).getMajor()));
+                }
+                workbook.write();
+                workbook.close();
+            } catch (IOException | WriteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
     void importFromExcel(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文件类型", "*.xls"));
@@ -80,16 +124,25 @@ public class StudentListController {
             Workbook workbook = Workbook.getWorkbook(xlsFile);
             Sheet sheet = workbook.getSheet(0);
             int rows = sheet.getRows();
-            int columns = sheet.getColumns();
-            Cell cell;
-            for (int i = 0; i < rows; ++i) {
-                for (int j = 0; j < columns; ++j) {
-                    cell = sheet.getCell(j, i);
-                    CustomAlertBoard.showAlert(cell.getContents());
+            Student student;
+            int count = 0;
+            for (int i = 1; i < rows; ++i) {
+                student = new Student.Builder()
+                        .studentId(Long.parseLong(sheet.getCell(0, i).getContents()))
+                        .studentName(sheet.getCell(1, i).getContents())
+                        .gender(sheet.getCell(2, i).getContents())
+                        .major(sheet.getCell(3, i).getContents())
+                        .build();
+                if (!studentIdSet.contains(student.getStudentId())) {
+                    addStudentToBox(student);
+                    teachingClassService.addStudent(selectedTeachingClass.getClassId(), student.getStudentId());
+                    studentService.insertStudent(student);
+                    ++count;
                 }
             }
             workbook.close();
-        } catch (IOException | BiffException e) {
+            CustomAlertBoard.showAlert("成功导入" + count + "名学生");
+        } catch (IOException | BiffException | NumberFormatException e) {
             CustomAlertBoard.showAlert("导入失败");
             e.printStackTrace();
         }
@@ -106,6 +159,7 @@ public class StudentListController {
     }
 
     private void addStudentToBox(Student student) {
+        studentIdSet.add(student.getStudentId());
         FxmlCmpLoaderUtil<AnchorPane, StudentCmpController> fxmlCmpLoaderUtil =
                 new FxmlCmpLoaderUtil<>("StudentCmp.fxml", student, this);
         fxmlCmpLoaderUtil.getController().setPane(fxmlCmpLoaderUtil.getPane());
@@ -116,6 +170,7 @@ public class StudentListController {
     public void removeStudent(AnchorPane pane, Student student) {
         this.studentBox.getChildren().remove(pane);
         this.studentList.remove(student);
+        this.studentIdSet.remove(student.getStudentId());
         teachingClassService.removeStudent(selectedTeachingClass.getClassId(), student.getStudentId());
     }
 }

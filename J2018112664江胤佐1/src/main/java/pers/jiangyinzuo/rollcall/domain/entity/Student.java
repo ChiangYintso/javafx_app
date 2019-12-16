@@ -86,7 +86,7 @@ public class Student implements Serializable {
 	}
 
 	public String getPwd() {
-		return password;
+		return password == null ? "123456" : password;
 	}
 
 	public void setPwd(String pwd) {
@@ -130,6 +130,12 @@ public class Student implements Serializable {
 
 		public Builder gender(Boolean val) {
 			gender = val;
+			return this;
+		}
+
+
+		public Builder gender(String val) {
+			gender = "ÄÐ".equals(val);
 			return this;
 		}
 
