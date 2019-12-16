@@ -5,39 +5,34 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.StudentMainBoardController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.StudentMainBoardController">
    <children>
-      <Text layoutX="179.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课堂点名系统学生端">
+      <Text layoutX="71.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课堂点名系统学生端">
          <font>
             <Font size="27.0" />
          </font>
       </Text>
-      <Button fx:id="recordBtn" layoutX="63.0" layoutY="250.0" mnemonicParsing="false" onAction="#showRollCallRecord" prefHeight="100.0" prefWidth="135.0" style="-fx-background-color: #aacccc;" text="查看点名记录" textFill="WHITE">
+      <Button fx:id="recordBtn" layoutX="31.0" layoutY="150.0" mnemonicParsing="false" onAction="#showRollCallRecord" prefHeight="100.0" prefWidth="135.0" style="-fx-background-color: #aacccc;" text="查看点名记录" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="scheduleBtn" layoutX="233.0" layoutY="250.0" mnemonicParsing="false" onAction="#showSchedule" prefHeight="100.0" prefWidth="135.0" style="-fx-background-color: #aaaacc;" text="查看课表" textFill="WHITE">
+      <Button fx:id="scheduleBtn" layoutX="213.0" layoutY="150.0" mnemonicParsing="false" onAction="#showSchedule" prefHeight="100.0" prefWidth="135.0" style="-fx-background-color: #aaaacc;" text="查看课表" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="teachingClassBtn" layoutX="402.0" layoutY="250.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="135.0" style="-fx-background-color: #ddcaac;" text="查看教学班" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Text fx:id="studentId" layoutX="63.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生id" wrappingWidth="86.24022674560547">
+      <Text fx:id="studentId" layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生id" wrappingWidth="151.66668701171875">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="studentName" layoutX="149.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生姓名" wrappingWidth="86.24022674560547">
+      <Text fx:id="studentName" layoutX="185.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生姓名" wrappingWidth="86.24022674560547">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="major" layoutX="249.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生专业" wrappingWidth="86.24022674560547">
+      <Text fx:id="major" layoutX="281.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生专业" wrappingWidth="86.24022674560547">
          <font>
             <Font size="19.0" />
          </font>

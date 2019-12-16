@@ -1,12 +1,15 @@
 package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.RollCall;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.service.RollCallService;
 import pers.jiangyinzuo.rollcall.service.impl.RollCallServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.javafx.controller.components.RollCallRecordCmpController;
+import pers.jiangyinzuo.rollcall.ui.javafx.utils.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 import java.util.List;
@@ -44,6 +47,10 @@ public class RollCallRecordController {
     }
 
     private void showRollCallRecord() {
-
+        rollCallRecordList.getChildren().clear();
+        for (RollCall rollCall : rollCallList) {
+            FxmlCmpLoaderUtil<Pane, RollCallRecordCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil<>("RollCallRecordCmp.fxml", rollCall);
+            rollCallRecordList.getChildren().add(fxmlCmpLoaderUtil.getPane());
+        }
     }
 }

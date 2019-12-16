@@ -22,9 +22,6 @@ public class StudentMainBoardController {
     private Button scheduleBtn;
 
     @FXML
-    private Button teachingClassBtn;
-
-    @FXML
     private Text studentId;
 
     @FXML
