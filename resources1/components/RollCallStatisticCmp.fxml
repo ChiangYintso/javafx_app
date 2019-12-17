@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="36.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.components.RollCallStatisticCmpController">
+   <children>
+      <Text fx:id="studentIdText" layoutX="23.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="studentNameText" layoutX="101.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="presenceCount" layoutX="177.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="absentCountText" layoutX="228.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lateCountText" layoutX="277.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="leaveEarlyText" layoutX="326.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="askForLeaveCount" layoutX="378.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="abnormalCountText" layoutX="428.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Line endX="332.3333435058594" endY="7.62939453125E-6" layoutX="123.0" layoutY="35.0" startX="-100.0" stroke="#959595" />
+   </children>
+</AnchorPane>

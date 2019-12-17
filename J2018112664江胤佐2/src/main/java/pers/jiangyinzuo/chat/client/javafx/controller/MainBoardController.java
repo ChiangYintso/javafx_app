@@ -2,6 +2,8 @@ package pers.jiangyinzuo.chat.client.javafx.controller;
 
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,6 +26,7 @@ import pers.jiangyinzuo.chat.client.javafx.controller.components.IndexPaneCmpCon
 import pers.jiangyinzuo.chat.client.javafx.controller.components.NoticeCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
+import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.chat.common.javafx.util.UpdateUiUtil;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.domain.entity.Group;
@@ -208,9 +211,11 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	}
 
 	private TreeItem<Pane> loadIndexTreeItem(String text) {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "IndexPaneCmp.fxml"));
+
+		FXMLLoader fxmlLoader = null;
 		Pane pane = null;
 		try {
+			fxmlLoader = new FXMLLoader(new URL("file:" + System.getProperty("user.dir") + "\\resources2\\client\\components\\" + "IndexPaneCmp.fxml"));
 			pane = fxmlLoader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -222,10 +227,10 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	}
 
 	private <T extends SessionCardCmpController.Session> TreeItem<Pane> loadCardItem(T session) {
-		FXMLLoader fxmlLoader;
+		FXMLLoader fxmlLoader = null;
 		Pane pane = null;
-		fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "SessionCardCmp.fxml"));
 		try {
+			fxmlLoader = new FXMLLoader(new URL("file:" + System.getProperty("user.dir") + "\\resources2\\client\\components\\" + "SessionCardCmp.fxml"));
 			pane = fxmlLoader.load();
 		} catch (IOException e) {
 			e.printStackTrace();

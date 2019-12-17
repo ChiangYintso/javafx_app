@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="30.0" prefWidth="306.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.components.LogCmpController">
+   <children>
+      <Text fx:id="userIdText" layoutX="57.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="logTimeText" layoutX="184.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Line endX="188.99996948242188" endY="1.0" layoutX="117.0" layoutY="29.0" startX="-100.0" stroke="#8c8c8c" />
+      <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="用户ID" />
+      <Text layoutX="125.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="登录时间" />
+   </children>
+</AnchorPane>

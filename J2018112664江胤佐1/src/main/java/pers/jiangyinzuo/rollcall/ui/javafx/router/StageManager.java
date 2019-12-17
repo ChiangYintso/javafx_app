@@ -1,8 +1,13 @@
 package pers.jiangyinzuo.rollcall.ui.javafx.router;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,7 +45,7 @@ public class StageManager {
 	private static void createScene(String sceneName) throws IOException {
 		for (int i = 0; i < sceneName.length(); ++i) {
 			if (sceneName.charAt(i) == '.') {
-				Parent root = FXMLLoader.load(StageManager.class.getResource("../scenes/" + sceneName));
+				Parent root = FXMLLoader.load(new URL("file:" + System.getProperty("user.dir") + "\\resources1\\" + sceneName));
 				sceneMap.put(sceneName, new Scene(root));
 			}
 		}
@@ -57,7 +62,7 @@ public class StageManager {
 	public static void showTempStage(String stageTitle, String fxmlFileName) {
 		try {
 			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(StageManager.class.getResource("../scenes/" + fxmlFileName));
+			Parent root = FXMLLoader.load(new URL("file:" + System.getProperty("user.dir") + "\\resources1\\" + fxmlFileName));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.setTitle(stageTitle);

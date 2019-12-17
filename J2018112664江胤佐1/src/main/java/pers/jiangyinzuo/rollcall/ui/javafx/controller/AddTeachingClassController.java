@@ -62,5 +62,4 @@ public class AddTeachingClassController {
         ControllerProxy.getTeacherMainBoardController().addTeachingClassTab();
         CustomAlertBoard.showAlert("Ìí¼Ó³É¹¦");
     }
-
 }

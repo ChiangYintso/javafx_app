@@ -1,6 +1,7 @@
 package pers.jiangyinzuo.chat.common.javafx;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,10 +69,11 @@ public class StageManager {
             if (sceneName.charAt(i) == '.') {
                 Parent root = null;
                 try {
-                    root = FXMLLoader.load(StageManager.class.getResource("../../" + path + "/javafx/scenes/" + sceneName));
+                    root = FXMLLoader.load(new URL("file:" + System.getProperty("user.dir") + "\\resources2\\" + path +"\\" + sceneName));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                assert root != null;
                 sceneMap.put(sceneName, new Scene(root));
             }
         }
@@ -89,7 +91,7 @@ public class StageManager {
     public static void showTempStage(String stageTitle, String fxmlFileName, String path) {
         try {
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(StageManager.class.getResource("../../" + path + "/javafx/scenes/" + fxmlFileName));
+            Parent root = FXMLLoader.load(new URL("file:" + System.getProperty("user.dir") + "\\resources2\\" + path +"\\" + fxmlFileName));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle(stageTitle);

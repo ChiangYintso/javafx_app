@@ -30,7 +30,6 @@ public class LoginUi extends AbstractUi {
         while (true) {
             System.out.println("-------------------------------------");
             System.out.println("欢迎, 请输入账号和密码, 或输入#退出程序");
-            System.out.println("(学生和老师都是账号123密码123456)");
             System.out.println("-------------------------------------");
             try {
                 System.out.println("身份(1代表学生, 0代表教师):");
