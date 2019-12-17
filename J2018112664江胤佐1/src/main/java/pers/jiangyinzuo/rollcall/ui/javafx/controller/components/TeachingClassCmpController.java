@@ -55,17 +55,17 @@ public class TeachingClassCmpController {
         this.teachingClassId.setText(teachingClass.getClassId().toString());
         this.schedule.setText(teachingClass.getWeeks() + "  ÖÜ" + teachingClass.getSession() / 10 + "µÚ" + teachingClass.getSession() % 10 + "½²");
         this.teachingClass = teachingClass;
-        this.teachingClassPane.setStyle("-fx-background-color: #88ccdd");
+        this.teachingClassPane.setStyle("-fx-background-color: #a8cadd");
     }
 
     @FXML
     void onMouseEntered(MouseEvent event) {
-        teachingClassPane.setStyle("-fx-background-color: #aabbcc");
+        teachingClassPane.setStyle("-fx-background-color: #b8c8cc");
     }
 
     @FXML
     void onMouseExited(MouseEvent event) {
-        teachingClassPane.setStyle("-fx-background-color: #88ccdd");
+        teachingClassPane.setStyle("-fx-background-color:  #a8cadd");
     }
 
     @FXML

@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
 import pers.jiangyinzuo.rollcall.service.TeachingClassService;
 import pers.jiangyinzuo.rollcall.service.impl.TeachingClassServiceImpl;
+import pers.jiangyinzuo.rollcall.ui.javafx.common.CustomAlertBoard;
 import pers.jiangyinzuo.rollcall.ui.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
@@ -59,6 +60,7 @@ public class AddTeachingClassController {
                 .build();
         teachingClassService.addTeachingClass(teachingClass);
         ControllerProxy.getTeacherMainBoardController().addTeachingClassTab();
+        CustomAlertBoard.showAlert("Ìí¼Ó³É¹¦");
     }
 
 }

@@ -21,6 +21,9 @@ import pers.jiangyinzuo.rollcall.ui.state.UserState;
 public class TeacherMainBoardController {
 
     @FXML
+    private Text titleText;
+
+    @FXML
     private Button showScheduleBtn;
 
     @FXML
@@ -57,6 +60,7 @@ public class TeacherMainBoardController {
     	this.addTeachingClassTab();
     	this.teacherName.setText(UserState.getSingleton().getTeacher().getTeacherName());
     	this.teacherId.setText(UserState.getSingleton().getTeacher().getTeacherId().toString());
+        this.titleText.setText(UserState.getSingleton().getTeacher().getTitle());
     }
 
     /**

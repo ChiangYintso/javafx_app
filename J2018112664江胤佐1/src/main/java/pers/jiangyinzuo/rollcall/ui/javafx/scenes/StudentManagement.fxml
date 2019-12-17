@@ -8,25 +8,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.StudentManagementController">
+<AnchorPane prefHeight="266.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.StudentManagementController">
    <children>
-      <Text layoutX="251.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生管理" wrappingWidth="97.99993896484375">
+      <Text layoutX="97.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学生管理" wrappingWidth="97.99993896484375">
          <font>
             <Font size="21.0" />
          </font>
       </Text>
       <TextField fx:id="studentIdField" layoutX="78.0" layoutY="67.0" />
       <Text layoutX="41.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="学号" />
-      <Button fx:id="queryBtn" layoutX="258.0" layoutY="67.0" mnemonicParsing="false" onAction="#queryStudent" text="查询" />
+      <Button fx:id="queryBtn" layoutX="45.0" layoutY="215.0" mnemonicParsing="false" onAction="#queryStudent" style="-fx-cursor: hand; -fx-background-color: #8EAFE6;" text="查询" textFill="WHITE" />
       <Text layoutX="41.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="姓名" />
       <TextField fx:id="studentNameText" layoutX="78.0" layoutY="106.0" />
       <Text layoutX="41.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="性别" />
       <Text layoutX="41.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="专业" />
       <TextField fx:id="majorText" layoutX="78.0" layoutY="175.0" />
-      <Button fx:id="editStudentBtn" layoutX="322.0" layoutY="67.0" mnemonicParsing="false" onAction="#editStudent" text="修改" />
-      <Button fx:id="deleteStudentBtn" layoutX="379.0" layoutY="68.0" mnemonicParsing="false" onAction="#deleteStudent" text="删除" />
-      <Button fx:id="addStudentBtn" layoutX="431.0" layoutY="68.0" mnemonicParsing="false" onAction="#addStudent" text="增加" />
+      <Button fx:id="editStudentBtn" layoutX="91.0" layoutY="215.0" mnemonicParsing="false" onAction="#editStudent" style="-fx-cursor: hand; -fx-background-color: #8EAFE6;" text="修改" textFill="WHITE" />
+      <Button fx:id="deleteStudentBtn" layoutX="143.0" layoutY="215.0" mnemonicParsing="false" onAction="#deleteStudent" style="-fx-cursor: hand; -fx-background-color: #8EAFE6;" text="删除" textFill="WHITE" />
+      <Button fx:id="addStudentBtn" layoutX="197.0" layoutY="215.0" mnemonicParsing="false" onAction="#addStudent" style="-fx-cursor: hand; -fx-background-color: #8EAFE6;" text="添加" textFill="WHITE" />
       <RadioButton fx:id="maleRadio" layoutX="78.0" layoutY="147.0" mnemonicParsing="false" text="男">
          <toggleGroup>
             <ToggleGroup fx:id="gender" />

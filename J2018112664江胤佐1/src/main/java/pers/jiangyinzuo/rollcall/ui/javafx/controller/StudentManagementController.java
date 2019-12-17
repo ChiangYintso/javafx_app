@@ -45,10 +45,19 @@ public class StudentManagementController {
     private StudentService studentService = new StudentServiceImpl();
 
     private Student student = new Student();
+
+    private void clear() {
+        studentIdField.setText("");
+        studentNameText.setText("");
+        majorText.setText("");
+    }
+
     @FXML
     void deleteStudent(ActionEvent event) {
         if (validateId()) {
             studentService.deleteStudent(student.getStudentId());
+            CustomAlertBoard.showAlert("删除成功");
+            clear();
         }
     }
 
@@ -82,6 +91,8 @@ public class StudentManagementController {
             student.setStudentName(studentNameText.getText());
 
             studentService.insertStudent(student);
+            CustomAlertBoard.showAlert("添加成功");
+            clear();
         }
     }
 
