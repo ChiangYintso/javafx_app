@@ -10,21 +10,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.GroupInfoBoardController">
+<Pane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.GroupInfoBoardController">
    <children>
       <ImageView fx:id="groupAvatar" fitHeight="100.0" fitWidth="97.0" layoutX="33.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
       <TextField fx:id="groupNameText" layoutX="250.0" layoutY="28.0" />
       <Label layoutX="169.0" layoutY="32.0" text="群聊名称" />
       <Label layoutX="169.0" layoutY="63.0" prefHeight="23.0" prefWidth="48.0" text="群聊简介" />
-      <TextArea fx:id="groupIntroText" layoutX="166.0" layoutY="86.0" prefHeight="199.0" prefWidth="421.0" />
+      <TextArea fx:id="groupIntroText" layoutX="168.0" layoutY="100.0" prefHeight="185.0" prefWidth="419.0" />
       <ScrollPane layoutX="24.0" layoutY="298.0">
          <content>
             <VBox fx:id="groupMember" prefHeight="148.0" prefWidth="564.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="quitBtn" layoutX="29.0" layoutY="235.0" mnemonicParsing="false" onAction="#onQuit" prefHeight="37.0" prefWidth="106.0" text="Button" />
+      <Button fx:id="quitBtn" layoutX="33.0" layoutY="187.0" mnemonicParsing="false" onAction="#onQuit" prefHeight="25.0" prefWidth="25.0" stylesheets="@static/groupInfo.css" textFill="WHITE" />
       <Label layoutX="424.0" layoutY="32.0" text="群聊id" />
       <Text fx:id="groupId" layoutX="472.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.0" />
+      <Button fx:id="editGroupBtn" layoutX="33.0" layoutY="138.0" mnemonicParsing="false" onAction="#editGroup" prefHeight="25.0" prefWidth="25.0" stylesheets="@static/groupInfo.css" textFill="WHITE" />
+      <Label fx:id="editLabel" layoutX="68.0" layoutY="144.0" onMouseClicked="#editGroup" style="-fx-cursor: hand;" text="修改群信息" />
+      <Label fx:id="quitLabel" layoutX="68.0" layoutY="192.0" onMouseClicked="#onQuit" style="-fx-cursor: hand;" text="Label" />
+      <Label layoutX="29.0" layoutY="273.0" text="群成员" />
    </children>
 </Pane>

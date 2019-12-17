@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.Main;
@@ -44,6 +45,9 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 
 	@FXML
 	private ImageView avatar;
+
+	@FXML
+	private Circle bubble;
 
 	@FXML
 	private Button userSettingBtn;
@@ -143,28 +147,13 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 							option.equals(JsonHelper.Option.AGREE_TO_JOIN_GROUP))) {
 				UpdateUiUtil.updateUi(() -> self.loadTreeView());
 			}
-			self.increaseNewNoticeCount();
+			ControllerProxy.getMainBoardController().bubble.setVisible(true);
 		}
 	}
 
 	private void initNewNoticeCount(int newMessageCount) {
-		UpdateUiUtil.updateUi(() -> {
-			self.noticeBtn.setText("[" + newMessageCount + "]条新消息");
-		});
+		bubble.setVisible(newMessageCount != 0);
 	}
-
-	public void increaseNewNoticeCount() {
-		UpdateUiUtil.updateUi(() -> {
-			self.noticeBtn.setText("[" + ++newMessageCount + "]条新消息");
-		});
-	}
-
-	public void decreaseNewNoticeCount() {
-		UpdateUiUtil.updateUi(() -> {
-			self.noticeBtn.setText("[" + --newMessageCount + "]条新消息");
-		});
-	}
-
 
 	@FXML
 	void addFriendOrGroup(ActionEvent event) {
@@ -215,6 +204,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 	@FXML
 	void showNotice(ActionEvent event) {
 		StageManager.showTempStage("通知", "NoticeBoard.fxml", "client");
+		bubble.setVisible(false);
 	}
 
 	private TreeItem<Pane> loadIndexTreeItem(String text) {
@@ -260,9 +250,6 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 		// 初始化会话列表
 		TreeItem<Pane> rootItem = loadIndexTreeItem("会话列表");
 
-		// 初始化好友列表
-		TreeItem<Pane> friendTreeItem = loadIndexTreeItem("我的好友");
-
 		Map<String, Set<User>> friendCategories = new HashMap<>(20);
 
 		// 初始化好友分组名——好友集合的HashMap
@@ -279,7 +266,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 			for (User friend : kv.getValue()) {
 				friendCategory.getChildren().add(loadCardItem(friend));
 			}
-			friendTreeItem.getChildren().add(friendCategory);
+			rootItem.getChildren().add(friendCategory);
 		}
 
 		// 初始化群聊列表
@@ -288,7 +275,7 @@ public class MainBoardController implements NoticeCmpController.MainBoardContrac
 			groupTreeItem.getChildren().add(loadCardItem(group));
 		}
 
-		rootItem.getChildren().addAll(friendTreeItem, groupTreeItem);
+		rootItem.getChildren().add(groupTreeItem);
 
 		// 初始化treeView, 并加载到页面
 		treeView = new TreeView<>(rootItem);

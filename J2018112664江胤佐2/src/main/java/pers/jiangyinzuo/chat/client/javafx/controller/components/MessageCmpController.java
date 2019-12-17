@@ -9,6 +9,9 @@ import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.domain.entity.User;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 /**
  * @author Jiang Yinzuo
@@ -36,14 +39,15 @@ public class MessageCmpController implements FxController {
             message = (Message) params[0];
         }
         assert message != null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // 该成员已经不在群内
         if (params[1] == null) {
             title.setText(message.getSendFrom() + " " + message.getSendTime().toLocalDateTime());
         } else if (params[1] instanceof User) {
-            title.setText(((User) params[1]).getUserName() + " " + message.getSendTime().toLocalDateTime());
+            title.setText(((User) params[1]).getUserName() + " " + simpleDateFormat.format(message.getSendTime()));
         } else if (params[1] instanceof Group) {
             title.setText(((Group) params[1]).getMessageSendFrom(message.getSendFrom()).getUserName()
-            + " " + message.getSendTime().toLocalDateTime());
+            + " " + simpleDateFormat.format(message.getSendTime()));
         }
         content.setText(message.getMessageContent());
     }

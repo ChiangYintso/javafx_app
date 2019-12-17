@@ -15,21 +15,11 @@ public class FriendRepo {
     public List<User> getFriendList(Long userId) {
         String sql = "SELECT chat_user.*, chat_friendship.friend_category FROM chat_user, chat_friendship" +
                 " WHERE chat_friendship.user_id = ? AND chat_friendship.friend_id = chat_user.user_id";
-        try {
-            return MySqlHelper.queryMany(User.class, sql, userId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(User.class, sql, userId);
     }
 
     public List<Long> getFriendIdList(Long userId) {
         String sql = "SELECT chat_friendship.friend_id FROM chat_friendship WHERE  user_id = ?";
-        try {
-            return MySqlHelper.queryMany(Long.class, sql, userId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Long.class, sql, userId);
     }
 }

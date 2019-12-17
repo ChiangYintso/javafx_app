@@ -3,6 +3,7 @@ package pers.jiangyinzuo.chat.client;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pers.jiangyinzuo.chat.client.javafx.Main;
+import pers.jiangyinzuo.chat.common.javafx.CustomAlertBoard;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 
 import java.io.*;
@@ -106,6 +107,8 @@ public class TcpClient {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            CustomAlertBoard.showAlert("·þÎñÆ÷Òì³£");
         }
     }
 

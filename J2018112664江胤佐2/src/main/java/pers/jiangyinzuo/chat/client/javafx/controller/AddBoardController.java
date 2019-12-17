@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
@@ -55,6 +56,9 @@ public class AddBoardController {
     private Text idText;
 
     @FXML
+    private AnchorPane queryResult;
+
+    @FXML
     private Text userNameText;
 
     /**
@@ -89,13 +93,14 @@ public class AddBoardController {
 
     @FXML
     void search(ActionEvent event) {
+        if (UserState.getSingleton().getUser().isBlocked()) {
+            CustomAlertBoard.showAlert("你正处于封禁状态, 无法加好友");
+            return;
+        }
 
         class VisibleHandler {
             void setVisible(boolean isVisible, SessionCardCmpController.Session session) {
-                addBtn.setVisible(isVisible);
-                idText.setVisible(isVisible);
-                userNameText.setVisible(isVisible);
-                avatarView.setVisible(isVisible);
+                queryResult.setVisible(isVisible);
                 sessionSearched = session;
                 if (isVisible) {
                     idText.setText(session.getId().toString());
@@ -119,6 +124,8 @@ public class AddBoardController {
             if (user == null) {
                 new VisibleHandler().setVisible(false, null);
                 CustomAlertBoard.showAlert("未找到");
+            } else if (user.isBlocked()) {
+                CustomAlertBoard.showAlert("该用户处于封禁状态");
             } else {
                 new VisibleHandler().setVisible(true, user);
             }
@@ -127,6 +134,8 @@ public class AddBoardController {
             if (group == null) {
                 new VisibleHandler().setVisible(false, null);
                 CustomAlertBoard.showAlert("未找到");
+            } else if (group.isBlocked()) {
+                CustomAlertBoard.showAlert("该群处于封禁状态");
             } else {
                 new VisibleHandler().setVisible(true, group);
             }
@@ -147,7 +156,7 @@ public class AddBoardController {
         } else {
             map.put("option", JsonHelper.Option.ADD_GROUP);
             Map<String, Object> data = new HashMap<>(10);
-            data.put("sendTo", ((Group)sessionSearched).getMaster().getUserId());
+            data.put("sendTo", ((Group) sessionSearched).getMaster().getUserId());
             data.put("sendFrom", UserState.getSingleton().getUser().getUserId());
             data.put("groupId", sessionSearched.getId());
             map.put("data", data);

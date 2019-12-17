@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -36,6 +37,9 @@ public class MainBoardController {
     private Button serverSwitchBtn;
 
     @FXML
+    private Label switchLabel;
+
+    @FXML
     private Button chattingRecordManagementBtn;
 
     @FXML
@@ -43,6 +47,12 @@ public class MainBoardController {
 
     @FXML
     private Button sensitiveWordBtn;
+
+    @FXML
+    private Button userManageBtn;
+
+    @FXML
+    private Button groupManageBtn;
 
     private static final TcpServer tcpServer = new TcpServer(20000);
 
@@ -63,10 +73,10 @@ public class MainBoardController {
     void switchServer(ActionEvent event) {
         if (tcpServer.isServerOn()) {
             tcpServer.exitServer();
-            serverSwitchBtn.setText("打开服务器");
+            switchLabel.setText("打开服务器");
         } else {
             tcpServer.runServer();
-            serverSwitchBtn.setText("关闭服务器");
+            switchLabel.setText("关闭服务器");
         }
     }
 
@@ -137,6 +147,16 @@ public class MainBoardController {
             toDoList.getChildren().add(finalPane);
         });
 
+    }
+
+    @FXML
+    void userManage(ActionEvent event) {
+        StageManager.showTempStage("用户管理", "UserManage.fxml", "server");
+    }
+
+    @FXML
+    void groupManage(ActionEvent event) {
+        StageManager.showTempStage("群聊管理", "GroupManage.fxml", "server");
     }
 
     public void removeToDo(Parent pane) {

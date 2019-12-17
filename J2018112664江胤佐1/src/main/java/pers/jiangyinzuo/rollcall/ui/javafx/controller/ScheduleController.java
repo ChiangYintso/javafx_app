@@ -7,6 +7,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import pers.jiangyinzuo.rollcall.domain.entity.TeachingClass;
@@ -37,7 +38,8 @@ public class ScheduleController {
         for (TeachingClass cls : teachingClassList) {
             Text text = new Text();
             text.setText(cls.getClassName());
-            text.setFont(new Font(20));
+            text.setFont(new Font(19));
+            text.setFill(Color.valueOf("#5f5f5f"));
             int session = cls.getSession();
             schedule.add(text, session / 10, session % 10);
         }

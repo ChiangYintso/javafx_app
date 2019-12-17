@@ -1,36 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.FriendInfoBoardController">
    <children>
-      <Text fx:id="friendName" layoutX="161.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FriendName">
+      <Text fx:id="friendName" layoutX="153.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FriendName">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fx:id="friendId" layoutX="161.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FriendId">
+      <Text fx:id="friendId" layoutX="154.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FriendId">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
       <ImageView fx:id="friendAvatar" fitHeight="92.0" fitWidth="93.0" layoutX="28.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="deleteFriendBtn" layoutX="246.0" layoutY="346.0" mnemonicParsing="false" onAction="#deleteFriend" prefHeight="40.0" prefWidth="87.0" style="-fx-background-color: #eeffff; -fx-border-color: #333333;" text="删除好友" textFill="#e80202">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Text fx:id="friendIntro" layoutX="23.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Intro" wrappingWidth="274.9069290161133">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Text>
-      <TextField fx:id="friendCategory" layoutX="23.0" layoutY="233.0" />
-      <Button fx:id="editFriendCategoryBtn" layoutX="211.0" layoutY="233.0" mnemonicParsing="false" onAction="#editFriendCategory" text="修改分组" />
+      <Button fx:id="deleteFriendBtn" layoutX="262.0" layoutY="363.0" mnemonicParsing="false" onAction="#deleteFriend" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #85A4D8; -fx-border-color: #85A4D8;" text="删除好友" textFill="WHITE" />
+      <ScrollPane layoutX="17.0" layoutY="150.0" prefHeight="199.0" prefWidth="314.0" style="-fx-background-color: #ffffff;">
+         <content>
+            <AnchorPane prefHeight="201.0" prefWidth="263.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Text fx:id="friendIntro" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Intro" wrappingWidth="294.24024200439453">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <TextField fx:id="friendCategory" layoutX="10.0" layoutY="364.0" prefHeight="23.0" prefWidth="163.0" />
+      <Button fx:id="editFriendCategoryBtn" layoutX="186.0" layoutY="363.0" mnemonicParsing="false" onAction="#editFriendCategory" style="-fx-background-color: #85A4D8; -fx-border-color: #85A4D8;" text="修改分组" textFill="WHITE" />
+      <Text layoutX="17.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="好友简介" />
+      <Label layoutX="155.0" layoutY="77.0" text="好友ID" />
    </children>
 </Pane>

@@ -5,17 +5,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.Main;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.MessageCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
+import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
+import pers.jiangyinzuo.chat.common.javafx.CustomAlertBoard;
 import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.chat.common.javafx.util.UpdateUiUtil;
 import pers.jiangyinzuo.chat.common.javafx.StageManager;
@@ -25,6 +30,7 @@ import pers.jiangyinzuo.chat.domain.entity.Group;
 import pers.jiangyinzuo.chat.domain.entity.Message;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
+import pers.jiangyinzuo.chat.service.GroupService;
 import pers.jiangyinzuo.chat.service.MessageService;
 import pers.jiangyinzuo.chat.service.impl.MessageServiceImpl;
 
@@ -36,6 +42,9 @@ import java.util.List;
  * @author Jiang Yinzuo
  */
 public class ChattingBoardController implements SessionState.Subscriber {
+
+    @FXML
+    private Pane rootLayout;
 
     @FXML
     TextArea inputBox;
@@ -139,6 +148,9 @@ public class ChattingBoardController implements SessionState.Subscriber {
     @FXML
     private GridPane emojiPane;
 
+    @FXML
+    private Label blockTip;
+
     SessionCardCmpController.Session session;
 
     User self = null;
@@ -146,6 +158,19 @@ public class ChattingBoardController implements SessionState.Subscriber {
     MessageService messageService = new MessageServiceImpl();
 
     private AbstractSessionHandler sessionHandler = null;
+
+    public void changeGroupBlockStatus() {
+        UpdateUiUtil.updateUi(() -> {
+            session.changeBlockStat();
+            if (session.isBlocked()) {
+                sendBtn.setDisable(true);
+                blockTip.setVisible(true);
+            } else {
+                sendBtn.setDisable(false);
+                blockTip.setVisible(false);
+            }
+        });
+    }
 
     abstract static class AbstractSessionHandler implements SessionState.Subscriber {
 
@@ -214,6 +239,10 @@ public class ChattingBoardController implements SessionState.Subscriber {
 
     @FXML
     void sendMessage(ActionEvent event) {
+        if (UserState.getSingleton().getUser().isBlocked()) {
+            CustomAlertBoard.showAlert("你正处于封禁状态, 无法发言");
+            return;
+        }
         sessionHandler.sendMessage();
     }
 
@@ -228,18 +257,26 @@ public class ChattingBoardController implements SessionState.Subscriber {
     void showChattingRecord(ActionEvent event) {
         SessionState.setSelectedSession(session);
         StageManager.showTempStage("聊天记录", "ChattingRecordBoard.fxml", "client");
+        if (session instanceof Group) {
+            StageManager.groupChattingRecordBoardStageMap.put(session.getId(), (Stage) rootLayout.getScene().getWindow());
+        } else {
+            StageManager.friendChattingRecordBoardStageMap.put(session.getId(), (Stage) rootLayout.getScene().getWindow());
+        }
     }
 
     @FXML
     void initialize() {
         session = SessionState.getSelectedSession();
-        StageManager.friendChattingBoardStageMap.put(session.getId(), StageManager.getCurrentStage());
 
-        // 注册SessionHandler
+        // 注册SessionHandler, 添加Stage
         if (session instanceof User) {
-            sessionHandler = new FriendHandler(this, (User) session);
+            sessionHandler = new FriendHandler(this, session);
         } else if (session instanceof Group) {
-            sessionHandler = new GroupHandler(this, (Group) session);
+            sessionHandler = new GroupHandler(this, session);
+            if (session.isBlocked()) {
+                sendBtn.setDisable(true);
+                blockTip.setVisible(true);
+            }
         } else {
             throw new RuntimeException();
         }
@@ -273,6 +310,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
         UpdateUiUtil.updateUi(() -> messageBox.getChildren().addAll(paneList));
 
         messageBox.heightProperty().addListener(e -> scrollPane.setVvalue(1));
+        ControllerProxy.groupChattingBoardController.put(session.getId(), this);
     }
 
     @FXML
@@ -284,6 +322,7 @@ public class ChattingBoardController implements SessionState.Subscriber {
     @FXML
     void selectEmoji(ActionEvent event) {
         inputBox.appendText(((Button)event.getSource()).getText());
+        emojiPane.setVisible(false);
     }
 
     @FXML
@@ -308,7 +347,9 @@ public class ChattingBoardController implements SessionState.Subscriber {
      */
     @Override
     public void onStatusChanged(JsonNode rawJson) {
-        sessionHandler.onStatusChanged(rawJson);
+        if (JsonHelper.getJsonOption(rawJson).equals(JsonHelper.Option.GROUP_STATUS_CHANGED)) {
+            sessionHandler.onStatusChanged(rawJson);
+        }
     }
 
     /**
@@ -407,6 +448,15 @@ class GroupHandler extends ChattingBoardController.AbstractSessionHandler {
     public Integer getMessageType() {
         // TODO 消息类型
         return 11;
+    }
+
+    @Override
+    public void sendMessage() {
+        if (controllerCallBack.session.isBlocked()) {
+            CustomAlertBoard.showAlert("该群正处于封禁状态, 无法发言");
+            return;
+        }
+        super.sendMessage();
     }
 
     /**

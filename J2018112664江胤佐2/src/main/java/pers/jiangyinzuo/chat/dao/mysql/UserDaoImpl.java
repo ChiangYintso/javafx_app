@@ -5,6 +5,7 @@ import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.helper.MySqlHelper;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author Jiang Yinzuo
@@ -33,12 +34,18 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        String sql = "UPDATE chat_user SET user_name = ?, user_avatar = ?, password = ?, intro = ? WHERE user_id = ?";
-        MySqlHelper.executeUpdate(sql, user.getUserName(), user.getAvatar(), user.getPassword(), user.getIntro(), user.getUserId());
+        String sql = "UPDATE chat_user SET user_name = ?, user_avatar = ?, password = ?, intro = ?, is_blocked = ? WHERE user_id = ?";
+        MySqlHelper.executeUpdate(sql, user.getUserName(), user.getAvatar(), user.getPassword(), user.getIntro(), user.isBlocked(), user.getUserId());
     }
 
     @Override
     public void deleteUserByUserId(Integer userId) {
 
+    }
+
+    @Override
+    public List<User> queryAllUsers() {
+        String sql = "SELECT * FROM chat_user";
+        return MySqlHelper.queryMany(User.class, sql);
     }
 }

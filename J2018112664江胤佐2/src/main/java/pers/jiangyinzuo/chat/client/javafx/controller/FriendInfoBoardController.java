@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.chat.client.state.SessionState;
@@ -53,7 +54,7 @@ public class FriendInfoBoardController {
         friendService.deleteFriend(friend.getUserId());
         ControllerProxy.getMainBoardController().loadTreeView();
         StageManager.friendDeleted(friend.getUserId());
-        deleteFriendBtn.getScene().getWindow().hide();
+        ((Stage)deleteFriendBtn.getScene().getWindow()).close();
     }
 
     @FXML
@@ -68,8 +69,6 @@ public class FriendInfoBoardController {
     @FXML
     void initialize() {
         session = SessionState.getSelectedSession();
-        StageManager.friendInfoBoardStageMap.put(session.getId(), StageManager.getCurrentStage());
-
         friend = (User) SessionState.getSelectedSession();
         friendId.setText(friend.getUserId().toString());
         friendAvatar.setImage(new Image(friend.getAvatar()));

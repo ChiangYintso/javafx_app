@@ -43,11 +43,7 @@ public class GroupRepo {
                 "WHERE chat_user_group_relation.user_id = ? " +
                 "AND chat_user_group_relation.group_id = chat_group.group_id";
         List<Group> resultList = null;
-        try {
-            resultList = MySqlHelper.queryMany(Group.class, sql, userId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        resultList = MySqlHelper.queryMany(Group.class, sql, userId);
         return resultList;
     }
 
@@ -62,25 +58,16 @@ public class GroupRepo {
         String sql = "SELECT chat_user_group_relation.user_privilege," +
                 " chat_user.user_id, chat_user.user_name FROM chat_user_group_relation, chat_user WHERE chat_user_group_relation.group_id = ? " +
                 "AND chat_user.user_id = chat_user_group_relation.user_id";
-        try {
-            return MySqlHelper.queryMany(GroupMemberDTO.class, sql, groupId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(GroupMemberDTO.class, sql, groupId);
     }
 
     public void updateMemberMap(Long groupId) {
         String sql = "SELECT chat_user.* FROM chat_user, chat_user_group_relation WHERE group_id = ? AND chat_user.user_id = chat_user_group_relation.user_id";
         Map<Long, User> resultMap = new HashMap<>(20);
-        try {
-            List<User> list = MySqlHelper.queryMany(User.class, sql, groupId);
-            assert list != null;
-            for (User user : list) {
-                resultMap.put(user.getUserId(), user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        List<User> list = MySqlHelper.queryMany(User.class, sql, groupId);
+        assert list != null;
+        for (User user : list) {
+            resultMap.put(user.getUserId(), user);
         }
         memberMap = resultMap;
     }

@@ -6,12 +6,12 @@
 
 <FlowPane maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.components.MessageCmpController">
    <children>
-      <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="600.9068698883057">
+      <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="584.9068698883057">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fx:id="content" strokeType="OUTSIDE" strokeWidth="0.0" text="content" wrappingWidth="599.5735683441162">
+      <Text fx:id="content" strokeType="OUTSIDE" strokeWidth="0.0" text="content" wrappingWidth="584.9069423675537">
          <font>
             <Font size="17.0" />
          </font>

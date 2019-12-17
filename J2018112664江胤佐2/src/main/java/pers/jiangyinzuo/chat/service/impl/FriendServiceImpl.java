@@ -42,7 +42,6 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void getFriendInfo(User friend) {
-        // TODO Auto-generated method stub
 
     }
 

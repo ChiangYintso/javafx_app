@@ -4,13 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.chat.domain.entity.Message;
+import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.server.javafx.controller.components.MessageRecordCmpController;
 import pers.jiangyinzuo.chat.service.MessageService;
 import pers.jiangyinzuo.chat.service.impl.MessageServiceImpl;
@@ -22,6 +25,8 @@ import java.util.List;
  * @author Jiang Yinzuo
  */
 public class ChattingRecordBoardController {
+    @FXML
+    private Pane rootLayout;
 
     @FXML
     private VBox messageBox;
@@ -34,7 +39,7 @@ public class ChattingRecordBoardController {
 
     private MessageService messageService = new MessageServiceImpl();
 
-    private int start = 1;
+    private int start = 0;
 
     private List<Message> messageList;
 
@@ -44,11 +49,11 @@ public class ChattingRecordBoardController {
     void onNext(ActionEvent event) {
         prevBtn.setDisable(false);
         start -= 5;
-        if (start == 1) {
-            nextBtn.setDisable(true);
-            return;
-        }
+
         queryMessageAndLoad();
+        if (start == 0) {
+            nextBtn.setDisable(true);
+        }
     }
 
     @FXML
@@ -61,16 +66,20 @@ public class ChattingRecordBoardController {
     @FXML
     public void initialize() {
         session = SessionState.getSelectedSession();
-        StageManager.friendChattingRecordBoardStageMap.put(session.getId(), StageManager.getCurrentStage());
-        nextBtn.setDisable(true);
         queryMessageAndLoad();
+        nextBtn.setDisable(true);
     }
 
     private void queryMessageAndLoad() {
-        messageList = messageService.queryUserMessageToFriends(
-                UserState.getSingleton().getUser().getUserId(),
-                session.getId(), start, 5,
-                new Timestamp(System.currentTimeMillis()));
+        if (session instanceof User) {
+            messageList = messageService.queryUserMessageToFriends(
+                    UserState.getSingleton().getUser().getUserId(),
+                    session.getId(), start, 5,
+                    new Timestamp(System.currentTimeMillis()));
+        } else {
+            messageList = messageService.queryGroupMessage(session.getId(),
+                    start, 5, new Timestamp(System.currentTimeMillis()));
+        }
 
         if (messageList.size() == 0) {
             prevBtn.setDisable(true);

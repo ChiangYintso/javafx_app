@@ -6,19 +6,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="sessionCardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickedCard" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="57.0" prefWidth="247.0" style="-fx-background-color: #ddddee;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController">
+<Pane fx:id="sessionCardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClickedCard" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="41.0" prefWidth="247.0" style="-fx-background-color: #D4E2FA;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController">
    <children>
-      <ImageView fx:id="avatar" fitHeight="50.0" fitWidth="50.0" layoutX="12.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="name" layoutX="62.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="126.41999816894531">
+      <ImageView fx:id="avatar" fitHeight="41.0" fitWidth="41.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+      <Text fx:id="name" layoutX="61.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="126.41999816894531">
          <font>
-            <Font size="23.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text fx:id="statusText" layoutX="188.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Text>
-      <Circle fx:id="bubble" fill="#ff1f1f" layoutX="20.0" layoutY="18.0" radius="6.0" stroke="#ffffff00" strokeType="INSIDE" visible="false" />
+      <Text fx:id="statusText" layoutX="197.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+      <Circle fx:id="bubble" fill="#ff1f1f" layoutX="35.0" layoutY="10.0" radius="6.0" stroke="#ffffff00" strokeType="INSIDE" visible="false" />
    </children>
 </Pane>

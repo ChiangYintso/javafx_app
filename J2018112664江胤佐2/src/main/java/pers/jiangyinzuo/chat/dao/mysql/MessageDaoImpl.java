@@ -24,35 +24,20 @@ public class MessageDaoImpl implements MessageDao {
     @Override
     public List<Message> queryMessagesByUserId(Long sendFromId, Long sendToId, Integer row, Integer offset) {
         String sql = "SELECT * FROM chat_message WHERE (send_from = ? AND send_to = ?) OR (send_from = ? AND send_to = ?) ORDER BY send_time DESC LIMIT ?, ?";
-        try {
-            return MySqlHelper.queryMany(Message.class, sql, sendFromId, sendToId, sendToId, sendFromId, row, offset);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Message.class, sql, sendFromId, sendToId, sendToId, sendFromId, row, offset);
     }
 
     @Override
     public List<Message> queryMessagesByUserIdAndGroupId(Long userId, Long groupId, Integer row, Integer offset, Timestamp timestamp) {
         String sql = "SELECT * FROM chat_message WHERE (send_from = ? AND send_to = ?) AND send_time < ? ORDER BY send_time DESC LIMIT ?, ?";
-        try {
-            return MySqlHelper.queryMany(Message.class, sql, userId, groupId, timestamp, row, offset);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Message.class, sql, userId, groupId, timestamp, row, offset);
     }
 
 
     @Override
     public List<Message> queryMessagesByUserId(Long sendFromId, Long sendToId, Integer row, Integer offset, Timestamp timestamp) {
         String sql = "SELECT * FROM chat_message WHERE (chat_message.send_time < ?) AND (send_from = ? AND send_to = ?) OR (send_from = ? AND send_to = ?) ORDER BY send_time DESC LIMIT ?, ?";
-        try {
-            return MySqlHelper.queryMany(Message.class, sql, timestamp, sendFromId, sendToId, sendToId, sendFromId, row, offset);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Message.class, sql, timestamp, sendFromId, sendToId, sendToId, sendFromId, row, offset);
     }
 
     /**
@@ -74,12 +59,7 @@ public class MessageDaoImpl implements MessageDao {
             sql = "SELECT * FROM chat_message WHERE send_to = ? AND message_type < 10 AND send_time < ? ORDER BY send_time DESC LIMIT ?, ?";
         }
 
-        try {
-            return MySqlHelper.queryMany(Message.class, sql, sendToId, limitTime, row, offset);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Message.class, sql, sendToId, limitTime, row, offset);
     }
 
     @Override
@@ -90,12 +70,7 @@ public class MessageDaoImpl implements MessageDao {
         } else {
             sql = "SELECT * FROM chat_message WHERE send_to = ? AND message_type < 10 ORDER BY send_time DESC LIMIT ?, ?";
         }
-        try {
-            return MySqlHelper.queryMany(Message.class, sql, sendToId, row, offset);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Message.class, sql, sendToId, row, offset);
     }
 
     @Override

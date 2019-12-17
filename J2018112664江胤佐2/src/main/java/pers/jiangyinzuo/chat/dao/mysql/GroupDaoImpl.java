@@ -15,12 +15,7 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public List<Long> queryUserIdInGroup(Long groupId) {
         String sql = "SELECT user_id FROM chat_user_group_relation WHERE group_id = ?";
-        try {
-            return MySqlHelper.queryMany(Long.class, sql, groupId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Long.class, sql, groupId);
     }
 
     @Override
@@ -28,7 +23,7 @@ public class GroupDaoImpl implements GroupDao {
         String sql = "INSERT INTO chat_group(group_name, group_intro, master_user_id)" +
                 " VALUES (?, ?, ?)";
         try {
-           return MySqlHelper.executeUpdateReturnPrimaryKey(sql, group.getGroupName(), group.getGroupIntro(), masterId);
+            return MySqlHelper.executeUpdateReturnPrimaryKey(sql, group.getGroupName(), group.getGroupIntro(), masterId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,6 +58,26 @@ public class GroupDaoImpl implements GroupDao {
     public Group queryGroup(Long groupId) {
         String sql = "SELECT * FROM chat_group WHERE group_id = ?";
         return MySqlHelper.queryOne(Group.class, sql, groupId);
+    }
+
+    @Override
+    public void updateGroup(Group group) {
+        String sql = "UPDATE chat_group SET group_name = ? , group_intro = ?, is_blocked = ? WHERE group_id = ?";
+        MySqlHelper.executeUpdate(sql, group.getGroupName(), group.getGroupIntro(), group.isBlocked(), group.getGroupId());
+    }
+
+    @Override
+    public void deleteGroup(Long groupId) {
+        String sql = "DELETE chat_group, chat_user_group_relation, chat_message FROM chat_group LEFT JOIN chat_user_group_relation  ON chat_user_group_relation.group_id = ? LEFT JOIN " +
+                " chat_message ON chat_message.send_to = ? and chat_message.message_type > 10 " +
+                " WHERE chat_group.group_id = ?";
+        MySqlHelper.executeUpdate(sql, groupId, groupId, groupId);
+    }
+
+    @Override
+    public List<Group> queryAllGroups() {
+        String sql = "SELECT * FROM chat_group";
+        return MySqlHelper.queryMany(Group.class, sql);
     }
 
     public static void main(String[] args) {

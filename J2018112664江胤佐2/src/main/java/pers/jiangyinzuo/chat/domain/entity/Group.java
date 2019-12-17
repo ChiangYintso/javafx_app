@@ -20,7 +20,7 @@ public class Group implements SessionCardCmpController.Session {
 
     private static String DEFAULT_AVATAR_URL;
 
-	@FieldMapper(name = "group_id")
+    @FieldMapper(name = "group_id")
     private Long groupId;
 
     @FieldMapper(name = "group_name")
@@ -35,15 +35,19 @@ public class Group implements SessionCardCmpController.Session {
     @FieldMapper(name = "group_intro")
     private String groupIntro;
 
+    @FieldMapper(name = "is_blocked")
+    private Boolean isBlocked;
+
     private GroupRepo groupRepo;
 
-    public Group(Long groupId, String groupName, User master, String avatar, String groupIntro) {
+    public Group(Long groupId, String groupName, User master, String avatar, String groupIntro, Boolean isBlocked) {
         this();
         this.groupId = groupId;
         this.groupName = groupName;
         this.master = master;
         this.avatar = avatar;
         this.groupRepo.updateMemberMap(groupId);
+        this.isBlocked = isBlocked;
     }
 
     public Group() {
@@ -57,6 +61,16 @@ public class Group implements SessionCardCmpController.Session {
         setMaster(builder.master);
         setAvatar(builder.avatar);
         setGroupIntro(builder.groupIntro);
+        isBlocked = builder.isBlocked;
+    }
+
+    @Override
+    public Boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        isBlocked = blocked;
     }
 
     public String getGroupIntro() {
@@ -112,8 +126,7 @@ public class Group implements SessionCardCmpController.Session {
 
     @Override
     public String getStatus() {
-        // TODO ÈºÁÄ×´Ì¬
-        return "";
+        return isBlocked ? "·â½ûÖÐ" : "";
     }
 
     public Map<Long, User> getGroupMemberMap() {
@@ -128,12 +141,23 @@ public class Group implements SessionCardCmpController.Session {
         this.avatar = avatar;
     }
 
+    @Override
+    public void changeBlockStat() {
+        this.isBlocked = !isBlocked;
+    }
+
+    @Override
+    public SessionCardCmpController.Session copy() {
+        return new Group(groupId, groupName, master, avatar, groupIntro, isBlocked);
+    }
+
     public static final class Builder {
         private Long groupId;
         private String groupName;
         private User master;
         private String avatar;
         private String groupIntro;
+        private Boolean isBlocked;
 
         public Builder() {
         }
@@ -160,6 +184,11 @@ public class Group implements SessionCardCmpController.Session {
 
         public Builder groupIntro(String val) {
             groupIntro = val;
+            return this;
+        }
+
+        public Builder isBlocked(Boolean val) {
+            isBlocked = val;
             return this;
         }
 

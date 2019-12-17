@@ -23,24 +23,14 @@ public class NoticeDaoImpl implements NoticeDao {
     @Override
     public List<Notice> queryNotices(String noticeType, Long sendToId) {
         String sql = "SELECT * FROM chat_notice WHERE send_to_id = ? AND notice_type = ?";
-        try {
-            return MySqlHelper.queryMany(Notice.class, sql, sendToId, noticeType);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Notice.class, sql, sendToId, noticeType);
     }
 
     @Override
     public List<Notice> queryNoticesBySendToUserId(Long sendToId) {
         String sql = "SELECT * FROM chat_notice WHERE send_to_id = ? AND notice_type <> '" +
                 JsonHelper.Option.GROUP_MESSAGE + "'";
-        try {
-            return MySqlHelper.queryMany(Notice.class, sql, sendToId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(Notice.class, sql, sendToId);
     }
 
     /**

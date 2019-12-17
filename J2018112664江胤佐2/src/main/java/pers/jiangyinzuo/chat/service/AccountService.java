@@ -1,6 +1,9 @@
 package pers.jiangyinzuo.chat.service;
 
+import pers.jiangyinzuo.chat.domain.dto.LoginDTO;
 import pers.jiangyinzuo.chat.domain.entity.User;
+
+import java.util.List;
 
 /**
  * @author Jiang Yinzuo
@@ -30,4 +33,6 @@ public interface AccountService {
 	String retrievePassword(Long userId);
 
 	void updateUserInfo(User user);
+
+	List<LoginDTO> queryLogsByUserId(Long userId);
 }

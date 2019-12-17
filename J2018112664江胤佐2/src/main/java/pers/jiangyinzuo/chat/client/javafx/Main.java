@@ -39,10 +39,15 @@ public class Main extends Application {
 
     public static void exit() {
         if (isOn) {
-            MessageRepo.shutDownThreadPool();
-            clientThreadPool.shutdown();
-            tcpClient.exit();
-            isOn = false;
+            try {
+                MessageRepo.shutDownThreadPool();
+                clientThreadPool.shutdown();
+                tcpClient.exit();
+                isOn = false;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

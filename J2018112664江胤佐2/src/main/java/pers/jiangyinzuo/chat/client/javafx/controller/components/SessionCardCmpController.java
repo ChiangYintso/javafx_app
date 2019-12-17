@@ -71,6 +71,20 @@ public class SessionCardCmpController implements SessionState.Subscriber {
         }
     }
 
+    public void changeBlockStatus() {
+        UpdateUiUtil.updateUi(() -> {
+            if (session instanceof Group) {
+                session.changeBlockStat();
+                if (session.isBlocked()) {
+                    statusText.setVisible(true);
+                    statusText.setText("封禁中");
+                } else {
+                    statusText.setVisible(false);
+                }
+            }
+        });
+    }
+
     public interface Publisher {
         /**
          * 更新好友上线情况
@@ -110,6 +124,12 @@ public class SessionCardCmpController implements SessionState.Subscriber {
         Long getId();
 
         String getStatus();
+
+        Boolean isBlocked();
+
+        void changeBlockStat();
+
+        Session copy();
     }
 
     public <T extends Session> void init(T session) {
@@ -117,12 +137,13 @@ public class SessionCardCmpController implements SessionState.Subscriber {
         avatar.setImage(new Image(session.getAvatar()));
         statusText.setText(session.getStatus());
         this.session = session;
+
         this.registerAsSubscriber();
     }
 
     @FXML
     void onMouseEntered(MouseEvent event) {
-        sessionCardPane.setStyle(sessionCardPane.getStyle() + ";-fx-border-color: red");
+        sessionCardPane.setStyle(sessionCardPane.getStyle() + ";-fx-border-color: #626262;-fx-cursor: hand");
     }
 
     @FXML
@@ -135,5 +156,8 @@ public class SessionCardCmpController implements SessionState.Subscriber {
         SessionState.setSelectedSession(session);
         StageManager.showTempStage("会话窗口", "ChattingBoard.fxml", "client");
         this.bubble.setVisible(false);
+        if (session instanceof Group) {
+            StageManager.groupChattingBoardStageMap.put(session.getId(), StageManager.getCurrentStage());
+        }
     }
 }

@@ -54,6 +54,5 @@ public class NoticeBoardController implements NoticeCmpController.NoticeBoardCon
     @Override
     public void remove(Pane pane) {
         this.noticeBox.getChildren().remove(pane);
-        ControllerProxy.getMainBoardController().decreaseNewNoticeCount();
     }
 }

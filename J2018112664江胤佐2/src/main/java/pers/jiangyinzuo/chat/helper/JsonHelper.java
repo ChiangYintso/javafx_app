@@ -60,6 +60,8 @@ public class JsonHelper {
         public static final String FOUND_GROUP_ACCEPTED = "foundGroupAccepted";
         public static final String ADD_GROUP = "addGroup";
         public static final String AGREE_TO_JOIN_GROUP = "agreeToJoinGroup";
+        public static final String UPDATE_USER_INFO = "updateUserInfo";
+        public static final String GROUP_BLOCK_CHANGED = "groupBlockChanged";
     }
 
     /**
@@ -143,6 +145,11 @@ public class JsonHelper {
                     userIdList.remove(JsonHelper.getSendFromId(jsonNode));
                     return userIdList;
                 }
+            } else if (Option.GROUP_BLOCK_CHANGED.equals(option)) {
+                GroupService groupService = new GroupServiceImpl();
+                List<Long> userIdList = groupService.getUserIdsInGroup(objectMapper.readTree(bytes).get("data").get("sendTo").asLong());
+                userIdList.remove(JsonHelper.getSendFromId(jsonNode));
+                return userIdList;
             }
 
             JsonNode sendToJsonNode = objectMapper.readTree(bytes).get("data").get("sendTo");
@@ -180,7 +187,6 @@ public class JsonHelper {
      * @return
      */
     public static long getSendFromId(JsonNode jsonNode) {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             return jsonNode.get("data").get("sendFrom").asInt();
         } catch (Exception e) {
@@ -231,10 +237,6 @@ public class JsonHelper {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static Integer getMessageSendTo(JsonNode jsonNode) {
-        return jsonNode.get("data").get("sendTo").asInt();
     }
 
     /**

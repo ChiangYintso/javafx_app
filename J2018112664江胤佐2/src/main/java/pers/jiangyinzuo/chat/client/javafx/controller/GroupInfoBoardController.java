@@ -4,17 +4,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.GroupMemberCmpController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
+import pers.jiangyinzuo.chat.client.javafx.controller.proxy.ControllerProxy;
 import pers.jiangyinzuo.chat.client.state.SessionState;
 import pers.jiangyinzuo.chat.client.state.UserState;
+import pers.jiangyinzuo.chat.common.javafx.StageManager;
 import pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil;
 import pers.jiangyinzuo.chat.domain.dto.GroupMemberDTO;
 import pers.jiangyinzuo.chat.domain.entity.Group;
@@ -34,6 +40,9 @@ public class GroupInfoBoardController {
     private ImageView groupAvatar;
 
     @FXML
+    private Pane rootLayout;
+
+    @FXML
     private VBox groupMember;
 
     @FXML
@@ -44,6 +53,12 @@ public class GroupInfoBoardController {
 
     @FXML
     private Text groupId;
+
+    @FXML
+    private Label editLabel;
+
+    @FXML
+    private Label quitLabel;
 
     @FXML
     private TextArea groupIntroText;
@@ -57,13 +72,33 @@ public class GroupInfoBoardController {
     private List<GroupMemberDTO> groupMemberList;
 
     @FXML
-    void onQuit(ActionEvent event) {
+    private Button editGroupBtn;
 
+    @FXML
+    void editGroup(MouseEvent  event) {
+        group.setGroupName(groupNameText.getText());
+        group.setGroupIntro(groupIntroText.getText());
+        groupService.editGroup(group);
+        ControllerProxy.groupChattingBoardController.get(group.getGroupId()).updateChattingBoardInfo();
+        ControllerProxy.getMainBoardController().loadTreeView();
+    }
+
+    @FXML
+    void onQuit(MouseEvent event) {
+        if (user.getUserId().equals(group.getMaster().getUserId())) {
+            groupService.deleteGroup(group.getGroupId());
+        } else {
+            groupService.removeGroupMember(user.getUserId(), group.getGroupId());
+        }
+        ControllerProxy.getMainBoardController().loadTreeView();
+        StageManager.groupDeleted(group.getGroupId());
+        ((Stage) rootLayout.getScene().getWindow()).close();
     }
 
     @FXML
     public void initialize() {
         group = (Group) SessionState.getSelectedSession();
+
         groupNameText.setText(group.getGroupName());
         groupAvatar.setImage(new Image(group.getAvatar()));
         groupId.setText(group.getGroupId().toString());
@@ -73,9 +108,11 @@ public class GroupInfoBoardController {
         if (!user.getUserId().equals(group.getMaster().getUserId())) {
             groupIntroText.setEditable(false);
             groupNameText.setEditable(false);
-            quitBtn.setText("退出群聊");
+            editLabel.setVisible(false);
+            editGroupBtn.setVisible(false);
+            quitLabel.setText("退出群聊");
         } else {
-            quitBtn.setText("解散群聊");
+            quitLabel.setText("解散群聊");
         }
 
         Long privilege = 0L;
@@ -94,6 +131,7 @@ public class GroupInfoBoardController {
                     = new FxmlCmpLoaderUtil<>("client", "GroupMemberCmp.fxml", groupMemberDTO, privilege, group, this);
             groupMember.getChildren().add(fxmlCmpLoaderUtil.getPane());
         }
+        editGroupBtn.setVisible(user.getUserId().equals(group.getMaster().getUserId()));
 
     }
 

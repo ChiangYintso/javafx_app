@@ -18,24 +18,29 @@ public class StageManager {
 
     public static Map<Long, Stage> friendChattingBoardStageMap = new HashMap<>();
     public static Map<Long, Stage> friendChattingRecordBoardStageMap = new HashMap<>();
-    public static Map<Long, Stage> friendInfoBoardStageMap = new HashMap<>();
+    public static Map<Long, Stage> groupChattingBoardStageMap = new HashMap<>();
+    public static Map<Long, Stage> groupChattingRecordBoardStageMap = new HashMap<>();
 
     /**
      * 删除好友后关闭Stage
      * @param friendId 好友ID
      */
     public static void friendDeleted(Long friendId) {
-        if (friendInfoBoardStageMap.get(friendId) != null) {
-            friendInfoBoardStageMap.get(friendId).close();
-            friendInfoBoardStageMap.remove(friendId);
+        onSessionDeleted(friendId, friendChattingRecordBoardStageMap, friendChattingBoardStageMap);
+    }
+
+    public static void groupDeleted(Long groupId) {
+        onSessionDeleted(groupId, groupChattingRecordBoardStageMap, groupChattingBoardStageMap);
+    }
+
+    public static void onSessionDeleted(Long groupId, Map<Long, Stage> chattingRecordBoardStageMap, Map<Long, Stage> chattingBoardStageMap) {
+        if (chattingRecordBoardStageMap.get(groupId) != null) {
+            chattingRecordBoardStageMap.get(groupId).close();
+            chattingRecordBoardStageMap.remove(groupId);
         }
-        if (friendChattingRecordBoardStageMap.get(friendId) != null) {
-            friendChattingRecordBoardStageMap.get(friendId).close();
-            friendChattingRecordBoardStageMap.remove(friendId);
-        }
-        if (friendChattingBoardStageMap.get(friendId) != null) {
-            friendChattingBoardStageMap.get(friendId).close();
-            friendChattingBoardStageMap.remove(friendId);
+        if (chattingBoardStageMap.get(groupId) != null) {
+            chattingBoardStageMap.get(groupId).close();
+            chattingBoardStageMap.remove(groupId);
         }
     }
 
@@ -77,6 +82,7 @@ public class StageManager {
         stage.setScene(getScene(sceneName, path));
         stage.setTitle(stageName);
         currentStage = stage;
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -87,6 +93,7 @@ public class StageManager {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle(stageTitle);
+            stage.setResizable(false);
             stage.show();
             currentStage = stage;
         } catch (IOException e) {

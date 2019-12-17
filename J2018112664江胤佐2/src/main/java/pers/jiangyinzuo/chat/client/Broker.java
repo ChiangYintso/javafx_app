@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import pers.jiangyinzuo.chat.client.javafx.controller.MainBoardController;
 import pers.jiangyinzuo.chat.client.javafx.controller.components.SessionCardCmpController;
 import pers.jiangyinzuo.chat.client.state.SessionState;
+import pers.jiangyinzuo.chat.client.state.UserState;
 import pers.jiangyinzuo.chat.helper.JsonHelper;
 
 import static pers.jiangyinzuo.chat.helper.JsonHelper.Option;
@@ -25,6 +26,7 @@ public class Broker implements MainBoardController.Publisher, SessionCardCmpCont
                 break;
             case Option.MESSAGE:
             case Option.FRIEND_STATUS_CHANGED:
+            case Option.GROUP_BLOCK_CHANGED:
                 SessionState.notifySession(jsonNode);
                 break;
             case Option.UPDATE_ONLINE_TOTAL:
@@ -39,6 +41,9 @@ public class Broker implements MainBoardController.Publisher, SessionCardCmpCont
                 break;
             case Option.FRIENDS_ONLINE_STATUS:
                 this.onUpdateFriendOnlineStatus(jsonNode);
+                break;
+            case Option.UPDATE_USER_INFO:
+                UserState.getSingleton().getUser().changeBlockStat();
                 break;
             default:
                 break;

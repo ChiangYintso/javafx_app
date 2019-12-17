@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.MainBoardController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="642.0" prefWidth="433.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.MainBoardController">
    <children>
-      <Text layoutX="219.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="网络聊天室管理面板">
+      <Text layoutX="138.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="网络聊天室管理面板">
          <font>
             <Font size="18.0" />
          </font></Text>
-      <Text fx:id="totalCountText" layoutX="22.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="当前用户上线总数:" />
-      <Button fx:id="serverSwitchBtn" layoutX="448.0" layoutY="56.0" mnemonicParsing="false" onAction="#switchServer" prefHeight="37.0" prefWidth="113.0" text="启动服务器" />
-      <Button fx:id="sensitiveWordBtn" layoutX="448.0" layoutY="125.0" mnemonicParsing="false" onAction="#editSensitiveWords" prefHeight="37.0" prefWidth="113.0" text="敏感词管理" />
-      <Button fx:id="chattingRecordManagementBtn" layoutX="448.0" layoutY="197.0" mnemonicParsing="false" onAction="#showChattingRecordManagementBoard" prefHeight="37.0" prefWidth="113.0" text="聊天记录查询" />
-      <ScrollPane layoutX="30.0" layoutY="110.0" prefHeight="518.0" prefWidth="378.0">
+      <Text fx:id="totalCountText" layoutX="30.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="当前用户上线总数:" wrappingWidth="169.5552978515625" />
+      <Button fx:id="serverSwitchBtn" layoutX="47.0" layoutY="541.0" mnemonicParsing="false" onAction="#switchServer" prefHeight="40.0" prefWidth="40.0" stylesheets="@static/mainBoard.css" />
+      <Button fx:id="sensitiveWordBtn" layoutX="127.0" layoutY="542.0" mnemonicParsing="false" onAction="#editSensitiveWords" prefHeight="40.0" prefWidth="40.0" stylesheets="@static/mainBoard.css" />
+      <Button fx:id="chattingRecordManagementBtn" layoutX="355.0" layoutY="544.0" mnemonicParsing="false" onAction="#showChattingRecordManagementBoard" prefHeight="40.0" prefWidth="40.0" stylesheets="@static/mainBoard.css" />
+      <ScrollPane layoutX="30.0" layoutY="110.0" prefHeight="406.0" prefWidth="378.0">
          <content>
-            <VBox fx:id="toDoList" prefHeight="517.0" prefWidth="375.0" />
+            <VBox fx:id="toDoList" prefHeight="397.0" prefWidth="375.0" />
          </content>
       </ScrollPane>
-      <Text layoutX="195.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="待处理事项" />
+      <Text layoutX="30.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="待处理事项" />
+      <Label fx:id="switchLabel" layoutX="37.0" layoutY="588.0" text="启动服务器" />
+      <Label layoutX="116.0" layoutY="588.0" text="敏感词管理" />
+      <Label layoutX="350.0" layoutY="588.0" text="聊天记录" />
+      <Button fx:id="userManageBtn" layoutX="206.0" layoutY="541.0" mnemonicParsing="false" onAction="#userManage" prefHeight="40.0" prefWidth="40.0" stylesheets="@static/mainBoard.css" />
+      <Label layoutX="202.0" layoutY="588.0" text="用户管理" />
+      <Label layoutX="275.0" layoutY="588.0" text="群聊管理" />
+      <Button fx:id="groupManageBtn" layoutX="279.0" layoutY="542.0" mnemonicParsing="false" onAction="#groupManage" prefHeight="40.0" prefWidth="40.0" stylesheets="@static/mainBoard.css" />
    </children>
 </Pane>

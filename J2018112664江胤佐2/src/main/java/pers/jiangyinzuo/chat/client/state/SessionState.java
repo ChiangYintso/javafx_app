@@ -47,7 +47,8 @@ public class SessionState {
     private static Map<Long, ChattingBoardController> groupChattingBoardDistributorMap = new ConcurrentHashMap<>(20);
 
     public synchronized static SessionCardCmpController.Session getSelectedSession() {
-        return selectedSession;
+
+        return selectedSession.copy();
     }
 
     public synchronized static void setSelectedSession(SessionCardCmpController.Session selectedSession) {
@@ -90,6 +91,7 @@ public class SessionState {
             case JsonHelper.Option.FRIEND_STATUS_CHANGED:
                 notifyFriendSession(jsonNode, option);
                 break;
+            case JsonHelper.Option.GROUP_BLOCK_CHANGED:
             case JsonHelper.Option.GROUP_STATUS_CHANGED:
                 notifyGroupSession(jsonNode, option);
                 break;
@@ -107,21 +109,30 @@ public class SessionState {
     }
 
     private static void notifyGroupSession(JsonNode jsonNode, String option) {
-        // TODO 根据option执行不同的逻辑
+
         long groupId = JsonHelper.getSendToGroupId(jsonNode);
+
+        // 通知聊天面板
+        ChattingBoardController chattingBoardController =
+                groupChattingBoardDistributorMap.get(groupId);
+        if (chattingBoardController != null) {
+            if (option.equals(JsonHelper.Option.GROUP_BLOCK_CHANGED)) {
+                chattingBoardController.changeGroupBlockStatus();
+            } else {
+                chattingBoardController.onNewMessageArrived(jsonNode);
+            }
+        }
 
         // 通知会话列表
         SessionCardCmpController sessionCardCmpController =
                 groupSessionCardCmpDistributorMap.get(groupId);
         assert sessionCardCmpController != null;
-        sessionCardCmpController.onNewMessageArrived(jsonNode);
+        if (option.equals(JsonHelper.Option.GROUP_BLOCK_CHANGED)) {
+            sessionCardCmpController.changeBlockStatus();
+        } else {
+            sessionCardCmpController.onNewMessageArrived(jsonNode);
+        }
 
-		// 通知聊天面板
-		ChattingBoardController chattingBoardController =
-				groupChattingBoardDistributorMap.get(groupId);
-		if (chattingBoardController != null) {
-			chattingBoardController.onNewMessageArrived(jsonNode);
-		}
     }
 
     private static void notifyFriendSession(JsonNode jsonNode, String option) {

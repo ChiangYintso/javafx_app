@@ -14,12 +14,7 @@ public class SensitiveWordDaoImpl implements SensitiveWordDao {
     @Override
     public List<String> queryAllSensitiveWord() {
         String sql = "SELECT * FROM chat_sensitive_word_dict";
-        try {
-            return MySqlHelper.queryMany(String.class, sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return MySqlHelper.queryMany(String.class, sql);
     }
 
     @Override

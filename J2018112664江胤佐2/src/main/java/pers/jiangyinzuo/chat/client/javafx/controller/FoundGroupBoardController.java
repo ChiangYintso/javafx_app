@@ -30,6 +30,10 @@ public class FoundGroupBoardController {
 
     @FXML
     void apply(ActionEvent event) {
+        if (UserState.getSingleton().getUser().isBlocked()) {
+            CustomAlertBoard.showAlert("你正处于封禁状态, 无法建群");
+            return;
+        }
         if (groupName.getText() == null ||groupName.getText().isBlank()) {
             CustomAlertBoard.showAlert("群名称不能为空");
         }
@@ -62,6 +66,7 @@ public class FoundGroupBoardController {
                 e.printStackTrace();
             }
         });
+        applyBtn.getScene().getWindow().hide();
     }
 
 }

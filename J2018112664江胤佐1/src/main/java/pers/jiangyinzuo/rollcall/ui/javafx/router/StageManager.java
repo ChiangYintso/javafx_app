@@ -50,7 +50,7 @@ public class StageManager {
 		Stage stage = getStage(stageName);
 		stage.setScene(getScene(sceneName));
 		stage.setTitle(stageName);
-		
+		stage.setResizable(false);
 		stage.show();
 	}
 	
@@ -61,6 +61,7 @@ public class StageManager {
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.setTitle(stageTitle);
+			stage.setResizable(false);
 			stage.show();
 			currentStage = stage;
 		} catch (IOException e) {

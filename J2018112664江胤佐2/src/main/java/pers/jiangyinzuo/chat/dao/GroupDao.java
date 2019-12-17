@@ -21,4 +21,10 @@ public interface GroupDao {
 	void deleteGroupMember(Long userId, Long groupId);
 
     Group queryGroup(Long groupId);
+
+    void updateGroup(Group group);
+
+	void deleteGroup(Long groupId);
+
+    List<Group> queryAllGroups();
 }

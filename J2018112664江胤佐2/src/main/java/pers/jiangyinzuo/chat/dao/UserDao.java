@@ -2,6 +2,8 @@ package pers.jiangyinzuo.chat.dao;
 
 import pers.jiangyinzuo.chat.domain.entity.User;
 
+import java.util.List;
+
 /**
  * @author Jiang Yinzuo
  */
@@ -23,4 +25,6 @@ public interface UserDao {
 	void updateUser(User user);
 
 	void deleteUserByUserId(Integer userId);
+
+    List<User> queryAllUsers();
 }

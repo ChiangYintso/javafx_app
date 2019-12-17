@@ -22,4 +22,10 @@ public interface GroupService {
 	 * º”»∫
 	 */
 	void addMember(long groupId, long userId);
+
+    void editGroup(Group group);
+
+	void deleteGroup(Long groupId);
+
+	List<Group> queryAllGroups();
 }

@@ -3,11 +3,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="49.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.components.MessageRecordCmpController">
+<AnchorPane prefHeight="49.0" prefWidth="508.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.chat.server.javafx.controller.components.MessageRecordCmpController">
    <children>
       <Text fx:id="sendFromText" layoutX="14.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sendFromId" wrappingWidth="69.57355117797852" />
-      <Text fx:id="messageContentText" layoutX="99.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="messsageContent" wrappingWidth="346.0292510986328" />
-      <Text fx:id="sendTimeText" layoutX="464.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sendTime" wrappingWidth="88.90682983398438" />
+      <Text fx:id="messageContentText" layoutX="90.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="messsageContent" wrappingWidth="240.0292510986328" />
+      <Text fx:id="sendTimeText" layoutX="340.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sendTime" wrappingWidth="142.2401123046875" />
    </children>
 </AnchorPane>

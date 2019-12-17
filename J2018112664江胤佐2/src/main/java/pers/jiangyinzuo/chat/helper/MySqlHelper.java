@@ -54,14 +54,14 @@ public class MySqlHelper {
         }
     }
 
-    public static <T> List<T> queryMany(Class<T> clazz, String sql, Object... parameters) throws SQLException {
+    public static <T> List<T> queryMany(Class<T> clazz, String sql, Object... parameters) {
         getConnection();
         try (ResultSet resultSet = executeQuery(sql, parameters)) {
             if (Number.class.isAssignableFrom(clazz) || String.class.isAssignableFrom(clazz)) {
                 return mapRecordsSystemType(clazz, resultSet);
             }
             return mapRecordsToEntities(clazz, resultSet);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | SQLException e) {
             e.printStackTrace();
         }
         return null;

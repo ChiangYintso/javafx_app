@@ -41,6 +41,9 @@ public class User implements SessionCardCmpController.Session {
     @FieldMapper(name = "sensitive_words_count")
     private Long sensitiveWordsCount;
 
+    @FieldMapper(name = "is_blocked")
+    private Boolean isBlocked;
+
     /**
      * 作为好友时的好友分组
      */
@@ -52,13 +55,14 @@ public class User implements SessionCardCmpController.Session {
     private GroupRepo groupRepo;
     private FriendRepo friendRepo;
 
-    public User(Long userId, String userName, String password, String intro, String avatar, Integer unhandledNoticeCount) {
+    public User(Long userId, String userName, String password, String intro, String avatar, Boolean isBlocked) {
         this();
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.intro = intro;
         this.avatar = avatar;
+        this.isBlocked = isBlocked;
     }
 
     public User() {
@@ -74,10 +78,28 @@ public class User implements SessionCardCmpController.Session {
         setIntro(builder.intro);
         setAvatar(builder.avatar);
         sensitiveWordsCount = builder.sensitiveWordsCount;
+        isBlocked = builder.isBlocked;
         setFriendCategory(builder.friendCategory);
         isOnline = builder.isOnline;
-        groupRepo = builder.groupRepo;
-        friendRepo = builder.friendRepo;
+    }
+
+    @Override
+    public Boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        isBlocked = blocked;
+    }
+
+    @Override
+    public void changeBlockStat() {
+        isBlocked = !isBlocked;
+    }
+
+    @Override
+    public SessionCardCmpController.Session copy() {
+        return new User(userId, userName, password, intro, avatar, isBlocked);
     }
 
     public List<User> getFriendList() {
@@ -192,6 +214,7 @@ public class User implements SessionCardCmpController.Session {
         private String intro;
         private String avatar = DEFAULT_AVATAR_URL;
         private Long sensitiveWordsCount;
+        private Boolean isBlocked;
         private String friendCategory;
         private Integer isOnline;
         private GroupRepo groupRepo;
@@ -227,6 +250,11 @@ public class User implements SessionCardCmpController.Session {
 
         public Builder sensitiveWordsCount(Long val) {
             sensitiveWordsCount = val;
+            return this;
+        }
+
+        public Builder isBlocked(Boolean val) {
+            isBlocked = val;
             return this;
         }
 

@@ -1,10 +1,14 @@
 package pers.jiangyinzuo.chat.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pers.jiangyinzuo.chat.common.CustomInfo;
+import pers.jiangyinzuo.chat.dao.AccountDao;
 import pers.jiangyinzuo.chat.dao.UserDao;
+import pers.jiangyinzuo.chat.dao.mysql.AccountDaoImpl;
 import pers.jiangyinzuo.chat.dao.mysql.UserDaoImpl;
+import pers.jiangyinzuo.chat.domain.dto.LoginDTO;
 import pers.jiangyinzuo.chat.domain.entity.User;
 import pers.jiangyinzuo.chat.service.AccountService;
 
@@ -13,6 +17,7 @@ import pers.jiangyinzuo.chat.service.AccountService;
  */
 public class AccountServiceImpl implements AccountService {
 	private UserDao userDao = new UserDaoImpl();
+	private AccountDao accountDao = new AccountDaoImpl();
 
 	@Override
 	public Long register(String username, String password) {
@@ -28,6 +33,7 @@ public class AccountServiceImpl implements AccountService {
 		if (user == null || !user.getPassword().equals(password)) {
 			return null;
 		}
+		accountDao.login(new LoginDTO(userId));
 		return user;
 	}
 
@@ -50,5 +56,10 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void updateUserInfo(User user) {
 		userDao.updateUser(user);
+	}
+
+	@Override
+	public List<LoginDTO> queryLogsByUserId(Long userId) {
+		return accountDao.queryLogByUserId(userId);
 	}
 }

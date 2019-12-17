@@ -32,7 +32,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private ForwardingMessageManager forwardingMessageManager = new ForwardingMessageManager(this);
+    private ForwardingMessageManager forwardingMessageManager = ForwardingMessageManager.newForwardingMessageManager(this);
 
     private ExecutorService clientListenerThreadPool;
 
@@ -40,7 +40,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
     /**
      * 已连接上的客户端处理器映射
      */
-    Map<Long, ClientHandler> clientHandlerMap = new HashMap<>();
+    static Map<Long, ClientHandler> clientHandlerMap = new HashMap<>();
 
     public TcpServer(int port) {
         this.port = port;
@@ -80,6 +80,10 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
 
     public int getTotalOnlineCount() {
         return clientHandlerMap.size();
+    }
+
+    public static boolean userIsOnline(Long userId) {
+        return clientHandlerMap.get(userId) != null && clientHandlerMap.get(userId).isOn;
     }
 
     /**
@@ -208,6 +212,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    exitServer();
                 }
             } while (serverIsOn);
             System.out.println("服务器关闭");

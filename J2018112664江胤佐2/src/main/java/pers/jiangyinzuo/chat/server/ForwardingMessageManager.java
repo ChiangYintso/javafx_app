@@ -45,15 +45,28 @@ public class ForwardingMessageManager {
 
     private static TcpServer tcpServer;
 
+    private static ForwardingMessageManager singleton;
+
     private MessageService messageService = new MessageServiceImpl();
 
     private NoticeService noticeService = new NoticeServiceImpl();
 
-    ForwardingMessageManager(TcpServer tcpServer) {
+    public static ForwardingMessageManager newForwardingMessageManager(TcpServer tcpServer) {
+        if (singleton == null) {
+            singleton = new ForwardingMessageManager(tcpServer);
+        }
+        return singleton;
+    }
+
+    public static ForwardingMessageManager getSingleton() {
+        return singleton;
+    }
+
+    private ForwardingMessageManager(TcpServer tcpServer) {
         ForwardingMessageManager.tcpServer = tcpServer;
     }
 
-    void forward(byte[] message, Long userId) {
+    public void forward(byte[] message, Long userId) {
         String jsonOption = JsonHelper.getJsonOption(new ObjectMapper(), message);
         System.out.println(jsonOption);
 
@@ -98,19 +111,19 @@ public class ForwardingMessageManager {
                         assert friendIdList.isArray();
                         Map<String, Object> rawJson = new HashMap<>(10);
                         rawJson.put("option", JsonHelper.Option.FRIENDS_ONLINE_STATUS);
-                        long sendToId = (long) root.get("sendFrom").asInt();
+                        long sendToId = root.get("sendFrom").asInt();
                         rawJson.put("sendTo", sendToId);
 
                         List<Long> onLineList = new ArrayList<>();
 
                         for (JsonNode friendIdJsonNode : friendIdList) {
                             long friendId = friendIdJsonNode.asInt();
-                            if (tcpServer.clientHandlerMap.get(friendId) != null) {
+                            if (TcpServer.clientHandlerMap.get(friendId) != null) {
                                 onLineList.add(friendId);
                             }
                         }
                         rawJson.put("onLineList", onLineList);
-                        tcpServer.clientHandlerMap.get(sendToId).send(objectMapper.writeValueAsBytes(rawJson));
+                        TcpServer.clientHandlerMap.get(sendToId).send(objectMapper.writeValueAsBytes(rawJson));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -147,7 +160,7 @@ public class ForwardingMessageManager {
             List<Long> sendToList = JsonHelper.getSendToList(message);
             ClientHandler clientHandler;
             for (Long sendToUserId : sendToList) {
-                clientHandler = tcpServer.clientHandlerMap.get(sendToUserId);
+                clientHandler = TcpServer.clientHandlerMap.get(sendToUserId);
 
                 // 用户已经上线
                 if (clientHandler != null) {
