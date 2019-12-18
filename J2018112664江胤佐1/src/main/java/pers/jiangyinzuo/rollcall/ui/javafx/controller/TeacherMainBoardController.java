@@ -1,6 +1,8 @@
 package pers.jiangyinzuo.rollcall.ui.javafx.controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -70,7 +72,12 @@ public class TeacherMainBoardController {
         this.teachingClassList.getChildren().clear();
         this.teachingClasses = this.teachingClassService.queryTeachingClassesByTeacherId(UserState.getSingleton().getTeacher().getTeacherId());
     	for (TeachingClass cls : this.teachingClasses) {
-        	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "TeachingClassCmp.fxml"));
+            FXMLLoader fxmlLoader = null;
+            try {
+                fxmlLoader = new FXMLLoader(new URL("file:" + System.getProperty("user.dir") + "\\resources1\\components\\" + "TeachingClassCmp.fxml"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
             // 必须调用此方法才能得到controller
             Pane pane = null;
