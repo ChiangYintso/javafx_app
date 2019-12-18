@@ -13,6 +13,7 @@ import pers.jiangyinzuo.chat.service.NoticeService;
 import pers.jiangyinzuo.chat.service.impl.NoticeServiceImpl;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class NoticeBoardController implements NoticeCmpController.NoticeBoardCon
     private void initNoticeBox() {
         try {
             for (Notice notice : noticeList) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../scenes/components/" + "NoticeCmp.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(new URL("file:" + System.getProperty("user.dir") + "\\resources2" +"\\" + "NoticeBoard.fxml"));
                 Pane pane = fxmlLoader.load();
                 NoticeCmpController noticeCmpController = fxmlLoader.getController();
                 noticeCmpController.init(notice, this, pane);
