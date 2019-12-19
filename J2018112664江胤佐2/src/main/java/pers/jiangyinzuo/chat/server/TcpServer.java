@@ -98,17 +98,21 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
         @Override
         public void run() {
             while (serverIsOn) {
+                // 遍历所有连接上的客户端
                 for (Long userId : clientHandlerMap.keySet()) {
+                    // 发送数据格式
                     ObjectMapper objectMapper = new ObjectMapper();
                     Map<String, Object> map = new HashMap<>(10);
                     map.put("option", JsonHelper.Option.UPDATE_ONLINE_TOTAL);
                     map.put("totalCount", getTotalOnlineCount());
                     try {
                         if (clientHandlerMap.get(userId) != null) {
+                            // 映射中的值不为空，说明用户在线，向客户端发送全网在线人数消息
                             synchronized (clientHandlerMap.get(userId)) {
                                 clientHandlerMap.get(userId).send(objectMapper.writeValueAsBytes(map));
                             }
                         } else {
+                            // 用户下线，通知好友
                             TcpServer.broadCastUserOnlineStatusToFriends(false, userId);
                         }
                     } catch (JsonProcessingException e) {
@@ -116,6 +120,7 @@ public class TcpServer implements ClientHandler.ClientHandlerCallback {
                     }
                 }
                 try {
+                    // 每隔10秒发送一次
                     sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

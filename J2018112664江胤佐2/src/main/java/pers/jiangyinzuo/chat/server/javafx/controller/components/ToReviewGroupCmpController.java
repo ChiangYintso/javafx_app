@@ -59,11 +59,14 @@ public class ToReviewGroupCmpController extends AbstractToDoCmpController implem
 
     @FXML
     void agree(ActionEvent event) {
+        // 由服务端将建群信息提交到数据库
         groupService.foundGroup(group, Long.parseLong(userIdText.getText()));
+        // 移除已处理的通知
         GuiBroker.getSingleMainBoardController().removeToDo(self);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
+        // 发送消息给客户端，提醒客户端查看通知
         Map<String, Object> noticeRoot = new HashMap<>(10);
         noticeRoot.put("option", JsonHelper.Option.FOUND_GROUP_ACCEPTED);
         Map<String, Object> data = new HashMap<>(10);
@@ -73,7 +76,9 @@ public class ToReviewGroupCmpController extends AbstractToDoCmpController implem
 
         try {
             byte[] bytes = objectMapper.writeValueAsBytes(noticeRoot);
+            // 将通知存入数据库
             noticeService.insertNotice(bytes);
+            // 由消息转发管理类转发消息
             ForwardingMessageManager.sendMessage(bytes);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

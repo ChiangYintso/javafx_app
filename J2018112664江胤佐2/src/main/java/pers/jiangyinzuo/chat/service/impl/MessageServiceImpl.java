@@ -35,8 +35,8 @@ public class MessageServiceImpl implements MessageService {
     /**
      * 查询和好友聊天最近的5条记录
      *
-     * @param friendId
-     * @return
+     * @param friendId 好友id
+     * @return 聊天记录列表
      */
     @Override
     public List<Message> queryRecentMessage(Long userId, Long friendId) {

@@ -49,8 +49,10 @@ public class SensitiveManagerController implements SensitiveWordsCmpController.P
         } else if (sensitiveWordList.contains(newSensitiveWord.getText())) {
             CustomAlertBoard.showAlert("已经拥有该敏感词");
         } else {
+            // 将敏感词添加到界面上
             addPane(newSensitiveWord.getText());
             sensitiveWordList.add(newSensitiveWord.getText());
+            // 将敏感词存入数据库
             messageService.addSensitiveWord(newSensitiveWord.getText());
             newSensitiveWord.setText("");
         }

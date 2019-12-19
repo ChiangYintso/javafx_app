@@ -119,14 +119,23 @@ public class Message {
 		return filterSensitiveWords(sendFrom, messageContent, false);
 	}
 
+	/**
+	 * 敏感词过滤
+	 * @param sendFrom 发送方ID
+	 * @param messageContent 消息内容
+	 * @param upload 是否将记录上传
+	 * @return 替换敏感词后的文本
+	 */
 	public static String filterSensitiveWords(Long sendFrom, String messageContent, boolean upload) {
 		int count = 0;
+		// 替换敏感词
 		for (String word : SensitiveWordsState.getSensitiveWords()) {
 			if (messageContent.contains(word)) {
 				++count;
 				messageContent = messageContent.replace(word, "**");
 			}
 		}
+		// 上传发送敏感词记录至数据库
 		if (upload && count > 0) {
 			MessageRepo.updateUserSensitiveCount(sendFrom, count);
 		}

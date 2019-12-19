@@ -36,7 +36,10 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public List<Message> queryMessagesByUserId(Long sendFromId, Long sendToId, Integer row, Integer offset, Timestamp timestamp) {
-        String sql = "SELECT * FROM chat_message WHERE (chat_message.send_time < ?) AND (send_from = ? AND send_to = ?) OR (send_from = ? AND send_to = ?) ORDER BY send_time DESC LIMIT ?, ?";
+        String sql = "SELECT * FROM chat_message WHERE " +
+                "(chat_message.send_time < ?) AND " +
+                "(send_from = ? AND send_to = ?) OR " +
+                "(send_from = ? AND send_to = ?) ORDER BY send_time DESC LIMIT ?, ?";
         return MySqlHelper.queryMany(Message.class, sql, timestamp, sendFromId, sendToId, sendToId, sendFromId, row, offset);
     }
 
@@ -83,10 +86,5 @@ public class MessageDaoImpl implements MessageDao {
                 message.getMessageContent(),
                 message.getSendFrom(),
                 message.getSendTo());
-    }
-
-    @Override
-    public void deleteMessage(Message message) {
-
     }
 }

@@ -15,8 +15,6 @@ public interface FriendService {
 	 * @param friendId 好友ID
 	 */
 	void deleteFriend(Long friendId);
-	
-	void getFriendInfo(User friend);
 
 	/**
 	 * 通过userId查找用户

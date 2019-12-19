@@ -47,10 +47,8 @@ public class JsonHelper {
         public static final String FOUND_GROUP = "foundGroup";
         public static final String MESSAGE = "message";
         public static final String UPDATE_ONLINE_TOTAL = "updateOnlineTotal";
-        public static final String NEW_FRIEND_OR_GROUP = "newFriendOrGroup";
         public static final String ADD_FRIEND = "addFriend";
         public static final String AGREE_TO_ADD_FRIEND = "agreeToAddFriend";
-        public static final String JOIN_GROUP = "joinGroup";
         public static final String GROUP_MESSAGE = "groupMessage";
         public static final String CONNECTION_SUCCESS = "connectionSuccess";
         public static final String FRIEND_STATUS_CHANGED = "friendStatusChanged";

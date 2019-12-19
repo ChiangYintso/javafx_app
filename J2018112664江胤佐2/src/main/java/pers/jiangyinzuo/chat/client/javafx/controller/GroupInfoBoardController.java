@@ -79,7 +79,9 @@ public class GroupInfoBoardController {
         group.setGroupName(groupNameText.getText());
         group.setGroupIntro(groupIntroText.getText());
         groupService.editGroup(group);
+        // 更新聊天面板信息
         ControllerProxy.groupChattingBoardController.get(group.getGroupId()).updateChattingBoardInfo();
+        // 获取主面板，更新树形好友-群聊列表信息
         ControllerProxy.getMainBoardController().loadTreeView();
     }
 

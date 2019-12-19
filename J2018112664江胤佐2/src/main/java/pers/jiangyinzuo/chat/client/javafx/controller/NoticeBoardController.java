@@ -41,7 +41,7 @@ public class NoticeBoardController implements NoticeCmpController.NoticeBoardCon
     private void initNoticeBox() {
         try {
             for (Notice notice : noticeList) {
-                FXMLLoader fxmlLoader = new FXMLLoader(new URL("file:" + System.getProperty("user.dir") + "\\resources2" +"\\" + "NoticeBoard.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(new URL("file:" + System.getProperty("user.dir") + "\\resources2" +"\\client\\components\\" + "NoticeCmp.fxml"));
                 Pane pane = fxmlLoader.load();
                 NoticeCmpController noticeCmpController = fxmlLoader.getController();
                 noticeCmpController.init(notice, this, pane);

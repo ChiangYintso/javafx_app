@@ -47,6 +47,7 @@ public class UserManageController {
     void search(ActionEvent event) {
         if (userIdText.getText() == null || userIdText.getText().isBlank()) {
             if (userStatusPage.isSelected()) {
+                // 查看用户信息
                 addToUserBox(-1L);
             } else {
                 CustomAlertBoard.showAlert("ID不能为空");
@@ -55,8 +56,10 @@ public class UserManageController {
             try {
                 long userId = Long.parseLong(userIdText.getText());
                 if (userStatusPage.isSelected()) {
+                    // 查看用户信息
                     addToUserBox(userId);
                 } else {
+                    // 查看用户登录日志
                     addToLogBox(userId);
                 }
             } catch (NumberFormatException e) {
@@ -78,7 +81,7 @@ public class UserManageController {
                     = new FxmlCmpLoaderUtil<>("server", "LogCmp.fxml", dto);
             logBox.getChildren().add(fxmlCmpLoaderUtil.getPane());
         }
-}
+    }
 
     @FXML
     public void initialize() {

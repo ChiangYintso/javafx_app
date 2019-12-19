@@ -37,6 +37,4 @@ public interface MessageDao {
     List<Message> queryMessagesBySendToId(Long sendToId, Integer messageType, Integer row, Integer offset);
 
     void insertMessage(Message message);
-
-    void deleteMessage(Message message);
 }

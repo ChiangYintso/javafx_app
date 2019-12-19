@@ -38,9 +38,11 @@ public class UserStatusCmpController implements FxController {
     void changeBlockStatus(ActionEvent event) {
         AccountService accountService = new AccountServiceImpl();
         user.setBlocked(!user.isBlocked());
+        // 更新数据库中的用户状态信息
         accountService.updateUserInfo(user);
         changeBlockStatusBtn.setText(user.isBlocked() ? "解禁" : "封禁");
 
+        // 将通知通过TCP服务器发送给用户，实现实时禁言
         Map<String, Object> map = new HashMap<>(5);
         map.put("option", JsonHelper.Option.UPDATE_USER_INFO);
         Map<String, Object> data = new HashMap<>(5);

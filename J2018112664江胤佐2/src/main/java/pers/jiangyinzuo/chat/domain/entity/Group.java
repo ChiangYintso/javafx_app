@@ -129,10 +129,6 @@ public class Group implements SessionCardCmpController.Session {
         return isBlocked ? "·â½ûÖÐ" : "";
     }
 
-    public Map<Long, User> getGroupMemberMap() {
-        return groupRepo.getMemberMap(groupId, true);
-    }
-
     public List<GroupMemberDTO> getGroupMemberList() {
         return groupRepo.getGroupMemberDTOList(groupId);
     }

@@ -34,13 +34,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        String sql = "UPDATE chat_user SET user_name = ?, user_avatar = ?, password = ?, intro = ?, is_blocked = ? WHERE user_id = ?";
-        MySqlHelper.executeUpdate(sql, user.getUserName(), user.getAvatar(), user.getPassword(), user.getIntro(), user.isBlocked(), user.getUserId());
-    }
-
-    @Override
-    public void deleteUserByUserId(Integer userId) {
-
+        String sql = "UPDATE chat_user SET user_name = ?, " +
+                "user_avatar = ?, password = ?, intro = ?, is_blocked = ? WHERE user_id = ?";
+        MySqlHelper.executeUpdate(sql, user.getUserName(),
+                user.getAvatar(), user.getPassword(), user.getIntro(), user.isBlocked(), user.getUserId());
     }
 
     @Override

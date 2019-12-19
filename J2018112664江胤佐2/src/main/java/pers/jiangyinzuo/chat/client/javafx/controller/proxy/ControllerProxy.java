@@ -17,6 +17,9 @@ public class ControllerProxy {
      */
     private static MainBoardController mainBoardController;
 
+    /**
+     * ¡ƒÃÏ√Ê∞ÂController
+     */
     public static Map<Long, ChattingBoardController> groupChattingBoardController = new HashMap<>(20);
 
     public static void setMainBoardController(MainBoardController mainBoardController) {

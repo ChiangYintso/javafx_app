@@ -34,10 +34,6 @@ public class User implements SessionCardCmpController.Session {
     @FieldMapper(name = "user_avatar")
     private String avatar;
 
-    public Long getSensitiveWordsCount() {
-        return sensitiveWordsCount;
-    }
-
     @FieldMapper(name = "sensitive_words_count")
     private Long sensitiveWordsCount;
 
@@ -81,6 +77,10 @@ public class User implements SessionCardCmpController.Session {
         isBlocked = builder.isBlocked;
         setFriendCategory(builder.friendCategory);
         isOnline = builder.isOnline;
+    }
+
+    public Long getSensitiveWordsCount() {
+        return sensitiveWordsCount;
     }
 
     @Override

@@ -446,7 +446,6 @@ class GroupHandler extends ChattingBoardController.AbstractSessionHandler {
 
     @Override
     public Integer getMessageType() {
-        // TODO 消息类型
         return 11;
     }
 
@@ -466,7 +465,6 @@ class GroupHandler extends ChattingBoardController.AbstractSessionHandler {
      */
     @Override
     public void onStatusChanged(JsonNode rawJson) {
-        // TODO 获取群聊信息
         controllerCallBack.updateChattingBoardInfo();
     }
 
