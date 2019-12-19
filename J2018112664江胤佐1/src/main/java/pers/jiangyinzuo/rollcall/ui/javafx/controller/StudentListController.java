@@ -117,15 +117,18 @@ public class StudentListController {
 
     @FXML
     void importFromExcel(ActionEvent event) {
+        // 打开Excel文件
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文件类型", "*.xls"));
         File xlsFile = fileChooser.showOpenDialog(new Stage());
         try {
+            // 创建工作簿对象
             Workbook workbook = Workbook.getWorkbook(xlsFile);
             Sheet sheet = workbook.getSheet(0);
             int rows = sheet.getRows();
             Student student;
             int count = 0;
+            // 循环创建学生实体类，并加入教学名单
             for (int i = 1; i < rows; ++i) {
                 student = new Student.Builder()
                         .studentId(Long.parseLong(sheet.getCell(0, i).getContents()))

@@ -22,7 +22,6 @@ import pers.jiangyinzuo.rollcall.ui.state.SelectedTeachingClassState;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -79,8 +78,13 @@ public class RollCallStatisticController {
     @FXML
     public void initialize() {
         RollCallService rollCallService = new RollCallServiceImpl();
-        dtoList = rollCallService.queryRollCallStatistic(SelectedTeachingClassState.getSingleton().getCls().getClassId());
+        // 根据教学班ID获取点名结果记录
+        dtoList = rollCallService.queryRollCallStatistic(
+                SelectedTeachingClassState.getSingleton().getCls()
+                        .getClassId());
+        // 根据异常点名次数排序
         Collections.sort(dtoList);
+        // 将点名结果动态加载到界面上
         for (StudentRollCallResultDTO dto : dtoList) {
             FxmlCmpLoaderUtil<AnchorPane, RollCallStatisticCmpController> fxmlCmpLoaderUtil =
                     new FxmlCmpLoaderUtil<>("RollCallStatisticCmp.fxml", dto);
