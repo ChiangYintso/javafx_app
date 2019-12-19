@@ -58,18 +58,24 @@ public class LoginController {
 	 */
 	@FXML
 	void login(ActionEvent event) {
+		// 数据格式验证
 		if (validate()) {
 			try {
 				if (studentRadio.isSelected()) {
+					// 学生登录
 					Student student = loginService.studentLogin(Long.parseLong(usernameField.getText()), passwordField.getText());
 					if (student == null) {
 						CustomAlertBoard.showAlert("账号或密码错误");
 						return;
 					}
+					// 全局保存学生信息
 					UserState.getSingleton().setStudent(student);
+					// 进入学生主界面
 					StageManager.showStage("学生主界面", "StudentMainBoard.fxml");
+					// 关闭登录界面
 					StageManager.closeStage("登录");
 				} else if (teacherRadio.isSelected()) {
+					// 教师登录
 					Teacher teacher = loginService.teacherLogin(Long.parseLong(usernameField.getText()), passwordField.getText());
 					if (teacher == null) {
 						CustomAlertBoard.showAlert("账号或密码错误");
@@ -87,7 +93,7 @@ public class LoginController {
 	}
 
 	@FXML
-	public void initialize() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public void initialize() {
 		loginService = new LoginServiceImpl();
 	}
 

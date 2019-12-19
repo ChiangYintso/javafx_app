@@ -63,11 +63,13 @@ public class StudentManagementController {
 
     @FXML
     void editStudent(ActionEvent event) {
+        // 验证ID格式是否正确
         if (validateId()) {
+            // 获取用户输入的数据
             student.setGender(maleRadio.isSelected());
             student.setMajor(majorText.getText());
             student.setStudentName(studentNameText.getText());
-
+            // 调用studentService方法
             studentService.updateStudent(student);
         }
     }

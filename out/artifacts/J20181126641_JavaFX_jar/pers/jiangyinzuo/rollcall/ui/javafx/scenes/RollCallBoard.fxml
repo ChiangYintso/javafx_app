@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.RollCallBoardController">
+   <children>
+      <Text fx:id="teachingClassName" layoutX="257.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="教学班级">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Text>
+      <Button fx:id="randomRollCallBtn" layoutX="126.0" layoutY="118.0" mnemonicParsing="false" onAction="#randomRollCall" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #8EAFE6; -fx-cursor: hand;" text="随机点名" textFill="WHITE" />
+      <Button fx:id="abnormalRollCallBtn" layoutX="30.0" layoutY="118.0" mnemonicParsing="false" onAction="#abnormalRollCall" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #8EAFE6; -fx-cursor: hand;" text="异常点名" textFill="WHITE" />
+      <Button fx:id="wholeRollCallBtn" layoutX="126.0" layoutY="67.0" mnemonicParsing="false" onAction="#wholeRollCall" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #8EAFE6; -fx-cursor: hand;" text="顺序点名" textFill="WHITE" />
+      <ScrollPane layoutX="30.0" layoutY="171.0" prefHeight="263.0" prefWidth="546.0">
+         <content>
+            <VBox fx:id="rollCallBox" prefHeight="261.0" prefWidth="529.0" />
+         </content>
+      </ScrollPane>
+      <Button fx:id="submitRollCallBtn" layoutX="496.0" layoutY="118.0" mnemonicParsing="false" onAction="#submitRollCall" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #8EAFE6; -fx-cursor: hand;" text="提交全部" textFill="WHITE" />
+      <Button fx:id="showRollCallRecordBtn" layoutX="389.0" layoutY="118.0" mnemonicParsing="false" onAction="#showRollCallRecord" prefHeight="40.0" prefWidth="92.0" style="-fx-background-color: #8EAFE6; -fx-cursor: hand;" text="查看点名记录" textFill="WHITE" />
+      <RadioButton fx:id="rollCallRadio" layoutX="224.0" layoutY="67.0" mnemonicParsing="false" onAction="#chooseRollCallType" selected="true" text="点名">
+         <toggleGroup>
+            <ToggleGroup fx:id="rollCallTypeToggleGroup" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="questionRadio" layoutX="224.0" layoutY="99.0" mnemonicParsing="false" onAction="#chooseRollCallType" text="提问" toggleGroup="$rollCallTypeToggleGroup" />
+      <Button fx:id="repeatRollCallBtn" layoutX="30.0" layoutY="67.0" mnemonicParsing="false" onAction="#repeatRollCall" prefHeight="40.0" prefWidth="80.0" style="-fx-background-color: #8EAFE6; -fx-cursor: hand;" text="二次点名" textFill="WHITE" />
+      <Text layoutX="223.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="人数" />
+      <TextField fx:id="randomTotal" layoutX="259.0" layoutY="138.0" prefHeight="23.0" prefWidth="24.0" text="1" />
+   </children>
+</Pane>

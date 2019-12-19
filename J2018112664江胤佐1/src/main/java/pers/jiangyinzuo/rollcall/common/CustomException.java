@@ -2,9 +2,6 @@ package pers.jiangyinzuo.rollcall.common;
 
 public class CustomException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7691595303103866753L;
 
 	private String errInfo;

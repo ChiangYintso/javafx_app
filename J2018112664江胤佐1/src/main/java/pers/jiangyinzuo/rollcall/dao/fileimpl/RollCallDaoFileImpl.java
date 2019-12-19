@@ -97,13 +97,18 @@ public class RollCallDaoFileImpl implements RollCallDao {
 
 	@Override
 	public void updateRollCall(RollCall rollCall) {
+		// 读取文件中所有的实体类，并临时存放到rollCallList中
 		List<RollCall> rollCallList = FileHelper.<RollCall>readAllSerializableEntities(FILE_NAME);
 		for (int i = 0; i < rollCallList.size(); ++i) {
+			// 遍历列表，找到符合条件的实体类并修改
 			if (rollCallList.get(i).equals(rollCall)) {
 				rollCallList.set(i, rollCall);
-				return;
+				break;
 			}
 		}
+
+		// 将所有实体类重写覆盖写入文件
+		FileHelper.bulkWriteSerializableEntities(FILE_NAME, rollCallList, false);
 	}
 
 	private List<RollCall> getAllRollCalls() {

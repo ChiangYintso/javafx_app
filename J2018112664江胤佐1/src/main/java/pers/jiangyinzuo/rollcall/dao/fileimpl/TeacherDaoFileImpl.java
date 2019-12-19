@@ -1,12 +1,10 @@
 package pers.jiangyinzuo.rollcall.dao.fileimpl;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.TeacherDao;
 import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.helper.FileHelper;
+
+import java.io.IOException;
 
 /**
  * @author Jiang Yinzuo

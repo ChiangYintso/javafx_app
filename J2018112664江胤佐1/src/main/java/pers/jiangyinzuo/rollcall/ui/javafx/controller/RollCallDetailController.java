@@ -89,19 +89,23 @@ public class RollCallDetailController {
 
     @FXML
     void showPreRecord(ActionEvent event) {
+        // 展现前一页记录，起始 - 10
         start -= 10;
+        // 判断位置
         if (start >= 0) {
             rollCallList = rollCallService.queryRollCallsByTeachingClassId(teachingClassId, start, filter.getText());
         } else {
             preBtn.setDisable(true);
         }
         nextBtn.setDisable(false);
+        // 将点名记录显示到界面上
         addRollCallToBox();
     }
 
     @FXML
     public void initialize() {
-        rollCallList = rollCallService.queryRollCallsByTeachingClassId(teachingClassId, start, filter.getText());
+        rollCallList = rollCallService.queryRollCallsByTeachingClassId(
+                teachingClassId, start, filter.getText());
         addRollCallToBox();
     }
 

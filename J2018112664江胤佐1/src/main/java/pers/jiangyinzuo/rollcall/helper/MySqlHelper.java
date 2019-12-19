@@ -71,9 +71,21 @@ public class MySqlHelper {
         return null;
     }
 
+    /**
+     * 查询单条记录
+     * @param clazz 需要返回的泛型类
+     * @param sql 需要执行的SQL语句
+     * @param parameters 需要在SQL语句中传入的可变参数
+     * @param <T> 需要返回的泛型
+     * @return 查询得到的结果
+     */
     public static <T> T queryOne(Class<T> clazz, String sql, Object... parameters) {
+        // 获取数据库连接
         getConnection();
+
+        // 对JDBC的简单封装，返回查询得到的ResultSet
         try (ResultSet resultSet = executeQuery(sql, parameters)) {
+            // 调用映射方法，将结果集映射成实体类
             return mapRecordToEntity(clazz, resultSet);
         } catch (SQLException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             e.printStackTrace();
@@ -197,11 +209,6 @@ public class MySqlHelper {
      * @param resultSet 读取数据库得到的结果集
      * @param <T>       实体类
      * @return 若记录存在，返回实体类；否则返回null
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws SQLException
      */
     private static <T> T mapRecordToEntity(Class<T> clazz, ResultSet resultSet) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, SQLException {
         if (resultSet == null || !resultSet.next()) {
@@ -217,6 +224,7 @@ public class MySqlHelper {
         }
 
         do {
+            // 递归调用mapFields()方法
             mapFields(resultSet, dto, fields);
         } while (resultSet.next());
         return dto;
@@ -265,10 +273,6 @@ public class MySqlHelper {
      * @param dto 数据传输对象
      * @param fields 实例域数组
      * @param <T> 对象类型
-     * @throws IllegalAccessException
-     * @throws NoSuchMethodException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
      */
     private static <T> void mapFields(ResultSet resultSet, T dto, Field[] fields) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
         for (Field field : fields) {
@@ -283,19 +287,21 @@ public class MySqlHelper {
                 try {
                     value = resultSet.getObject(columnName);
                     if ("column".equals(fieldMapper.type())) {
+                        // 映射的实例成员是某个字段的值
                         try {
                             field.set(dto, value);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     } else if ("reference".equals(fieldMapper.type())) {
+                        // 若需要映射的实例成员是一个实体，则调用 mapRecordToEntity()方法进行递归的映射
                         StringBuilder sql = new StringBuilder("SELECT * FROM ");
                         TableMapper tableMapper = field.getType().getAnnotation(TableMapper.class);
                         if (tableMapper != null) {
-                            // 表名
+                            // 获取表名
                             sql.append(tableMapper.value());
                             sql.append(" WHERE ");
-                            // 字段名
+                            // 获取字段名
                             sql.append("".equals(fieldMapper.joinName()) ? columnName : fieldMapper.joinName());
                             sql.append(" = ?");
                         }

@@ -15,7 +15,7 @@ public class DaoFactory {
     private static Properties props = new Properties();
     private static String daoImpl;
 
-    // 使用静态代码块为Properties对象赋值
+    // 初始化工厂。使用静态代码块为Properties对象赋值
     static {
         // 获取properties流对象
         try (InputStream in = DaoFactory.class.getClassLoader().getResourceAsStream("dao.properties")) {
@@ -35,16 +35,13 @@ public class DaoFactory {
      */
     public static <T> T createDao(Class<T> daoInterface) {
         try {
-            return (T) Class.forName(DAO_PACKAGE_NAME + "." + daoImpl.toLowerCase() + "impl." + daoInterface.getSimpleName() + daoImpl + "Impl").getDeclaredConstructor().newInstance();
+            // 根据类名获取Controller, 并实例化DAO对象
+            return (T) Class.forName(DAO_PACKAGE_NAME + "." +
+                    daoImpl.toLowerCase() + "impl." + daoInterface.getSimpleName()
+                    + daoImpl + "Impl").getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        RollCallDao rollCallDao = createDao(RollCallDao.class);
-        System.out.println(rollCallDao.toString());
-        System.out.println(RollCallDao.class.getName());
     }
 }

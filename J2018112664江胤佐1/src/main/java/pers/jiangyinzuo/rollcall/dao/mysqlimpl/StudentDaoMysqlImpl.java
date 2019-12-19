@@ -1,14 +1,8 @@
 package pers.jiangyinzuo.rollcall.dao.mysqlimpl;
 
-import pers.jiangyinzuo.rollcall.common.CustomException;
 import pers.jiangyinzuo.rollcall.dao.StudentDao;
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.helper.MySqlHelper;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 
 /**
  * @author Jiang Yinzuo

@@ -29,15 +29,24 @@ public class RollCallManager {
         return abnormalStudentList;
     }
 
+    /**
+     * 获取随机学生名单
+     * @param count 名单数量
+     * @param teachingClassStudentList 全体教学名单
+     * @return 随机的学生名单
+     */
     public static List<Student> getRandomStudent(int count, List<Student> teachingClassStudentList) {
+        // 异常数据直接返回全体名单
         if (count < 0 || count > teachingClassStudentList.size()) {
             return teachingClassStudentList;
         }
         List<Student> resultList = new ArrayList<>();
         Set<Integer> set = new HashSet<>();
+        // 用集合作为临时的存储数据结构，防止名单出现重复
         while (set.size() < count) {
             set.add((int) (Math.random() * teachingClassStudentList.size()));
         }
+        // 将集合转换为列表
         for (Integer i : set) {
             resultList.add(teachingClassStudentList.get(i));
         }

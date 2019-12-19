@@ -93,7 +93,10 @@ public class RollCallBoardController {
 
     @FXML
     public void initialize() {
+        // 初始化教学班名称
         teachingClassName.setText(selectedTeachingClass.getClassName());
+        // 初始化选中的学生列表和全体学生列表。studentList表示待点名名单；
+        // totalStudentList表示全体学生名单
         studentList = selectedTeachingClass.getStudentList();
         totalStudentList = selectedTeachingClass.getStudentList();
     }
@@ -132,13 +135,22 @@ public class RollCallBoardController {
         addToStudentBox(studentList);
     }
 
+    /**
+     * 将学生名单加载至界面上
+     * @param students 需要点名的教学班名单
+     */
     private void addToStudentBox(List<Student> students) {
+        // 清空先前的名单。rollCallBox是一个VBox对象
         rollCallBox.getChildren().clear();
         teachingClassRollCallList.clear();
         for (Student student : students) {
             RollCall rollCall = createRollCall(rollCallType);
             teachingClassRollCallList.add(rollCall);
-            FxmlCmpLoaderUtil<AnchorPane, RollCallCmpController> fxmlCmpLoaderUtil = new FxmlCmpLoaderUtil<>("RollCallCmp.fxml", student, rollCall, rollCallType);
+            // 构造Fxml面板加载工具类，生成AnchorPane面板并进行相应的初始化操作
+            FxmlCmpLoaderUtil<AnchorPane, RollCallCmpController> fxmlCmpLoaderUtil =
+                    new FxmlCmpLoaderUtil<>("RollCallCmp.fxml",
+                            student, rollCall, rollCallType);
+            // 将面板添加至VBox对象中
             rollCallBox.getChildren().addAll(fxmlCmpLoaderUtil.getPane());
         }
     }
@@ -170,9 +182,13 @@ public class RollCallBoardController {
         }
 
         for (RollCall rollCall : teachingClassRollCallList) {
-            statisticMap.put(rollCall.getPresence(), statisticMap.get(rollCall.getPresence()) + 1);
+            // 对应的点名结果 + 1
+            statisticMap.put(rollCall.getPresence(),
+                    statisticMap.get(rollCall.getPresence()) + 1);
         }
+        // 将点名结果存入数据库
         rollCallService.bulkInsertRollCalls(teachingClassRollCallList);
+        // 将点名结果显示到界面上
         statistic(statisticMap, teachingClassRollCallList.size());
         RollCallManager.setLastRollCall(selectedTeachingClass.getClassId(), studentList);
     }

@@ -101,9 +101,9 @@ public class RollCallUi extends AbstractUi {
                 editRollCallRecord();
                 return this.getClass();
             case 5:
-//				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
-//				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
-//				addRollCallRecord(this.service.getRandomStudent(count), "提问");
+				System.out.println("请输入数字1-"+ this.selectedTeachingClass.getStudentList().size());
+				count = ConsoleIoHelper.scanItem(1, this.selectedTeachingClass.getStudentList().size());
+				addRollCallRecord(RollCallManager.getRandomStudent(count, selectedTeachingClass.getStudentList()), 2L);
                 return this.getClass();
             case 6:
                 return TeacherMainUi.class;

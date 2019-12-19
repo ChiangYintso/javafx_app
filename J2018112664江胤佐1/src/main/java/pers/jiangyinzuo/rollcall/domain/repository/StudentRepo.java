@@ -16,13 +16,6 @@ public class StudentRepo {
     public void setStudent(Student student) {
         this.student = student;
     }
-    public Student getStudentByRollCallId(Long rollCallId) {
-        if (student != null && rollCallId.equals(student.getStudentId())) {
-            return student;
-        } else {
-            return null;
-        }
-    }
 
     public List<Student> getStudentList(Long classId) {
         return teachingClassDao.queryStudentList(classId);

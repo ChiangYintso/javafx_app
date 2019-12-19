@@ -15,31 +15,27 @@ public class FxmlCmpLoaderUtil<T, C extends FxController> {
     private T pane = null;
     private C controller = null;
 
-    public static <T, C extends FxController> T loadFxComponent(String fxmlFileName, Object ...params) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(new URL("file:" + System.getProperty("user.dir") + "\\resources1\\components\\" + fxmlFileName));
-        T pane = fxmlLoader.load();
-        C controller = fxmlLoader.getController();
-        controller.init(params);
-        return pane;
-    }
-
     /**
      * 创建 Pane(自定义组件)及其Controller的实例对象, 并调用controller.init(Object... params)方法
-     * @param fxmlFileName
-     * @param params
+     * @param fxmlFileName FXML文件名
+     * @param params  FxController接口 init方法的参数列表
      */
     public FxmlCmpLoaderUtil(String fxmlFileName, Object ...params) {
         FXMLLoader fxmlLoader = null;
         try {
+            // 从程序运行的当前目录加载静态fxml资源文件
             fxmlLoader = new FXMLLoader(
-                    new URL("file:" + System.getProperty("user.dir") + "\\resources1\\components\\" + fxmlFileName)
+                    new URL("file:" + System.getProperty("user.dir")
+                            + "\\resources1\\components\\" + fxmlFileName)
             );
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         try {
             T pane = fxmlLoader.load();
+            // 获取controller
             C controller = fxmlLoader.getController();
+            // 初始化面板
             controller.init(params);
             this.pane = pane;
             this.controller = controller;

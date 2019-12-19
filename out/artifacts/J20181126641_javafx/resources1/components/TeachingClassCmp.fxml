@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane prefHeight="52.0" prefWidth="384.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.components.TeachingClassCmpController">
+   <children>
+      <Pane fx:id="teachingClassPane" layoutX="8.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="36.0" prefWidth="375.0" style="-fx-cursor: hand;">
+         <children>
+            <Text fx:id="teachingClassName" layoutX="62.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课程名称" wrappingWidth="89.99999999999977">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="teachingClassId" layoutX="7.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课程ID" wrappingWidth="55.333251953125">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="schedule" layoutX="152.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="讲次" wrappingWidth="135.33337402343727">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
+            <SplitMenuButton fx:id="setting" layoutX="299.0" layoutY="6.0" mnemonicParsing="false" onAction="#rollCall" prefHeight="23.0" prefWidth="67.0" style="-fx-cursor: hand;" text="点名">
+              <items>
+                <MenuItem fx:id="showStudentListBtn" mnemonicParsing="false" onAction="#showStudentList" text="教学名单" />
+                  <MenuItem fx:id="editClassBtn" mnemonicParsing="false" onAction="#editClass" text="修改教学班" />
+              </items>
+            </SplitMenuButton>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="10.0" top="10.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets bottom="5.0" left="5.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+      </Pane>
+   </children>
+</Pane>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pers.jiangyinzuo.rollcall.ui.javafx.controller.TeacherMainBoardController">
+   <children>
+      <Text layoutX="144.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="课堂点名系统教师端">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Button fx:id="showScheduleBtn" layoutX="230.0" layoutY="45.0" mnemonicParsing="false" onAction="#showSchedule" prefHeight="36.0" prefWidth="48.0" stylesheets="@static/teacher-main-board.css">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <Text fx:id="teacherName" layoutX="61.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="教师姓名" wrappingWidth="87.33330535888672">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="teacherId" layoutX="61.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="教师工号" wrappingWidth="87.33330535888672">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <ScrollPane layoutX="24.0" layoutY="155.0" prefHeight="223.0" prefWidth="393.0">
+         <content>
+            <VBox fx:id="teachingClassList" prefHeight="221.0" prefWidth="390.0" style="-fx-background-color: #eeeeee;" />
+         </content>
+      </ScrollPane>
+      <Text fill="#4f4b4b" layoutX="24.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="本学期您的教学班列表" />
+      <Button fx:id="studentManagementBtn" layoutX="304.0" layoutY="45.0" mnemonicParsing="false" onAction="#showStudentManagement" prefHeight="45.0" prefWidth="48.0" stylesheets="@static/teacher-main-board.css" />
+      <Button fx:id="addTeachingClassBtn" layoutX="371.0" layoutY="46.0" mnemonicParsing="false" onAction="#addTeachingClass" prefHeight="45.0" prefWidth="48.0" stylesheets="@static/teacher-main-board.css" />
+      <Label layoutX="24.0" layoutY="49.0" text="工号" />
+      <Label layoutX="24.0" layoutY="71.0" text="姓名" />
+      <Label layoutX="24.0" layoutY="91.0" text="职称" />
+      <Text fx:id="titleText" layoutX="61.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="职称" wrappingWidth="87.33330535888672">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Label layoutX="229.0" layoutY="94.0" text="查看课表" />
+      <Label layoutX="304.0" layoutY="94.0" text="学生管理" />
+      <Label layoutX="370.0" layoutY="94.0" text="新建班级" />
+   </children>
+</Pane>

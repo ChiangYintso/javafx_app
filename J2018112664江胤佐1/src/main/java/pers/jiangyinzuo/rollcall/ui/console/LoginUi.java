@@ -1,14 +1,12 @@
 package pers.jiangyinzuo.rollcall.ui.console;
 
-import java.lang.reflect.InvocationTargetException;
-
 import pers.jiangyinzuo.rollcall.domain.entity.Student;
 import pers.jiangyinzuo.rollcall.domain.entity.Teacher;
 import pers.jiangyinzuo.rollcall.helper.ConsoleIoHelper;
 import pers.jiangyinzuo.rollcall.service.LoginService;
 import pers.jiangyinzuo.rollcall.service.impl.LoginServiceImpl;
-import pers.jiangyinzuo.rollcall.ui.console.teacher.TeacherMainUi;
 import pers.jiangyinzuo.rollcall.ui.console.student.StudentMainUi;
+import pers.jiangyinzuo.rollcall.ui.console.teacher.TeacherMainUi;
 import pers.jiangyinzuo.rollcall.ui.state.UserState;
 
 /**
@@ -22,7 +20,7 @@ public class LoginUi extends AbstractUi {
      * @return 要跳转的UI, 若为null则结束程序
      */
     @Override
-    public Class<? extends AbstractUi> run() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public Class<? extends AbstractUi> run() {
         String isStudent = "";
         String id = "";
         String pwd = "";

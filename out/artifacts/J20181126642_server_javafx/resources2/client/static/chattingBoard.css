@@ -1,0 +1,15 @@
+#option {
+    -fx-background-image: url("../static/profile.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+#chattingRecordBtn {
+    -fx-background-image: url("../static/record.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: rgba(0, 0, 0, 0);
+    -fx-cursor: hand;
+}

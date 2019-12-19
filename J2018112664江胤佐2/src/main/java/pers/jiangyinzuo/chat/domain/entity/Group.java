@@ -52,7 +52,7 @@ public class Group implements SessionCardCmpController.Session {
 
     public Group() {
         this.groupRepo = new GroupRepo();
-        DEFAULT_AVATAR_URL = "file:" + URLDecoder.decode(Objects.requireNonNull(User.class.getClassLoader().getResource("avatar.png")).getPath(), StandardCharsets.UTF_8);
+        DEFAULT_AVATAR_URL = "file:" + URLDecoder.decode(User.class.getClassLoader().getResource("avatar.png").getPath(), StandardCharsets.UTF_8);
     }
 
     private Group(Builder builder) {

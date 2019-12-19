@@ -1,0 +1,27 @@
+#userSettingBtn {
+     -fx-background-image: url("../static/settings.png");
+     -fx-background-repeat: no-repeat;
+     -fx-background-size: 100% 100%;
+     -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+#addBtn {
+    -fx-background-image: url("../static/search.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+#noticeBtn {
+    -fx-background-image: url("../static/notice.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+#foundGroupBtn {
+    -fx-background-image: url("../static/add.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}

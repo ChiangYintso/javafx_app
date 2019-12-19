@@ -20,5 +20,4 @@ public class Main extends Application {
     void main(String[] args) {
         launch();
     }
-
 }

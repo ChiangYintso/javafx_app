@@ -4,9 +4,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class CustomAlertBoard {
-	public static void showAlert(String infomation) {
+	public static void showAlert(String information) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setContentText(infomation);
+		alert.setContentText(information);
 		alert.showAndWait();
 	}
 }

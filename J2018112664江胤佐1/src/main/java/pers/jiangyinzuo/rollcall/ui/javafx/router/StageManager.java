@@ -1,18 +1,14 @@
 package pers.jiangyinzuo.rollcall.ui.javafx.router;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jiang Yinzuo
@@ -58,11 +54,20 @@ public class StageManager {
 		stage.setResizable(false);
 		stage.show();
 	}
-	
+
+	/**
+	 * 展示临时舞台
+	 * @param stageTitle 舞台名称
+	 * @param fxmlFileName FXML文件名
+	 */
 	public static void showTempStage(String stageTitle, String fxmlFileName) {
 		try {
 			Stage stage = new Stage();
-			Parent root = FXMLLoader.load(new URL("file:" + System.getProperty("user.dir") + "\\resources1\\" + fxmlFileName));
+
+			// 加载程序运行目录下的静态资源文件
+			Parent root = FXMLLoader.load(
+					new URL("file:" + System.getProperty("user.dir")
+							+ "\\resources1\\" + fxmlFileName));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.setTitle(stageTitle);
