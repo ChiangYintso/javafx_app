@@ -1,0 +1,30 @@
+
+Osquid:S2589‡"7Remove this expression which always evaluates to "true"(ì¡ãã
+?squid:S1148w"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+?squid:S1148~"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+@squid:S1148¦"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+@squid:S1148°"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+@squid:S1148Û"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+@squid:S1148–"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+@squid:S1148¤"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+@squid:S1148Ø"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+@squid:S1148ö"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+;squid:S2438<""clientListener" is a "Thread".(ž¾šþÿÿÿÿ
+7squid:S2438?""Argument 1" is a "Thread".(‹¢­èýÿÿÿÿ
+Ksquid:S2864f"4Iterate over the "entrySet" instead of the "keySet".(„™š€
+gsquid:HiddenFieldCheckh"@Rename "objectMapper" which hides the field declared at line 33.(¡ôó‰ùÿÿÿÿ
+]squid:S2142}"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+P
+squid:S106“"9Replace this use of System.out or System.err by a logger.(À—È–
+osquid:S2177¢"WRename this method; there is a "private" method in the parent class with the same name.(ÿ¯†—
+Vsquid:S1854É"9Remove this useless assignment to local variable "count".(¸²ç¾üÿÿÿÿ
+U
+squid:S106¶"9Replace this use of System.out or System.err by a logger.(Õ´ìæùÿÿÿÿ
+P
+squid:S106À"9Replace this use of System.out or System.err by a logger.(Éªª…
+P
+squid:S106Ò"9Replace this use of System.out or System.err by a logger.(ï¥»°
+U
+squid:S106ß"9Replace this use of System.out or System.err by a logger.(Û¥öøÿÿÿÿ
+osquid:S2177Ô"WRename this method; there is a "private" method in the parent class with the same name.(ÿ¯†—
+Gsquid:S1481É"*Remove this unused "count" local variable.(¸²ç¾üÿÿÿÿ

@@ -1,0 +1,9 @@
+
+@squid:S1148€"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+=squid:S3010B"&Remove this assignment of "tcpServer".(äã¾ 
+O
+squid:S106G"9Replace this use of System.out or System.err by a logger.(õóó•
+Hsquid:S1602M",Remove useless curly braces around statement(÷îŠğşÿÿÿÿ
+Hsquid:S1602V",Remove useless curly braces around statement(÷îŠğşÿÿÿÿ
+Dsquid:S1068."-Remove this unused "tcpServer" private field.(ÏøÜÕ
+bsquid:CommentedOutCodeLine]"<This block of commented-out lines of code should be removed.(ßÓ˜‡

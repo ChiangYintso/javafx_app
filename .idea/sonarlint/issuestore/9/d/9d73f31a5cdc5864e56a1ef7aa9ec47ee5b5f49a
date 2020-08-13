@@ -1,0 +1,5 @@
+
+csquid:UselessImportCheck"?Remove this unused import 'pers.jiangyinzuo.chat.dao.GroupDao'.(ן¼¦
+rsquid:UselessImportCheck"IRemove this unused import 'pers.jiangyinzuo.chat.dao.mysql.GroupDaoImpl'.(ֿÝתײתÿÿÿÿ
+?squid:S1148T"#Use a logger to log this exception.(€ֹװ…‎ÿÿÿÿ
+msquid:S1450:"VRemove the "rawJson" field and declare it as a local variable in the relevant methods.(ַ€טה

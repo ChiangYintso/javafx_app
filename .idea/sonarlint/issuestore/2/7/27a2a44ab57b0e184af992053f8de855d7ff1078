@@ -1,0 +1,26 @@
+
+?squid:S1148H"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S1148U"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S1148^"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S1148m"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148‡"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148•"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148©"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148¸"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+Xsquid:S3252."AUse static access with "java.net.InetAddress" for "getLocalHost".(îõåç
+T
+squid:S106/"9Replace this use of System.out or System.err by a logger.(Û‹»Ûøÿÿÿÿ
+T
+squid:S1060"9Replace this use of System.out or System.err by a logger.(´°·¸ÿÿÿÿÿ
+T
+squid:S1061"9Replace this use of System.out or System.err by a logger.(ÁËŞ­ÿÿÿÿÿ
+O
+squid:S1065"9Replace this use of System.out or System.err by a logger.(›—ß
+fsquid:HiddenFieldCheckB"?Rename "readHandler" which hides the field declared at line 27.(¸²ÿúşÿÿÿÿ
+tsquid:S2177ƒ"WRename this method; there is a "private" method in the parent class with the same name.(´áÄ—şÿÿÿÿ
+U
+squid:S106—"9Replace this use of System.out or System.err by a logger.(Û¥öøÿÿÿÿ
+U
+squid:S106²"9Replace this use of System.out or System.err by a logger.(şµ‡´øÿÿÿÿ
+U
+squid:S106´"9Replace this use of System.out or System.err by a logger.(Şğøøÿÿÿÿ

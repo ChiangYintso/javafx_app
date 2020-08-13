@@ -1,0 +1,12 @@
+
+dsquid:S1192Ò"GDefine a constant instead of duplicating this literal "client" 6 times.(ŞòòĞıÿÿÿÿ
+msquid:S1192Ò"PDefine a constant instead of duplicating this literal "MessageCmp.fxml" 3 times.(ŞòòĞıÿÿÿÿ
+dsquid:S00112™"FDefine and throw a dedicated exception instead of using a generic one.(¯åÕøÿÿÿÿ
+Gsquid:S5411¥"*Use the primitive boolean expression here.(»ÿ¢Áşÿÿÿÿ
+Bsquid:S5411ò"*Use the primitive boolean expression here.(Å§Íï
+Gsquid:S5411”"*Use the primitive boolean expression here.(»ÿ¢Áşÿÿÿÿ
+Bsquid:S5411Æ"*Use the primitive boolean expression here.(¿¬Á
+ksquid:UselessImportCheck!"GRemove this unused import 'pers.jiangyinzuo.chat.service.GroupService'.(ù¼·Õ
+@squid:S1148Í"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148é"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+Osquid:S1135Œ"2Complete the task associated to this TODO comment.(›ËœÎÿÿÿÿÿ

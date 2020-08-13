@@ -1,0 +1,16 @@
+
+_squid:S1192£"GDefine a constant instead of duplicating this literal "client" 4 times.(Â¬ş¯
+esquid:S2259ß"HA "NullPointerException" could be thrown; "fxmlLoader" is nullable here.(Âƒ…½ÿÿÿÿÿ
+`squid:S2259î"HA "NullPointerException" could be thrown; "fxmlLoader" is nullable here.(–§—Û
+€squid:UselessImportCheck"WRemove this unused import 'pers.jiangyinzuo.chat.common.javafx.util.FxmlCmpLoaderUtil'.(»Ãã÷ıÿÿÿÿ
+_squid:UselessImportCheck";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ
+@squid:S1148İ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148ì"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+usquid:S1450V"YRemove the "friendList" field and declare it as a local variable in the relevant methods.(„Šœßøÿÿÿÿ
+tsquid:S1450["XRemove the "groupList" field and declare it as a local variable in the relevant methods.(ª¢šàøÿÿÿÿ
+zsquid:S1450a"^Remove the "newMessageCount" field and declare it as a local variable in the relevant methods.(ó¶ Îÿÿÿÿÿ
+Nsquid:S2696·"6Make the enclosing method "static" or remove this set.(¯‡…±
+Ksquid:S1611À"3Remove the parentheses around the "event" parameter(³³Æ
+P
+squid:S106Á"9Replace this use of System.out or System.err by a logger.(‘Í´û
+Vsquid:S1905ß"9Remove this unnecessary cast to "IndexPaneCmpController".(Âƒ…½ÿÿÿÿÿ
